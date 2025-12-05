@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: debugbox
+  labels:
+    app: debugbox
+spec:
+  replicas: {{ .Values.replicaCount }}
+  strategy:
+    type: {{ .Values.deploymentStrategy.type | default "Recreate" }}
+  selector:
+    matchLabels:
+      app: debugbox
+  template:
+    metadata:
+      labels:
+        app: debugbox
+    spec:
+      serviceAccountName: {{ default "debugbox-sa" .Values.serviceAccount.name }}
+      hostNetwork: {{ .Values.pod.hostNetwork | quote }}
+      hostPID: {{ .Values.pod.hostPID | quote }}
+      tolerations: {{ toYaml .Values.pod.tolerations | nindent 6 }}
+      nodeSelector: {{ toYaml .Values.pod.nodeSelector | nindent 6 }}
+      affinity: {{ toYaml .Values.pod.affinity | nindent 6 }}
+      containers:
+        - name: debugbox
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          command: ["/bin/bash", "-lc", "sleep infinity"]
+          securityContext:
+            privileged: {{ .Values.pod.privileged | quote }}
+            runAsUser: {{ .Values.pod.runAsUser }}
+            capabilities:
+              add: {{ toYaml .Values.security.capabilities.add | nindent 14 }}
+            seccompProfile:
+              type: {{ .Values.security.seccompProfile }}
+          resources:
+            {{- toYaml .Values.pod.resources | nindent 12 }}
+          volumeMounts:
+            {{- toYaml .Values.extraVolumeMounts | nindent 12 }}
+      volumes:
+        {{- toYaml .Values.extraVolumes | nindent 8 }}

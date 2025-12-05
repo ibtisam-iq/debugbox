@@ -1,0 +1,38 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: debugbox-role
+  namespace: default
+  labels:
+    app: debugbox
+rules:
+  - apiGroups: [""]
+    resources:
+      - pods
+      - pods/exec
+      - pods/log
+      - services
+      - endpoints
+      - configmaps
+      - secrets
+    verbs:
+      - get
+      - list
+      - watch
+      - create
+      - delete
+      - update
+      - patch
+  - apiGroups: ["apps"]
+    resources:
+      - deployments
+      - daemonsets
+      - replicasets
+    verbs:
+      - get
+      - list
+      - watch
+      - create
+      - delete
+      - update
+      - patch

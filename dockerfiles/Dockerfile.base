@@ -1,0 +1,64 @@
+# DebugBox — Base image
+# Purpose: Shared base for lite / balanced / power variants
+FROM alpine:3.20.8
+
+ARG USER=ibtisam
+ARG UID=1000
+ARG GID=1000
+ARG MIRROR=false
+
+LABEL org.opencontainers.image.title="DebugBox — base" \
+      org.opencontainers.image.description="Minimal base for Kubernetes debugging toolkit" \
+      org.opencontainers.image.licenses="MIT" \
+      org.opencontainers.image.version="0.1.0" \
+      org.opencontainers.image.authors="Muhammad Ibtisam <contact@ibtisam-iq.com>" \
+      org.opencontainers.image.source="https://github.com/ibtisam-iq/debugbox" \
+      org.opencontainers.image.vendor="Ibtisam IQ"
+
+# Install minimal certs; mirror if specified
+RUN set -eux; \
+    if [ "$MIRROR" = "true" ]; then \
+      sed -i 's/dl-cdn.alpinelinux.org/dl-3.alpinelinux.org/g' /etc/apk/repositories; \
+    fi; \
+    apk add --no-cache ca-certificates && \
+    apk update --no-cache && \
+    rm -rf /var/cache/apk/* && \
+    apk info ca-certificates 
+
+# Create non-root user/group
+RUN set -eux; \
+    addgroup -g "${GID}" "${USER}" && \
+    adduser -D -u "${UID}" -G "${USER}" -s /bin/ash "${USER}"
+
+# Verify user creation (fails build if broken)
+RUN set -eux; \
+    apk add --no-cache su-exec && \
+    su-exec "${USER}" id >/dev/null && \
+    echo "Non-root user verified: $(su-exec ${USER} whoami)" && \
+    rm -rf /var/cache/apk/*  
+
+# UX: Profile functions (ash-compatible; jq/yq assumed in variants)
+RUN mkdir -p /etc/profile.d && \
+    cat > /etc/profile.d/debugbox.sh << 'EOF' && \
+    chmod 0644 /etc/profile.d/debugbox.sh
+ll() { ls -alF "$@"; }
+json() { jq . "$@" 2>/dev/null || echo "jq missing"; }
+yaml() { yq . "$@" 2>/dev/null || echo "yq missing"; }
+export PS1='[debugbox \w] \$ '
+EOF
+
+ENV PAGER=less \
+    EDITOR=vi \
+    LANG=C.UTF-8 \
+    LC_ALL=C.UTF-8
+
+WORKDIR /home/${USER}
+
+# Default non-root; override at runtime: docker run --user root:0:0 image
+USER ${USER}
+
+# Basic health: Always pass for shell (K8s probes override)
+HEALTHCHECK --interval=30s --timeout=10s --start-period=5s --retries=3 \
+  CMD exit 0
+
+CMD ["/bin/ash"]

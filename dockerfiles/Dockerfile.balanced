@@ -1,0 +1,68 @@
+# DebugBox — Balanced
+# Purpose: Everyday K8s/SRE debug with net/sys tools
+FROM debug:base AS base
+
+ARG USER=ibtisam
+ARG UID=1000
+ARG GID=1000
+ARG NO_SUDO=true
+
+LABEL org.opencontainers.image.title="DebugBox — balanced" \
+      org.opencontainers.image.description="Balanced debug image for Kubernetes and cloud-native troubleshooting" \
+      org.opencontainers.image.version="0.1.0"
+
+# Switch to root for installs
+USER root
+
+# Install tools: Trimmed to 15 core, dynamic (latest in v3.20)
+RUN set -eux; \
+    apk add --no-cache \
+      # Community
+      bash bash-completion \
+      git \
+      htop \
+      httpie \
+      nmap \
+      openssh-client-default \
+      vim && \
+    # Main
+    apk add --no-cache \
+      bind-tools \
+      curl \
+      coreutils diffutils file findutils \
+      grep \
+      iproute2 iputils \
+      jq less \
+      lsof \
+      procps psmisc \
+      shadow strace \
+      tar gzip \
+      util-linux which \
+      ethtool iftop \
+      mtr netcat-openbsd \
+      socat \
+      sudo \
+      tcpdump \
+      traceroute wget \
+      iperf3 \
+      yq && \
+    rm -rf /var/cache/apk/*
+
+# Verify key tools (merged for efficiency)
+RUN set -eux; \
+    curl --version | head -1 && \
+    strace --version | head -1 && \
+    tcpdump --version | head -1 && \
+    yq --version | head -1 && \
+    echo "Balanced tools verified"
+
+# Optional sudoers
+RUN if [ "$NO_SUDO" = "false" ]; then \
+      echo "# DebugBox sudoers" > /etc/sudoers.d/debugbox && \
+      echo "Defaults env_keep += \"HOME LANG LC_ALL LC_MESSAGES\"" >> /etc/sudoers.d/debugbox && \
+      chmod 0440 /etc/sudoers.d/debugbox; \
+    fi
+
+# Back to non-root
+USER ${USER}
+CMD ["/bin/bash"]

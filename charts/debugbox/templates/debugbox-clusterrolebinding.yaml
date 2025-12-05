@@ -1,0 +1,14 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: debugbox-clusterrolebinding
+  labels:
+    app: debugbox
+subjects:
+  - kind: ServiceAccount
+    name: debugbox-sa
+    namespace: default
+roleRef:
+  kind: ClusterRole
+  name: debugbox-clusterrole
+  apiGroup: rbac.authorization.k8s.io

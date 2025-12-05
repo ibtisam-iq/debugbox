@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: sample-app
+spec:
+  containers:
+  - name: app
+    image: nginx
+
+  ephemeralContainers:
+  - name: debugbox
+    image: ghcr.io/ibtisam-iq/debugbox:balanced
+    command: ["/bin/bash"]
+    stdin: true
+    tty: true
+    securityContext:
+      runAsUser: 0

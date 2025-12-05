@@ -1,0 +1,40 @@
+# DebugBox — Lite
+# Purpose: Minimal for quick K8s checks (ephemeral pods)
+FROM debug:base
+
+ARG USER=ibtisam  
+ARG UID=1000
+ARG GID=1000
+
+LABEL org.opencontainers.image.title="DebugBox — lite" \
+      org.opencontainers.image.description="Minimal debug image for quick checks" \
+      org.opencontainers.image.version="0.1.0"
+
+# Switch to root for installs
+USER root
+
+# Install minimal tools: Dynamic latest, no dupes (base has certs)
+RUN set -eux; \
+    apk add --no-cache \
+      curl \
+      wget \
+      jq \
+      vim \
+      iproute2 \
+      iputils \
+      netcat-openbsd \
+      bind-tools \
+      yq && \
+    rm -rf /var/cache/apk/*
+
+# Verify tools (merged for efficiency)
+RUN set -eux; \
+    curl --version | head -1 && \
+    jq --version | head -1 && \
+    nslookup kubernetes.default.svc.cluster.local | head -1 && \
+    yq --version | head -1 && \
+    echo "Lite tools verified"
+
+# Back to non-root
+USER ${USER}
+CMD ["/bin/ash"]  

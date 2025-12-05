@@ -1,0 +1,32 @@
+{{- if .Values.daemonset.enabled -}}
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: debugbox-daemon
+  labels:
+    app: debugbox
+spec:
+  selector:
+    matchLabels:
+      app: debugbox
+  template:
+    metadata:
+      labels:
+        app: debugbox
+    spec:
+      serviceAccountName: {{ default "debugbox-sa" .Values.serviceAccount.name }}
+      hostNetwork: true
+      tolerations: {{ toYaml .Values.pod.tolerations | nindent 6 }}
+      nodeSelector: {{ toYaml .Values.pod.nodeSelector | nindent 6 }}
+      containers:
+        - name: debugbox
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          command: ["/bin/bash","-lc","sleep infinity"]
+          securityContext:
+            privileged: {{ .Values.pod.privileged | quote }}
+            runAsUser: {{ .Values.pod.runAsUser }}
+            capabilities:
+              add: {{ toYaml .Values.security.capabilities.add | nindent 14 }}
+{{- end }}
+

@@ -1,0 +1,42 @@
+# DebugBox package manifest
+# Lists packages per variant and a short justification for inclusion.
+
+
+lite:
+- bash: "shell"
+- curl: "download, http checks"
+- wget: "alternative downloader"
+- jq: "json inspector"
+- yq: "yaml inspector"
+- iproute2: "ip addr / route"
+- iputils: "ping"
+- netcat-openbsd: "tcp/udp debugging"
+- bind-tools: "dig/nslookup"
+- busybox-extras: "various small tools"
+
+
+balanced:
+- Includes everything in lite
+- htop: "process viewer"
+- tcpdump: "packet capture"
+- socat: "port forwarding / proxy"
+- mtr: "network traceroute + ping"
+- httpie: "human-friendly http client"
+- git, vim, nano: "developer convenience"
+- iperf3/ethtool/iftop: "network performance"
+
+
+power:
+- Includes everything in balanced
+- tshark: "Wireshark CLI for deep packet decode"
+- nmap, nmap-nping, nmap-scripts: "network scanning & probe generation"
+- nftables/iptables/ipset: "firewall/routing manipulation"
+- conntrack-tools: "netfilter connection tracking"
+- bird: "routing daemons for BGP testing"
+- ngrep, tcptraceroute, ngrep: "advanced packet inspection"
+- py3-pip: "ability to install ad-hoc Python debugging scripts"
+
+
+notes:
+- The manifest is intentionally explicit so maintainers can review package additions.
+- Goal: justify each heavy package in power; keep lite small and fast.

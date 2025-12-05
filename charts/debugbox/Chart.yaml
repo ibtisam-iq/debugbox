@@ -1,0 +1,15 @@
+apiVersion: v2
+name: debugbox
+description: DebugBox — Kubernetes debugging images (lite, balanced, power)
+type: application
+version: 0.1.0
+appVersion: "0.1.0"
+keywords:
+  - debug
+  - k8s
+  - troubleshooting
+maintainers:
+  - name: Muhammad Ibtisam
+    email: contact@ibtisam-iq.com
+    url: https://ibtisam-iq.com
+

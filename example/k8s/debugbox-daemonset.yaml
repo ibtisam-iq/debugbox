@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: debugbox-daemon
+  labels:
+    app: debugbox
+spec:
+  selector:
+    matchLabels:
+      app: debugbox
+  template:
+    metadata:
+      labels:
+        app: debugbox
+    spec:
+      hostNetwork: true
+      dnsPolicy: ClusterFirstWithHostNet
+
+      containers:
+      - name: debugbox
+        image: ghcr.io/ibtisam-iq/debugbox:balanced
+        imagePullPolicy: Always
+
+        command: ["/bin/bash", "-lc", "sleep infinity"]
+
+        securityContext:
+          runAsUser: 0
+          privileged: true
+          capabilities:
+            add:
+              - NET_ADMIN
+              - NET_RAW
+              - SYS_ADMIN
+
+        resources:
+          requests:
+            cpu: "20m"
+            memory: "64Mi"
+          limits:
+            cpu: "200m"
+            memory: "128Mi"
