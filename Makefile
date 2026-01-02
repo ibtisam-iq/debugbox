@@ -21,6 +21,8 @@ LOCAL_TAG := local
 REGISTRY_GHCR := ghcr.io/ibtisam-iq/$(IMAGE_NAME)
 PLATFORM ?= linux/amd64,linux/arm64  # Multi-arch default
 NO_CACHE ?= false  # --no-cache arg
+HADOLINT ?= hadolint
+HADOLINT_IMAGE ?= hadolint/hadolint:latest
 BUILDX_ARGS := --platform $(PLATFORM) --load  # Buildx for multi-arch
 
 # -------------------------------
@@ -80,8 +82,25 @@ endef
 # Lint/Scan
 # -------------------------------
 lint:
-	@echo "Linting Dockerfiles with hadolint..."
-	@hadolint $(foreach var,$(VARIANTS),$(DOCKERFILES_DIR)/Dockerfile.$(var)) | tee /dev/stderr | (grep -q "error" && (echo "Lint errors found—fix and retry"; exit 1) || echo "Lint clean (warnings ignored).")
+	@echo "==> Linting Dockerfiles"
+
+	@if command -v hadolint >/dev/null 2>&1; then \
+		echo "Using local hadolint"; \
+		for f in $(foreach var,$(VARIANTS),$(DOCKERFILES_DIR)/Dockerfile.$(var)); do \
+			hadolint $$f; \
+		done; \
+	else \
+		echo "hadolint not found locally, using containerized hadolint"; \
+		for f in $(foreach var,$(VARIANTS),$(DOCKERFILES_DIR)/Dockerfile.$(var)); do \
+			docker run --rm -i \
+				-v $(PWD):/work \
+				-w /work \
+				hadolint/hadolint:latest \
+				$$f; \
+		done; \
+	fi
+
+	@echo "Dockerfile lint passed"
 
 scan:
 	@echo "Scanning variants with trivy (fail HIGH)..."
