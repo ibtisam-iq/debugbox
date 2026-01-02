@@ -32,6 +32,10 @@ DebugBox adheres to:
 - **SBOM generation** using Syft  
 - **Trivy scanning** (fail on HIGH/CRITICAL vulnerabilities)  
 - **Checksum verification** of third-party binaries (e.g., yq)  
-- **Deterministic builds** with Buildx & pinned versions where possible  
+- **Deterministic builds** with Buildx & pinned versions where possible
+
+> The DebugBox `power` image bundles third-party binaries (e.g., `yq`).
+> All binaries are pinned by version and checksum and scanned with Trivy.
+> Builds fail on HIGH/CRITICAL vulnerabilities.
 
 Thank you for helping keep DebugBox secure.
