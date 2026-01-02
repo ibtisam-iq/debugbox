@@ -1,13 +1,19 @@
 # DebugBox — Power
 FROM debug:base AS base
 
+ARG USER=ibtisam
+ARG UID=1000
+ARG GID=1000
+ARG NO_SUDO=true
 ARG YQ_VERSION=v4.44.3
 ARG YQ_SHA256=__PLACEHOLDER_YQ_SHA256__
 
+LABEL org.opencontainers.image.title="DebugBox — power" \
+      org.opencontainers.image.description="Advanced SRE-grade network forensics and troubleshooting image" \
+      org.opencontainers.image.version="0.1.0"
 
-LABEL org.opencontainers.image.title="DebugBox — power"
-LABEL org.opencontainers.image.description="Advanced SRE-grade network forensics and troubleshooting image"
-
+# Switch to root for installs
+USER root
 
 RUN set -eux; \
 apk add --no-cache \
@@ -55,7 +61,6 @@ perl-crypt-ssleay perl-net-ssleay \
 websocat; \
 rm -rf /var/cache/apk/* /usr/share/man /usr/share/doc /usr/share/locale || true
 
-
 # Install yq and validate checksum
 RUN set -eux; \
 wget -qO /usr/local/bin/yq "https://github.com/mikefarah/yq/releases/download/${YQ_VERSION}/yq_linux_amd64"; \
@@ -66,6 +71,16 @@ echo "${YQ_SHA256} /usr/local/bin/yq" | sha256sum -c -; \
 fi; \
 chmod +x /usr/local/bin/yq
 
-
 # Add helpful aliases (system-wide already provided by base)
 RUN echo "alias sniff='tcpdump -i any -n -s 0'" >> /etc/profile.d/debugbox.sh || true
+
+# Optional sudoers
+RUN if [ "$NO_SUDO" = "false" ]; then \
+      echo "# DebugBox sudoers" > /etc/sudoers.d/debugbox && \
+      echo "Defaults env_keep += \"HOME LANG LC_ALL LC_MESSAGES\"" >> /etc/sudoers.d/debugbox && \
+      chmod 0440 /etc/sudoers.d/debugbox; \
+    fi
+
+# Back to non-root
+USER ${USER}
+CMD ["/bin/bash"]
