@@ -5,8 +5,8 @@ ARG USER=ibtisam
 ARG UID=1000
 ARG GID=1000
 ARG NO_SUDO=true
-ARG YQ_VERSION=v4.44.3
-ARG YQ_SHA256=__PLACEHOLDER_YQ_SHA256__
+ARG YQ_VERSION=v4.50.1
+ARG YQ_SHA256=c7a1278e6bbc4924f41b56db838086c39d13ee25dcb22089e7fbf16ac901f0d4
 
 LABEL org.opencontainers.image.title="DebugBox — power" \
       org.opencontainers.image.description="Advanced SRE-grade network forensics and troubleshooting image" \
@@ -61,15 +61,12 @@ perl-crypt-ssleay perl-net-ssleay \
 websocat; \
 rm -rf /var/cache/apk/* /usr/share/man /usr/share/doc /usr/share/locale || true
 
-# Install yq and validate checksum
+# Install yq (pinned + verified)
 RUN set -eux; \
-wget -qO /usr/local/bin/yq "https://github.com/mikefarah/yq/releases/download/${YQ_VERSION}/yq_linux_amd64"; \
-if [ "${YQ_SHA256}" = "__PLACEHOLDER_YQ_SHA256__" ]; then \
-echo "YQ_SHA256 is placeholder - CI should replace this with a real sha256 or set build-arg"; \
-else \
-echo "${YQ_SHA256} /usr/local/bin/yq" | sha256sum -c -; \
-fi; \
-chmod +x /usr/local/bin/yq
+  wget -qO /usr/local/bin/yq \
+    "https://github.com/mikefarah/yq/releases/download/${YQ_VERSION}/yq_linux_amd64"; \
+  echo "${YQ_SHA256}  /usr/local/bin/yq" | sha256sum -c -; \
+  chmod +x /usr/local/bin/yq
 
 # Add helpful aliases (system-wide already provided by base)
 RUN echo "alias sniff='tcpdump -i any -n -s 0'" >> /etc/profile.d/debugbox.sh || true
