@@ -44,18 +44,28 @@ RUN set -eux; \
       yq && \
     rm -rf /var/cache/apk/*
 
-# Add kubectx + kubens (static Go binaries, multi-arch)
+# Add kubectx + kubens (static Go binaries from tar.gz, multi-arch)
 ARG KUBECTX_VERSION=v0.9.5
 RUN set -eux; \
-    apk add --no-cache --virtual .build-deps curl; \
-    case "$(uname -m)" in \
-        x86_64)  ARCH=amd64 ;; \
-        aarch64) ARCH=arm64 ;; \
-        *) echo "Unsupported arch: $(uname -m)" && exit 1 ;; \
-    esac; \
-    curl -L -o /usr/local/bin/kubectx "https://github.com/ahmetb/kubectx/releases/download/${KUBECTX_VERSION}/kubectx_${KUBECTX_VERSION}_linux_${ARCH}" && \
-    curl -L -o /usr/local/bin/kubens "https://github.com/ahmetb/kubectx/releases/download/${KUBECTX_VERSION}/kubens_${KUBECTX_VERSION}_linux_${ARCH}" && \
+    apk add --no-cache --virtual .build-deps curl tar; \
+    if [ "$(uname -m)" = "x86_64" ]; then ARCH="x86_64"; else ARCH="arm64"; fi; \
+    # kubectx
+    curl -L -o /tmp/kubectx.tar.gz \
+      "https://github.com/ahmetb/kubectx/releases/download/${KUBECTX_VERSION}/kubectx_${KUBECTX_VERSION}_linux_${ARCH}.tar.gz" && \
+    tar -xzf /tmp/kubectx.tar.gz -C /usr/local/bin kubectx && \
+    rm /tmp/kubectx.tar.gz && \
+    # kubens
+    curl -L -o /tmp/kubens.tar.gz \
+      "https://github.com/ahmetb/kubectx/releases/download/${KUBECTX_VERSION}/kubens_${KUBECTX_VERSION}_linux_${ARCH}.tar.gz" && \
+    tar -xzf /tmp/kubens.tar.gz -C /usr/local/bin kubens && \
+    rm /tmp/kubens.tar.gz && \
     chmod +x /usr/local/bin/kubectx /usr/local/bin/kubens && \
+    # Manual bash completions (recommended)
+    mkdir -p /etc/bash_completion.d && \
+    curl -L -o /etc/bash_completion.d/kubectx \
+      https://raw.githubusercontent.com/ahmetb/kubectx/${KUBECTX_VERSION}/completion/kubectx.bash && \
+    curl -L -o /etc/bash_completion.d/kubens \
+      https://raw.githubusercontent.com/ahmetb/kubectx/${KUBECTX_VERSION}/completion/kubens.bash && \
     apk del .build-deps
 
 # Verify key tools (merged for efficiency)
@@ -70,8 +80,8 @@ RUN set -eux; \
     strace --version | head -1 && \
     tcpdump --version | head -1 && \
     yq --version | head -1 && \
-    kubectx --version >/dev/null 2>&1 && echo "kubectx installed" || true && \
-    kubens --version >/dev/null 2>&1 && echo "kubens installed" || true && \
+    echo "kubectx: $(kubectx --version)" || true && \
+    echo "kubens: $(kubens --version)" || true && \
     htop --version | head -1 && \
     git --version | head -1 && \
     bash --version | head -1 && \
