@@ -15,36 +15,26 @@ LABEL org.opencontainers.image.title="DebugBox — power" \
 # Switch to root for installs
 USER root
 
+# Install tools
 RUN set -eux; \
 apk add --no-cache \
 bash bash-completion \
-ca-certificates tzdata \
 curl wget \
-coreutils util-linux \
-busybox-extras \
-shadow sudo \
 bind-tools \
 iproute2 iputils \
 iperf3 \
 mtr \
 netcat-openbsd \
 socat \
-traceroute \
 tcpdump \
 iftop \
 ethtool \
-drill \
 nmap \
 nmap-nping \
 nmap-scripts \
-ngrep \
-tcptraceroute \
 tshark \
-libpcap \
 iptables \
 nftables \
-ipvsadm \
-ipset \
 conntrack-tools \
 bird \
 bridge-utils \
@@ -53,12 +43,8 @@ speedtest-cli \
 vim nano \
 jq \
 ltrace strace \
-file findutils \
-net-snmp-tools \
-git openssh-client \
-py3-pip py3-setuptools \
-perl-crypt-ssleay perl-net-ssleay \
-websocat; \
+git \
+py3-pip; \
 rm -rf /var/cache/apk/* /usr/share/man /usr/share/doc /usr/share/locale || true
 
 # Install yq (pinned + verified)
