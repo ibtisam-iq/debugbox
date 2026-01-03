@@ -17,9 +17,8 @@ USER root
 RUN set -eux; \
     apk add --no-cache \
       curl \
-      wget \
+      # wget \
       jq \
-      vim \
       iproute2 \
       iputils \
       netcat-openbsd \
