@@ -14,47 +14,68 @@ LABEL org.opencontainers.image.title="DebugBox — balanced" \
 # Switch to root for installs
 USER root
 
-# Install tools: Trimmed to 15 core, dynamic (latest in v3.20)
+# Install tools (latest in v3.20)
 RUN set -eux; \
     apk add --no-cache \
       # Community
       bash bash-completion \
       git \
       htop \
-      httpie \
+      # httpie \
       nmap \
-      openssh-client-default \
+      # openssh-client-default \
       vim && \
     # Main
     apk add --no-cache \
       bind-tools \
       curl \
-      coreutils diffutils file findutils \
-      grep \
       iproute2 iputils \
       jq less \
       lsof \
       procps psmisc \
-      shadow strace \
+      strace \
       tar gzip \
-      util-linux which \
       ethtool iftop \
       mtr netcat-openbsd \
       socat \
-      sudo \
       tcpdump \
-      traceroute wget \
+      wget \
       iperf3 \
       yq && \
     rm -rf /var/cache/apk/*
 
+# Add kubectx + kubens (static Go binaries, multi-arch)
+ARG KUBECTX_VERSION=v0.9.5
+RUN set -eux; \
+    apk add --no-cache --virtual .build-deps curl; \
+    case "$(uname -m)" in \
+        x86_64)  ARCH=amd64 ;; \
+        aarch64) ARCH=arm64 ;; \
+        *) echo "Unsupported arch: $(uname -m)" && exit 1 ;; \
+    esac; \
+    curl -L -o /usr/local/bin/kubectx "https://github.com/ahmetb/kubectx/releases/download/${KUBECTX_VERSION}/kubectx_${KUBECTX_VERSION}_linux_${ARCH}" && \
+    curl -L -o /usr/local/bin/kubens "https://github.com/ahmetb/kubectx/releases/download/${KUBECTX_VERSION}/kubens_${KUBECTX_VERSION}_linux_${ARCH}" && \
+    chmod +x /usr/local/bin/kubectx /usr/local/bin/kubens && \
+    apk del .build-deps
+
 # Verify key tools (merged for efficiency)
 RUN set -eux; \
     curl --version | head -1 && \
+    wget --version | head -1 && \
+    jq --version | head -1 && \
+    dig -v | head -1 && \
+    nmap --version | head -1 && \
+    mtr --version | head -1 && \
+    iperf3 --version | head -1 && \
     strace --version | head -1 && \
     tcpdump --version | head -1 && \
     yq --version | head -1 && \
-    echo "Balanced tools verified"
+    kubectx --version >/dev/null 2>&1 && echo "kubectx installed" || true && \
+    kubens --version >/dev/null 2>&1 && echo "kubens installed" || true && \
+    htop --version | head -1 && \
+    git --version | head -1 && \
+    bash --version | head -1 && \
+    echo "Balanced tools verified successfully"
 
 # Optional sudoers
 RUN if [ "$NO_SUDO" = "false" ]; then \
