@@ -1,64 +1,65 @@
 # DebugBox — Base image
-# Purpose: Shared base for lite / balanced / power variants
+#
+# This is the shared base image for all DebugBox variants (lite, balanced, power).
+# It provides a minimal Alpine foundation with essential HTTPS support, a custom shell
+# profile for improved UX, and standard OCI labels.
+#
+# Following open-source conventions for debugging and network troubleshooting tools
+# (e.g., nicolaka/netshoot, busybox, network-multitool), this image runs as root by
+# default. Root is required for many common debugging operations (e.g., tcpdump,
+# privileged ports, namespace entry). Users can override with `--user` if needed.
+#
+# No non-root user is created — this keeps the image simple, small, and aligned with
+# community standards.
+
 FROM alpine:3.20.8
 
-ARG USER=ibtisam
-ARG UID=1000
-ARG GID=1000
-ARG MIRROR=false
-
+# OCI Image Format Specification labels — improve discoverability and tooling support
 LABEL org.opencontainers.image.title="DebugBox — base" \
-      org.opencontainers.image.description="Minimal base for Kubernetes debugging toolkit" \
+      org.opencontainers.image.description="Minimal base image for the DebugBox Kubernetes debugging toolkit" \
       org.opencontainers.image.licenses="MIT" \
-      org.opencontainers.image.version="0.1.0" \
+      org.opencontainers.image.version="1.0.0" \
       org.opencontainers.image.authors="Muhammad Ibtisam <contact@ibtisam-iq.com>" \
       org.opencontainers.image.source="https://github.com/ibtisam-iq/debugbox" \
       org.opencontainers.image.vendor="Ibtisam IQ"
 
-# Install minimal certs; mirror if specified
+# Install ca-certificates — required for HTTPS connections in curl, wget, etc.
+# No apk update is needed because ca-certificates is always available in Alpine's main repository.
 RUN set -eux; \
-    if [ "$MIRROR" = "true" ]; then \
-      sed -i 's/dl-cdn.alpinelinux.org/dl-3.alpinelinux.org/g' /etc/apk/repositories; \
-    fi; \
-    apk add --no-cache ca-certificates && \
-    apk update --no-cache && \
-    rm -rf /var/cache/apk/* && \
-    apk info ca-certificates 
+    apk add --no-cache ca-certificates; \
+    rm -rf /var/cache/apk/*
 
-# Create non-root user/group
-RUN set -eux; \
-    addgroup -g "${GID}" "${USER}" && \
-    adduser -D -u "${UID}" -G "${USER}" -s /bin/ash "${USER}"
-
-# Verify user creation (fails build if broken)
-RUN set -eux; \
-    apk add --no-cache su-exec && \
-    su-exec "${USER}" id >/dev/null && \
-    echo "Non-root user verified: $(su-exec ${USER} whoami)" && \
-    rm -rf /var/cache/apk/*  
-
-# UX: Profile functions (ash-compatible; jq/yq assumed in variants)
-RUN mkdir -p /etc/profile.d && \
-    cat > /etc/profile.d/debugbox.sh << 'EOF' && \
-    chmod 0644 /etc/profile.d/debugbox.sh
+# Custom shell profile with useful aliases and prompt
+# Placed in /etc/profile.d so it is sourced automatically for all interactive shells.
+RUN <<EOF
+set -eux
+mkdir -p /etc/profile.d
+cat > /etc/profile.d/debugbox.sh << 'HEREDOC'
 ll() { ls -alF "$@"; }
-json() { jq . "$@" 2>/dev/null || echo "jq missing"; }
-yaml() { yq . "$@" 2>/dev/null || echo "yq missing"; }
-export PS1='[debugbox \w] \$ '
+json() { jq . "$@" 2>/dev/null || cat "$@"; }
+yaml() { yq . "$@" 2>/dev/null || cat "$@"; }
+export PS1='[debugbox \w]\$ '
+HEREDOC
+chmod 0644 /etc/profile.d/debugbox.sh
 EOF
 
-ENV PAGER=less \
-    EDITOR=vi \
-    LANG=C.UTF-8 \
-    LC_ALL=C.UTF-8
+# Standard environment variables
+# - UTF-8 locale for consistent behavior across tools
+# - PAGER=less (less is installed in balanced/power variants)
+# - EDITOR=vi (lightweight vi provided by busybox in Alpine)
+ENV LANG=C.UTF-8 \
+    LC_ALL=C.UTF-8 \
+    PAGER=less \
+    EDITOR=vi
 
-WORKDIR /home/${USER}
+# Default working directory for root
+WORKDIR /root
 
-# Default non-root; override at runtime: docker run --user root:0:0 image
-USER ${USER}
+# No USER directive — default is root (standard for debugging images)
 
-# Basic health: Always pass for shell (K8s probes override)
-HEALTHCHECK --interval=30s --timeout=10s --start-period=5s --retries=3 \
-  CMD exit 0
+# Basic healthcheck — always succeeds.
+# Kubernetes liveness/readiness probes can override if needed.
+HEALTHCHECK --interval=30s --timeout=10s --start-period=5s --retries=3 CMD true
 
+# Default command — interactive Alpine shell
 CMD ["/bin/ash"]
