@@ -1,39 +1,49 @@
-# DebugBox — Lite
-# Purpose: Minimal for quick K8s checks (ephemeral pods)
-FROM debug:base
+# DebugBox — Lite variant
+#
+# Minimal, fast-pull debugging image for Kubernetes ephemeral containers.
+# Focused on basic networking, DNS, JSON/YAML inspection, and HTTP checks.
 
-ARG USER=ibtisam  
-ARG UID=1000
-ARG GID=1000
+FROM ghcr.io/ibtisam-iq/debugbox-base:latest
 
-LABEL org.opencontainers.image.title="DebugBox — lite" \
-      org.opencontainers.image.description="Minimal debug image for quick checks" \
-      org.opencontainers.image.version="0.1.0"
+# OCI labels
+LABEL org.opencontainers.image.title="DebugBox Lite" \
+      org.opencontainers.image.description="Minimal debugging image for quick Kubernetes checks and ephemeral containers" \
+      org.opencontainers.image.version="1.0.0"
 
-# Switch to root for installs
-USER root
-
-# Install minimal tools: Dynamic latest, no dupes (base has certs)
+# Install minimal, high-value debugging tools
 RUN set -eux; \
     apk add --no-cache \
       curl \
       # wget \
       jq \
+      yq \
       iproute2 \
       iputils \
       netcat-openbsd \
-      bind-tools \
-      yq && \
-    rm -rf /var/cache/apk/*
+      bind-tools
 
-# Verify tools (merged for efficiency)
+# DebugBox Lite — shell helpers
+# Loaded automatically via /etc/profile.d
 RUN set -eux; \
-    curl --version | head -1 && \
-    jq --version | head -1 && \
-    nslookup kubernetes.default.svc.cluster.local | head -1 && \
-    yq --version | head -1 && \
-    echo "Lite tools verified"
+    mkdir -p /etc/profile.d; \
+    printf '%s\n' \
+      '# DebugBox Lite — shell helpers' \
+      '# Loaded automatically via /etc/profile.d' \
+      'json() { jq . "$@" 2>/dev/null || cat "$@"; }' \
+      'yaml() { yq . "$@" 2>/dev/null || cat "$@"; }' \
+      > /etc/profile.d/debugbox-lite.sh; \
+    chmod 0644 /etc/profile.d/debugbox-lite.sh
 
-# Back to non-root
-USER ${USER}
-CMD ["/bin/ash"]  
+# Verify binaries exist and are runnable (no network dependency)
+RUN set -eux; \
+    curl --version >/dev/null; \
+    jq --version >/dev/null; \
+    yq --version >/dev/null; \
+    ip -V >/dev/null; \
+    ping -V >/dev/null; \
+    nc -h >/dev/null; \
+    dig -v >/dev/null; \
+    echo "DebugBox Lite tools verified"
+
+# Default shell
+CMD ["/bin/ash"]
