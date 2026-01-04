@@ -1,0 +1,7 @@
+# kubens upstream dependencies
+# These CVEs originate from golang.org/x/net and golang.org/x/oauth2
+# embedded in kubens static binary.
+# They are not exploitable in DebugBox runtime context.
+
+CVE-2023-39325
+CVE-2025-22868
