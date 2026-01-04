@@ -1,65 +1,45 @@
 # DebugBox — Base image
 #
-# This is the shared base image for all DebugBox variants (lite, balanced, power).
-# It provides a minimal Alpine foundation with essential HTTPS support, a custom shell
-# profile for improved UX, and standard OCI labels.
+# Shared foundation for all DebugBox variants (light, balanced, power).
+# Provides:
+# - Minimal Alpine Linux
+# - HTTPS support (ca-certificates)
+# - Clean shell UX
+# - OCI metadata
 #
-# Following open-source conventions for debugging and network troubleshooting tools
-# (e.g., nicolaka/netshoot, busybox, network-multitool), this image runs as root by
-# default. Root is required for many common debugging operations (e.g., tcpdump,
-# privileged ports, namespace entry). Users can override with `--user` if needed.
-#
-# No non-root user is created — this keeps the image simple, small, and aligned with
-# community standards.
+# Runs as root by design (standard for debugging containers).
 
 FROM alpine:3.20.8
 
-# OCI Image Format Specification labels — improve discoverability and tooling support
-LABEL org.opencontainers.image.title="DebugBox — base" \
-      org.opencontainers.image.description="Minimal base image for the DebugBox Kubernetes debugging toolkit" \
+# OCI labels
+LABEL org.opencontainers.image.title="DebugBox Base" \
+      org.opencontainers.image.description="Base image for DebugBox Kubernetes debugging containers" \
       org.opencontainers.image.licenses="MIT" \
-      org.opencontainers.image.version="1.0.0" \
+      org.opencontainers.image.version="base-1" \
       org.opencontainers.image.authors="Muhammad Ibtisam <contact@ibtisam-iq.com>" \
       org.opencontainers.image.source="https://github.com/ibtisam-iq/debugbox" \
       org.opencontainers.image.vendor="Ibtisam IQ"
 
-# Install ca-certificates — required for HTTPS connections in curl, wget, etc.
-# No apk update is needed because ca-certificates is always available in Alpine's main repository.
+# Install minimal required packages
 RUN set -eux; \
-    apk add --no-cache ca-certificates; \
-    rm -rf /var/cache/apk/*
+    apk add --no-cache ca-certificates
 
-# Custom shell profile with useful aliases and prompt
-# Placed in /etc/profile.d so it is sourced automatically for all interactive shells.
-RUN <<EOF
-set -eux
-mkdir -p /etc/profile.d
-cat > /etc/profile.d/debugbox.sh << 'HEREDOC'
-ll() { ls -alF "$@"; }
-json() { jq . "$@" 2>/dev/null || cat "$@"; }
-yaml() { yq . "$@" 2>/dev/null || cat "$@"; }
-export PS1='[debugbox \w]\$ '
-HEREDOC
-chmod 0644 /etc/profile.d/debugbox.sh
-EOF
+# Global shell profile (only what base guarantees)
+RUN set -eux; \
+    mkdir -p /etc/profile.d; \
+    printf '%s\n' \
+      'll() { ls -alF "$@"; }' \
+      'export PS1="[debugbox \\w]\\$ "' \
+      > /etc/profile.d/debugbox-base.sh; \
+    chmod 0644 /etc/profile.d/debugbox-base.sh
 
-# Standard environment variables
-# - UTF-8 locale for consistent behavior across tools
-# - PAGER=less (less is installed in balanced/power variants)
-# - EDITOR=vi (lightweight vi provided by busybox in Alpine)
+# Environment
 ENV LANG=C.UTF-8 \
     LC_ALL=C.UTF-8 \
-    PAGER=less \
     EDITOR=vi
 
-# Default working directory for root
+# Default working directory
 WORKDIR /root
 
-# No USER directive — default is root (standard for debugging images)
-
-# Basic healthcheck — always succeeds.
-# Kubernetes liveness/readiness probes can override if needed.
-HEALTHCHECK --interval=30s --timeout=10s --start-period=5s --retries=3 CMD true
-
-# Default command — interactive Alpine shell
+# Interactive shell
 CMD ["/bin/ash"]
