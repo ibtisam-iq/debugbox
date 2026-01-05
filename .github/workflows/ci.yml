@@ -94,6 +94,12 @@ jobs:
           load: true
           push: false
           tags: debugbox-lite:ci
+      
+      - name: Report lite image size
+        run: |
+          SIZE_BYTES=$(docker image inspect debugbox-lite:ci --format='{{.Size}}')
+          SIZE_MB=$((SIZE_BYTES / 1024 / 1024))
+          echo "Lite image size: ${SIZE_MB} MB"
 
       - name: CI smoke test - lite
         run: |
@@ -122,6 +128,12 @@ jobs:
           push: false
           tags: debugbox-balanced:ci
 
+      - name: Report balanced image size
+        run: |
+          SIZE_BYTES=$(docker image inspect debugbox-balanced:ci --format='{{.Size}}')
+          SIZE_MB=$((SIZE_BYTES / 1024 / 1024))
+          echo "Balanced image size: ${SIZE_MB} MB"
+
       - name: CI smoke test - balanced
         run: |
           docker run --rm \
@@ -148,7 +160,13 @@ jobs:
           load: true
           push: false
           tags: debugbox-power:ci
-
+      
+      - name: Report power image size
+        run: |
+          SIZE_BYTES=$(docker image inspect debugbox-power:ci --format='{{.Size}}')
+          SIZE_MB=$((SIZE_BYTES / 1024 / 1024))
+          echo "Power image size: ${SIZE_MB} MB"
+      
       - name: CI smoke test - power
         run: |
           docker run --rm \
