@@ -7,7 +7,6 @@ set -eu
 
 LIB_URL="https://raw.githubusercontent.com/ibtisam-iq/infra-bootstrap/main/scripts/lib/common.sh"
 LIB_PATH="/tmp/infra-bootstrap-common.sh"
-LIB_SHA256="__PUT_REAL_SHA256_HERE__"
 LIB_LOADED=false
 
 cleanup() {
@@ -23,17 +22,14 @@ if command -v curl >/dev/null 2>&1; then
         --retry-delay 1 \
         "$LIB_URL" -o "$LIB_PATH"; then
 
-        if [ -n "$LIB_SHA256" ]; then
-            echo "${LIB_SHA256}  ${LIB_PATH}" | sha256sum -c - >/dev/null 2>&1 || {
-                echo "[WARN] infra-bootstrap checksum verification failed"
-                LIB_LOADED=false
-            }
-        fi
-
         # shellcheck disable=SC1090
         . "$LIB_PATH"
         LIB_LOADED=true
+    else
+        echo "[WARNING] Failed to download infra-bootstrap common library"    
     fi
+else
+    echo "[WARNING] curl not available to download infra-bootstrap common library"
 fi
 
 # Fallbacks ONLY if library not loaded
@@ -45,7 +41,7 @@ if [ "$LIB_LOADED" != "true" ]; then
 fi
 
 # ------------------------------------------------------------
-banner "infra-bootstrap – DebugBox smoke test started"
+banner "infra-bootstrap - DebugBox smoke test started"
 
 info "User identity"
 USER_NAME="$(whoami)"
@@ -91,4 +87,4 @@ rm /tmp/smoke-test
 ok "Filesystem check passed"
 blank
 
-banner "infra-bootstrap – DebugBox smoke test PASSED"
+banner "infra-bootstrap - DebugBox smoke test PASSED"
