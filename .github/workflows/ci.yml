@@ -1,40 +1,75 @@
-name: CI – Build Validation & Smoke Tests
+name: CI – Build, Validate & Smoke Test
 
+# ------------------------------------------------------------
+# Triggers
+# ------------------------------------------------------------
+# CI runs on:
+# - pushes to main (continuous validation)
+# - pull requests (contributor safety)
+#
+# This CI does NOT publish images.
+# Publishing is handled by a separate release workflow.
+# ------------------------------------------------------------
 on:
   push:
     branches: [ main ]
     paths:
       - 'dockerfiles/**'
+      - 'tests/**'
       - '.github/workflows/ci.yml'
   pull_request:
     paths:
       - 'dockerfiles/**'
+      - 'tests/**'
       - '.github/workflows/ci.yml'
 
+# ------------------------------------------------------------
+# Permissions (least privilege)
+# ------------------------------------------------------------
 permissions:
   contents: read
 
+# ------------------------------------------------------------
+# Jobs
+# ------------------------------------------------------------
 jobs:
   build-and-smoke-test:
+    name: Build & CI Smoke Test
     runs-on: ubuntu-latest
 
     steps:
+      # ------------------------------------------------------
+      # Checkout
+      # ------------------------------------------------------
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      # Enable multi-arch emulation (arm64 on amd64 runner)
+      # ------------------------------------------------------
+      # Enable multi-arch emulation
+      # (required for arm64 validation)
+      # ------------------------------------------------------
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v3
         with:
           platforms: amd64,arm64
 
-      # Docker Buildx (required even for build-only)
+      # ------------------------------------------------------
+      # Docker Buildx
+      # ------------------------------------------------------
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
 
       # ------------------------------------------------
-      # Base image – build only (no runtime tests)
+      # Install Trivy
       # ------------------------------------------------
+      - name: Install Trivy
+        uses: aquasecurity/trivy-action@v0.20.0
+        with:
+          install-only: true  
+
+      # ======================================================
+      # Base image (build validation only)
+      # ======================================================
       - name: Build base image (validation only)
         uses: docker/build-push-action@v6
         with:
@@ -45,9 +80,9 @@ jobs:
           push: false
           tags: debugbox-base:ci
 
-      # ------------------------------------------------
+      # ======================================================
       # Lite variant
-      # ------------------------------------------------
+      # ======================================================
       - name: Build lite image
         uses: docker/build-push-action@v6
         with:
@@ -58,20 +93,23 @@ jobs:
           push: false
           tags: debugbox-lite:ci
 
-      - name: Smoke test lite image
+      - name: CI smoke test - lite
         run: |
-          docker run --rm debugbox-lite:ci sh -c "
-            set -e
-            curl --version
-            jq --version
-            dig -v
-            ip link show
-            nc -h >/dev/null
-          "
+          docker run --rm \
+            -v ${{ github.workspace }}/tests:/tests:ro \
+            debugbox-lite:ci \
+            sh /tests/ci-smoke.sh
 
-      # ------------------------------------------------
+      - name: Trivy scan lite image
+        run: |
+          trivy image \
+            --severity HIGH,CRITICAL \
+            --exit-code 1 \
+            debugbox-lite:ci      
+
+      # ======================================================
       # Balanced variant
-      # ------------------------------------------------
+      # ======================================================
       - name: Build balanced image
         uses: docker/build-push-action@v6
         with:
@@ -82,23 +120,23 @@ jobs:
           push: false
           tags: debugbox-balanced:ci
 
-      - name: Smoke test balanced image
+      - name: CI smoke test - balanced
         run: |
-          docker run --rm debugbox-balanced:ci bash -c "
-            set -e
-            curl --version
-            jq --version
-            yq --version
-            dig -v
-            kubectx --help >/dev/null
-            kubens --help >/dev/null
-            htop --version
-            tcpdump --version
-          "
+          docker run --rm \
+            -v ${{ github.workspace }}/tests:/tests:ro \
+            debugbox-balanced:ci \
+            sh /tests/ci-smoke.sh
 
-      # ------------------------------------------------
+      - name: Trivy scan balanced image
+        run: |
+          trivy image \
+            --severity HIGH,CRITICAL \
+            --exit-code 1 \
+            debugbox-balanced:ci      
+
+      # ======================================================
       # Power variant
-      # ------------------------------------------------
+      # ======================================================
       - name: Build power image
         uses: docker/build-push-action@v6
         with:
@@ -109,16 +147,16 @@ jobs:
           push: false
           tags: debugbox-power:ci
 
-      - name: Smoke test power image
+      - name: CI smoke test - power
         run: |
-          docker run --rm debugbox-power:ci bash -c "
-            set -e
-            curl --version
-            jq --version
-            yq --version
-            dig -v
-            nmap --version
-            tcpdump --version
-            tshark -v
-            bird --version
-          "
+          docker run --rm \
+            -v ${{ github.workspace }}/tests:/tests:ro \
+            debugbox-power:ci \
+            sh /tests/ci-smoke.sh
+
+      - name: Trivy scan power image
+        run: |
+          trivy image \
+            --severity HIGH,CRITICAL \
+            --exit-code 1 \
+            debugbox-power:ci      
