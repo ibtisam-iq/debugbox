@@ -1,5 +1,5 @@
 # DebugBox
-
+[![CI – Build, Validate & Smoke Test](https://github.com/ibtisam-iq/debugbox/actions/workflows/ci.yml/badge.svg)](https://github.com/ibtisam-iq/debugbox/actions/workflows/ci.yml)
 [![GitHub Actions](https://img.shields.io/github/actions/workflow/status/ibtisam-iq/debugbox/build-and-test.yml?branch=main)](https://github.com/ibtisam-iq/debugbox/actions?query=workflow%3Abuild-and-test)
 [![Docker Pulls](https://img.shields.io/docker/pulls/mibtisam/debugbox)](https://hub.docker.com/r/mibtisam/debugbox)
 [![License](https://img.shields.io/github/license/ibtisam-iq/debugbox)](LICENSE)
