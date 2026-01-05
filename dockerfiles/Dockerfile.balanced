@@ -1,99 +1,107 @@
-# DebugBox — Balanced
-# Purpose: Everyday K8s/SRE debug with net/sys tools
-FROM debug:base AS base
+# DebugBox — Balanced variant
+#
+# Recommended daily-driver debugging image for Kubernetes and cloud-native work.
+# Balances capability and size for most real-world troubleshooting scenarios.
 
-ARG USER=ibtisam
-ARG UID=1000
-ARG GID=1000
-ARG NO_SUDO=true
+# ---- kubectx / kubens builder ----
+FROM golang:1.25-alpine AS kubectx-builder
 
-LABEL org.opencontainers.image.title="DebugBox — balanced" \
-      org.opencontainers.image.description="Balanced debug image for Kubernetes and cloud-native troubleshooting" \
-      org.opencontainers.image.version="0.1.0"
+ARG KUBECTX_VERSION=v0.9.5
+WORKDIR /src
 
-# Switch to root for installs
-USER root
+RUN apk add --no-cache git
 
-# Install tools (latest in v3.20)
+RUN git clone --branch ${KUBECTX_VERSION} --depth 1 \
+    https://github.com/ahmetb/kubectx.git .
+
+RUN CGO_ENABLED=0 go build -trimpath \
+      -ldflags="-s -w -X main.version=${KUBECTX_VERSION}" \
+      -o kubectx ./cmd/kubectx && \
+    CGO_ENABLED=0 go build -trimpath \
+      -ldflags="-s -w -X main.version=${KUBECTX_VERSION}" \
+      -o kubens ./cmd/kubens
+
+# ---- runtime image ----
+FROM ghcr.io/ibtisam-iq/debugbox-base:latest
+
+COPY --from=kubectx-builder /src/kubectx /usr/local/bin/kubectx
+COPY --from=kubectx-builder /src/kubens  /usr/local/bin/kubens
+
+ENV PAGER=less
+
+# OCI labels
+LABEL org.opencontainers.image.title="DebugBox Balanced" \
+      org.opencontainers.image.description="Balanced debugging image for everyday Kubernetes and cloud-native troubleshooting" \
+      org.opencontainers.image.version="1.0.0"
+
+# Install core debugging tools
 RUN set -eux; \
     apk add --no-cache \
-      # Community
-      bash bash-completion \
+      # Shell & productivity
+      bash \
+      bash-completion \
       git \
       htop \
-      # httpie \
-      nmap \
-      # openssh-client-default \
-      vim && \
-    # Main
-    apk add --no-cache \
+      vim \
+      less \
+      \
+      # Network & connectivity
       bind-tools \
       curl \
-      iproute2 iputils \
-      jq less \
-      lsof \
-      procps psmisc \
-      strace \
-      tar gzip \
-      ethtool iftop \
-      mtr netcat-openbsd \
-      socat \
-      tcpdump \
       wget \
+      iproute2 \
+      iputils \
+      netcat-openbsd \
+      socat \
+      mtr \
+      nmap \
       iperf3 \
-      yq && \
-    rm -rf /var/cache/apk/*
+      ethtool \
+      iftop \
+      tcpdump \
+      \
+      # System inspection
+      jq \
+      yq \
+      lsof \
+      procps \
+      psmisc \
+      strace \
+      tar \
+      gzip
 
-# Add kubectx + kubens (static Go binaries from tar.gz, multi-arch)
-ARG KUBECTX_VERSION=v0.9.5
+# Verify binaries exist and execute (no network dependency, no log noise)
 RUN set -eux; \
-    apk add --no-cache --virtual .build-deps curl tar; \
-    if [ "$(uname -m)" = "x86_64" ]; then ARCH="x86_64"; else ARCH="arm64"; fi; \
-    # kubectx
-    curl -L -o /tmp/kubectx.tar.gz \
-      "https://github.com/ahmetb/kubectx/releases/download/${KUBECTX_VERSION}/kubectx_${KUBECTX_VERSION}_linux_${ARCH}.tar.gz" && \
-    tar -xzf /tmp/kubectx.tar.gz -C /usr/local/bin kubectx && \
-    rm /tmp/kubectx.tar.gz && \
-    # kubens
-    curl -L -o /tmp/kubens.tar.gz \
-      "https://github.com/ahmetb/kubectx/releases/download/${KUBECTX_VERSION}/kubens_${KUBECTX_VERSION}_linux_${ARCH}.tar.gz" && \
-    tar -xzf /tmp/kubens.tar.gz -C /usr/local/bin kubens && \
-    rm /tmp/kubens.tar.gz && \
-    chmod +x /usr/local/bin/kubectx /usr/local/bin/kubens && \
-    # Manual bash completions (recommended)
-    mkdir -p /etc/bash_completion.d && \
-    curl -L -o /etc/bash_completion.d/kubectx \
-      https://raw.githubusercontent.com/ahmetb/kubectx/${KUBECTX_VERSION}/completion/kubectx.bash && \
-    curl -L -o /etc/bash_completion.d/kubens \
-      https://raw.githubusercontent.com/ahmetb/kubectx/${KUBECTX_VERSION}/completion/kubens.bash && \
-    apk del .build-deps
+    bash --version >/dev/null; \
+    git --version >/dev/null; \
+    curl --version >/dev/null; \
+    wget --version >/dev/null; \
+    jq --version >/dev/null; \
+    yq --version >/dev/null; \
+    ip -V >/dev/null; \
+    ping -V >/dev/null; \
+    nc -h >/dev/null 2>&1; \
+    dig -v >/dev/null 2>&1; \
+    nmap --version >/dev/null; \
+    mtr --version >/dev/null; \
+    iperf3 --version >/dev/null; \
+    tcpdump --version >/dev/null; \
+    strace --version >/dev/null; \
+    kubectx --help >/dev/null; \
+    kubens --help >/dev/null; \
+    echo "DebugBox Balanced tools verified"
 
-# Verify key tools (merged for efficiency)
+# DebugBox Balanced — shell helpers
+# Loaded automatically via /etc/profile.d
 RUN set -eux; \
-    curl --version | head -1 && \
-    wget --version | head -1 && \
-    jq --version | head -1 && \
-    dig -v | head -1 && \
-    nmap --version | head -1 && \
-    mtr --version | head -1 && \
-    iperf3 --version | head -1 && \
-    strace --version | head -1 && \
-    tcpdump --version | head -1 && \
-    yq --version | head -1 && \
-    echo "kubectx: $(kubectx --version)" || true && \
-    echo "kubens: $(kubens --version)" || true && \
-    htop --version | head -1 && \
-    git --version | head -1 && \
-    bash --version | head -1 && \
-    echo "Balanced tools verified successfully"
+    mkdir -p /etc/profile.d; \
+    printf '%s\n' \
+      '# DebugBox Balanced — shell helpers' \
+      '# Loaded automatically via /etc/profile.d' \
+      'json() { jq . "$@" 2>/dev/null || cat "$@"; }' \
+      'yaml() { yq . "$@" 2>/dev/null || cat "$@"; }' \
+      > /etc/profile.d/debugbox-balanced.sh; \
+    chmod 0644 /etc/profile.d/debugbox-balanced.sh
 
-# Optional sudoers
-RUN if [ "$NO_SUDO" = "false" ]; then \
-      echo "# DebugBox sudoers" > /etc/sudoers.d/debugbox && \
-      echo "Defaults env_keep += \"HOME LANG LC_ALL LC_MESSAGES\"" >> /etc/sudoers.d/debugbox && \
-      chmod 0440 /etc/sudoers.d/debugbox; \
-    fi
-
-# Back to non-root
-USER ${USER}
+# Default command — interactive Bash shell
 CMD ["/bin/bash"]
