@@ -1,6 +1,6 @@
-# DebugBox package manifest
-# Lists packages per variant and a short justification for inclusion.
-
+# DebugBox Tooling Manifest
+# This file documents and justifies all tools included in DebugBox images.
+# It is a policy artifact and does not affect builds directly.
 
 lite:
 - bash: "shell"
