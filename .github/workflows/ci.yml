@@ -1,0 +1,124 @@
+name: CI – Build Validation & Smoke Tests
+
+on:
+  push:
+    branches: [ main ]
+    paths:
+      - 'dockerfiles/**'
+      - '.github/workflows/ci.yml'
+  pull_request:
+    paths:
+      - 'dockerfiles/**'
+      - '.github/workflows/ci.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  build-and-smoke-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # Enable multi-arch emulation (arm64 on amd64 runner)
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v3
+        with:
+          platforms: amd64,arm64
+
+      # Docker Buildx (required even for build-only)
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      # ------------------------------------------------
+      # Base image – build only (no runtime tests)
+      # ------------------------------------------------
+      - name: Build base image (validation only)
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          file: dockerfiles/Dockerfile.base
+          platforms: linux/amd64
+          load: true
+          push: false
+          tags: debugbox-base:ci
+
+      # ------------------------------------------------
+      # Lite variant
+      # ------------------------------------------------
+      - name: Build lite image
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          file: dockerfiles/Dockerfile.lite
+          platforms: linux/amd64
+          load: true
+          push: false
+          tags: debugbox-lite:ci
+
+      - name: Smoke test lite image
+        run: |
+          docker run --rm debugbox-lite:ci sh -c "
+            set -e
+            curl --version
+            jq --version
+            dig -v
+            ip link show
+            nc -h >/dev/null
+          "
+
+      # ------------------------------------------------
+      # Balanced variant
+      # ------------------------------------------------
+      - name: Build balanced image
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          file: dockerfiles/Dockerfile.balanced
+          platforms: linux/amd64
+          load: true
+          push: false
+          tags: debugbox-balanced:ci
+
+      - name: Smoke test balanced image
+        run: |
+          docker run --rm debugbox-balanced:ci bash -c "
+            set -e
+            curl --version
+            jq --version
+            yq --version
+            dig -v
+            kubectx --help >/dev/null
+            kubens --help >/dev/null
+            htop --version
+            tcpdump --version
+          "
+
+      # ------------------------------------------------
+      # Power variant
+      # ------------------------------------------------
+      - name: Build power image
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          file: dockerfiles/Dockerfile.power
+          platforms: linux/amd64
+          load: true
+          push: false
+          tags: debugbox-power:ci
+
+      - name: Smoke test power image
+        run: |
+          docker run --rm debugbox-power:ci bash -c "
+            set -e
+            curl --version
+            jq --version
+            yq --version
+            dig -v
+            nmap --version
+            tcpdump --version
+            tshark -v
+            bird --version
+          "
