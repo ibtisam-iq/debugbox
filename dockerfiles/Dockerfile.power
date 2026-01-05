@@ -1,69 +1,113 @@
-# DebugBox — Power
-FROM debug:base AS base
+# DebugBox — Power variant
+#
+# Full-featured SRE-grade debugging and network forensics image.
 
-ARG USER=ibtisam
-ARG UID=1000
-ARG GID=1000
-ARG NO_SUDO=true
-ARG YQ_VERSION=v4.50.1
-ARG YQ_SHA256=c7a1278e6bbc4924f41b56db838086c39d13ee25dcb22089e7fbf16ac901f0d4
+FROM ghcr.io/ibtisam-iq/debugbox-base:latest
 
-LABEL org.opencontainers.image.title="DebugBox — power" \
+ENV PAGER=less
+
+# OCI labels
+LABEL org.opencontainers.image.title="DebugBox Power" \
       org.opencontainers.image.description="Advanced SRE-grade network forensics and troubleshooting image" \
-      org.opencontainers.image.version="0.1.0"
+      org.opencontainers.image.version="1.0.0"
 
-# Switch to root for installs
-USER root
-
-# Install tools
+# Install comprehensive toolset
 RUN set -eux; \
-apk add --no-cache \
-bash bash-completion \
-curl wget \
-bind-tools \
-iproute2 iputils \
-iperf3 \
-mtr \
-netcat-openbsd \
-socat \
-tcpdump \
-iftop \
-ethtool \
-nmap \
-nmap-nping \
-nmap-scripts \
-tshark \
-iptables \
-nftables \
-conntrack-tools \
-bird \
-bridge-utils \
-fping \
-speedtest-cli \
-vim nano \
-jq \
-ltrace strace \
-git \
-py3-pip; \
-rm -rf /var/cache/apk/* /usr/share/man /usr/share/doc /usr/share/locale || true
+    apk add --no-cache \
+      # Shell & productivity
+      bash \
+      bash-completion \
+      git \
+      vim \
+      nano \
+      less \
+      \
+      # Network core
+      bind-tools \
+      curl \
+      wget \
+      iproute2 \
+      iputils \
+      netcat-openbsd \
+      socat \
+      mtr \
+      nmap \
+      nmap-nping \
+      nmap-scripts \
+      iperf3 \
+      ethtool \
+      iftop \
+      tcpdump \
+      tshark \
+      fping \
+      speedtest-cli \
+      \
+      # System & forensics
+      jq \
+      strace \
+      ltrace \
+      \
+      # Advanced networking
+      iptables \
+      nftables \
+      conntrack-tools \
+      bird \
+      bridge-utils \
+      \
+      # Python for ad-hoc scripts
+      py3-pip
 
-# Install yq (pinned + verified)
+# Install pinned yq with SHA256 verification for reproducibility and security
+ARG YQ_VERSION=v4.50.1
+ARG YQ_SHA256_AMD64=c7a1278e6bbc4924f41b56db838086c39d13ee25dcb22089e7fbf16ac901f0d4
+ARG YQ_SHA256_ARM64=cf0a663d8e4e00bb61507c5237b95b45a6aaa1fbedac77f4dc8abdadd5e2b745
+
 RUN set -eux; \
-  wget -qO /usr/local/bin/yq \
-    "https://github.com/mikefarah/yq/releases/download/${YQ_VERSION}/yq_linux_amd64"; \
-  echo "${YQ_SHA256}  /usr/local/bin/yq" | sha256sum -c -; \
-  chmod +x /usr/local/bin/yq
+    arch="$(apk --print-arch)"; \
+    case "$arch" in \
+      x86_64) \
+        yq_arch=amd64; \
+        yq_sha="${YQ_SHA256_AMD64}" ;; \
+      aarch64) \
+        yq_arch=arm64; \
+        yq_sha="${YQ_SHA256_ARM64}" ;; \
+      *) \
+        echo "unsupported arch: $arch" >&2; exit 1 ;; \
+    esac; \
+    wget -qO /usr/local/bin/yq \
+      "https://github.com/mikefarah/yq/releases/download/${YQ_VERSION}/yq_linux_${yq_arch}"; \
+    echo "${yq_sha}  /usr/local/bin/yq" | sha256sum -c -; \
+    chmod +x /usr/local/bin/yq
 
-# Add helpful aliases (system-wide already provided by base)
-RUN echo "alias sniff='tcpdump -i any -n -s 0'" >> /etc/profile.d/debugbox.sh || true
+# Verify binaries exist and execute (silent, no network dependency)
+RUN set -eux; \
+    bash --version >/dev/null; \
+    curl --version >/dev/null; \
+    wget --version >/dev/null; \
+    dig -v >/dev/null 2>&1; \
+    mtr --version >/dev/null; \
+    iperf3 --version >/dev/null; \
+    strace --version >/dev/null; \
+    jq --version >/dev/null; \
+    yq --version >/dev/null; \
+    ip -V >/dev/null; \
+    tcpdump --version >/dev/null; \
+    tshark -v >/dev/null; \
+    nmap --version >/dev/null; \
+    bird --version >/dev/null; \
+    echo "DebugBox Power tools verified"
 
-# Optional sudoers
-RUN if [ "$NO_SUDO" = "false" ]; then \
-      echo "# DebugBox sudoers" > /etc/sudoers.d/debugbox && \
-      echo "Defaults env_keep += \"HOME LANG LC_ALL LC_MESSAGES\"" >> /etc/sudoers.d/debugbox && \
-      chmod 0440 /etc/sudoers.d/debugbox; \
-    fi
+# Power-specific helpers and aliases (own file, no base modification)
+RUN set -eux; \
+    mkdir -p /etc/profile.d; \
+    printf '%s\n' \
+      '# DebugBox Power — shell helpers and aliases' \
+      '# Loaded automatically via /etc/profile.d' \
+      "alias sniff='tcpdump -i any -n -s 0'" \
+      'json() { jq . "$@" 2>/dev/null || cat "$@"; }' \
+      'yaml() { yq . "$@" 2>/dev/null || cat "$@"; }' \
+      > /etc/profile.d/debugbox-power.sh; \
+    chmod 0644 /etc/profile.d/debugbox-power.sh
 
-# Back to non-root
-USER ${USER}
+# Default command — interactive Bash shell
 CMD ["/bin/bash"]
