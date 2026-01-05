@@ -60,13 +60,15 @@ jobs:
         uses: docker/setup-buildx-action@v3
 
       # ------------------------------------------------
-      # Install Trivy
+      # Install Trivy (official install script)
       # ------------------------------------------------
       - name: Install Trivy
-        uses: aquasecurity/trivy-action@v0.33.1
-        with:
-          install-only: true  
-
+        run: |
+          set -e
+          curl -sfL https://raw.githubusercontent.com/aquasecurity/trivy/main/contrib/install.sh \
+            | sh -s -- -b /usr/local/bin v0.68.2
+          trivy --version
+  
       # ======================================================
       # Base image (build validation only)
       # ======================================================
