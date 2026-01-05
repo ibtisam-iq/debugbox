@@ -63,7 +63,7 @@ jobs:
       # Install Trivy
       # ------------------------------------------------
       - name: Install Trivy
-        uses: aquasecurity/trivy-action@v0.20.0
+        uses: aquasecurity/trivy-action@v0.24.0
         with:
           install-only: true  
 
