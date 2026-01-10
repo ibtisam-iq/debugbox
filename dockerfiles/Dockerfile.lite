@@ -46,4 +46,4 @@ RUN set -eux; \
     echo "DebugBox Lite tools verified"
 
 # Default shell
-CMD ["/bin/ash"]
+CMD ["/bin/ash", "-l"]

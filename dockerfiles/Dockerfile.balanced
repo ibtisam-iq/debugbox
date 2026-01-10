@@ -5,6 +5,7 @@
 
 # ---- kubectx / kubens builder ----
 FROM golang:1.25-alpine AS kubectx-builder
+# FROM ghcr.io/ibtisam-iq/debugbox-golang:1.25-alpine AS kubectx-builder
 
 ARG KUBECTX_VERSION=v0.9.5
 WORKDIR /src
@@ -34,61 +35,19 @@ LABEL org.opencontainers.image.title="DebugBox Balanced" \
       org.opencontainers.image.description="Balanced debugging image for everyday Kubernetes and cloud-native troubleshooting" \
       org.opencontainers.image.version="1.0.0"
 
-# Install core debugging tools
+# Copy shared package definitions into the image
+COPY dockerfiles/common/ /common/
+      
+# Install Balanced packages
+# - Shared package set from balanced.packages
+# - Balanced-only tool: yq (via distro package)
 RUN set -eux; \
-    apk add --no-cache \
-      # Shell & productivity
-      bash \
-      bash-completion \
-      git \
-      htop \
-      vim \
-      less \
-      \
-      # Network & connectivity
-      bind-tools \
-      curl \
-      wget \
-      iproute2 \
-      iputils \
-      netcat-openbsd \
-      socat \
-      mtr \
-      nmap \
-      iperf3 \
-      ethtool \
-      iftop \
-      tcpdump \
-      \
-      # System inspection
-      jq \
-      yq \
-      lsof \
-      procps \
-      psmisc \
-      strace \
-      tar \
-      gzip
+    . /common/balanced.packages; \
+    apk add --no-cache yq
 
-# Verify binaries exist and execute (no network dependency, no log noise)
+# Verify balanced debugging tools
 RUN set -eux; \
-    bash --version >/dev/null; \
-    git --version >/dev/null; \
-    curl --version >/dev/null; \
-    wget --version >/dev/null; \
-    jq --version >/dev/null; \
-    yq --version >/dev/null; \
-    ip -V >/dev/null; \
-    ping -V >/dev/null; \
-    nc -h >/dev/null 2>&1; \
-    dig -v >/dev/null 2>&1; \
-    nmap --version >/dev/null; \
-    mtr --version >/dev/null; \
-    iperf3 --version >/dev/null; \
-    tcpdump --version >/dev/null; \
-    strace --version >/dev/null; \
-    kubectx --help >/dev/null; \
-    kubens --help >/dev/null; \
+    . /common/balanced.verify; \
     echo "DebugBox Balanced tools verified"
 
 # DebugBox Balanced — shell helpers
@@ -104,4 +63,4 @@ RUN set -eux; \
     chmod 0644 /etc/profile.d/debugbox-balanced.sh
 
 # Default command — interactive Bash shell
-CMD ["/bin/bash"]
+CMD ["/bin/bash", "-l"]

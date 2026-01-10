@@ -2,7 +2,30 @@
 #
 # Full-featured SRE-grade debugging and network forensics image.
 
+# ---- kubectx / kubens builder ----
+FROM golang:1.25-alpine AS kubectx-builder
+# FROM ghcr.io/ibtisam-iq/debugbox-golang:1.25-alpine AS kubectx-builder
+
+ARG KUBECTX_VERSION=v0.9.5
+WORKDIR /src
+
+RUN apk add --no-cache git
+
+RUN git clone --branch ${KUBECTX_VERSION} --depth 1 \
+    https://github.com/ahmetb/kubectx.git .
+
+RUN CGO_ENABLED=0 go build -trimpath \
+      -ldflags="-s -w -X main.version=${KUBECTX_VERSION}" \
+      -o kubectx ./cmd/kubectx && \
+    CGO_ENABLED=0 go build -trimpath \
+      -ldflags="-s -w -X main.version=${KUBECTX_VERSION}" \
+      -o kubens ./cmd/kubens
+
+# ---- runtime image ----
 FROM ghcr.io/ibtisam-iq/debugbox-base:latest
+
+COPY --from=kubectx-builder /src/kubectx /usr/local/bin/kubectx
+COPY --from=kubectx-builder /src/kubens  /usr/local/bin/kubens
 
 ENV PAGER=less
 
@@ -11,90 +34,48 @@ LABEL org.opencontainers.image.title="DebugBox Power" \
       org.opencontainers.image.description="Advanced SRE-grade network forensics and troubleshooting image" \
       org.opencontainers.image.version="1.0.0"
 
-# Install comprehensive toolset
+# Copy shared package definitions into the image
+COPY dockerfiles/common/ /common/
+
+# Install Power-only OS packages
 RUN set -eux; \
+    . /common/balanced.packages; \
     apk add --no-cache \
-      # Shell & productivity
-      bash \
-      bash-completion \
-      git \
-      vim \
       nano \
-      less \
-      \
-      # Network core
-      bind-tools \
-      curl \
-      wget \
-      iproute2 \
-      iputils \
-      netcat-openbsd \
-      socat \
-      mtr \
-      nmap \
       nmap-nping \
       nmap-scripts \
-      iperf3 \
-      ethtool \
-      iftop \
-      tcpdump \
       tshark \
       fping \
       speedtest-cli \
-      \
-      # System & forensics
-      jq \
-      strace \
       ltrace \
-      \
-      # Advanced networking
       iptables \
       nftables \
       conntrack-tools \
       bird \
       bridge-utils \
-      \
-      # Python for ad-hoc scripts
       py3-pip
 
-# Install pinned yq with SHA256 verification for reproducibility and security
-ARG YQ_VERSION=v4.50.1
-ARG YQ_SHA256_AMD64=c7a1278e6bbc4924f41b56db838086c39d13ee25dcb22089e7fbf16ac901f0d4
-ARG YQ_SHA256_ARM64=cf0a663d8e4e00bb61507c5237b95b45a6aaa1fbedac77f4dc8abdadd5e2b745
+# Install Power-only pinned binaries
+COPY scripts /scripts
 
+# Power uses pinned upstream yq binary for full feature set and reproducibility
 RUN set -eux; \
-    arch="$(apk --print-arch)"; \
-    case "$arch" in \
-      x86_64) \
-        yq_arch=amd64; \
-        yq_sha="${YQ_SHA256_AMD64}" ;; \
-      aarch64) \
-        yq_arch=arm64; \
-        yq_sha="${YQ_SHA256_ARM64}" ;; \
-      *) \
-        echo "unsupported arch: $arch" >&2; exit 1 ;; \
-    esac; \
-    wget -qO /usr/local/bin/yq \
-      "https://github.com/mikefarah/yq/releases/download/${YQ_VERSION}/yq_linux_${yq_arch}"; \
-    echo "${yq_sha}  /usr/local/bin/yq" | sha256sum -c -; \
-    chmod +x /usr/local/bin/yq
+    chmod +x /scripts/install-yq-binary; \
+    /scripts/install-yq-binary
 
-# Verify binaries exist and execute (silent, no network dependency)
+# Verify Power debugging tools
 RUN set -eux; \
-    bash --version >/dev/null; \
-    curl --version >/dev/null; \
-    wget --version >/dev/null; \
-    dig -v >/dev/null 2>&1; \
-    mtr --version >/dev/null; \
-    iperf3 --version >/dev/null; \
-    strace --version >/dev/null; \
-    jq --version >/dev/null; \
-    yq --version >/dev/null; \
-    ip -V >/dev/null; \
-    tcpdump --version >/dev/null; \
+    . /common/balanced.verify; \
+    nano --version >/dev/null; \
     tshark -v >/dev/null; \
-    nmap --version >/dev/null; \
-    bird --version >/dev/null; \
+    fping -v >/dev/null; \
+    speedtest-cli --version >/dev/null; \
+    ltrace --version >/dev/null; \
+    command -v iptables >/dev/null; \
+    command -v nft >/dev/null; \
+    command -v bird >/dev/null; \
+    brctl --version >/dev/null; \
+    pip3 --version >/dev/null; \
     echo "DebugBox Power tools verified"
 
 # Power-specific helpers and aliases (own file, no base modification)
@@ -110,4 +91,4 @@ RUN set -eux; \
     chmod 0644 /etc/profile.d/debugbox-power.sh
 
 # Default command — interactive Bash shell
-CMD ["/bin/bash"]
+CMD ["/bin/bash", "-l"]

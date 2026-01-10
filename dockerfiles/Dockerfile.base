@@ -29,7 +29,17 @@ RUN set -eux; \
     mkdir -p /etc/profile.d; \
     printf '%s\n' \
       'll() { ls -alF "$@"; }' \
-      'export PS1="[debugbox \\w]\\$ "' \
+      '' \
+      '# Prompt configuration (BusyBox-safe, UID-aware)' \
+      'if [ "$(id -u)" -eq 0 ]; then' \
+      '  PROMPT_SYMBOL="#"' \
+      'else' \
+      '  PROMPT_SYMBOL="$"' \
+      'fi' \
+      '' \
+      '# Add a blank line before each prompt and apply colors' \
+      'PS1="\n\[\033[1;32m\]\u@\h\[\033[0m\]:\[\033[1;34m\]\w\[\033[0m\]${PROMPT_SYMBOL} "' \
+      'export PS1' \
       > /etc/profile.d/debugbox-base.sh; \
     chmod 0644 /etc/profile.d/debugbox-base.sh
 
@@ -42,4 +52,4 @@ ENV LANG=C.UTF-8 \
 WORKDIR /root
 
 # Interactive shell
-CMD ["/bin/ash"]
+CMD ["/bin/ash", "-l"]
