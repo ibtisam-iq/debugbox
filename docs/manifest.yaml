@@ -1,42 +1,163 @@
-# DebugBox Tooling Manifest
-# This file documents and justifies all tools included in DebugBox images.
-# It is a policy artifact and does not affect builds directly.
+# DebugBox Product Manifest
+#
+# This file documents the user-visible contract of DebugBox images.
+# It describes what tools, shell behavior, helpers, and environment
+# guarantees are provided by each variant.
+#
+# Build and implementation details live in Dockerfiles.
 
-lite:
-- bash: "shell"
-- curl: "download, http checks"
-- wget: "alternative downloader"
-- jq: "json inspector"
-- yq: "yaml inspector"
-- iproute2: "ip addr / route"
-- iputils: "ping"
-- netcat-openbsd: "tcp/udp debugging"
-- bind-tools: "dig/nslookup"
-- busybox-extras: "various small tools"
+base:
+  description: "Shared foundation for all DebugBox variants"
 
+  packages:
+    - ca-certificates
 
-balanced:
-- Includes everything in lite
-- htop: "process viewer"
-- tcpdump: "packet capture"
-- socat: "port forwarding / proxy"
-- mtr: "network traceroute + ping"
-- httpie: "human-friendly http client"
-- git, vim, nano: "developer convenience"
-- iperf3/ethtool/iftop: "network performance"
+  shell:
+    default: ash
+    helpers:
+      - ll()   # ls -alF wrapper
+
+  environment:
+    editor: vi
+    locale: C.UTF-8
+    prompt: "[debugbox \\w]$"
 
 
-power:
-- Includes everything in balanced
-- tshark: "Wireshark CLI for deep packet decode"
-- nmap, nmap-nping, nmap-scripts: "network scanning & probe generation"
-- nftables/iptables/ipset: "firewall/routing manipulation"
-- conntrack-tools: "netfilter connection tracking"
-- bird: "routing daemons for BGP testing"
-- ngrep, tcptraceroute, ngrep: "advanced packet inspection"
-- py3-pip: "ability to install ad-hoc Python debugging scripts"
+variants:
+  lite:
+    description: "Minimal, fast-pull image for ephemeral Kubernetes debugging"
+
+    tools:
+      networking:
+        - curl
+        - netcat-openbsd
+        - iproute2
+        - iputils
+        - bind-tools
+
+      data:
+        - jq
+        - yq    # YAML (apk version)
+
+    shell:
+      default: ash
+      helpers:
+        - json()
+        - yaml()
+
+    environment:
+      editor: vi
+      locale: C.UTF-8
+
+
+  balanced:
+    description: "Recommended daily-driver image for cloud-native debugging"
+    includes: lite
+
+    tools:
+      shell-and-ux:
+        - bash
+        - bash-completion
+        - less
+
+      editors:
+        - vim
+
+      version-control:
+        - git
+
+      filesystem:
+        - file
+        - tar
+        - gzip
+
+      networking:
+        - tcpdump
+        - socat
+        - nmap
+        - mtr
+        - iperf3
+        - ethtool
+        - iftop
+
+      system:
+        - htop
+        - strace
+        - lsof
+        - procps
+        - psmisc
+
+      kubernetes:
+        - kubectx
+        - kubens
+
+    shell:
+      default: bash
+      helpers:
+        - json()
+        - yaml()
+
+    environment:
+      pager: less
+      editor: vim
+      locale: C.UTF-8
+
+
+  power:
+    description: "Full SRE-grade image for deep system and network forensics"
+    includes: balanced
+
+    tools:
+      editors:
+        - vim       # inherited default editor
+        - nano      # power-only addition
+
+      networking-deep:
+        - tshark
+        - fping
+        - speedtest-cli
+        - nmap-nping
+        - nmap-scripts
+
+      system-internals:
+        - ltrace
+
+      routing:
+        - iptables
+        - nftables
+        - conntrack-tools
+        - bird
+        - bridge-utils
+
+      scripting:
+        - py3-pip
+
+      control-plane:
+        - yq   # pinned upstream binary (not apk)
+
+    shell:
+      default: bash
+      helpers:
+        - json()
+        - yaml()
+        - sniff()
+
+    environment:
+      pager: less
+      editor: vim       # default editor, nano is also available
+      locale: C.UTF-8
 
 
 notes:
-- The manifest is intentionally explicit so maintainers can review package additions.
-- Goal: justify each heavy package in power; keep lite small and fast.
+  - Helpers are loaded via /etc/profile.d
+  - All images run as root by design
+  - Lite prioritizes speed and small size
+  - Balanced prioritizes daily usability
+  - Power prioritizes determinism and SRE workflows
+  - Python tooling (pip3) is available in Power variant
+
+
+contributing:
+  - "Group tools by function, not by package name"
+  - "Document behavioral changes here when Dockerfiles change"
+  - "Avoid copying build or verification logic into this file"
