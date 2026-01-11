@@ -2,3 +2,4 @@
 *.packages text eol=lf
 *.verify text eol=lf
 Dockerfile* text eol=lf
+scripts/* text eol=lf
