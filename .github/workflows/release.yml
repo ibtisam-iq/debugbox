@@ -1,0 +1,174 @@
+name: Release - Build & Publish DebugBox Images
+
+# ------------------------------------------------------------
+# Triggers
+# ------------------------------------------------------------
+# Release workflow runs ONLY on version tags.
+#
+# Example:
+#   git tag v1.0.0
+#   git push origin v1.0.0
+#
+# This workflow:
+# - builds production images
+# - runs security scanning
+# - publishes to registries
+#
+# Development & testing are handled in ci.yml
+# ------------------------------------------------------------
+on:
+  push:
+    tags:
+      - "v*.*.*"
+
+# ------------------------------------------------------------
+# Permissions (least privilege)
+# ------------------------------------------------------------
+permissions:
+  contents: read
+  packages: write
+
+# ------------------------------------------------------------
+# Jobs
+# ------------------------------------------------------------
+jobs:
+  build-and-publish:
+    name: Build & Publish Release Images
+    runs-on: ubuntu-latest
+
+    steps:
+      # ------------------------------------------------------
+      # Checkout
+      # ------------------------------------------------------
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # ------------------------------------------------------
+      # Extract release version from Git tag
+      #
+      # Example:
+      #   refs/tags/v1.0.0 -> 1.0.0
+      # ------------------------------------------------------
+      - name: Extract release version
+        id: version
+        run: |
+          VERSION="${GITHUB_REF#refs/tags/v}"
+          echo "version=${VERSION}" >> $GITHUB_OUTPUT
+
+      # ------------------------------------------------------
+      # Enable multi-arch emulation
+      # ------------------------------------------------------
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v3
+        with:
+          platforms: amd64,arm64
+
+      # ------------------------------------------------------
+      # Docker Buildx
+      # ------------------------------------------------------
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      # ------------------------------------------------------
+      # Install Trivy (security scanning)
+      #
+      # Final safety gate before publishing images
+      # ------------------------------------------------------
+      - name: Install Trivy
+        run: |
+          set -e
+          curl -sfL https://raw.githubusercontent.com/aquasecurity/trivy/main/contrib/install.sh \
+            | sh -s -- -b /usr/local/bin v0.68.2
+          trivy --version
+
+      # ------------------------------------------------------
+      # Login to GitHub Container Registry (GHCR)
+      # ------------------------------------------------------
+      - name: Login to GHCR
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      # ------------------------------------------------------
+      # Login to Docker Hub
+      # ------------------------------------------------------
+      - name: Login to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      # ======================================================
+      # Lite variant
+      # ======================================================
+      - name: Build & push lite image
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          file: dockerfiles/Dockerfile.lite
+          platforms: linux/amd64,linux/arm64
+          push: true
+          tags: |
+            ghcr.io/ibtisam-iq/debugbox-lite:${{ steps.version.outputs.version }}
+            ghcr.io/ibtisam-iq/debugbox-lite:latest
+            docker.io/${{ secrets.DOCKERHUB_USERNAME }}/debugbox-lite:${{ steps.version.outputs.version }}
+            docker.io/${{ secrets.DOCKERHUB_USERNAME }}/debugbox-lite:latest
+
+      - name: Trivy scan lite image
+        run: |
+          trivy image \
+            --severity HIGH,CRITICAL \
+            --exit-code 1 \
+            ghcr.io/ibtisam-iq/debugbox-lite:${{ steps.version.outputs.version }}
+
+      # ======================================================
+      # Balanced variant (default)
+      # ======================================================
+      - name: Build & push balanced image
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          file: dockerfiles/Dockerfile.balanced
+          platforms: linux/amd64,linux/arm64
+          push: true
+          tags: |
+            ghcr.io/ibtisam-iq/debugbox-balanced:${{ steps.version.outputs.version }}
+            ghcr.io/ibtisam-iq/debugbox-balanced:latest
+            ghcr.io/ibtisam-iq/debugbox:${{ steps.version.outputs.version }}
+            ghcr.io/ibtisam-iq/debugbox:latest
+            docker.io/${{ secrets.DOCKERHUB_USERNAME }}/debugbox-balanced:${{ steps.version.outputs.version }}
+            docker.io/${{ secrets.DOCKERHUB_USERNAME }}/debugbox-balanced:latest
+            docker.io/${{ secrets.DOCKERHUB_USERNAME }}/debugbox:${{ steps.version.outputs.version }}
+            docker.io/${{ secrets.DOCKERHUB_USERNAME }}/debugbox:latest
+
+      - name: Trivy scan balanced image
+        run: |
+          trivy image \
+            --severity HIGH,CRITICAL \
+            --exit-code 1 \
+            ghcr.io/ibtisam-iq/debugbox-balanced:${{ steps.version.outputs.version }}
+
+      # ======================================================
+      # Power variant
+      # ======================================================
+      - name: Build & push power image
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          file: dockerfiles/Dockerfile.power
+          platforms: linux/amd64,linux/arm64
+          push: true
+          tags: |
+            ghcr.io/ibtisam-iq/debugbox-power:${{ steps.version.outputs.version }}
+            ghcr.io/ibtisam-iq/debugbox-power:latest
+            docker.io/${{ secrets.DOCKERHUB_USERNAME }}/debugbox-power:${{ steps.version.outputs.version }}
+            docker.io/${{ secrets.DOCKERHUB_USERNAME }}/debugbox-power:latest
+
+      - name: Trivy scan power image
+        run: |
+          trivy image \
+            --severity HIGH,CRITICAL \
+            --exit-code 1 \
+            ghcr.io/ibtisam-iq/debugbox-power:${{ steps.version.outputs.version }}
