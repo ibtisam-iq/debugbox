@@ -61,11 +61,13 @@ COPY scripts /scripts
 # Power uses pinned upstream yq binary for full feature set and reproducibility
 RUN set -eux; \
     # chmod +x /scripts/install-yq-binary; \
-    sh /scripts/install-yq-binary
+    sh /scripts/install-yq-binary; \
+    rm -rf /scripts
 
 # Verify Power debugging tools
 RUN set -eux; \
     sh /common/balanced.verify; \
+    rm -rf /common; \
     nano --version >/dev/null; \
     tshark -v >/dev/null; \
     fping -v >/dev/null; \

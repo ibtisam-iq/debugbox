@@ -48,6 +48,7 @@ RUN set -eux; \
 # Verify balanced debugging tools
 RUN set -eux; \
     sh /common/balanced.verify; \
+    rm -rf /common; \
     echo "DebugBox Balanced tools verified"
 
 # DebugBox Balanced — shell helpers
