@@ -42,12 +42,12 @@ COPY dockerfiles/common/ /common/
 # - Shared package set from balanced.packages
 # - Balanced-only tool: yq (via distro package)
 RUN set -eux; \
-    . /common/balanced.packages; \
+    sh /common/balanced.packages; \
     apk add --no-cache yq
 
 # Verify balanced debugging tools
 RUN set -eux; \
-    . /common/balanced.verify; \
+    sh /common/balanced.verify; \
     echo "DebugBox Balanced tools verified"
 
 # DebugBox Balanced — shell helpers

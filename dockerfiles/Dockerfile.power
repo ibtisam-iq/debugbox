@@ -39,7 +39,7 @@ COPY dockerfiles/common/ /common/
 
 # Install Power-only OS packages
 RUN set -eux; \
-    . /common/balanced.packages; \
+    sh /common/balanced.packages; \
     apk add --no-cache \
       nano \
       nmap-nping \
@@ -65,7 +65,7 @@ RUN set -eux; \
 
 # Verify Power debugging tools
 RUN set -eux; \
-    . /common/balanced.verify; \
+    sh /common/balanced.verify; \
     nano --version >/dev/null; \
     tshark -v >/dev/null; \
     fping -v >/dev/null; \
