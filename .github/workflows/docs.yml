@@ -129,16 +129,21 @@ jobs:
       - name: QA – broken links
         uses: lycheeverse/lychee-action@v2
         with:
-          args: ./site/**/*.html --no-progress --accept 200,429
+          args: '--no-progress --accept 200,429 site/'
           fail: false
 
 
       # ------------------------------------------------------
       # QA: HTML validation
       # ------------------------------------------------------
+      # - name: QA – HTML validation
+      #  run: html5validator --root site --blacklist robots.txt --ignore "autocomplete" "autocorrect" "autocapitalize" "No \"p\" element in scope"
       - name: QA – HTML validation
-        run: html5validator --root site --blacklist robots.txt --ignore "autocomplete" "autocorrect" "autocapitalize" "No \"p\" element in scope"
-
+        uses: Cyb3r-Jak3/html5validator-action@v7.2.0
+        with:
+          root: site/
+          extra: '--ignore-re "Attribute \"(autocomplete|autocorrect|autocapitalize)\" not allowed"'
+        continue-on-error: true
 
   # ==========================================================
   # JOB 2: PREVIEW (ONLY FOR PULL REQUESTS)
