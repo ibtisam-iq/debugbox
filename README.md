@@ -1,6 +1,7 @@
 # DebugBox
 
 [![CI – Build, Validate & Smoke Test](https://github.com/ibtisam-iq/debugbox/actions/workflows/ci.yml/badge.svg)](https://github.com/ibtisam-iq/debugbox/actions/workflows/ci.yml)
+[![Documentation Pipeline](https://github.com/ibtisam-iq/debugbox/actions/workflows/docs.yml/badge.svg)](https://github.com/ibtisam-iq/debugbox/actions/workflows/docs.yml)
 
 **A lightweight, variant-based debugging container suite for Kubernetes and Docker environments.**
 
