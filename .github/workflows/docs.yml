@@ -295,4 +295,4 @@ jobs:
           mike deploy --push latest
           # Use mike set-default only when a new version is introduced.
           # Never use it for normal docs updates.
-          mike set-default --push latest
+          # mike set-default --push latest
