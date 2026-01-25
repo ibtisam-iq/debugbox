@@ -1,182 +1,178 @@
-name: CI – Build, Validate & Smoke Test
+name: CI - Build, Validate & Smoke Test
 
-# ------------------------------------------------------------
-# Triggers
-# ------------------------------------------------------------
-# CI runs on:
-# - pushes to main (continuous validation)
-# - pull requests (contributor safety)
+# ============================================================
+# Purpose: Validate Docker images on every code change
+# ============================================================
+# This workflow:
+# - Builds all variants (base, lite, balanced, power)
+# - Tests on both architectures (amd64, arm64)
+# - Validates with Trivy security scanner
+# - Runs smoke tests to ensure basic functionality
 #
-# This CI does NOT publish images.
-# Publishing is handled by a separate release workflow.
-# ------------------------------------------------------------
+# This is CI ONLY - does not publish images.
+# Publishing is handled by the release workflow.
+# ============================================================
+
+# ============================================================
+# Trigger Configuration
+# ============================================================
 on:
+  # Continuous integration on main branch
   push:
-    branches: [ main ]
+    branches:
+      - main
     paths:
-      - 'dockerfiles/**'
-      - 'tests/**'
-      - '.github/workflows/ci.yml'
+      - 'dockerfiles/**'            # Dockerfile changes
+      - 'tests/**'                  # Test script changes
+      - 'scripts/**'                # Build script changes
+      - '.github/workflows/ci.yml'  # Workflow changes
+
+  # Validate pull requests
   pull_request:
     paths:
       - 'dockerfiles/**'
       - 'tests/**'
+      - 'scripts/**'
       - '.github/workflows/ci.yml'
 
-# ------------------------------------------------------------
-# Permissions (least privilege)
-# ------------------------------------------------------------
+  # Manual trigger (useful for debugging)
+  workflow_dispatch:
+
+# ============================================================
+# Permissions (Principle of Least Privilege)
+# ============================================================
 permissions:
   contents: read
 
-# ------------------------------------------------------------
+# ============================================================
 # Jobs
-# ------------------------------------------------------------
+# ============================================================
 jobs:
   build-and-smoke-test:
-    name: Build & CI Smoke Test
+    name: Build & Test
     runs-on: ubuntu-latest
+    
+    # ========================================================
+    # Matrix Strategy: Test all combinations
+    # ========================================================
+    # This creates parallel jobs for:
+    # - 2 architectures (amd64, arm64)
+    # - 4 variants (base, lite, balanced, power)
+    # Total: 8 parallel jobs
+    # ========================================================
+    strategy:
+      matrix:
+        arch: [amd64, arm64]
+        variant: [base, lite, balanced, power]
+      fail-fast: true
 
     steps:
-      # ------------------------------------------------------
+      # =====================================================
       # Checkout
-      # ------------------------------------------------------
+      # =====================================================
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      # ------------------------------------------------------
-      # Enable multi-arch emulation
-      # (required for arm64 validation)
-      # ------------------------------------------------------
+      # =====================================================
+      # Multi-Architecture Support (QEMU)
+      # =====================================================
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v3
         with:
-          platforms: amd64,arm64
+          platforms: ${{ matrix.arch }}
 
-      # ------------------------------------------------------
-      # Docker Buildx
-      # ------------------------------------------------------
+      # =====================================================
+      # Docker Buildx (Multi-platform builds)
+      # =====================================================
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
 
-      # ------------------------------------------------
-      # Install Trivy (official install script)
-      # ------------------------------------------------
+      # =====================================================
+      # Security: Install Trivy Scanner
+      # =====================================================
       - name: Install Trivy
         run: |
           set -e
           curl -sfL https://raw.githubusercontent.com/aquasecurity/trivy/main/contrib/install.sh \
             | sh -s -- -b /usr/local/bin v0.68.2
           trivy --version
-  
-      # ======================================================
-      # Base image (build validation only)
-      # ======================================================
-      - name: Build base image (validation only)
-        uses: docker/build-push-action@v6
-        with:
-          context: .
-          file: dockerfiles/Dockerfile.base
-          platforms: linux/amd64
-          load: true
-          push: false
-          tags: debugbox-base:ci
 
-      # ======================================================
-      # Lite variant
-      # ======================================================
-      - name: Build lite image
+      # =====================================================
+      # Build: Docker Image
+      # =====================================================
+      # Builds the specified variant for the specified architecture.
+      #
+      # Key settings:
+      # - platforms: linux/${{ matrix.arch }}
+      #   Specifies target architecture (amd64 or arm64)
+      #
+      # - load: true
+      #   Load image into local Docker daemon
+      #   Required for subsequent steps (inspect, test, scan)
+      #
+      # - push: false
+      #   Don't push to registry (this is CI, not release)
+      #
+      # - tags: debugbox-${{ matrix.variant }}:ci
+      #   Tag format: debugbox-lite:ci, debugbox-balanced:ci, etc.
+      # =====================================================
+      - name: Build ${{ matrix.variant }} image for ${{ matrix.arch }}
         uses: docker/build-push-action@v6
         with:
           context: .
-          file: dockerfiles/Dockerfile.lite
-          platforms: linux/amd64
+          file: dockerfiles/Dockerfile.${{ matrix.variant }}
+          platforms: linux/${{ matrix.arch }}
           load: true
           push: false
-          tags: debugbox-lite:ci
-      
-      - name: Report lite image size
+          tags: debugbox-${{ matrix.variant }}:ci
+
+      # =====================================================
+      # Quality: Report Image Size
+      # =====================================================
+      - name: Report image size
         run: |
-          SIZE_BYTES=$(docker image inspect debugbox-lite:ci --format='{{.Size}}')
+          SIZE_BYTES=$(docker image inspect debugbox-${{ matrix.variant }}:ci --format='{{.Size}}')
           SIZE_MB=$((SIZE_BYTES / 1024 / 1024))
-          echo "Lite image size: ${SIZE_MB} MB"
+          echo "📦 [${{ matrix.arch }}] ${{ matrix.variant }}: ${SIZE_MB} MB"
 
-      - name: CI smoke test - lite
+      # =====================================================
+      # Test: Smoke Test
+      # =====================================================
+      # Runs basic sanity checks on the image.
+      #
+      # Skipped for 'base' variant
+      # For other variants (lite, balanced, power):
+      # - Runs /tests/ci-smoke.sh script
+      # - Verifies basic tools are present
+      # - Confirms entry point works
+      # =====================================================
+      - name: CI smoke test - ${{ matrix.variant }}
+        if: matrix.variant != 'base'
         run: |
           docker run --rm \
             -v ${{ github.workspace }}/tests:/tests:ro \
-            debugbox-lite:ci \
+            debugbox-${{ matrix.variant }}:ci \
             sh /tests/ci-smoke.sh
 
-      - name: Trivy scan lite image
+      # =====================================================
+      # Security: Trivy Vulnerability Scan
+      # =====================================================
+      # Scans the built image for security vulnerabilities.
+      #
+      # Configuration:
+      # - severity: HIGH,CRITICAL
+      #   Only report high/critical issues (skip low/medium)
+      #
+      # - exit-code: 1
+      #   Fail CI if any HIGH/CRITICAL vulnerabilities found
+      #
+      # Skipped for 'base' variant (same reason as smoke test)
+      #
+      # =====================================================
+      - name: Trivy security scan
+        if: matrix.variant != 'base'
         run: |
           trivy image \
             --severity HIGH,CRITICAL \
             --exit-code 1 \
-            debugbox-lite:ci      
-
-      # ======================================================
-      # Balanced variant
-      # ======================================================
-      - name: Build balanced image
-        uses: docker/build-push-action@v6
-        with:
-          context: .
-          file: dockerfiles/Dockerfile.balanced
-          platforms: linux/amd64
-          load: true
-          push: false
-          tags: debugbox-balanced:ci
-
-      - name: Report balanced image size
-        run: |
-          SIZE_BYTES=$(docker image inspect debugbox-balanced:ci --format='{{.Size}}')
-          SIZE_MB=$((SIZE_BYTES / 1024 / 1024))
-          echo "Balanced image size: ${SIZE_MB} MB"
-
-      - name: CI smoke test - balanced
-        run: |
-          docker run --rm \
-            -v ${{ github.workspace }}/tests:/tests:ro \
-            debugbox-balanced:ci \
-            sh /tests/ci-smoke.sh
-
-      - name: Trivy scan balanced image
-        run: |
-          trivy image \
-            --severity HIGH,CRITICAL \
-            --exit-code 1 \
-            debugbox-balanced:ci      
-
-      # ======================================================
-      # Power variant
-      # ======================================================
-      - name: Build power image
-        uses: docker/build-push-action@v6
-        with:
-          context: .
-          file: dockerfiles/Dockerfile.power
-          platforms: linux/amd64
-          load: true
-          push: false
-          tags: debugbox-power:ci
-      
-      - name: Report power image size
-        run: |
-          SIZE_BYTES=$(docker image inspect debugbox-power:ci --format='{{.Size}}')
-          SIZE_MB=$((SIZE_BYTES / 1024 / 1024))
-          echo "Power image size: ${SIZE_MB} MB"
-      
-      - name: CI smoke test - power
-        run: |
-          docker run --rm \
-            -v ${{ github.workspace }}/tests:/tests:ro \
-            debugbox-power:ci \
-            sh /tests/ci-smoke.sh
-
-      - name: Trivy scan power image
-        run: |
-          trivy image \
-            --severity HIGH,CRITICAL \
-            --exit-code 1 \
-            debugbox-power:ci      
+            debugbox-${{ matrix.variant }}:ci
