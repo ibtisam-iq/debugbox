@@ -22,8 +22,6 @@ A script should live in `scripts/` if **all** of the following are true:
 Examples:
 
 * `install-yq-binary`
-* `install-helm-binary`
-* `install-k9s-binary`
 
 ---
 
@@ -55,7 +53,6 @@ install-<tool>-binary
 Examples:
 
 * `install-yq-binary`
-* `install-helm-binary`
 
 Rationale:
 
