@@ -1,0 +1,26 @@
+# Core MkDocs with Material theme
+mkdocs==1.6.0
+mkdocs-material==9.5.47
+
+# Plugins
+mkdocs-macros-plugin==1.0.5      # Template variables & versioning support
+mkdocs-section-index              # Section index plugin (no pinned version yet)
+
+# Syntax highlighting
+pygments==2.18.0                  # Code syntax highlighting
+
+# Versioning with mike
+mike==2.1.1
+
+# Python extensions for Material
+pymdown-extensions==10.11.2
+python-dateutil==2.8.2
+
+# Optional (local development)
+# mkdocs-minify-plugin==0.8.0     # Minify HTML/CSS/JS
+
+# Optional (advanced features)
+# mkdocs-autorefs==1.4.3          # Cross-reference Markdown headings
+# mkdocs-swagger-ui-tag==0.6.1    # API docs via Swagger UI
+# mkdocs-pdf-export-plugin==0.5.10  # Export to PDF
+# mkdocs-git-revision-date-localized==1.2.4  # Last updated date

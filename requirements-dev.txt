@@ -1,0 +1,12 @@
+# Link checking (CLI tool, installed via pip)
+lychee
+
+# HTML validation
+html5validator
+
+# Markdown formatting
+mdformat
+mdformat-gfm
+mdformat-tables
+mdformat-frontmatter
+mdformat-mkdocs
