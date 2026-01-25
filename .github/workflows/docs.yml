@@ -241,8 +241,9 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
 
-      - run: echo "debugbox.ibtisam-iq.com" > site/CNAME
-
+      # - run: echo "debugbox.ibtisam-iq.com" > site/CNAME
+      # Let it copy from docs/CNAME via mkdocs build
+      
       # =====================================================
       # 🚀 RELEASE FLOW (TAG PUSH)
       # =====================================================
