@@ -1,91 +1,50 @@
 # Quick Start
 
-Get started with DebugBox in seconds.
+Get debugging in seconds.
 
-## Installation
-
-### GitHub Container Registry (Recommended)
-
-```bash
-# Default (balanced variant)
-docker pull ghcr.io/ibtisam-iq/debugbox:latest
-
-# Specific variants
-docker pull ghcr.io/ibtisam-iq/debugbox-lite:latest
-docker pull ghcr.io/ibtisam-iq/debugbox-power:latest
-```
-
-### Docker Hub
-
-```bash
-docker pull mibtisam/debugbox:latest
-docker pull mibtisam/debugbox-lite:latest
-docker pull mibtisam/debugbox-power:latest
-```
-
-## Kubernetes Usage
-
-### Debug Running Pod
+## Debug a Running Pod (Most Common)
 
 ```bash
 kubectl debug my-pod -it --image=ghcr.io/ibtisam-iq/debugbox
 ```
 
-### Temporary Debugging Pod
+This attaches an **ephemeral debugging container** (balanced variant) with the same network/process namespace as your pod.
+
+## Standalone Debugging Session
 
 ```bash
-kubectl run debugbox --rm -it \
+kubectl run debug --rm -it \
   --image=ghcr.io/ibtisam-iq/debugbox \
   --restart=Never
 ```
 
-### Host Network Debugging
+## Inside the Container
+
+You now have access to:
 
 ```bash
-kubectl run debugbox --rm -it \
-  --image=ghcr.io/ibtisam-iq/debugbox \
-  --overrides='{"spec":{"hostNetwork":true}}' \
-  --restart=Never
+curl https://example.com
+dig kubernetes.default.svc.cluster.local
+tcpdump -i eth0 port 443 -c 5
+htop
+strace -p 1
+vim /etc/hosts
 ```
 
-## Docker Usage
+## Choose the Right Variant
 
-### Interactive Shell
+| Need                          | Variant   | Image Tag                                      |
+|-------------------------------|-----------|------------------------------------------------|
+| Quick network/DNS check       | **lite**     | `ghcr.io/ibtisam-iq/debugbox-lite`          |
+| General troubleshooting       | **balanced** (default) | `ghcr.io/ibtisam-iq/debugbox`     |
+| Packet capture / deep forensics | **power**    | `ghcr.io/ibtisam-iq/debugbox-power`       |
 
-```bash
-docker run -it --rm ghcr.io/ibtisam-iq/debugbox
-```
-
-### Debug Another Container's Network
-
-```bash
-docker run -it --rm \
-  --net container:my-app-container \
-  ghcr.io/ibtisam-iq/debugbox
-```
-
-### Host Network
-
-```bash
-docker run -it --rm \
-  --net host \
-  ghcr.io/ibtisam-iq/debugbox
-```
-
-## Which Variant?
-
-Choose based on your needs:
-
-| Need | Variant | Command |
-|------|---------|---------|
-| Quick DNS/network check | lite | `--image=ghcr.io/ibtisam-iq/debugbox-lite` |
-| General troubleshooting | balanced | `--image=ghcr.io/ibtisam-iq/debugbox` |
-| Packet capture/forensics | power | `--image=ghcr.io/ibtisam-iq/debugbox-power` |
-
-When in doubt, use **balanced** (default).
+**When in doubt, use balanced** — it's the default.
 
 ## Next Steps
 
-- Explore [common workflows](../usage/workflows.md)
-- Read about [all variants](../variants/overview.md)
-- Check the [tooling manifest](../reference/manifest.md)
+- **[Installation details →](installation.md)** (registries, tags, multi-arch)
+- **[Full variant comparison →](../variants/overview.md)**
+- **[Complete tool list →](../reference/manifest.md)**
+
+→ Ready for real scenarios? Check the **[Examples](../guides/examples.md)**

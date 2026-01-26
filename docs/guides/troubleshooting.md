@@ -1,170 +1,173 @@
-# Troubleshooting Guide
+# Troubleshooting & FAQ
 
-Common issues and solutions when using DebugBox.
+Common issues, solutions, and frequently asked questions when using DebugBox.
 
-## Pod Not Pulling Image
+## Image Pull Failures
 
-**Problem:** Pod stuck in ImagePullBackOff
+**Symptoms:** `ImagePullBackOff`, `ErrImagePull`
 
-**Solution:**
+**Causes & Solutions:**
 
-```bash
-# Check image availability
-docker pull ghcr.io/ibtisam-iq/debugbox:latest
+- **Wrong tag/name:** Verify exact image name
+  ```bash
+  # Correct examples
+  ghcr.io/ibtisam-iq/debugbox              # balanced
+  ghcr.io/ibtisam-iq/debugbox-lite
+  ghcr.io/ibtisam-iq/debugbox-power:v1.0.0
+  ```
 
-# Verify image name and tag
-kubectl get pod -o jsonpath='{.items[0].spec.containers[0].image}'
+- **GHCR authentication required** (common in private clusters):
+  Configure image pull secret for `ghcr.io` or use Docker Hub mirror:
+  ```bash
+  --image=docker.io/mibtisam/debugbox
+  ```
 
-# If network-restricted, use Docker Hub mirror
-kubectl ... --image=docker.io/mibtisam/debugbox:latest
-```
+- **Network restrictions:** Pre-pull on nodes or use internal mirror
 
----
+## Tool Not Found (e.g., bash, tcpdump, vim)
 
-## No Such File or Directory
+**Symptoms:** `command not found`
 
-**Problem:** `bash: command not found`
+**Diagnosis & Solution:**
 
-**Solution:**
+Use the correct variant:
 
-You're using the lite variant (BusyBox shell). Upgrade to balanced:
+| Missing Tool      | Required Variant | Command Example                              |
+|-------------------|------------------|----------------------------------------------|
+| `bash`, `vim`     | balanced+       | `ghcr.io/ibtisam-iq/debugbox`               |
+| `tcpdump`, `strace` | balanced+     | `ghcr.io/ibtisam-iq/debugbox`               |
+| `tshark`, `nftables` | power         | `ghcr.io/ibtisam-iq/debugbox-power`         |
 
-```bash
-# Instead of lite
-kubectl ... --image=ghcr.io/ibtisam-iq/debugbox-lite
+Lite only has `ash`, `curl`, `dig`, `jq`, `yq`.
 
-# Use balanced
-kubectl ... --image=ghcr.io/ibtisam-iq/debugbox
-```
+## Permission Denied (tcpdump, raw sockets)
 
----
+**Symptoms:** `tcpdump: permission denied` or similar
 
-## Ephemeral Container Not Attaching
+**Cause:** Missing Linux capabilities (`NET_ADMIN`, `NET_RAW`)
 
-**Problem:** `kubectl debug` command not working
+**Solutions:**
 
-**Check prerequisites:**
+- For ephemeral containers: Kubernetes drops capabilities by default in newer versions
+  Use standalone pod instead:
+  ```bash
+  kubectl run debug --rm -it --image=ghcr.io/ibtisam-iq/debugbox --restart=Never
+  ```
 
-```bash
-# Verify Kubernetes version (1.16+)
-kubectl version --short
+- Or add capabilities explicitly (requires cluster privileges):
+  ```bash
+  kubectl debug my-pod -it --image=ghcr.io/ibtisam-iq/debugbox --cap-add=NET_ADMIN,NET_RAW
+  ```
 
-# Check if api server supports debugging
-kubectl api-resources | grep debugged
-```
+## kubectl debug Not Working
 
-**Alternative:**
+**Symptoms:** Command fails or "debug subcommand not available"
 
-Use temporary pod instead:
-
-```bash
-kubectl run debugbox --rm -it \
-  --image=ghcr.io/ibtisam-iq/debugbox \
-  --restart=Never
-```
-
----
-
-## tcpdump Not Working
-
-**Problem:** `tcpdump: permission denied`
-
-**Solution:**
-
-You need the lite or balanced variant. Use power:
+**Check:**
 
 ```bash
-kubectl run debugbox --rm -it \
-  --image=ghcr.io/ibtisam-iq/debugbox-power
+kubectl version --short                  # Needs v1.23+
+kubectl api-versions | grep debugging    # Should show debugging.k8s.io/v1
 ```
 
-Also check if container has NET_ADMIN capability:
-
+**Alternative:** Always use standalone pod:
 ```bash
-# Inside container
-cat /proc/self/status | grep Cap
+kubectl run debug --rm -it --image=ghcr.io/ibtisam-iq/debugbox --restart=Never
 ```
-
----
-
-## DNS Not Resolving
-
-**Problem:** `dig` returns `SERVFAIL`
-
-**Check setup:**
-
-```bash
-# Are you in pod's network namespace?
-cat /etc/resolv.conf
-
-# Test with different domain
-dig kubernetes.default.svc.cluster.local
-dig google.com
-
-# Check if coredns is running
-kubectl get pod -n kube-system -l k8s-app=kube-dns
-```
-
----
 
 ## Slow Image Pull
 
-**Problem:** Image takes too long to download
-
-**Solution:**
-
-Use lite variant (15 MB vs 48 MB):
-
+**Solution:** Use **lite** variant for fastest startup:
 ```bash
-kubectl run debugbox-lite --rm -it \
-  --image=ghcr.io/ibtisam-iq/debugbox-lite
+--image=ghcr.io/ibtisam-iq/debugbox-lite   # ~15 MB
 ```
 
-Or pre-pull on nodes:
-
+Pre-pull on nodes if recurring:
 ```bash
-docker pull ghcr.io/ibtisam-iq/debugbox:latest
+kubectl get nodes -o jsonpath='{range .items[*]}{.metadata.name}{"\n"}{end}' | xargs -I{} kubectl ssh {} -- docker pull ghcr.io/ibtisam-iq/debugbox
 ```
 
----
+## DNS Issues Inside Container
 
-## Out of Disk Space
+**Symptoms:** `dig` fails, no resolution
 
-**Problem:** Container filesystem full
-
-**Solution:**
-
-- Use lite variant (smaller) or
-- Debug on different node with more space:
+**Check:**
 
 ```bash
-kubectl run debugbox --rm -it \
-  --image=ghcr.io/ibtisam-iq/debugbox \
-  --overrides='{"spec":{"nodeName":"node-with-space"}}'
+cat /etc/resolv.conf
 ```
 
----
+- In `kubectl debug`: Should match target pod (usually correct)
+- In standalone pod: Uses pod's DNS (cluster DNS)
+- If broken: May be cluster-wide CoreDNS issue
 
-## Debugging Multi-Container Pods
-
-**Problem:** Not sure which container to debug
-
-**Solution:**
-
+Test known-good domain:
 ```bash
-# List containers
-kubectl get pod my-pod -o jsonpath='{.spec.containers[*].name}'
-
-# Debug specific container
-kubectl debug my-pod -it \
-  --image=ghcr.io/ibtisam-iq/debugbox \
-  --target=my-container
+dig google.com
 ```
 
----
+## Architecture Mismatch (arm64 nodes)
+
+**Symptoms:** `exec format error`, image pull fails
+
+**Solution:** DebugBox images are multi-arch — no special tag needed.
+
+Verify node arch:
+```bash
+kubectl get nodes -o jsonpath='{range .items[*]}{.metadata.name}{"\t"}{.status.nodeInfo.architecture}{"\n"}{end}'
+```
+
+All variants support `amd64` and `arm64`.
+
+## Container Exits Immediately
+
+**Cause:** Missing `-it` or `--rm` with no TTY
+
+**Fix:** Always include interactive flags:
+```bash
+kubectl run debug --rm -it --image=ghcr.io/ibtisam-iq/debugbox --restart=Never
+```
+
+## Frequently Asked Questions
+
+### Does DebugBox include kubectl?
+
+**No — intentionally.**
+
+DebugBox is a **debugging toolbox**, not a Kubernetes client. Including `kubectl` would:
+
+- Bloat image size
+- Duplicate your workstation capability
+- Encourage insecure control-plane access
+
+**Pattern:** Run `kubectl` locally and pipe output:
+```bash
+kubectl logs my-pod | kubectl run debug --rm -it --image=ghcr.io/ibtisam-iq/debugbox --restart=Never -- cat
+```
+
+### Can I run non-root?
+
+Yes, but many tools (`tcpdump`, `strace`) require root.
+
+Override:
+```bash
+docker run -it --rm --user 1000:1000 ghcr.io/ibtisam-iq/debugbox-lite
+```
+
+### Why no helm, k9s, etc.?
+
+DebugBox is **focused on low-level debugging** — network, system, process.  
+Deployment tools are out of scope to keep images small and secure.
+
+→ See **[Variants Overview](../variants/overview.md)** for tool breakdown
 
 ## Still Stuck?
 
-- Check [Common Workflows](../usage/workflows.md)
-- Review [Kubernetes Usage](../usage/kubernetes.md)
-- Open GitHub issue with details
+- Review **[Examples](../guides/examples.md)**
+- Check cluster logs: `kubectl logs -n kube-system coredns-...`
+- Open a GitHub issue with:
+    - DebugBox variant/tag used
+    - Kubernetes/Docker version
+    - Exact command and error output
+
+You're not alone — the community is here to help.

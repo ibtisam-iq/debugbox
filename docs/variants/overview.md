@@ -1,100 +1,25 @@
 # Variants Overview
 
-DebugBox provides three purpose-built variants instead of one monolithic image.
+DebugBox provides **three purpose-built variants** so you pull only what you need.
 
-## At a Glance
+| Variant    | Size     | Best For                                      | Pull Command                              |
+|------------|----------|-----------------------------------------------|-------------------------------------------|
+| **lite**   | ~15 MB  | Quick network/DNS checks                      | `ghcr.io/ibtisam-iq/debugbox-lite`       |
+| **balanced** (default) | ~48 MB  | Daily Kubernetes troubleshooting             | `ghcr.io/ibtisam-iq/debugbox`            |
+| **power**  | ~110 MB | Deep forensics & packet analysis              | `ghcr.io/ibtisam-iq/debugbox-power`      |
 
-| Variant | Size | Use Case | Shell |
-|---------|------|----------|-------|
-| **lite** | 15 MB | Quick network checks | ash (BusyBox) |
-| **balanced** | 48 MB | General troubleshooting | bash |
-| **power** | 110 MB | Deep forensics | bash |
+**Recommendation:** Start with **balanced** — it's the default and covers 90% of use cases.
 
-## Choosing a Variant
+## Choosing the Right Variant
 
-### When to Use lite
+- Use **lite** when pull speed is critical (e.g., incident response, constrained bandwidth)
+- Use **balanced** for general debugging (recommended default)
+- Use **power** only when you need advanced tools like `tshark`, `nftables`, or `ltrace`
 
-- Fast pod startup is critical
-- Quick DNS or network checks
-- Resource-constrained environments
-- Init container debugging
+## Detailed Pages
 
-**Start with:** 
-```bash
-kubectl run debugbox-lite --rm -it \
-  --image=ghcr.io/ibtisam-iq/debugbox-lite
-```
+- **[Lite Variant →](lite.md)** — Minimal & fast
+- **[Balanced Variant →](balanced.md)** — Recommended daily driver
+- **[Power Variant →](power.md)** — Full SRE toolkit
 
-### When to Use balanced (Recommended)
-
-- General Kubernetes troubleshooting
-- Debugging live pods
-- Daily debugging workflows
-- Default choice when unsure
-
-**Start with:**
-```bash
-kubectl debug my-pod -it \
-  --image=ghcr.io/ibtisam-iq/debugbox
-```
-
-### When to Use power
-
-- Packet captures and analysis
-- Deep network forensics
-- Routing and firewall debugging
-- SRE investigations
-
-**Start with:**
-```bash
-kubectl run debugbox-power --rm -it \
-  --image=ghcr.io/ibtisam-iq/debugbox-power
-```
-
-## Detailed Comparison
-
-### Network Tools
-
-| Tool | lite | balanced | power |
-|------|------|----------|-------|
-| curl | ✓ | ✓ | ✓ |
-| dig | ✓ | ✓ | ✓ |
-| netcat | ✓ | ✓ | ✓ |
-| ping | ✓ | ✓ | ✓ |
-| tcpdump | ✗ | ✓ | ✓ |
-| nmap | ✗ | ✓ | ✓ |
-| mtr | ✗ | ✓ | ✓ |
-| tshark | ✗ | ✗ | ✓ |
-
-### System Tools
-
-| Tool | lite | balanced | power |
-|------|------|----------|-------|
-| bash | ✗ | ✓ | ✓ |
-| vim | ✗ | ✓ | ✓ |
-| strace | ✗ | ✓ | ✓ |
-| htop | ✗ | ✓ | ✓ |
-| lsof | ✗ | ✓ | ✓ |
-| ltrace | ✗ | ✗ | ✓ |
-
-### Kubernetes Tools
-
-| Tool | lite | balanced | power |
-|------|------|----------|-------|
-| kubectl | ✓ | ✓ | ✓ |
-| kubectx | ✗ | ✓ | ✓ |
-| kubens | ✗ | ✓ | ✓ |
-| yq | ✓ | ✓ | ✓ |
-| jq | ✓ | ✓ | ✓ |
-
-## Authoritative Tooling List
-
-For the complete, authoritative list of tools in each variant, see [`docs/manifest.yaml`](../manifest.yaml) in the GitHub repository.
-
-## Summary
-
-- **lite:** Lean and fast. Pull time is measured in seconds.
-- **balanced:** Sweet spot. Has everything for most troubleshooting.
-- **power:** Complete forensics toolkit for deep investigations.
-
-**Start with balanced. Downgrade to lite if startup time is critical. Upgrade to power for detailed analysis.**
+→ Complete tool list: **[Tooling Manifest](../reference/manifest.md)**

@@ -1,173 +1,62 @@
 # Kubernetes Usage
 
-DebugBox is optimized for Kubernetes debugging workflows.
+DebugBox is designed for Kubernetes-native debugging workflows.
 
-## Debug Running Pod (Recommended)
-
-Attach an ephemeral container to an existing pod:
+## Debug a Running Pod (Recommended)
 
 ```bash
 kubectl debug my-pod -it --image=ghcr.io/ibtisam-iq/debugbox
 ```
 
-This shares the network namespace with the target pod, allowing you to inspect its network stack without modifying the pod itself.
+Shares network and process namespace with the target pod.
 
-### Debug Specific Container
-
-If a pod has multiple containers, debug a specific one:
-
+Target specific container in multi-container pod:
 ```bash
-kubectl debug my-pod -it \
-  --image=ghcr.io/ibtisam-iq/debugbox \
-  --target=my-container
+kubectl debug my-pod -it --image=ghcr.io/ibtisam-iq/debugbox --target=sidecar
 ```
 
----
-
-## Run Temporary Debugging Pod
-
-Spin up a temporary pod for debugging:
+## Standalone Debugging Pod
 
 ```bash
-kubectl run debugbox --rm -it \
+kubectl run debug --rm -it \
   --image=ghcr.io/ibtisam-iq/debugbox \
   --restart=Never
 ```
 
-The `--rm` flag automatically deletes the pod when you exit.
-
----
-
-## Host Network Debugging
-
-Access the node's network namespace:
+## Node-Level Debugging
 
 ```bash
-kubectl run debugbox-host --rm -it \
+kubectl run debug-node --rm -it \
   --image=ghcr.io/ibtisam-iq/debugbox \
-  --overrides='{"spec":{"hostNetwork":true}}' \
+  --overrides='{"spec":{"hostNetwork":true, "nodeName":"my-node"}}' \
   --restart=Never
 ```
 
-Inside this pod, you can inspect host-level networking, routing tables, and firewall rules.
-
----
-
-## Node Debugging
-
-Debug a specific node:
-
-```bash
-kubectl run debugbox-node-<node-name> --rm -it \
-  --image=ghcr.io/ibtisam-iq/debugbox \
-  --overrides='{"spec":{"hostNetwork":true,"nodeName":"<node-name>"}}' \
-  --restart=Never
-```
-
-Replace `<node-name>` with your target node name.
-
----
-
-## Sidecar Debugging
-
-Deploy DebugBox as a sidecar container:
+## Persistent Sidecar Pattern
 
 ```yaml
 apiVersion: v1
 kind: Pod
 metadata:
-  name: app-with-debugbox
+  name: app-with-debug
 spec:
   containers:
   - name: app
     image: nginx:alpine
-    ports:
-    - containerPort: 80
-  
   - name: debugbox
     image: ghcr.io/ibtisam-iq/debugbox
     command: ["sleep", "infinity"]
 ```
 
-Both containers share the pod's network namespace:
-
+Access:
 ```bash
-kubectl exec -it app-with-debugbox -c debugbox -- bash
-
-# Inside debugbox (same network as app)
-curl localhost:80
-netstat -tulpn
-tcpdump -i eth0
+kubectl exec -it app-with-debug -c debugbox -- bash
 ```
 
----
+## Variant Recommendations
 
-## Variant Selection
+- **lite**: Fast DNS/network checks
+- **balanced** (default): Most debugging tasks
+- **power**: When you need `tshark`, `nftables`, or `ltrace`
 
-Choose the right variant for your workflow:
-
-```bash
-# Fast network check (lite)
-kubectl run debugbox --rm -it \
-  --image=ghcr.io/ibtisam-iq/debugbox-lite
-
-# General debugging (balanced, recommended)
-kubectl debug my-pod -it \
-  --image=ghcr.io/ibtisam-iq/debugbox
-
-# Deep forensics (power)
-kubectl run debugbox --rm -it \
-  --image=ghcr.io/ibtisam-iq/debugbox-power
-```
-
----
-
-## Tag Selection
-
-Use semantic version tags for reproducibility:
-
-```bash
-# Pinned version (recommended for production)
---image=ghcr.io/ibtisam-iq/debugbox:{{ git.tag or git.describe }}
-
-# Latest stable
---image=ghcr.io/ibtisam-iq/debugbox:latest
-```
-
----
-
-## Common Patterns
-
-### Test Service Connectivity
-
-```bash
-kubectl run debugbox --rm -it \
-  --image=ghcr.io/ibtisam-iq/debugbox \
-  --restart=Never
-
-# Inside
-curl -v http://my-service.default.svc.cluster.local:8080
-dig my-service.default.svc.cluster.local
-```
-
-### Capture Network Traffic
-
-```bash
-kubectl run debugbox --rm -it \
-  --image=ghcr.io/ibtisam-iq/debugbox-power \
-  --restart=Never
-
-# Inside
-tcpdump -i eth0 -w /tmp/capture.pcap
-# Or for analysis
-tshark -i eth0
-```
-
-### Inspect Pod's System Calls
-
-```bash
-kubectl debug my-pod -it --image=ghcr.io/ibtisam-iq/debugbox
-
-# Inside (attach to running process)
-strace -p <pid>
-```
+→ Real-world debugging recipes: **[Examples](../guides/examples.md)**

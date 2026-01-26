@@ -1,144 +1,55 @@
-# Local Development
+# Local Development Setup
 
-Set up DebugBox for local development.
+How to build and test DebugBox locally.
 
 ## Prerequisites
 
-- Docker or Podman
+- Docker (or Podman)
 - Make
-- Python 3.11+ (for documentation)
 - Git
 
----
-
-## Clone Repository
+## Clone the Repository
 
 ```bash
 git clone https://github.com/ibtisam-iq/debugbox.git
 cd debugbox
 ```
 
----
+## Common Commands
 
-## Build Images
+| Command              | Description                              |
+|----------------------|------------------------------------------|
+| `make build-all`     | Build all variants (amd64 + arm64)       |
+| `make build-lite`    | Build only lite variant                  |
+| `make test-all`      | Run smoke tests on all variants          |
+| `make scan`          | Security scan with Trivy                 |
+| `make lint`          | Lint Dockerfiles with hadolint           |
 
-### Single Variant
+## Multi-Architecture Builds
 
+Default builds both platforms:
 ```bash
-# Build specific variant
-make build-lite
-make build-balanced
-make build-power
+make build-balanced        # amd64 + arm64
 ```
 
-### All Variants
-
+Force single platform:
 ```bash
-make build-all
+PLATFORM=linux/arm64 make build-power
 ```
 
-### Multi-Architecture
-
-```bash
-# Default builds both amd64 and arm64
-make build-balanced
-
-# Build for specific platform
-PLATFORM=linux/arm64 make build-lite
-```
-
----
-
-## Test Images
-
-### Smoke Tests
-
-```bash
-# Test specific variant
-make test-lite
-make test-balanced
-make test-power
-
-# Test all variants
-make test-all
-```
-
----
-
-## Security Scanning
-
-### Scan with Trivy
-
-```bash
-make scan
-```
-
-Scanning checks for HIGH and CRITICAL vulnerabilities. Build fails if found.
-
----
-
-## Lint Dockerfiles
-
-```bash
-make lint
-```
-
----
-
-## Documentation
-
-### Build Documentation
+## Preview Documentation
 
 ```bash
 pip install -r requirements.txt
-mkdocs build
-```
-
-### Preview Documentation
-
-```bash
 mkdocs serve
 ```
 
-Then open http://localhost:8000
+Open http://localhost:8000
 
----
+## Contributing
 
-## Makefile Targets
+Want to add a tool or fix a bug?
 
-Common targets in the Makefile:
+→ See the full guidelines: [CONTRIBUTING.md on GitHub](https://github.com/ibtisam-iq/debugbox/blob/main/CONTRIBUTING.md)
 
-| Target | Description |
-|--------|-------------|
-| `build-lite` | Build lite variant |
-| `build-balanced` | Build balanced variant |
-| `build-power` | Build power variant |
-| `build-all` | Build all variants |
-| `test-lite` | Test lite variant |
-| `test-balanced` | Test balanced variant |
-| `test-power` | Test power variant |
-| `test-all` | Test all variants |
-| `scan` | Security scan with Trivy |
-| `lint` | Lint Dockerfiles |
-
----
-
-## Code Structure
-
-```
-.
-├── dockerfiles/          # All Dockerfiles
-├── docs/                 # Documentation
-├── scripts/              # Installation scripts
-├── tests/                # Test scripts
-├── Makefile              # Build automation
-└── mkdocs.yml            # Documentation config
-```
-
----
-
-## Next Steps
-
-- Read the [Project Structure](structure.md)
-- Review [Contributing Guidelines](contributing.md)
-- Check the [Release Process](release.md)
+→ Release process: [RELEASE.md on GitHub](https://github.com/ibtisam-iq/debugbox/blob/main/RELEASE.md)

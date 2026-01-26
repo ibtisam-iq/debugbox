@@ -1,182 +1,106 @@
 # DebugBox
 
-A **lightweight, variant-based debugging container suite for Kubernetes and Docker environments.**
+**A lightweight, variant-based debugging container suite**  
+for Kubernetes and Docker environments.
 
-Instead of one oversized debugging image, DebugBox provides three purpose-built variants — from minimal network checks (15MB) to full SRE forensics (110MB).
+Pull **only what you need** — from 15 MB quick checks to 110 MB full forensics.
 
-## Why DebugBox?
+| Variant       | Size      | Best For                              | Pull Command                                      |
+|---------------|-----------|---------------------------------------|---------------------------------------------------|
+| **lite**      | ~15 MB   | Network/DNS checks                    | `ghcr.io/ibtisam-iq/debugbox-lite`               |
+| **balanced** (default) | ~48 MB   | Daily Kubernetes troubleshooting      | `ghcr.io/ibtisam-iq/debugbox`                    |
+| **power**     | ~110 MB  | Packet capture & deep forensics        | `ghcr.io/ibtisam-iq/debugbox-power`              |
 
-Modern Kubernetes pods (distroless, minimal Alpine) often ship **without curl, dig, tcpdump or bash**. Existing solutions like netshoot work but require downloading a 208MB image even for basic network checks.
+Also available on Docker Hub: `mibtisam/debugbox*`
 
-DebugBox provides **three focused variants** instead of one monolithic image:
-
-- **lite (15 MB)** – Fast pulls for quick network/DNS checks
-- **balanced (48 MB)** – Daily-driver for most troubleshooting (recommended)
-- **power (110 MB)** – Deep forensics and packet analysis
-
-**4.3× smaller** than netshoot for 90% of use cases → faster pulls, faster incident response.
-
-## Quick Start
-
-```bash
-# Debug a running pod
-kubectl debug my-pod -it --image=ghcr.io/ibtisam-iq/debugbox
-
-# Run a temporary debugging pod
-kubectl run debugbox --rm -it \
-  --image=ghcr.io/ibtisam-iq/debugbox \
-  --restart=Never
-```
-
-Inside the container:
-```bash
-curl -I https://kubernetes.io              # Test connectivity
-dig kubernetes.default.svc.cluster.local   # Check DNS
-ip route                                   # Inspect routes
-kubectl get cm my-config -o yaml | yq      # Parse YAML
-tcpdump -i eth0 port 443 -c 10             # Capture packets
-```
-
-## Variants at a Glance
-
-| Variant | Size | Use Case | Shell |
-|---------|------|----------|-------|
-| **lite** | 15 MB | Quick network checks | ash (BusyBox) |
-| **balanced** | 48 MB | General troubleshooting | bash |
-| **power** | 110 MB | Deep forensics | bash |
-
-**→ [Learn more about variants](variants/overview.md)**
-
-## Registries
-
-Images available on:
-- **GHCR (primary):** `ghcr.io/ibtisam-iq/debugbox`
-- **Docker Hub (mirror):** `docker.io/mibtisam/debugbox`
-
-Both registries contain identical multi-arch images (amd64 + arm64).
-
-## Key Features
-
-✅ **Minimal variants** – Choose only what you need  
-✅ **Fast pulls** – Lite: 15MB, Balanced: 48MB, Power: 110MB  
-✅ **Multi-arch** – Works on amd64 (x86), arm64 (Apple Silicon, AWS Graviton, Pi)  
-✅ **Kubernetes-ready** – Built for `kubectl debug` and ephemeral containers  
-✅ **Deterministic** – Critical binaries pinned with SHA verification  
-✅ **Secure** – Scanned with Trivy on every release  
-
-## What's Included
-
-### Lite (15 MB)
-- Network: curl, netcat, ip, ping, dig, nslookup
-- Data: jq, yq
-- Shell: ash (BusyBox)
-
-### Balanced (48 MB) — Recommended
-- All lite tools, plus:
-- Shell: bash with completion, vim, less
-- Network: tcpdump, socat, nmap, mtr, iperf3, iftop, ethtool
-- System: htop, strace, lsof, procps, psmisc
-- Kubernetes: kubectx, kubens
-- VCS: git, and more
-
-### Power (110 MB)
-- All balanced tools, plus:
-- Forensics: tshark, ltrace
-- Routing/firewall: iptables, nftables, conntrack-tools, bird, bridge-utils
-- Scripting: Python 3 with pip3
-
-## Common Workflows
-
-### Test Service Connectivity
-```bash
-kubectl run debugbox --rm -it \
-  --image=ghcr.io/ibtisam-iq/debugbox \
-  --restart=Never
-
-# Inside
-curl http://my-service.default.svc.cluster.local:8080
-dig my-service.default.svc.cluster.local
-```
-
-### Debug Running Pod
-```bash
-kubectl debug my-app-pod -it \
-  --image=ghcr.io/ibtisam-iq/debugbox
-
-# Inside (same network as app)
-curl localhost:8080
-netstat -tulpn
-```
-
-### Capture Network Traffic
-```bash
-kubectl run debugbox-power --rm -it \
-  --image=ghcr.io/ibtisam-iq/debugbox-power \
-  --restart=Never
-
-# Inside
-tcpdump -i eth0 -w /tmp/capture.pcap port 443
-tshark -i eth0 -f "port 443"
-```
-
-**→ [See more workflows](usage/workflows.md)**
-
-## Comparison
-
-```
-netshoot:         208 MB  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100%
-DebugBox power:   110 MB  ━━━━━━━━━━━━━━━━━━━━━━ 53%
-DebugBox balanced: 48 MB  ━━━━━━━━━ 23%
-DebugBox lite:     15 MB  ━━ 7%
-busybox:           1.5 MB  ░ <1%
-```
-
-## Design Principles
-
-1. **Variants Over Bloat** – Each variant installs only what it promises
-2. **Deterministic Builds** – Critical binaries pinned and SHA-verified
-3. **Explicit Contracts** – Documentation declares exactly what's included
-4. **Debug-First Philosophy** – Runs as root (debugging tool, not production workload)
-5. **Engineering Clarity** – Makefile-driven, automated CI/CD, security scanning
-
-## Navigation
-
-- **[Getting Started](getting-started/quick-start.md)** – 60-second setup
-- **[Variants](variants/overview.md)** – Detailed variant comparison
-- **[Kubernetes Usage](usage/kubernetes.md)** – kubectl debug, ephemeral containers, sidecar patterns
-- **[Docker Usage](usage/docker.md)** – Docker and Docker Compose examples
-- **[Workflows](usage/workflows.md)** – Real-world debugging scenarios
-- **[Reference](reference/manifest.md)** – Complete tooling reference and image details
-- **[Development](development/local-setup.md)** – Local builds, testing, contribution guidelines
-- **[Security](security/policy.md)** – Reporting vulnerabilities, security scanning
-
-## Local Development
-
-```bash
-# Clone repository
-git clone https://github.com/ibtisam-iq/debugbox.git
-cd debugbox
-
-# Build all variants
-make build-all
-
-# Run tests
-make test-all
-
-# Security scan
-make scan
-
-# Preview documentation
-pip install -r requirements.txt
-mkdocs serve
-```
-
-## Links
-
-- **GitHub:** https://github.com/ibtisam-iq/debugbox
-- **Author:** [Muhammad Ibtisam](https://github.com/ibtisam-iq)
-- **License:** [MIT](https://github.com/ibtisam-iq/debugbox/blob/main/LICENSE)
+Supports **amd64** and **arm64** (Apple Silicon, Graviton, Raspberry Pi) out of the box.
 
 ---
 
-**Ready to debug? Start with [Quick Start](getting-started/quick-start.md) or [choose a variant](variants/overview.md).**
+## Quick Start
+
+Debug a running pod in seconds:
+
+```bash
+kubectl debug my-pod -it --image=ghcr.io/ibtisam-iq/debugbox
+```
+
+Or launch a standalone session:
+
+```bash
+kubectl run debug --rm -it --image=ghcr.io/ibtisam-iq/debugbox --restart=Never
+```
+
+Now you're inside with `curl`, `dig`, `tcpdump`, `vim`, `strace`, and more.
+
+→ **[Full quick start guide](getting-started/quick-start.md)**
+
+---
+
+## Why DebugBox?
+
+Modern pods often lack basic tools:
+
+```bash
+kubectl exec -it my-pod -- curl
+# curl: not found
+```
+
+Alternatives like `netshoot` are great but **208 MB** — too heavy for simple checks.
+
+DebugBox gives you **three focused variants** so you pull:
+
+- **15 MB** for basic connectivity
+- **48 MB** for daily debugging
+- **110 MB** only when you need `tshark` or `nftables`
+
+**Faster pulls. Faster debugging.**
+
+---
+
+## Explore the Docs
+
+<div class="grid cards" markdown>
+
+- **[:material-run-fast: Getting Started](getting-started/quick-start.md)**  
+  First steps, installation, motivation
+
+- **[:material-layers: Variants](variants/overview.md)**  
+  Compare lite · balanced · power and choose the right one
+
+- **[:material-kubernetes: Kubernetes Usage](usage/kubernetes.md)**  
+  `kubectl debug`, ephemeral containers, sidecar patterns
+
+- **[:material-docker: Docker Usage](usage/docker.md)**  
+  Network namespace sharing, host inspection
+
+- **[:material-tools: Tooling Manifest](reference/manifest.md)**  
+  Complete list of included tools per variant
+
+- **[:material-book-open-page-variant: Examples](guides/examples.md)**  
+  Real-world debugging recipes
+
+- **[:material-shield-check: Security](security/policy.md)**  
+  Reporting, scanning, design trade-offs
+
+- **[:material-code-brackets: Development](development/local-setup.md)**  
+  Build, test locally
+
+</div>
+
+---
+
+## Features
+
+- **Multi-architecture** – Seamless on x86, ARM, Apple Silicon
+- **Deterministic builds** – Critical tools pinned with SHA verification
+- **Security scanned** – Trivy blocks HIGH/CRITICAL on every release
+- **Runs as root** – By design, for full debugging access (ephemeral use only)
+
+---
+
+**Ready to debug faster?**
+  
+Start with the [Quick Start](getting-started/quick-start.md) or [choose your variant](variants/overview.md).
+
+Built and maintained by [@ibtisam-iq](https://github.com/ibtisam-iq) · [MIT License](https://github.com/ibtisam-iq/debugbox/blob/main/LICENSE)

@@ -1,83 +1,63 @@
 # Power Variant
 
-110 MB variant with full SRE-grade tooling.
+**~110 MB** — Full SRE-grade forensics toolkit.
 
-## Use Cases
+The **power** variant includes everything from balanced, plus advanced tools for deep investigation.
 
-- Deep network forensics
-- Packet capture and analysis
-- Routing and firewall debugging
-- Complex system troubleshooting
-- Performance analysis
+## When to Use Power
 
-## What's Included
+Use only when you need:
 
-Includes all balanced tools, plus:
+- Detailed packet analysis (`tshark`)
+- Library-level tracing (`ltrace`)
+- Firewall/routing debugging (`nftables`, `bird`, `conntrack-tools`)
+- Custom Python scripting (`pip3`)
+- High-precision network testing
 
-### Editors
-- `nano` — Alternative editor
+**Do not use power** for routine tasks — stick with balanced to save time and bandwidth.
 
-### Network Forensics
-- `tshark` — Wireshark CLI for packet analysis
-- `fping` — Fast ping tool
-- `speedtest-cli` — Internet speed testing
-- `nmap-nping` — Advanced ping
-- `nmap-scripts` — NSE scripts
+## Key Additions Over Balanced
 
-### System Internals
-- `ltrace` — Library call tracing
+| Category            | Tools Added                                      |
+|---------------------|--------------------------------------------------|
+| Packet Analysis     | `tshark`                                         |
+| Advanced Network    | `fping`, `speedtest-cli`, `nmap-nping`, `nmap-scripts` |
+| System Internals    | `ltrace`                                         |
+| Routing & Firewall  | `iptables`, `nftables`, `conntrack-tools`, `bird`, `bridge-utils` |
+| Scripting           | Python 3 + `pip3`                                |
+| Editors             | `nano` (in addition to `vim`)                    |
+| YAML Processing     | Pinned `yq` v4.x binary (SHA-verified)           |
 
-### Routing & Firewall
-- `iptables` — Packet filtering
-- `nftables` — Modern firewall
-- `conntrack-tools` — Connection tracking
-- `bird` — BGP/OSPF daemon
-- `bridge-utils` — Bridge tools
-
-### Scripting
-- `python3` with `pip3` — Python scripting
-
-### Tools
-- `yq` — YAML parser (v4.x pinned binary with SHA verification, not Alpine package)
+→ Full details: **[Tooling Manifest](../reference/manifest.md)**
 
 ## Example Usage
 
 ```bash
-kubectl run debugbox-power --rm -it \
+kubectl run debug-power --rm -it \
   --image=ghcr.io/ibtisam-iq/debugbox-power \
   --restart=Never
 ```
 
-Inside the container:
-
+Inside:
 ```bash
-# Interactive packet analysis
 tshark -i eth0 -f "port 443"
-
-# Detailed packet capture
-tcpdump -i eth0 -w /tmp/capture.pcap port 443
-
-# Check routing table
-ip route
-bird -P -d
-
-# Advanced firewall inspection
-iptables -L -v -n
-nftables list ruleset
-
-# Connection state inspection
+nft list ruleset
 conntrack -L
+ltrace -p 1234
+pip3 install requests
+python3 -c "import requests; print(requests.get('https://api.ipify.org').text)"
 ```
 
-## Size
+## Image Details
 
-- **Compressed:** 110 MB
-- **Uncompressed:** ~350 MB
+- Compressed size: ~110 MB
+- Architectures: `linux/amd64`, `linux/arm64`
 
-## When to Use Power
+Pull:
+```bash
+ghcr.io/ibtisam-iq/debugbox-power:latest
+```
 
-This variant is for when you need to:
-- Capture and analyze packets in detail
-- Debug complex routing scenarios
-- Trace system calls at the library level
-- Run custom scripts for advanced analysis
+## Navigation
+
+← **[Balanced Variant](balanced.md)** | **[Variants Overview](overview.md)** →

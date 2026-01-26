@@ -1,137 +1,116 @@
 # Tooling Manifest
 
-The authoritative source of tools included in each DebugBox variant.
+The **authoritative** list of tools, shell behavior, and environment guarantees in each DebugBox variant.
 
-This file documents the **user-visible contract** for each variant. It defines exactly what tools, helpers, and environment guarantees are provided.
+This page is derived from the source-of-truth [`manifest.yaml`](../../manifest.yaml) in the repository.
 
-For the complete manifest including all details, see the [`docs/manifest.yaml`](../manifest.yaml) file in the repository.
+All variants run as **root** by design (required for debugging privileges).
 
-## Base (All Variants)
+## Variant Inheritance
 
-All variants inherit these tools and behaviors:
+- **lite** → builds on base
+- **balanced** → builds on lite
+- **power** → builds on balanced
 
-### System
-- ca-certificates
-- locale: C.UTF-8
+Tools marked with ✓ are included in that variant and all higher tiers.
 
-### Shell
-- ash (BusyBox)
-- Prompt: `[debugbox \w]$`
-- Editor: vi
+## Tools by Category
 
-### Helpers
-- `ll()` — Alias for `ls -alF`
+### Shell & Environment
 
----
+| Feature                  | Base | Lite | Balanced | Power | Notes                                      |
+|--------------------------|------|------|----------|-------|--------------------------------------------|
+| Default shell            | ash  | ash  | **bash** | bash  | Balanced+ include bash-completion          |
+| Prompt                   | ✓    | ✓    | ✓        | ✓     | `[debugbox \w]$`                           |
+| Editor (default)         | vi   | vi   | **vim**  | vim   | nano added in power                        |
+| Pager                    | —    | —    | **less** | less  |                                            |
+| Locale                   | ✓    | ✓    | ✓        | ✓     | `C.UTF-8`                                  |
 
-## Lite Variant
+### Shell Helpers (/etc/profile.d)
+
+| Helper     | Base | Lite | Balanced | Power | Description                          |
+|------------|------|------|----------|-------|--------------------------------------|
+| `ll()`     | ✓    | ✓    | ✓        | ✓     | `ls -alF` alias                      |
+| `json()`   | —    | ✓    | ✓        | ✓     | Pretty-print JSON with jq            |
+| `yaml()`   | —    | ✓    | ✓        | ✓     | Pretty-print YAML with yq            |
+| `sniff()`  | —    | —    | —        | ✓     | Quick tcpdump wrapper (power only)   |
 
 ### Networking
-- curl
-- netcat-openbsd
-- iproute2
-- iputils (ping, traceroute)
-- bind-tools (dig, nslookup)
 
-### Data Tools
-- jq — JSON parsing
-- yq — YAML parsing (Alpine package, v3.x)
+| Tool              | Lite | Balanced | Power | Notes                                      |
+|-------------------|------|----------|-------|--------------------------------------------|
+| curl              | ✓    | ✓        | ✓     |                                            |
+| netcat-openbsd    | ✓    | ✓        | ✓     |                                            |
+| iproute2 (`ip`)   | ✓    | ✓        | ✓     |                                            |
+| iputils (`ping`)  | ✓    | ✓        | ✓     |                                            |
+| bind-tools (`dig`, `nslookup`) | ✓    | ✓        | ✓     |                                            |
+| tcpdump           | —    | ✓        | ✓     |                                            |
+| socat             | —    | ✓        | ✓     |                                            |
+| nmap              | —    | ✓        | ✓     |                                            |
+| mtr               | —    | ✓        | ✓     |                                            |
+| iperf3            | —    | ✓        | ✓     |                                            |
+| ethtool           | —    | ✓        | ✓     |                                            |
+| iftop             | —    | ✓        | ✓     |                                            |
+| tshark            | —    | —        | ✓     | Wireshark CLI                              |
+| fping             | —    | —        | ✓     |                                            |
+| speedtest-cli     | —    | —        | ✓     |                                            |
+| nmap-nping        | —    | —        | ✓     |                                            |
+| nmap-scripts      | —    | —        | ✓     | NSE scripts                                |
 
-### Shell
-- ash (BusyBox)
-- Helpers: `json()`, `yaml()`
+### System & Process
 
----
+| Tool              | Lite | Balanced | Power | Notes                                      |
+|-------------------|------|----------|-------|--------------------------------------------|
+| htop              | —    | ✓        | ✓     |                                            |
+| strace            | —    | ✓        | ✓     |                                            |
+| lsof              | —    | ✓        | ✓     |                                            |
+| procps            | —    | ✓        | ✓     |                                            |
+| psmisc            | —    | ✓        | ✓     |                                            |
+| ltrace            | —    | —        | ✓     | Library call tracing                       |
 
-## Balanced Variant
+### Kubernetes & Control Plane
 
-Includes all lite tools, plus:
+| Tool              | Lite | Balanced | Power | Notes                                      |
+|-------------------|------|----------|-------|--------------------------------------------|
+| kubectx           | —    | ✓        | ✓     | Context switching                          |
+| kubens            | —    | ✓        | ✓     | Namespace switching                        |
 
-### Shell & UX
-- bash with completion
-- less — Pager
-- Editor: vim
+### Data Processing & Scripting
 
-### Network Tools
-- tcpdump — Packet capture
-- socat — Socket relay
-- nmap — Network scanning
-- mtr — Traceroute with stats
-- iperf3 — Network performance testing
-- ethtool — Network interface configuration
-- iftop — Bandwidth monitoring
+| Tool              | Lite | Balanced | Power | Notes                                      |
+|-------------------|------|----------|-------|--------------------------------------------|
+| jq                | ✓    | ✓        | ✓     | JSON processing                            |
+| yq                | ✓    | ✓        | ✓     | Lite/Balanced: Alpine package<br>Power: pinned v4.x binary (SHA-verified) |
+| python3 + pip3    | —    | —        | ✓     | Ad-hoc scripting                           |
 
-### System Tools
-- htop — Process monitoring
-- strace — System call tracing
-- lsof — Open files inspector
-- procps — Process utilities
-- psmisc — Process signals/named pipes
+### Filesystem & Version Control
 
-### Kubernetes
-- kubectl — Already in base
-- kubectx — Switch contexts
-- kubens — Switch namespaces
+| Tool              | Lite | Balanced | Power |
+|-------------------|------|----------|------|
+| file              | —    | ✓        | ✓    |
+| tar, gzip         | —    | ✓        | ✓    |
+| git               | —    | ✓        | ✓    |
 
-### Other
-- git — Version control
-- file — File type detection
-- tar, gzip — Archive tools
+### Routing & Firewall (Power Only)
 
-### Shell
-- bash with completion
-- Helpers: `json()`, `yaml()`
-
----
-
-## Power Variant
-
-Includes all balanced tools, plus:
-
-### Editors
-- nano — Text editor
-
-### Network Forensics
-- tshark — Wireshark CLI
-- fping — Fast ping
-- speedtest-cli — Internet speed test
-- nmap-nping — Advanced ping
-- nmap-scripts — NSE scripts
-
-### System Internals
-- ltrace — Library call tracing
-
-### Routing & Firewall
-- iptables — Packet filtering
-- nftables — Modern firewall
-- conntrack-tools — Connection tracking
-- bird — BGP/OSPF routing daemon
-- bridge-utils — Bridge management
-
-### Scripting
-- python3 with pip3 — Python scripting
-
-### Tools
-- yq — YAML parser (v4.x binary, SHA-verified, not Alpine package)
-
-### Shell
-- bash with completion
-- Helpers: `json()`, `yaml()`, `sniff()`
-
----
+| Tool              | Power |
+|-------------------|-------|
+| iptables          | ✓     |
+| nftables          | ✓     |
+| conntrack-tools   | ✓     |
+| bird              | ✓     |
+| bridge-utils      | ✓     |
 
 ## Guarantees
 
-For each variant:
+- **Deterministic**: Critical tools (e.g., `yq` in power) are version-pinned and SHA-verified
+- **Transparent**: Only documented tools are included — no hidden packages
+- **Secure by default**: Scanned with Trivy on every release
+- **Root access**: All images run as root for full debugging capability (ephemeral use only)
 
-- ✅ **Version pinning:** Critical binaries are pinned
-- ✅ **SHA verification:** Power variant yq is SHA-verified
-- ✅ **Documentation:** All tools listed here are documented and intentional
-- ✅ **No hidden packages:** Only what's documented is included
-- ✅ **Root user:** All images run as root (debugging tool design)
+## Source of Truth
 
----
+The raw manifest is maintained in [`manifest.yaml`](../../manifest.yaml).  
+Any discrepancy between this page and the YAML file should be reported as a bug.
 
-## Updates
-
-This manifest is updated whenever tools are added, removed, or upgraded. See [CHANGELOG.md](https://github.com/ibtisam-iq/debugbox/blob/main/CHANGELOG.md) for version history.
+→ Back to **[Variants Overview](../variants/overview.md)** | **[Examples](../guides/examples.md)** →

@@ -1,111 +1,49 @@
 # Why DebugBox?
 
-DebugBox exists because debugging Kubernetes workloads shouldn't be complicated.
+## The Pain Point
 
-## The Problem
-
-During CKA/CKAD prep and production troubleshooting, I repeatedly hit a frustrating pattern:
+You've probably seen this:
 
 ```bash
-$ kubectl exec -it my-pod -- curl
-exec: "curl": executable file not found
+kubectl exec -it my-pod -- curl
+# exec failed: "curl": executable file not found
 ```
 
-Modern production pods (distroless, Alpine) ship without debugging tools. Existing solutions like netshoot work but require downloading a 208MB image even for basic network checks.
+Modern production containers (distroless, scratch, minimal Alpine) ship **without basic debugging tools**.
 
-## The Solution
+Existing solutions help, but:
 
-**Three focused variants instead of one monolithic image.**
+- `netshoot`: Great tools, but **208 MB** — overkill for a simple `curl`
+- `busybox`: Tiny (1.5 MB), but lacks real debugging tools
 
-- **lite (15MB):** Fast pull for quick network/DNS checks
-- **balanced (48MB):** Daily-driver for most troubleshooting
-- **power (110MB):** Deep forensics and packet analysis
+## The DebugBox Solution
 
-### Why Variants Matter
+**Three purpose-built variants** so you pull only what you need:
 
-```
-netshoot:         208 MB  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100%
-DebugBox power:   110 MB  ━━━━━━━━━━━━━━━━━━━━━━ 53%
-DebugBox balanced: 48 MB  ━━━━━━━━━ 23%
-DebugBox lite:     15 MB  ━━ 7%
-```
+| Variant    | Size    | When to Use                              |
+|------------|---------|------------------------------------------|
+| lite       | ~15 MB | Quick network/DNS checks                 |
+| balanced   | ~48 MB | Daily Kubernetes troubleshooting (default) |
+| power      | ~110 MB| Deep forensics, packet capture           |
 
-**4.3x smaller** for 90% of use cases means faster pod startup in production incidents.
+**Result:** Up to **4.3× faster pulls** than alternatives for common cases.
 
-## Key Principles
+## Comparison
 
-### 1. Variants Over Bloat
+| Feature                | DebugBox     | netshoot    | busybox   |
+|------------------------|--------------|-------------|-----------|
+| Multiple size options  | ✓ (3 variants) | ✗           | ✗         |
+| Smallest option        | 15 MB        | 208 MB      | 1.5 MB    |
+| Kubernetes-focused     | ✓            | ✓           | ✗         |
+| Multi-arch support     | ✓            | ✓           | ✓         |
+| Deterministic builds   | ✓            | ✗           | ✗         |
+| Security scanned       | ✓ (Trivy)    | ✗           | ✗         |
 
-Each variant installs only what it promises. Balanced doesn't carry forensics tools. Lite stays minimal.
+## Core Principles
 
-### 2. Deterministic Builds
+- **Variants over bloat** – No unnecessary tools
+- **Speed** – Faster incident response
+- **Transparency** – Everything documented in the **[tool manifest](../reference/manifest.md)**
+- **Debug-first** – Runs as root for full access (ephemeral use only)
 
-Critical binaries are pinned and SHA-verified (Power variant). No surprise version drift.
-
-### 3. Explicit Contracts
-
-[`docs/manifest.yaml`](../manifest.yaml) documents exactly what tools are included. No hidden packages.
-
-### 4. Debug-First Philosophy
-
-Runs as root by design. This is a debugging tool, not a production workload.
-
-### 5. Engineering Clarity
-
-- Makefile-driven local development
-- CI/CD automation for builds, tests, and releases
-- Trivy security scans on every release
-- Zero magic — every tool is documented and intentional
-
-## Real-World Scenarios
-
-### Quick Network Check (lite)
-
-```bash
-$ kubectl run debugbox --rm -it --image=ghcr.io/ibtisam-iq/debugbox-lite
-# Pull: 15 MB (fast!)
-# Time to troubleshoot: <5 seconds
-```
-
-### Daily Debugging (balanced)
-
-```bash
-$ kubectl debug my-pod -it --image=ghcr.io/ibtisam-iq/debugbox
-# Pull: 48 MB (reasonable)
-# Tools: curl, dig, tcpdump, strace, kubectx...
-# Time to troubleshoot: <30 seconds
-```
-
-### Deep Forensics (power)
-
-```bash
-$ kubectl run debugbox-power --rm -it --image=ghcr.io/ibtisam-iq/debugbox-power
-# Pull: 110 MB (for serious analysis)
-# Tools: tshark, ltrace, iptables, nftables, bird...
-# Time to troubleshoot: as long as needed
-```
-
-## Comparison to Alternatives
-
-| Feature | DebugBox | netshoot | busybox |
-|---------|----------|----------|---------|
-| Multiple variants | ✓ | ✗ | ✗ |
-| Smallest variant | 15 MB | 208 MB | 1.5 MB |
-| Kubernetes-focused | ✓ | ✓ | ✗ |
-| Multi-arch | ✓ | ✓ | ✓ |
-| Pinned binaries | ✓ (Power) | ✗ | ✗ |
-| Version guarantees | ✓ | ✗ | ✗ |
-| Security scans | ✓ | ✗ | ✗ |
-
-**Choose DebugBox if:** You want a lean, focused debugging tool with multiple size options.
-
-**Choose netshoot if:** You need every tool in one image and don't care about size.
-
-**Choose busybox if:** You literally only need `sh` and `ping`.
-
-## What DebugBox is NOT
-
-- ❌ **Not a sidecar container:** Use `kubectl debug` ephemeral containers
-- ❌ **Not production-workload ready:** Runs as root; for debugging only
-- ❌ **Not a monolithic toolbox:** Each variant is focused; use the right one
-- ❌ **Not a security scanner:** This is for troubleshooting, not vulnerability assessment
+→ Back to **[Quick Start](quick-start.md)** | Explore **[Variants](../variants/overview.md)**

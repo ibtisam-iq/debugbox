@@ -1,62 +1,57 @@
 # Lite Variant
 
-15 MB variant optimized for minimal size and fast pulls.
+**~15 MB** — Minimal and lightning-fast.
 
-## Use Cases
+The **lite** variant is optimized for scenarios where pull speed and image size matter most.
 
-- Quick network diagnostics
-- DNS resolution checks
-- Fast pod startup
-- Resource-constrained environments
-- Init container debugging
+## When to Use Lite
 
-## What's Included
+Perfect for:
 
-### Network Tools
-- `curl` — HTTP requests
-- `netcat-openbsd` — TCP/UDP debugging
-- `iproute2` — IP routing and network configuration
-- `iputils` — ping, traceroute
-- `bind-tools` — dig, nslookup
+- Quick network or DNS checks during incidents
+- Ephemeral debugging in bandwidth-constrained environments
+- Init containers or fast pod startup
+- When you only need basic connectivity tools
 
-### Data Tools
-- `jq` — JSON parsing
-- `yq` — YAML parsing (Alpine package, v3.x)
+**Avoid lite** if you need `tcpdump`, `strace`, `vim`, or Kubernetes context switching.
 
-### Shell
-- `ash` (BusyBox) — Lightweight shell
+## Key Tools
+
+| Category     | Tools                                      |
+|--------------|--------------------------------------------|
+| Networking   | `curl`, `netcat-openbsd`, `iproute2`, `iputils`, `bind-tools` (dig, nslookup) |
+| Data         | `jq`, `yq` (Alpine package)                |
+| Shell        | `ash` (BusyBox)                            |
+
+→ Full details: **[Tooling Manifest](../reference/manifest.md)**
 
 ## Example Usage
 
 ```bash
-kubectl run debugbox-lite --rm -it \
+kubectl run debug-lite --rm -it \
   --image=ghcr.io/ibtisam-iq/debugbox-lite \
   --restart=Never
 ```
 
-Inside the container:
-
+Inside:
 ```bash
-# Quick DNS check
-dig kubernetes.default.svc.cluster.local
-
-# Connectivity test
 curl -I https://kubernetes.io
-
-# Route inspection
+dig kubernetes.default.svc.cluster.local
 ip route
+jq . < config.json
+yq '.metadata.name' config.yaml
 ```
 
-## Size
+## Image Details
 
-- **Compressed:** 15 MB
-- **Uncompressed:** ~50 MB
+- Compressed size: ~15 MB
+- Architectures: `linux/amd64`, `linux/arm64`
 
-## When to Upgrade
+Pull:
+```bash
+ghcr.io/ibtisam-iq/debugbox-lite:latest
+```
 
-Move to **balanced** if you need:
-- bash shell
-- Packet captures (tcpdump)
-- Process inspection (strace, lsof)
-- Text editors (vim)
-- Kubernetes helpers (kubectx)
+## Navigation
+
+→ **[Balanced Variant (recommended)](balanced.md)** | **[Variants Overview](overview.md)** →

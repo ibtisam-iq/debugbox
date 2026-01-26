@@ -1,71 +1,74 @@
 # Security Policy
 
-## Reporting Vulnerabilities
+DebugBox takes security seriously. All released images follow strict practices to minimize risk.
 
-If you discover a security vulnerability in DebugBox, please report it responsibly:
+## Vulnerability Reporting
 
-**Do not** open a public GitHub issue.
+**Do not open public GitHub issues for security vulnerabilities.**
 
-Instead, email security details to the maintainer. Details will be handled confidentially.
+Please report privately via **[Email](mailto:contact@ibtisam-iq.com)**.
 
----
+**Subject:** `[SECURITY] DebugBox vulnerability: [brief description]`
 
-## Security Scanning
+Include:
 
-Every DebugBox release is scanned with **Trivy** for known vulnerabilities:
+- Description and steps to reproduce
+- Affected variant and version
+- Potential impact
 
-- ✅ HIGH and CRITICAL vulnerabilities fail the build
-- ✅ Both amd64 and arm64 are scanned
-- ✅ Scan results are logged in CI/CD
+We follow responsible disclosure:
 
----
+- Acknowledgment within 72 hours
+- Fix timeline based on severity
+- Patch released before public announcement
+- Credit given (if desired)
 
-## Image Security
+→ Full policy and GitHub Security Advisories: **[SECURITY.md on GitHub](https://github.com/ibtisam-iq/debugbox/blob/main/SECURITY.md)**
 
-### By Design
+## Security Practices
 
-- **Runs as root:** This is a debugging tool, not a production workload
-- **No secrets baked in:** Only open-source debugging tools included
-- **Minimal attack surface:** Lite variant excludes compilers/runtimes
-- **Multi-arch support:** Same security properties on all platforms
+### Automated Scanning
+Every release is scanned with **Trivy**:
 
-### Best Practices
+- HIGH and CRITICAL vulnerabilities **block release**
+- Both `amd64` and `arm64` images scanned
+- Results logged in GitHub Actions
 
-- Pin specific versions in production: `--image=ghcr.io/ibtisam-iq/debugbox:{{ git.tag or git.describe }}`
-- Use Lite variant when possible (smallest attack surface)
-- Remove debugging pods after troubleshooting
-- Monitor for security updates
+Local scanning:
+```bash
+make scan
+```
 
----
+### Image Design
+- **Runs as root** — required for tools like `tcpdump`, `strace` (ephemeral debugging only)
+- **No baked-in secrets**
+- **Minimal variants** — lite excludes compilers/runtimes
+- **Pinned dependencies** — critical tools version-locked and SHA-verified where possible
 
-## Supported Versions
+### Support Policy
+From **[RELEASE.md](https://github.com/ibtisam-iq/debugbox/blob/main/RELEASE.md)**:
 
-Security updates are provided for:
-- Current release: Full support
-- Previous release: Critical fixes only
-- Older releases: Best effort
+| Version       | Support                  | Security Patches             |
+|---------------|--------------------------|------------------------------|
+| Current       | Full (12 months)         | All severities               |
+| Previous (N-1)| Security-only (6 months) | HIGH/CRITICAL only           |
+| Older         | Community/best-effort    | None guaranteed              |
 
----
+## Best Practices for Users
 
-## Disclosure Timeline
+- **Pin versions** in production:
+  ```bash
+  ghcr.io/ibtisam-iq/debugbox:v1.0.0
+  ```
+- Use **lite** variant when possible (smallest attack surface)
+- Run in isolated namespaces
+- Delete debugging pods after use
+- Monitor GitHub releases and security advisories
 
-For reported vulnerabilities:
-1. Initial acknowledgment within 48 hours
-2. Assessment and reproduction
-3. Fix development
-4. Patch release
-5. Public disclosure (after fix is released)
+## Acknowledgments
 
----
+Thank you to security researchers who report issues responsibly.
 
-## Responsible Disclosure
+**Hall of Fame:** *No reports yet*
 
-We appreciate security researchers who:
-- Report vulnerabilities responsibly
-- Provide detailed information
-- Allow time for patching before disclosure
-- Work with us to verify fixes
-
----
-
-For full security policy, see [SECURITY.md](https://github.com/ibtisam-iq/debugbox/blob/main/SECURITY.md) in the repository.
+→ Subscribe to security alerts: Watch → Custom → Security alerts on GitHub
