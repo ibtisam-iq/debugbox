@@ -260,6 +260,24 @@
     
     
       <li class="md-tabs__item">
+        <a href="../../guides/examples/" class="md-tabs__link">
+          
+  
+  Guides
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
         <a href="../../reference/manifest/" class="md-tabs__link">
           
   
@@ -275,17 +293,16 @@
   
   
   
+    <li class="md-tabs__item">
+      <a href="../../development/local-setup/" class="md-tabs__link">
+        
+  
     
-    
-      <li class="md-tabs__item">
-        <a href="../../development/local-setup/" class="md-tabs__link">
-          
   
   Development
 
-        </a>
-      </li>
-    
+      </a>
+    </li>
   
 
       
@@ -293,35 +310,16 @@
   
   
   
+    <li class="md-tabs__item">
+      <a href="../../security/policy/" class="md-tabs__link">
+        
+  
     
-    
-      <li class="md-tabs__item">
-        <a href="../../security/policy/" class="md-tabs__link">
-          
   
   Security
 
-        </a>
-      </li>
-    
-  
-
-      
-        
-  
-  
-  
-    
-    
-      <li class="md-tabs__item">
-        <a href="../../guides/troubleshooting/" class="md-tabs__link">
-          
-  
-  Guides
-
-        </a>
-      </li>
-    
+      </a>
+    </li>
   
 
       
@@ -493,126 +491,36 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#installation" class="md-nav__link">
+  <a href="#debug-a-running-pod-most-common" class="md-nav__link">
     <span class="md-ellipsis">
-      Installation
+      Debug a Running Pod (Most Common)
     </span>
   </a>
-  
-    <nav class="md-nav" aria-label="Installation">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#github-container-registry-recommended" class="md-nav__link">
-    <span class="md-ellipsis">
-      GitHub Container Registry (Recommended)
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#docker-hub" class="md-nav__link">
-    <span class="md-ellipsis">
-      Docker Hub
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#kubernetes-usage" class="md-nav__link">
+  <a href="#standalone-debugging-session" class="md-nav__link">
     <span class="md-ellipsis">
-      Kubernetes Usage
+      Standalone Debugging Session
     </span>
   </a>
-  
-    <nav class="md-nav" aria-label="Kubernetes Usage">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#debug-running-pod" class="md-nav__link">
-    <span class="md-ellipsis">
-      Debug Running Pod
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#temporary-debugging-pod" class="md-nav__link">
-    <span class="md-ellipsis">
-      Temporary Debugging Pod
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#host-network-debugging" class="md-nav__link">
-    <span class="md-ellipsis">
-      Host Network Debugging
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#docker-usage" class="md-nav__link">
+  <a href="#inside-the-container" class="md-nav__link">
     <span class="md-ellipsis">
-      Docker Usage
+      Inside the Container
     </span>
   </a>
-  
-    <nav class="md-nav" aria-label="Docker Usage">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#interactive-shell" class="md-nav__link">
-    <span class="md-ellipsis">
-      Interactive Shell
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#debug-another-containers-network" class="md-nav__link">
-    <span class="md-ellipsis">
-      Debug Another Container's Network
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#host-network" class="md-nav__link">
-    <span class="md-ellipsis">
-      Host Network
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#which-variant" class="md-nav__link">
+  <a href="#choose-the-right-variant" class="md-nav__link">
     <span class="md-ellipsis">
-      Which Variant?
+      Choose the Right Variant
     </span>
   </a>
   
@@ -668,7 +576,7 @@
         
   
   <span class="md-ellipsis">
-    Why DebugBox?
+    Motivation
   </span>
   
 
@@ -898,27 +806,6 @@
 
               
             
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../usage/workflows/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    Common Workflows
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
           </ul>
         </nav>
       
@@ -952,7 +839,7 @@
             
   
   <span class="md-ellipsis">
-    Reference
+    Guides
   </span>
   
 
@@ -962,7 +849,7 @@
         <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_5">
             <span class="md-nav__icon md-icon"></span>
-            Reference
+            Guides
           </label>
           <ul class="md-nav__list" data-md-scrollfix>
             
@@ -973,11 +860,11 @@
   
   
     <li class="md-nav__item">
-      <a href="../../reference/manifest/" class="md-nav__link">
+      <a href="../../guides/examples/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
-    Tooling Manifest
+    Examples
   </span>
   
 
@@ -994,53 +881,11 @@
   
   
     <li class="md-nav__item">
-      <a href="../../reference/tags/" class="md-nav__link">
+      <a href="../../guides/troubleshooting/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
-    Image Tags & Registries
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../reference/multi-arch/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    Multi-Architecture
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../reference/sizes/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    Image Sizes
+    Troubleshooting & FAQs
   </span>
   
 
@@ -1083,7 +928,7 @@
             
   
   <span class="md-ellipsis">
-    Development
+    Reference
   </span>
   
 
@@ -1093,12 +938,82 @@
         <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_6">
             <span class="md-nav__icon md-icon"></span>
-            Development
+            Reference
           </label>
           <ul class="md-nav__list" data-md-scrollfix>
             
               
                 
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/manifest/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Tooling Manifest
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/multi-arch/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Multi-Architecture
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/tags/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Image Tags & Registries
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
   
   
   
@@ -1108,7 +1023,7 @@
         
   
   <span class="md-ellipsis">
-    Local Setup
+    Development
   </span>
   
 
@@ -1116,120 +1031,9 @@
     </li>
   
 
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../development/structure/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    Project Structure
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../development/contributing/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    Contributing
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../development/release/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    Release Process
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-          </ul>
-        </nav>
-      
-    </li>
-  
-
     
       
       
-  
-  
-  
-  
-    
-    
-    
-      
-      
-        
-      
-    
-    
-    <li class="md-nav__item md-nav__item--nested">
-      
-        
-        
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" >
-        
-          
-          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="0">
-            
-  
-  <span class="md-ellipsis">
-    Security
-  </span>
-  
-
-            <span class="md-nav__icon md-icon"></span>
-          </label>
-        
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_7">
-            <span class="md-nav__icon md-icon"></span>
-            Security
-          </label>
-          <ul class="md-nav__list" data-md-scrollfix>
-            
-              
-                
   
   
   
@@ -1239,129 +1043,11 @@
         
   
   <span class="md-ellipsis">
-    Security Policy
+    Security
   </span>
   
 
       </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../security/scanning/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    Security Scanning
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-          </ul>
-        </nav>
-      
-    </li>
-  
-
-    
-      
-      
-  
-  
-  
-  
-    
-    
-    
-      
-      
-        
-      
-    
-    
-    <li class="md-nav__item md-nav__item--nested">
-      
-        
-        
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8" >
-        
-          
-          <label class="md-nav__link" for="__nav_8" id="__nav_8_label" tabindex="0">
-            
-  
-  <span class="md-ellipsis">
-    Guides
-  </span>
-  
-
-            <span class="md-nav__icon md-icon"></span>
-          </label>
-        
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_8_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_8">
-            <span class="md-nav__icon md-icon"></span>
-            Guides
-          </label>
-          <ul class="md-nav__list" data-md-scrollfix>
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../guides/troubleshooting/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    Troubleshooting
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../guides/examples/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    Examples & Recipes
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-          </ul>
-        </nav>
-      
     </li>
   
 
@@ -1393,126 +1079,36 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#installation" class="md-nav__link">
+  <a href="#debug-a-running-pod-most-common" class="md-nav__link">
     <span class="md-ellipsis">
-      Installation
+      Debug a Running Pod (Most Common)
     </span>
   </a>
-  
-    <nav class="md-nav" aria-label="Installation">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#github-container-registry-recommended" class="md-nav__link">
-    <span class="md-ellipsis">
-      GitHub Container Registry (Recommended)
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#docker-hub" class="md-nav__link">
-    <span class="md-ellipsis">
-      Docker Hub
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#kubernetes-usage" class="md-nav__link">
+  <a href="#standalone-debugging-session" class="md-nav__link">
     <span class="md-ellipsis">
-      Kubernetes Usage
+      Standalone Debugging Session
     </span>
   </a>
-  
-    <nav class="md-nav" aria-label="Kubernetes Usage">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#debug-running-pod" class="md-nav__link">
-    <span class="md-ellipsis">
-      Debug Running Pod
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#temporary-debugging-pod" class="md-nav__link">
-    <span class="md-ellipsis">
-      Temporary Debugging Pod
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#host-network-debugging" class="md-nav__link">
-    <span class="md-ellipsis">
-      Host Network Debugging
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#docker-usage" class="md-nav__link">
+  <a href="#inside-the-container" class="md-nav__link">
     <span class="md-ellipsis">
-      Docker Usage
+      Inside the Container
     </span>
   </a>
-  
-    <nav class="md-nav" aria-label="Docker Usage">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#interactive-shell" class="md-nav__link">
-    <span class="md-ellipsis">
-      Interactive Shell
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#debug-another-containers-network" class="md-nav__link">
-    <span class="md-ellipsis">
-      Debug Another Container's Network
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#host-network" class="md-nav__link">
-    <span class="md-ellipsis">
-      Host Network
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#which-variant" class="md-nav__link">
+  <a href="#choose-the-right-variant" class="md-nav__link">
     <span class="md-ellipsis">
-      Which Variant?
+      Choose the Right Variant
     </span>
   </a>
   
@@ -1551,85 +1147,60 @@
 
 
 <h1 id="quick-start">Quick Start<a class="headerlink" href="#quick-start" title="Permanent link">&para;</a></h1>
-<p>Get started with DebugBox in seconds.</p>
-<h2 id="installation">Installation<a class="headerlink" href="#installation" title="Permanent link">&para;</a></h2>
-<h3 id="github-container-registry-recommended">GitHub Container Registry (Recommended)<a class="headerlink" href="#github-container-registry-recommended" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code><span class="c1"># Default (balanced variant)</span>
-docker<span class="w"> </span>pull<span class="w"> </span>ghcr.io/ibtisam-iq/debugbox:latest
-
-<span class="c1"># Specific variants</span>
-docker<span class="w"> </span>pull<span class="w"> </span>ghcr.io/ibtisam-iq/debugbox-lite:latest
-docker<span class="w"> </span>pull<span class="w"> </span>ghcr.io/ibtisam-iq/debugbox-power:latest
-</code></pre></div>
-<h3 id="docker-hub">Docker Hub<a class="headerlink" href="#docker-hub" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code>docker<span class="w"> </span>pull<span class="w"> </span>mibtisam/debugbox:latest
-docker<span class="w"> </span>pull<span class="w"> </span>mibtisam/debugbox-lite:latest
-docker<span class="w"> </span>pull<span class="w"> </span>mibtisam/debugbox-power:latest
-</code></pre></div>
-<h2 id="kubernetes-usage">Kubernetes Usage<a class="headerlink" href="#kubernetes-usage" title="Permanent link">&para;</a></h2>
-<h3 id="debug-running-pod">Debug Running Pod<a class="headerlink" href="#debug-running-pod" title="Permanent link">&para;</a></h3>
+<p>Get debugging in seconds.</p>
+<h2 id="debug-a-running-pod-most-common">Debug a Running Pod (Most Common)<a class="headerlink" href="#debug-a-running-pod-most-common" title="Permanent link">&para;</a></h2>
 <div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>debug<span class="w"> </span>my-pod<span class="w"> </span>-it<span class="w"> </span>--image<span class="o">=</span>ghcr.io/ibtisam-iq/debugbox
 </code></pre></div>
-<h3 id="temporary-debugging-pod">Temporary Debugging Pod<a class="headerlink" href="#temporary-debugging-pod" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>run<span class="w"> </span>debugbox<span class="w"> </span>--rm<span class="w"> </span>-it<span class="w"> </span><span class="se">\</span>
+<p>This attaches an <strong>ephemeral debugging container</strong> (balanced variant) with the same network/process namespace as your pod.</p>
+<h2 id="standalone-debugging-session">Standalone Debugging Session<a class="headerlink" href="#standalone-debugging-session" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>run<span class="w"> </span>debug<span class="w"> </span>--rm<span class="w"> </span>-it<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--image<span class="o">=</span>ghcr.io/ibtisam-iq/debugbox<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--restart<span class="o">=</span>Never
 </code></pre></div>
-<h3 id="host-network-debugging">Host Network Debugging<a class="headerlink" href="#host-network-debugging" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>run<span class="w"> </span>debugbox<span class="w"> </span>--rm<span class="w"> </span>-it<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--image<span class="o">=</span>ghcr.io/ibtisam-iq/debugbox<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--overrides<span class="o">=</span><span class="s1">&#39;{&quot;spec&quot;:{&quot;hostNetwork&quot;:true}}&#39;</span><span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--restart<span class="o">=</span>Never
+<h2 id="inside-the-container">Inside the Container<a class="headerlink" href="#inside-the-container" title="Permanent link">&para;</a></h2>
+<p>You now have access to:</p>
+<div class="highlight"><pre><span></span><code>curl<span class="w"> </span>https://example.com
+dig<span class="w"> </span>kubernetes.default.svc.cluster.local
+tcpdump<span class="w"> </span>-i<span class="w"> </span>eth0<span class="w"> </span>port<span class="w"> </span><span class="m">443</span><span class="w"> </span>-c<span class="w"> </span><span class="m">5</span>
+htop
+strace<span class="w"> </span>-p<span class="w"> </span><span class="m">1</span>
+vim<span class="w"> </span>/etc/hosts
 </code></pre></div>
-<h2 id="docker-usage">Docker Usage<a class="headerlink" href="#docker-usage" title="Permanent link">&para;</a></h2>
-<h3 id="interactive-shell">Interactive Shell<a class="headerlink" href="#interactive-shell" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code>docker<span class="w"> </span>run<span class="w"> </span>-it<span class="w"> </span>--rm<span class="w"> </span>ghcr.io/ibtisam-iq/debugbox
-</code></pre></div>
-<h3 id="debug-another-containers-network">Debug Another Container's Network<a class="headerlink" href="#debug-another-containers-network" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code>docker<span class="w"> </span>run<span class="w"> </span>-it<span class="w"> </span>--rm<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--net<span class="w"> </span>container:my-app-container<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>ghcr.io/ibtisam-iq/debugbox
-</code></pre></div>
-<h3 id="host-network">Host Network<a class="headerlink" href="#host-network" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code>docker<span class="w"> </span>run<span class="w"> </span>-it<span class="w"> </span>--rm<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--net<span class="w"> </span>host<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>ghcr.io/ibtisam-iq/debugbox
-</code></pre></div>
-<h2 id="which-variant">Which Variant?<a class="headerlink" href="#which-variant" title="Permanent link">&para;</a></h2>
-<p>Choose based on your needs:</p>
+<h2 id="choose-the-right-variant">Choose the Right Variant<a class="headerlink" href="#choose-the-right-variant" title="Permanent link">&para;</a></h2>
 <table>
 <thead>
 <tr>
 <th>Need</th>
 <th>Variant</th>
-<th>Command</th>
+<th>Image Tag</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>Quick DNS/network check</td>
-<td>lite</td>
-<td><code>--image=ghcr.io/ibtisam-iq/debugbox-lite</code></td>
+<td>Quick network/DNS check</td>
+<td><strong>lite</strong></td>
+<td><code>ghcr.io/ibtisam-iq/debugbox-lite</code></td>
 </tr>
 <tr>
 <td>General troubleshooting</td>
-<td>balanced</td>
-<td><code>--image=ghcr.io/ibtisam-iq/debugbox</code></td>
+<td><strong>balanced</strong> (default)</td>
+<td><code>ghcr.io/ibtisam-iq/debugbox</code></td>
 </tr>
 <tr>
-<td>Packet capture/forensics</td>
-<td>power</td>
-<td><code>--image=ghcr.io/ibtisam-iq/debugbox-power</code></td>
+<td>Packet capture / deep forensics</td>
+<td><strong>power</strong></td>
+<td><code>ghcr.io/ibtisam-iq/debugbox-power</code></td>
 </tr>
 </tbody>
 </table>
-<p>When in doubt, use <strong>balanced</strong> (default).</p>
+<p><strong>When in doubt, use balanced</strong> — it's the default.</p>
 <h2 id="next-steps">Next Steps<a class="headerlink" href="#next-steps" title="Permanent link">&para;</a></h2>
 <ul>
-<li>Explore <a href="../../usage/workflows/">common workflows</a></li>
-<li>Read about <a href="../../variants/overview/">all variants</a></li>
-<li>Check the <a href="../../reference/manifest/">tooling manifest</a></li>
+<li><strong><a href="../installation/">Installation details →</a></strong> (registries, tags, multi-arch)</li>
+<li><strong><a href="../../variants/overview/">Full variant comparison →</a></strong></li>
+<li><strong><a href="../../reference/manifest/">Complete tool list →</a></strong></li>
 </ul>
+<p>→ Ready for real scenarios? Check the <strong><a href="../../guides/examples/">Examples</a></strong></p>
 
 
 

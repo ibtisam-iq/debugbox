@@ -8,3 +8,16 @@
   --md-primary-fg-color: #64B5F6;
   --md-accent-fg-color: #4DD0E1;
 }
+
+.grid.cards ul {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem;
+  list-style: none;
+  padding: 0;
+}
+.grid.cards li {
+  border: 1px solid var(--md-primary-fg-color--light);
+  border-radius: 8px;
+  padding: 1rem;
+}
