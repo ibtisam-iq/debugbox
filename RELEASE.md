@@ -1,309 +1,180 @@
 # DebugBox – Release Process
 
-This document describes **how DebugBox container images are released**, versioned, and published.
-
-It is written for:
-
-* Project maintainers
-* Contributors
-* Users who want to understand release guarantees
-
----
+> **Audience:** Project maintainers, contributors, users  
+> **Purpose:** Understand how DebugBox releases work, versioning guarantees, and image availability
 
 ## Overview
 
-DebugBox follows a **tag-based release model**.
+DebugBox follows a **strict, tag-based release model** for reproducibility and user safety.
 
-* Development happens on branches (primarily `main`)
-* Releases are created **only from Git tags**
-* Container images are published automatically via GitHub Actions
-* Images are pushed to:
+### Release Flow
 
-  * GitHub Container Registry (GHCR)
-  * Docker Hub
+1. Push a version tag (`vX.Y.Z`)
+2. GitHub Actions builds multi-arch images
+3. Trivy security scan (blocks on HIGH/CRITICAL vulnerabilities)
+4. Publish images to GHCR and Docker Hub
+5. Create GitHub Release (manual step)
 
-There is a strict separation between:
+Users can pull versioned images immediately after publishing.
 
-* **Development & testing**
-* **Releasing & publishing**
-
----
-
-## What Triggers a Release
-
-A release is triggered **only** when a version tag is pushed.
-
-Example:
+**Important:** Pushing to `main` does **not** create a release. Releases are intentional and triggered only by version tags:
 
 ```bash
 git tag v1.0.0
 git push origin v1.0.0
 ```
 
-This action:
-
-* Freezes the current state of the repository
-* Triggers the `release.yml` GitHub Actions workflow
-* Builds and publishes container images
-
-> Pushing to `main` alone does **not** create a release.
-
----
+This automatically builds and publishes images for `linux/amd64` and `linux/arm64`.
 
 ## Versioning Scheme
 
-DebugBox uses **Semantic Versioning**:
+DebugBox uses **Semantic Versioning** (`MAJOR.MINOR.PATCH`):
+
+- `v1.0.0` – First stable release
+- `v1.0.1` – Patch (bug fix, no breaking changes)
+- `v1.1.0` – Minor (new features, backward compatible)
+- `v2.0.0` – Major (breaking changes)
+
+Pre-releases use identifiers:
+
+- `v2.0.0-alpha.1`
+- `v2.0.0-beta.1`
+- `v2.0.0-rc.1`
+
+### Key Versioning Rules
+
+- Released versions are **immutable** – images never change after publishing
+- Older versions remain available forever
+- The `:latest` tag points only to the newest **stable** release (never pre-releases)
+
+## Image Variants
+
+| Variant      | Primary Tag Example        | Additional Tags        | Use Case                                                    | Tools Level    |
+|--------------|----------------------------|------------------------|-------------------------------------------------------------|----------------|
+| **Lite**     | `debugbox-lite`           | –                      | Minimal footprint, init containers, constrained environments | Basic          |
+| **Balanced** | `debugbox` (default)      | `debugbox-balanced`    | Recommended for most users                                  | Standard       |
+| **Power**    | `debugbox-power`          | –                      | Advanced SRE, forensics, production debugging               | Comprehensive  |
+| **Base**     | `debugbox-base:latest`    | –                      | Foundation layer for custom variants (manual release)       | None           |
+
+> **Note:** Base image is published manually (not part of automated release workflow).
+
+All variants are published to both registries:
+
+- **GHCR** (recommended): `ghcr.io/ibtisam-iq/<variant>`
+- **Docker Hub**: `docker.io/mibtisam/<variant>`
+
+Example tags for balanced variant:
 
 ```
-MAJOR.MINOR.PATCH
-```
-
-Examples:
-
-* `v1.0.0`
-* `v1.0.1`
-* `v1.1.0`
-
-Rules:
-
-* Versions are immutable once released
-* Older versions remain available indefinitely
-* `latest` always points to the newest release of each variant
-
----
-
-## Released Images
-
-Each release publishes the following container images:
-
-### Base Image (manual release)
-
-```
-ghcr.io/ibtisam-iq/debugbox-base
-```
-
-> The base image is released manually and versioned independently.
-
----
-
-### Lite Variant
-
-```
-ghcr.io/ibtisam-iq/debugbox-lite:<version>
-ghcr.io/ibtisam-iq/debugbox-lite:latest
-
-docker.io/<dockerhub-user>/debugbox-lite:<version>
-docker.io/<dockerhub-user>/debugbox-lite:latest
-```
-
-Purpose:
-
-* Minimal footprint
-* Fast pull times
-* Basic debugging tools
-
----
-
-### Balanced Variant (Default)
-
-```
-ghcr.io/ibtisam-iq/debugbox-balanced:<version>
-ghcr.io/ibtisam-iq/debugbox-balanced:latest
-
-ghcr.io/ibtisam-iq/debugbox:<version>
+ghcr.io/ibtisam-iq/debugbox:v1.0.0
 ghcr.io/ibtisam-iq/debugbox:latest
-
-docker.io/<dockerhub-user>/debugbox-balanced:<version>
-docker.io/<dockerhub-user>/debugbox-balanced:latest
-
-docker.io/<dockerhub-user>/debugbox:<version>
-docker.io/<dockerhub-user>/debugbox:latest
+docker.io/mibtisam/debugbox:v1.0.0
+docker.io/mibtisam/debugbox:latest
 ```
 
-Purpose:
-
-* Recommended default
-* Daily-driver debugging image
-* Used when no variant is explicitly specified
-
----
-
-### Power Variant
-
-```
-ghcr.io/ibtisam-iq/debugbox-power:<version>
-ghcr.io/ibtisam-iq/debugbox-power:latest
-
-docker.io/<dockerhub-user>/debugbox-power:<version>
-docker.io/<dockerhub-user>/debugbox-power:latest
-```
-
-Purpose:
-
-* Advanced SRE and forensics tooling
-* Larger footprint
-* Explicit opt-in
-
----
-
-## Default Image Behavior
-
-When users pull:
+Pulling without a tag defaults to the balanced variant and latest stable version:
 
 ```bash
-docker pull ghcr.io/ibtisam-iq/debugbox
+docker pull ghcr.io/ibtisam-iq/debugbox   # → balanced, latest stable
 ```
 
-They receive:
+## Multi-Architecture Support
 
-* The **Balanced** variant
-* The **latest** released version
+All released images support **linux/amd64** and **linux/arm64**. Docker automatically selects the correct architecture – no extra flags needed.
 
-This behavior is intentional and documented.
+```bash
+# Works seamlessly on Intel, Apple Silicon, Graviton, etc.
+docker pull ghcr.io/ibtisam-iq/debugbox:v1.0.0
+```
 
----
+## Common Usage Examples
 
-## CI vs Release Responsibilities
+```bash
+# Latest stable (balanced)
+docker pull ghcr.io/ibtisam-iq/debugbox
+docker pull mibtisam/debugbox
 
-### CI Workflow (`ci.yml`)
+# Specific version
+docker pull ghcr.io/ibtisam-iq/debugbox:v1.0.0
 
-Runs on:
+# Lite variant
+docker pull ghcr.io/ibtisam-iq/debugbox-lite:latest
 
-* Pushes to `main`
-* Pull requests
+# Power variant
+docker pull ghcr.io/ibtisam-iq/debugbox-power:v1.0.0
 
-Responsibilities:
-
-* Build validation
-* Smoke tests
-* Image size reporting
-* Trivy security scanning
-* **No publishing**
-
----
-
-### Release Workflow (`release.yml`)
-
-Runs on:
-
-* Version tags (`vX.Y.Z`)
-
-Responsibilities:
-
-* Multi-arch builds (`amd64`, `arm64`)
-* Final Trivy security scan
-* Publishing to registries
-* Tagging images (`version`, `latest`)
-
----
+# Interactive shell
+docker run -it ghcr.io/ibtisam-iq/debugbox:latest
+```
 
 ## Security Guarantees
 
-Before any image is published:
+Every released image provides:
 
-* It is built from a tagged commit
-* It passes CI validation
-* It is scanned with Trivy
-* Releases fail on **HIGH** or **CRITICAL** vulnerabilities
+- Traceability to a specific git tag
+- Passed CI validation
+- Scanned with Trivy (blocks release on HIGH/CRITICAL vulnerabilities)
+- Immutability after publishing
 
-This ensures:
+If Trivy detects serious issues, the release fails and no images are published.
 
-* Reproducibility
-* Traceability
-* User trust
+## Support Policy
 
----
+| Version            | Status            | Support Duration | Security Patches       |
+|--------------------|-------------------|------------------|------------------------|
+| Current (e.g., v1.5.x) | Full support  | 12 months       | All severity levels    |
+| Previous (N-1)     | Security-only     | 6 months        | HIGH/CRITICAL only     |
+| Older (N-2+)       | Community support | Indefinite      | None guaranteed        |
 
-## GitHub Releases (Mandatory)
+In case of vulnerabilities or bugs, a new patch version is released promptly. Bad releases are never deleted – instead, a fixed version is published and the problematic one is marked in release notes.
 
-For every DebugBox version, a **GitHub Release page MUST be created**.
+### Handling Problematic Releases
 
-* Git tags (`vX.Y.Z`) are the technical trigger for builds and publishing.
-* GitHub Releases are the **human-facing release artifact**.
-* They serve as the official record of:
+We never delete or overwrite released images. If a vulnerability or critical bug is discovered:
+- A patched version is released immediately
+- The affected release is clearly marked in its GitHub Release notes with a warning
+- Users pulling `:latest` automatically receive the fixed version
 
-  * What changed
-  * What was released
-  * Which version users should consume
+## Pre-Releases
 
-Creating a GitHub Release page is **mandatory for all releases**.
+Pre-release tags (alpha, beta, rc) follow the same build and publish process. Images are versioned accordingly, but `:latest` remains pointed at the newest stable release.
 
----
-
-### Current Process (Manual)
-
-At present, GitHub Releases are created **manually** after pushing a version tag.
-
-Typical flow:
-
-1. Push the version tag:
-
-   ```bash
-   git tag v1.0.0
-   git push origin v1.0.0
-   ```
-2. The release workflow builds and publishes container images.
-3. A GitHub Release page is created manually:
-
-   * Select the existing tag (`v1.0.0`)
-   * Add release notes
-   * Publish the release
-
-This manual step is intentional at this stage to ensure:
-
-* Clear communication
-* Reviewed release notes
-* Maintainer control
-
----
-
-### Future Direction (Automated)
-
-In the future, GitHub Release creation **may be automated** as part of the release workflow.
-
-When automated, this will:
-
-* Still require a version tag
-* Auto-generate release notes
-* Create the GitHub Release page programmatically
-
-Automation will **not** change the requirement that:
-
-> Every release must have a GitHub Release page.
-
----
+Support for pre-releases ends when the corresponding GA version is released.
 
 ## Making a New Release (Checklist)
 
-1. Ensure `main` is green (CI passing)
-2. Decide the next version number
-3. Create and push a tag:
+### Before Release
+- [ ] `main` branch CI is green
+- [ ] Update CHANGELOG.md
+- [ ] Choose appropriate version number
 
-   ```bash
-   git tag vX.Y.Z
-   git push origin vX.Y.Z
-   ```
-4. Monitor GitHub Actions
-5. Verify images in:
+### Create Release
+```bash
+git tag -a v1.0.0 -m "Release v1.0.0: [brief description]"
+git push origin v1.0.0
+```
 
-   * GitHub Packages
-   * Docker Hub
+### Monitor
+- Watch the "Release - Build & Publish DebugBox Images" workflow
+- Confirm build, scan, and publish steps succeed
+
+### After Release
+- [ ] Verify images on GHCR and Docker Hub
+- [ ] Create GitHub Release page manually:
+  - Select the tag
+  - Add release notes (features, fixes, breaking changes, etc.)
+  - Publish
+
+## Release History & Changelog
+
+All releases, changelogs, and detailed notes are available at:  
+[https://github.com/ibtisam-iq/debugbox/releases](https://github.com/ibtisam-iq/debugbox/releases)
+
+## Questions or Suggestions
+
+Open an issue: [https://github.com/ibtisam-iq/debugbox/issues](https://github.com/ibtisam-iq/debugbox/issues)
 
 ---
 
-## Release Philosophy
-
-* Releases are **intentional**
-* Automation does not guess intent
-* Stability is favored over speed
-* Users can always pin exact versions
-
----
-
-## Questions or Changes
-
-Any change to this release process should be treated as:
-
-* A maintainer decision
-* A documented change
-* Potentially a breaking change
+**Last Updated:** January 27, 2026  
+**Maintained By:** DebugBox Core Team

@@ -1,67 +1,114 @@
 # Contributing to DebugBox
 
-Thank you for your interest in contributing!
+Thank you for your interest in contributing to DebugBox!
 
-DebugBox is an open-source Kubernetes debugging toolkit, and contributions of all kinds are welcome — fixes, improvements, docs, CI enhancements, and new tooling proposals.
+DebugBox is a focused, variant-based debugging container suite for Kubernetes and Docker. We welcome bug fixes, improvements, documentation updates, CI enhancements, and thoughtful tooling proposals.
+
+### Found a Bug?
+If you spot a bug:
+
+- Search existing [issues](https://github.com/ibtisam-iq/debugbox/issues)
+- If none exists, open a new issue with version, variant, environment, and repro steps
+
+We triage issues regularly.
+
+### First-Time Contributor?
+Welcome! 👋 Documentation fixes and small improvements are great starting points. We're happy to help you through your first PR.
 
 ---
 
 ## How to Contribute
 
-### 1. Fork the Repository
-Click **Fork** → clone your fork locally.
-
-### 2. Create a Branch
-Use a descriptive branch name:
-
+### 1. Fork and Clone
 ```bash
-git checkout -b feat/add-new-tool
-git checkout -b fix/typo
+git clone https://github.com/ibtisam-iq/debugbox.git
+cd debugbox
+```
+
+### 2. Create a Feature Branch
+```bash
+git checkout -b feat/add-traceroute-to-lite
+# or fix/, docs/, ci/, chore/
 ```
 
 ### 3. Make Your Changes
-Follow project standards:
+- Follow Dockerfile and script style guidelines below
+- **Always update `docs/manifest.yaml`** for tool or shell changes (source of truth)
+- Test locally:
 
-- Keep Dockerfiles clean, deterministic, and minimal.
-- For tooling additions, update `dockerfiles/manifest.yaml`.
-- Run `make build-balanced` and `make test-balanced` locally.
+```bash
+make build-<variant>    # e.g., make build-balanced
+make test-<variant>
+make scan               # Trivy check
+```
 
-### 4. Open a Pull Request (PR)
-- PR must target **main**
-- PR must pass:  
-  ✔ Build  
-  ✔ Smoke tests  
-  ✔ Trivy security scan  
-  ✔ Hadolint  
-  ✔ Reviewer approval (minimum 1)
+### 4. Open a Pull Request
+- Target: `main` branch
+- Title format (Conventional Commits):
 
-### 5. Discuss & Iterate
-Maintain a constructive tone, follow the Code of Conduct, and be ready to revise based on reviewer feedback.
+```
+feat: add traceroute to lite
+fix: correct yq version in power
+docs: improve usage examples
+ci: optimize build cache
+chore: update alpine base
+```
+- PR must pass CI (build, test, scan, lint)
+
+### 5. Discuss and Iterate
+Be responsive to feedback. We aim for constructive, respectful reviews.
 
 ---
 
 ## Adding New Tools
-If you propose adding a new tool:
+Please justify in your PR or issue:
+1. What debugging gap does it fill?
+2. Which variant(s)?
+3. Approximate size impact?
+4. Does it overlap with existing tools?
 
-1. Justify its use-case (Kubernetes networking, cluster debugging, etc.)
-2. Add it to `dockerfiles/manifest.yaml`
-3. Justify why it belongs to `lite`, `balanced`, or `power`
-4. Keep image bloat minimal
+**Required:** Update `docs/manifest.yaml` with the new tool under the correct category.
 
 ---
 
 ## Style Guidelines
-- Keep Dockerfiles deterministic  
-- Prefer single-layer `apk add` blocks with immediate cleanup  
-- No massive RUN chains  
-- Use `/etc/profile.d/*.sh` for UX additions  
-- Avoid adding tooling unrelated to cloud-native/Kubernetes debugging  
+### Dockerfiles
+- Pin versions where possible
+- Combine `apk add` in single RUN with cleanup
+- Comment _why_, not _what_
+```dockerfile
+RUN apk add --no-cache curl netcat-openbsd bind-tools \
+    && rm -rf /var/cache/apk/*
+```
+
+### Shell Scripts
+- Shebang: `/bin/sh` (unless bash needed)
+- `set -euo pipefail`
+- Comment non-obvious logic
 
 ---
 
-## Questions?
-Open a Discussion or contact the maintainer:
+## Scope and Focus
+DebugBox prioritizes **small, secure, ephemeral debugging images**. We generally avoid:
+- Deployment/GitOps tools
+- Heavy editors or full language runtimes
+- Build/compilation tools
 
-`contact@ibtisam-iq.com`
+If you believe an exception is justified for debugging, open an issue to discuss.
 
-Thank you for contributing!
+---
+
+## Testing & CI
+(See local testing commands above)  
+All PRs run full multi-arch builds, smoke tests, Trivy scans, and Hadolint.
+
+---
+
+## Code of Conduct
+Please follow our [Code of Conduct](CODE_OF_CONDUCT.md).
+
+---
+
+Questions? → [Issues](https://github.com/ibtisam-iq/debugbox/issues) or [Email](mailto:contact@ibtisam-iq.com)
+
+Thank you for helping make DebugBox better!

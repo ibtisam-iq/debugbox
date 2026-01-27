@@ -1,87 +1,106 @@
 # Security Policy
 
 ## Supported Versions
-Security updates apply to the latest released version of DebugBox.
 
-| Version | Supported |
-| ------- | --------- |
-| Latest  | ✅        |
-| Older   | ❌        |
+Security updates are provided according to our release support windows:
+
+| Version            | Status            | Security Patches       | Support Duration |
+|--------------------|-------------------|------------------------|------------------|
+| Latest (v1.x.x)    | ✅ Full support   | All severity levels    | 12 months        |
+| Previous (N-1)     | ✅ Security-only  | HIGH/CRITICAL only     | 6 months         |
+| Older (N-2+)       | ⚠️ Community     | None guaranteed        | Best effort      |
+
+See [RELEASE.md](RELEASE.md) for the complete release and support policy.
 
 ---
 
 ## Reporting a Vulnerability
 
-If you discover a security vulnerability in DebugBox, **DO NOT** open a public GitHub issue.
+**Do not** open a public GitHub issue for security vulnerabilities.
 
-Please report it privately:
+Please report privately via **[email](mailto:contact@ibtisam-iq.com)**.
 
-- **Email:** contact@ibtisam-iq.com  
-- **PGP Key:** Coming soon  
+**Subject:** `[SECURITY] DebugBox vulnerability: [brief description]`
 
-We aim to respond within **72 hours**.
+Include as much detail as possible:
+- Description and steps to reproduce
+- Affected variant, version, and architecture
+- Potential impact
+- Suggested fix (optional)
 
-Please include:
+### Expected Response
+- Acknowledgment within 72 hours
+- Assessment and fix timeline based on severity (CRITICAL: ~7 days, HIGH: ~14 days)
+- Coordinated disclosure: Patch released first, then GitHub Security Advisory ~7 days later
+- Credit in the advisory (if desired)
 
-- Description of the issue  
-- Steps to reproduce  
-- Affected DebugBox variant (`lite`, `balanced`, `power`)  
-- Suggested fix (optional)  
+Public disclosure occurs after a patch is available or 90 days, whichever comes first.
+
+---
+
+## Security Advisories
+
+Tracked vulnerabilities and patches:  
+https://github.com/ibtisam-iq/debugbox/security/advisories
+
+Subscribe via GitHub Watch → Custom → Security alerts.
 
 ---
 
 ## Security Practices
 
-DebugBox follows industry-standard container security practices:
+DebugBox incorporates container security best practices:
 
-- **Image scanning** using Trivy  
-- **Fail-on policy** for HIGH and CRITICAL vulnerabilities  
-- **SBOM generation** (planned)  
-- **Checksum verification** for third-party binaries (e.g., `yq`)  
-- **Deterministic builds** using Docker Buildx  
-- **Minimal base images** (Alpine)  
-- **Non-root execution by default**
+- Automated Trivy scanning on every release (blocks HIGH/CRITICAL vulnerabilities)
+- Minimal Alpine Linux base with pinned dependencies
+- Checksum-verified third-party tools
+- Images designed for **ephemeral debugging use** (short-lived, no exposed services)
 
----
+### Running as Root
+DebugBox intentionally runs as root to enable common debugging tasks (e.g., `tcpdump`, process inspection, privileged volume access). This is standard for diagnostic containers.
 
-## Trivy Scan Policy and Exceptions
+**Mitigations:**
+- Ephemeral/short-lived usage only
+- No network services exposed
+- Intended for isolated/trusted environments
 
-DebugBox enforces strict Trivy scanning with build failure on all
-**HIGH** and **CRITICAL** vulnerabilities.
+Users can override with non-root if needed:
+```bash
+docker run -it --user 1000:1000 ghcr.io/ibtisam-iq/debugbox-lite
+```
 
-### Allowed Exceptions
-
-In rare cases, vulnerabilities may be reported inside **third-party static binaries**
-that are bundled for usability (e.g., `kubens`).
-
-These vulnerabilities may be allow-listed **only if all of the following are true**:
-
-- The vulnerability originates from **upstream dependencies**
-- The binary is **not exposed as a network service**
-- The affected code path is **not reachable** in DebugBox’s runtime usage
-- No patch is available upstream at the time
-- The CVE is **explicitly reviewed and documented**
-
-Such exceptions are tracked in `.trivyignore`.
-
-### Current Allow-Listed CVEs
-
-The following CVEs are currently allow-listed due to upstream limitations:
-
-- `CVE-2023-39325` — golang.org/x/net (kubens)
-- `CVE-2025-22868` — golang.org/x/oauth2 (kubens)
-
-These do **not** affect DebugBox’s security posture in practice.
+> Note: Some tools may require elevated privileges.
 
 ---
 
 ## Important Notes
 
-- DebugBox is a **debugging utility image**, not an application server
-- No inbound network services are exposed by default
-- Third-party tools are included for operator convenience
-- Security decisions favor **transparency over silence**
+DebugBox is a **debugging utility** for:
+- Kubernetes ephemeral containers
+- Short-lived diagnostic sessions
+
+**Not intended** for production workloads, long-running services, or exposed endpoints.
+
+By using DebugBox, you trust the maintainers, bundled tools, and source registries (GHCR/Docker Hub).
 
 ---
 
-Thank you for helping keep DebugBox secure.
+## Best Practices for Users
+
+- Pin to specific versions: `ghcr.io/ibtisam-iq/debugbox:v1.0.0`
+- Use in isolated namespaces
+- Apply Kubernetes network policies
+- Run with `--rm` for ephemeral sessions
+
+---
+
+## Acknowledgments
+
+Thank you to security researchers who report issues responsibly.
+
+**Hall of Fame:** *No reports yet*
+
+---
+
+**Last Updated:** January 27, 2026  
+**Maintained By:** DebugBox Core Team

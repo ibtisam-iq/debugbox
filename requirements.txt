@@ -3,7 +3,7 @@ mkdocs==1.6.0
 mkdocs-material==9.5.47
 
 # Plugins
-mkdocs-macros-plugin==1.0.5      # Template variables & versioning support
+mkdocs-macros-plugin==1.0.5       # Template variables & versioning support
 mkdocs-section-index              # Section index plugin (no pinned version yet)
 
 # Syntax highlighting

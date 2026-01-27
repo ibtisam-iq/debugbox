@@ -250,7 +250,7 @@ nav:
   - Getting Started:
     - Quick Start: getting-started/quick-start.md
     - Installation: getting-started/installation.md
-    - Why DebugBox?: getting-started/motivation.md
+    - Motivation: getting-started/motivation.md
   - Variants:
     - Overview: variants/overview.md
     - Lite: variants/lite.md
@@ -259,20 +259,12 @@ nav:
   - Usage:
     - Docker: usage/docker.md
     - Kubernetes: usage/kubernetes.md
-    - Common Workflows: usage/workflows.md
+  - Guides:
+    - Examples: guides/examples.md
+    - Troubleshooting & FAQs: guides/troubleshooting.md
   - Reference:
     - Tooling Manifest: reference/manifest.md
-    - Image Tags & Registries: reference/tags.md
     - Multi-Architecture: reference/multi-arch.md
-    - Image Sizes: reference/sizes.md
-  - Development:
-    - Local Setup: development/local-setup.md
-    - Project Structure: development/structure.md
-    - Contributing: development/contributing.md
-    - Release Process: development/release.md
-  - Security:
-    - Security Policy: security/policy.md
-    - Security Scanning: security/scanning.md
-  - Guides:
-    - Troubleshooting: guides/troubleshooting.md
-    - Examples & Recipes: guides/examples.md
+    - Image Tags & Registries: reference/tags.md
+  - Development: development/local-setup.md
+  - Security: security/policy.md
