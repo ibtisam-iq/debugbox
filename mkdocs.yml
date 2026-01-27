@@ -78,6 +78,23 @@ copyright: Copyright &copy; 2026 DebugBox
 theme:
   name: material
 
+  palette:
+    # Palette toggle for light mode
+    - scheme: default
+      primary: blue
+      accent: cyan
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+    
+    # Palette toggle for dark mode
+    - scheme: slate
+      primary: blue
+      accent: cyan
+      toggle:
+        icon: material/brightness-4
+        name: Switch to light mode
+
   # Custom overrides directory
   # Enables:
   # - Custom footer
@@ -187,6 +204,10 @@ markdown_extensions:
   - pymdownx.tasklist:
       clickable_checkbox: true
 
+  - pymdownx.emoji:
+      emoji_index: !!python/name:material.extensions.emoji.twemoji
+      emoji_generator: !!python/name:material.extensions.emoji.to_svg
+
 
 # ------------------------------------------------------------
 # 6. PLUGINS (Minimal, intentional)
@@ -205,7 +226,15 @@ plugins:
   # Very useful in product docs
   - macros
 
+  - git-revision-date-localized:
+      type: custom                  
+      custom_format: "%B %d, %Y %I:%M:%S %p"
+      enable_creation_date: false
+      fallback_to_build_date: false
+      timezone: Asia/Karachi
+      locale: en
 
+      
 # ------------------------------------------------------------
 # 7. EXTRA CONFIG (Versioning & Metadata)
 # ------------------------------------------------------------

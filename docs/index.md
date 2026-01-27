@@ -83,7 +83,7 @@ DebugBox gives you **three focused variants** so you pull:
 - **[:material-shield-check: Security](security/policy.md)**  
   Reporting, scanning, design trade-offs
 
-- **[:material-code-brackets: Development](development/local-setup.md)**  
+- **[:material-console-line: Development](development/local-setup.md)**  
   Build, test locally
 
 </div>

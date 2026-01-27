@@ -1,46 +1,38 @@
 # DebugBox
 
 **Pipelines**
-
 [![CI](https://github.com/ibtisam-iq/debugbox/actions/workflows/ci.yml/badge.svg)](https://github.com/ibtisam-iq/debugbox/actions/workflows/ci.yml)
 [![Docs](https://github.com/ibtisam-iq/debugbox/actions/workflows/docs.yml/badge.svg)](https://github.com/ibtisam-iq/debugbox/actions/workflows/docs.yml)
 
 **Release & Versioning**
-
 [![Latest Release](https://img.shields.io/github/v/release/ibtisam-iq/debugbox?label=latest%20release)](https://github.com/ibtisam-iq/debugbox/releases)
 [![Semantic Versioning](https://img.shields.io/badge/Semantic%20Versioning-2.0.0-blue.svg)](https://semver.org/)
 
 **Container Registries**
-
 [![Docker Hub](https://img.shields.io/badge/Docker%20Hub-mibtisam%2Fdebugbox-blue?logo=docker)](https://hub.docker.com/r/mibtisam/debugbox)
 [![GHCR](https://img.shields.io/badge/GHCR-ghcr.io%2Fibtisam--iq%2Fdebugbox-blue?logo=github)](https://github.com/ibtisam-iq/debugbox/pkgs/container/debugbox)
 
 **Image Sizes**
-
 [![Image Size - Lite](https://img.shields.io/badge/lite-15MB-blue?logo=docker)](https://github.com/ibtisam-iq/debugbox)
 [![Image Size - Balanced](https://img.shields.io/badge/balanced-48MB-blue?logo=docker)](https://github.com/ibtisam-iq/debugbox)
 [![Image Size - Power](https://img.shields.io/badge/power-110MB-blue?logo=docker)](https://github.com/ibtisam-iq/debugbox)
 
 **Distribution**
-
 [![Docker Pulls](https://img.shields.io/docker/pulls/mibtisam/debugbox?logo=docker)](https://hub.docker.com/u/mibtisam)
 [![Multi-Arch](https://img.shields.io/badge/Multi--Arch-amd64%20%7C%20arm64-blue?logo=docker)](https://github.com/ibtisam-iq/debugbox)
 
 **Security & Quality**
-
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![Trivy Scanning](https://img.shields.io/badge/Trivy-Scanning-blue?logo=aqua)](https://github.com/aquasecurity/trivy)
 [![Powered by Alpine](https://img.shields.io/badge/Powered%20by-Alpine%20Linux-0D597F?logo=alpine-linux)](https://alpinelinux.org/)
 
 **Community & Contribution**
-
 [![Contributor Covenant](https://img.shields.io/badge/Contributor%20Covenant-2.1-4baadc.svg)](CODE_OF_CONDUCT.md)
 [![GitHub Stars](https://img.shields.io/github/stars/ibtisam-iq/debugbox?style=flat&logo=github&logoColor=white)](https://github.com/ibtisam-iq/debugbox/stargazers)
 [![GitHub Forks](https://img.shields.io/github/forks/ibtisam-iq/debugbox?style=flat&logo=github&logoColor=white)](https://github.com/ibtisam-iq/debugbox/network/members)
 [![GitHub Issues](https://img.shields.io/github/issues/ibtisam-iq/debugbox?logo=github)](https://github.com/ibtisam-iq/debugbox/issues)
 
 **Platform Support**
-
 [![Kubernetes Ready](https://img.shields.io/badge/Kubernetes-Ready-326ce5?logo=kubernetes)](https://kubernetes.io/)
 
 **A lightweight, variant-based debugging container suite** for Kubernetes and Docker environments.
