@@ -2,7 +2,7 @@
 
 The **authoritative** list of tools, shell behavior, and environment guarantees in each DebugBox variant.
 
-This page is derived from the source-of-truth [`manifest.yaml`](../../manifest.yaml) in the repository.
+This page is derived from the source-of-truth [`manifest.yaml`](../manifest.yaml) in the repository.
 
 All variants run as **root** by design (required for debugging privileges).
 
@@ -110,7 +110,7 @@ Tools marked with ✓ are included in that variant and all higher tiers.
 
 ## Source of Truth
 
-The raw manifest is maintained in [`manifest.yaml`](../../manifest.yaml).  
+The raw manifest is maintained in [`manifest.yaml`](../manifest.yaml).  
 Any discrepancy between this page and the YAML file should be reported as a bug.
 
 → Back to **[Variants Overview](../variants/overview.md)** | **[Examples](../guides/examples.md)** →

@@ -36,4 +36,4 @@ ghcr.io/ibtisam-iq/debugbox:latest == ghcr.io/ibtisam-iq/debugbox-balanced:lates
 | Development / testing | `:latest`                           |
 | Production / CI/CD    | Pinned version (`:v1.0.0`)          |
 
-→ **[Quick Start](../getting-started/quick-start.md)** | **[Release Process](../development/release.md)** →
+→ **[Quick Start](../getting-started/quick-start.md)** | **[Release Process](https://github.com/ibtisam-iq/debugbox/blob/main/RELEASE.md)** →
