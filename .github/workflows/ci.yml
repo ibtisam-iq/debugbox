@@ -1,4 +1,4 @@
-name: CI - Build, Validate & Smoke Test
+name: CI
 
 # ============================================================
 # Purpose: Validate Docker images on every code change
