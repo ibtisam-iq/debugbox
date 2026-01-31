@@ -1,55 +1,116 @@
 # DebugBox — Base image
 #
-# Shared foundation for all DebugBox variants (light, balanced, power).
-# Provides:
-# - Minimal Alpine Linux
-# - HTTPS support (ca-certificates)
-# - Clean shell UX
-# - OCI metadata
+# Shared foundation for all DebugBox variants (lite, balanced, power).
 #
-# Runs as root by design (standard for debugging containers).
+# PURPOSE:
+#   Provides minimal, secure Alpine Linux base with essential utilities
+#   for Kubernetes debugging containers. All variants inherit from this.
+#
+# GUARANTEES:
+#   - Minimal attack surface (~3.9 MB base)
+#   - HTTPS support (ca-certificates)
+#   - Clean, consistent shell environment
+#   - Deterministic OCI metadata
+#   - Proper prompt with UID awareness
+#
+# BUILD STRATEGY:
+#   Multi-arch build via Docker Buildx (linux/amd64, linux/arm64)
+#   Published to GitHub Container Registry (GHCR)
+#
+# BUILD COMMAND:
+#   docker buildx build --platform linux/amd64,linux/arm64 -t ghcr.io/ibtisam-iq/debugbox-base:latest -f dockerfiles/Dockerfile.base --push .
 
-FROM alpine:3.20.8
+# NOTES:
+#   - Runs as root by design (standard for ephemeral containers)
+#   - Base image does NOT include debugging tools (added by variants)
+#   - Shell helpers are loaded via /etc/profile.d (inherited by all variants)
+#   - Environment variables set here: LANG, LC_ALL, EDITOR (vi)
 
-# OCI labels
+FROM alpine:3.20.9
+
+# ====================================================================
+# OCI IMAGE LABELS
+# ====================================================================
+# Metadata following OCI Image Spec v1.0.2
+# https://github.com/opencontainers/image-spec/blob/main/annotations.md
+
 LABEL org.opencontainers.image.title="DebugBox Base" \
-      org.opencontainers.image.description="Base image for DebugBox Kubernetes debugging containers" \
+      org.opencontainers.image.description="Minimal Alpine base image for DebugBox Kubernetes debugging containers" \
+      org.opencontainers.image.version="base-1.0.0" \
+      org.opencontainers.image.variant="base" \
+      org.opencontainers.image.base.name="alpine:3.20.9" \
       org.opencontainers.image.licenses="MIT" \
-      org.opencontainers.image.version="base-1" \
-      org.opencontainers.image.authors="Muhammad Ibtisam <contact@ibtisam-iq.com>" \
+      org.opencontainers.image.url="https://github.com/ibtisam-iq/debugbox" \
       org.opencontainers.image.source="https://github.com/ibtisam-iq/debugbox" \
-      org.opencontainers.image.vendor="Ibtisam IQ"
+      org.opencontainers.image.documentation="https://debugbox.ibtisam-iq.com" \
+      org.opencontainers.image.vendor="Ibtisam IQ" \
+      org.opencontainers.image.authors="Muhammad Ibtisam <contact@ibtisam-iq.com>"
 
-# Install minimal required packages
-RUN set -eux; \
-    apk add --no-cache ca-certificates
+# ====================================================================
+# SECURITY & ESSENTIALS
+# ====================================================================
+# Install only what's absolutely required:
+#   - ca-certificates: HTTPS/TLS support (required for any curl/wget)
+#   - No other packages: variants add what they need
 
-# Global shell profile (only what base guarantees)
-RUN set -eux; \
-    mkdir -p /etc/profile.d; \
-    printf '%s\n' \
-      'll() { ls -alF "$@"; }' \
-      '' \
-      '# Prompt configuration (BusyBox-safe, UID-aware)' \
-      'if [ "$(id -u)" -eq 0 ]; then' \
-      '  PROMPT_SYMBOL="#"' \
-      'else' \
-      '  PROMPT_SYMBOL="$"' \
-      'fi' \
-      '' \
-      '# Add a blank line before each prompt and apply colors' \
-      'PS1="\n\[\033[1;32m\]\u@\h\[\033[0m\]:\[\033[1;34m\]\w\[\033[0m\]${PROMPT_SYMBOL} "' \
-      'export PS1' \
-      > /etc/profile.d/debugbox-base.sh; \
-    chmod 0644 /etc/profile.d/debugbox-base.sh
+RUN apk add --no-cache ca-certificates && \
+    # Verify certificates are present and valid
+    if [ ! -d /etc/ssl/certs ] || [ ! -f /etc/ssl/certs/ca-certificates.crt ]; then \
+        echo "ERROR: ca-certificates not properly installed" >&2; exit 1; \
+    fi && \
+    echo "DebugBox Base: ca-certificates verified ✓"
 
-# Environment
+# ====================================================================
+# ENVIRONMENT VARIABLES
+# ====================================================================
+# UTF-8 locale for proper character handling
+# EDITOR: default editor for variants that use it (vi, vim, nano)
+
 ENV LANG=C.UTF-8 \
     LC_ALL=C.UTF-8 \
     EDITOR=vi
 
-# Default working directory
+# ====================================================================
+# SHELL PROFILE & PROMPT
+# ====================================================================
+# Setup clean shell environment loaded for all variants.
+#
+# Features:
+#   - PS1 prompt shows: user@hostname:workdir#
+#   - Prompt symbol changes based on UID (# for root, $ for user)
+#   - Colors: green username, blue path
+#   - ll() function: shorthand for 'ls -alF'
+#   - Blank line before each prompt (improves readability)
+#
+# This is loaded for all variants via /etc/profile.d (inherited from base)
+
+# Create profile directory
+RUN mkdir -p /etc/profile.d
+
+# Copy pre-built shell profile
+COPY dockerfiles/build/debugbox-base-profile /etc/profile.d/debugbox-base-profile.sh
+
+# Set correct permissions and verify
+RUN chmod 0644 /etc/profile.d/debugbox-base-profile.sh && \
+    [ -f /etc/profile.d/debugbox-base-profile.sh ] || (echo "ERROR: profile not found" && exit 1) && \
+    echo "DebugBox Base: shell profile configured ✓"
+
+# ====================================================================
+# WORKING DIRECTORY
+# ====================================================================
+# Standard working directory for root containers
+
 WORKDIR /root
 
-# Interactive shell
+# ====================================================================
+# ENTRYPOINT
+# ====================================================================
+# Default shell: ash (BusyBox shell, included in Alpine base)
+# Login shell (-l) loads profiles from /etc/profile and /etc/profile.d
+#
+# Variants override this with their own shells:
+#   - lite:    /bin/ash (minimal)
+#   - balanced: /bin/bash (full shell)
+#   - power:   /bin/bash (full shell)
+
 CMD ["/bin/ash", "-l"]

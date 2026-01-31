@@ -1,10 +1,67 @@
 # DebugBox — Power variant
 #
 # Full-featured SRE-grade debugging and network forensics image.
+# Comprehensive tools for deep system and network troubleshooting.
+#
+# PURPOSE:
+#   Provides all Balanced tools PLUS advanced forensics, routing internals,
+#   deep packet analysis, and SRE-grade scripting capabilities (~104 MB).
+#   Use when Balanced isn't enough—for incident response, forensics, and
+#   infrastructure troubleshooting at scale.
+#
+# USE CASES:
+#   - Deep packet capture and analysis (tcpdump, tshark, ngrep)
+#   - Network packet forensics with TUI (termshark)
+#   - Firewall and routing troubleshooting (iptables, nftables, bird)
+#   - Connection tracking and netflow (conntrack, iftop, iptraf-ng)
+#   - Advanced tracing (tcptraceroute, trippy, ltrace)
+#   - TLS/certificate inspection (openssl, cert-check helpers)
+#   - Dynamic script writing (Python with pip)
+#   - Incident response and forensics workflows
+#   - Load testing and performance benchmarking
+#
+# TRADE-OFFS:
+#   - Largest image (104 MB) — only use when needed
+#   - Uses bash (1.5 MB) — inherits from balanced
+#   - Includes both vim AND nano — editor flexibility
+#   - Firewall tools require CAP_NET_ADMIN in pod
+#   - Python packages may need compilation
+#
+# COMPARISON:
+#   lite (14 MB):     Basic connectivity only
+#   balanced (46 MB): Daily driver
+#   power (104 MB):   Full SRE forensics ← YOU ARE HERE
+#
+# SHELL:
+#   Uses /bin/bash with full features (inherited from balanced):
+#   - Functions, aliases, scripting
+#   - Tab-completion for common tools
+#   - History and editing modes
+#   - Subshells and process substitution
+#
+# PHILOSOPHY:
+#   "If a tool solves an SRE problem, include it."
+#   No size constraints. No trade-offs. Full capability.
 
-# ---- kubectx / kubens builder ----
+# ====================================================================
+# MULTI-STAGE BUILD: kubectx / kubens
+# ====================================================================
+# Build kubectx and kubens from source for:
+#   - Smaller binary size (stripped with -s -w)
+#   - Full control over version
+#   - Transparency and auditability
+#
+# kubectx — Switch Kubernetes contexts
+#           Used for: multi-cluster debugging
+#           Example: kubectx context-name
+#
+# kubens — Switch Kubernetes namespaces
+#          Used for: namespace-scoped debugging
+#          Example: kubens kube-system
+#
+# See: https://github.com/ahmetb/kubectx
+
 FROM golang:1.25-alpine AS kubectx-builder
-# FROM ghcr.io/ibtisam-iq/debugbox-golang:1.25-alpine AS kubectx-builder
 
 ARG KUBECTX_VERSION=v0.9.5
 WORKDIR /src
@@ -21,76 +78,190 @@ RUN CGO_ENABLED=0 go build -trimpath \
       -ldflags="-s -w -X main.version=${KUBECTX_VERSION}" \
       -o kubens ./cmd/kubens
 
-# ---- runtime image ----
+# ====================================================================
+# RUNTIME IMAGE
+# ====================================================================
+
 FROM ghcr.io/ibtisam-iq/debugbox-base:latest
+
+# ====================================================================
+# OCI IMAGE LABELS
+# ====================================================================
+# Metadata following OCI Image Spec v1.0.2
+# https://github.com/opencontainers/image-spec/blob/main/annotations.md
+#
+# Variant-specific labels defined here (unique per image):
+#   - title, description, version, variant, base.name
+#
+# Shared labels injected by CI workflow (common across all variants):
+#   - licenses, url, source, documentation, vendor, authors
+#
+# Auto-generated labels injected by docker/metadata-action:
+#   - created (RFC 3339 timestamp), revision (git SHA)
+# ====================================================================
+
+LABEL org.opencontainers.image.title="DebugBox Power" \
+      org.opencontainers.image.description="Advanced SRE-grade debugging image for deep network forensics and infrastructure troubleshooting" \
+      org.opencontainers.image.version="1.0.0" \
+      org.opencontainers.image.variant="power" \
+      org.opencontainers.image.base.name="ghcr.io/ibtisam-iq/debugbox-base:latest"
+
+# ====================================================================
+# KUBERNETES TOOLS
+# ====================================================================
+# Copy pre-built kubectx and kubens binaries from builder stage
 
 COPY --from=kubectx-builder /src/kubectx /usr/local/bin/kubectx
 COPY --from=kubectx-builder /src/kubens  /usr/local/bin/kubens
 
-ENV PAGER=less
+# ====================================================================
+# POWER PACKAGES — Full SRE-Grade Tools
+# ====================================================================
+# All balanced packages PLUS advanced forensics and routing tools.
+# Grouped by function with clear justifications.
+#
+# Total: ~45 tools across 12 functional groups
+# See build/balanced.packages for Group 1-8 and build/power.packages for Group 9-12 details.
 
-# OCI labels
-LABEL org.opencontainers.image.title="DebugBox Power" \
-      org.opencontainers.image.description="Advanced SRE-grade network forensics and troubleshooting image" \
-      org.opencontainers.image.version="1.0.0"
-
-# Copy shared package definitions into the image
-COPY dockerfiles/common/ /common/
-
-# Install Power-only OS packages
-RUN set -eux; \
-    sh /common/balanced.packages; \
-    apk add --no-cache \
-      nano \
-      nmap-nping \
-      nmap-scripts \
-      tshark \
-      fping \
-      speedtest-cli \
-      ltrace \
-      iptables \
-      nftables \
-      conntrack-tools \
-      bird \
-      bridge-utils \
-      py3-pip
+# Copy package definitions into the image
+COPY dockerfiles/build/ /tmp/build/
+      
+# Install Power packages
+# - Shared package set from balanced.packages
+# - Power-only tools from power.packages
+RUN set -eux && \
+    sh /tmp/build/balanced.packages && \
+    sh /tmp/build/power.packages
 
 # Install Power-only pinned binaries
-COPY scripts /scripts
+COPY scripts/ /tmp/scripts
 
 # Power uses pinned upstream yq binary for full feature set and reproducibility
-RUN set -eux; \
-    # chmod +x /scripts/install-yq-binary; \
-    sh /scripts/install-yq-binary; \
-    rm -rf /scripts
+RUN set -eux && \
+    # chmod +x /tmp/scripts/install-yq-binary && \
+    sh /tmp/scripts/install-yq-binary && \
+    rm -rf /tmp/scripts
 
-# Verify Power debugging tools
-RUN set -eux; \
-    sh /common/balanced.verify; \
-    rm -rf /common; \
-    nano --version >/dev/null; \
-    tshark -v >/dev/null; \
-    fping -v >/dev/null; \
-    speedtest-cli --version >/dev/null; \
-    ltrace --version >/dev/null; \
-    command -v iptables >/dev/null; \
-    command -v nft >/dev/null; \
-    command -v bird >/dev/null; \
-    brctl --version >/dev/null; \
-    pip3 --version >/dev/null; \
-    echo "DebugBox Power tools verified"
+# ====================================================================
+# VERIFICATION — Test All Tools
+# ====================================================================
+# Comprehensive verification of all 45+ tools.
+# Organized by group for clarity and debugging.
 
-# Power-specific helpers and aliases (own file, no base modification)
-RUN set -eux; \
-    mkdir -p /etc/profile.d; \
+RUN set -eux && \
+    sh /tmp/build/balanced.verify && \
+    sh /tmp/build/power.verify && \
+    rm -rf /tmp/build && \
+    echo "=== DebugBox Power: ALL TOOLS VERIFIED ✓ ===" && \
+    echo "Ready for SRE-grade debugging and forensics."
+
+# Set pager for scrolling output (less installed via balanced.packages)
+ENV PAGER=less
+
+# ====================================================================
+# SHELL HELPERS & ALIASES
+# ====================================================================
+# Power-specific convenience functions and aliases.
+#
+# Inherited from balanced /etc/profile.d/debugbox-balanced-profile.sh:
+#   - json() — JSON pretty-printer
+#   - yaml() — YAML pretty-printer
+#   - ports — netstat -tulpn
+#   - connections — ss -tulpn
+#   - routes — ip route show
+#   - k8s-info — current context + namespace
+#
+# Power adds:
+#   - Packet capture helpers (sniff, sniff-http, sniff-dns)
+#   - TLS/certificate inspection (cert-check)
+#   - Routing and firewall helpers (conntrack-watch)
+#
+# These helpers enable quick incident response workflows.
+
+RUN set -eux && \
+    mkdir -p /etc/profile.d && \
     printf '%s\n' \
-      '# DebugBox Power — shell helpers and aliases' \
-      '# Loaded automatically via /etc/profile.d' \
-      "alias sniff='tcpdump -i any -n -s 0'" \
-      'json() { jq . "$@" 2>/dev/null || cat "$@"; }' \
-      'yaml() { yq . "$@" 2>/dev/null || cat "$@"; }' \
-      > /etc/profile.d/debugbox-power.sh; \
-    chmod 0644 /etc/profile.d/debugbox-power.sh
+      '# DebugBox Power — Shell Helpers & Aliases' \
+      '# Loaded automatically via /etc/profile.d (bash)' \
+      '' \
+      '# === File Listing ===' \
+      '# ll() is inherited from debugbox-base-profile.sh' \
+      '' \
+      '# === Data Inspection ===' \
+      '# json() — Pretty-print JSON with fallback' \
+      '#   Usage: echo "{...}" | json' \
+      '#          json file.json' \
+      'json() {' \
+      '  jq . "$@" 2>/dev/null || cat "$@"' \
+      '}' \
+      '' \
+      '# yaml() — Pretty-print YAML with fallback' \
+      '#   Usage: kubectl get pod -o yaml | yaml' \
+      '#          yaml config.yaml' \
+      'yaml() {' \
+      '  yq . "$@" 2>/dev/null || cat "$@"' \
+      '}' \
+      '' \
+      '# === Network Inspection ===' \
+      '# ports() — Show all listening ports (TCP & UDP)' \
+      'alias ports="netstat -tulpn"' \
+      '' \
+      '# connections() — Show all active connections' \
+      'alias connections="ss -tulpn"' \
+      '' \
+      '# routes() — Show IP routing table' \
+      'alias routes="ip route show"' \
+      '' \
+      '# === Kubernetes ===' \
+      '# Show current context and namespace' \
+      'alias k8s-info="echo Context: $(kubectx -c 2>/dev/null || echo unknown); echo Namespace: $(kubens -c 2>/dev/null || echo unknown)"' \
+      '' \
+      '# === Packet Capture Helpers ===' \
+      '# sniff() — Quick packet capture on any interface' \
+      '#   Usage: sniff (capture all packets)' \
+      '#          sniff -c 100 (capture 100 packets)' \
+      '#          sniff -w capture.pcap (save to file)' \
+      'alias sniff="tcpdump -i any -n -s 0"' \
+      '' \
+      '# sniff-http() — Capture HTTP traffic (ports 80 and 443)' \
+      '#   Usage: sniff-http' \
+      '#          sniff-http -c 50 (50 packets)' \
+      'alias sniff-http="tcpdump -i any -n -s 0 \"tcp port 80 or tcp port 443\""' \
+      '' \
+      '# sniff-dns() — Capture DNS queries and responses (port 53)' \
+      '#   Usage: sniff-dns' \
+      '#          sniff-dns | grep myservice' \
+      'alias sniff-dns="tcpdump -i any -n -s 0 \"port 53\""' \
+      '' \
+      '# === TLS/Certificate Inspection ===' \
+      '# cert-check() — Inspect TLS certificate of a server' \
+      '#   Usage: cert-check example.com:443' \
+      '#          cert-check kubernetes.default.svc.cluster.local:443' \
+      'cert-check() {' \
+      '  echo | openssl s_client -connect "$1" -showcerts 2>/dev/null | openssl x509 -text -noout' \
+      '}' \
+      '' \
+      '# === Connection Tracking ===' \
+      '# conntrack-watch() — Watch active connections in real-time' \
+      '#   Usage: conntrack-watch (updates every 2 seconds)' \
+      'alias conntrack-watch="watch -n 2 \"conntrack -L | wc -l && echo 'active connections' && conntrack -L | head -20\""' \
+      '' \
+      > /etc/profile.d/debugbox-power-profile.sh && \
+    \
+    chmod 0644 /etc/profile.d/debugbox-power-profile.sh && \
+    \
+    echo "DebugBox Power: shell helpers configured ✓"
 
-# Default command — interactive Bash shell
+# ====================================================================
+# DEFAULT SHELL
+# ====================================================================
+# Use /bin/bash for full shell features (inherited from balanced).
+# Login shell (-l) sources /etc/profile and /etc/profile.d/*
+#
+# Power users can leverage:
+#   - Complex bash scripts
+#   - Function definitions
+#   - Process substitution
+#   - Advanced pipelines
+
 CMD ["/bin/bash", "-l"]

@@ -1,0 +1,42 @@
+#!/bin/sh
+set -eux
+
+echo "=== DebugBox Power: Verifying Shell & Editors ===" && \
+nano --version >/dev/null && \
+echo "  nano ✓" && \
+\
+echo "=== DebugBox Power: Verifying HTTP/HTTPS ===" && \
+openssl version >/dev/null && \
+echo "  openssl ✓" && \
+\
+echo "=== DebugBox Power: Verifying Deep Packet Analysis ===" && \
+tshark -v >/dev/null && \
+echo "  tshark ✓" && \
+command -v ngrep >/dev/null && \
+echo "  ngrep ✓" && \
+fping -v >/dev/null 2>&1 && \
+echo "  fping ✓" && \
+command -v tcptraceroute >/dev/null && \
+echo "  tcptraceroute ✓" && \
+ltrace --version >/dev/null 2>&1 && \
+echo "  ltrace ✓" && \
+speedtest-cli --version >/dev/null 2>&1 && \
+echo "  speedtest-cli ✓" && \
+\
+echo "=== DebugBox Power: Verifying Firewall & Routing ===" && \
+command -v iptables >/dev/null && \
+echo "  iptables ✓" && \
+command -v nft >/dev/null && \
+echo "  nftables ✓" && \
+command -v conntrack >/dev/null && \
+echo "  conntrack-tools ✓" && \
+bird --version >/dev/null 2>&1 && \
+echo "  bird ✓" && \
+brctl --version >/dev/null 2>&1 && \
+echo "  bridge-utils ✓" && \
+\
+echo "=== DebugBox Power: Verifying Scripting ===" && \
+pip3 --version >/dev/null && \
+echo "  pip3 ✓" && \
+\
+echo ""

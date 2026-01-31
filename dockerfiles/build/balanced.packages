@@ -1,0 +1,167 @@
+#!/bin/sh
+set -eux
+
+# ====================================================================
+# GROUP 1: SHELL & UX
+# ====================================================================
+# bash — Full Bourne Again Shell for scripting, functions, aliases, history
+#        Essential for complex debugging workflows and automation
+#
+# bash-completion — Tab-completion for bash
+#                   Improves UX when typing kubectl, docker, etc.
+#
+# less — Pager for scrolling through large outputs
+#        Used by: git, man pages, kubectl, many tools
+#        Alternatives: more (less powerful), vim (more complex)
+
+# ====================================================================
+# GROUP 2: EDITORS & TEXT PROCESSING
+# ====================================================================
+# vim — Full-featured text editor for config inspection
+#       Used for: editing K8s manifests, logs, configs
+#       Lighter than: nano not included (use power if needed)
+#
+# git — Version control: clone repos, inspect git history, fetch configs
+#       Used for: cloning helm charts, debugging infrastructure-as-code
+
+# ====================================================================
+# GROUP 3: FILESYSTEM & ARCHIVES
+# ====================================================================
+# file — Identify file types (not all files have extensions)
+#        Essential for: determining unknown file formats
+#
+# tar — Archive tool for: decompressing log files, configs
+#       Often needed: inspect .tar.gz files
+#
+# gzip — Compression tool for: working with .gz files
+
+# ====================================================================
+# GROUP 4: DATA INSPECTION (JSON/YAML)
+# ====================================================================
+# jq — JSON parser and transformer
+#      Essential for: parsing K8s API responses, logs
+#      Example: kubectl get pods -o json | jq '.items[].metadata.name'
+#
+# yq — YAML parser and transformer (used by balanced as distro pkg)
+#      Essential for: parsing K8s YAML manifests, configs
+#      Example: kubectl get pod my-pod -o yaml | yq '.spec.containers[].image'
+
+# ====================================================================
+# GROUP 5: HTTP/HTTPS
+# ====================================================================
+# curl — HTTP/HTTPS client for: API testing, service checks
+#        Used for: testing endpoints, downloading files
+#
+# wget — Alternative HTTP client (included for redundancy)
+#        Used when: curl not available or for scripting
+
+# ====================================================================
+# GROUP 6: BASIC NETWORKING (Common across all variants)
+# ====================================================================
+# bind-tools — DNS utilities
+#   dig — Query DNS with full details
+#   nslookup — Simple DNS lookups
+#   host — Quick hostname resolution
+#   Essential for: DNS troubleshooting, service discovery
+#
+# iproute2 — Advanced IP networking
+#   ip route — Routing table inspection and modification
+#   ip addr — IP addresses and interfaces
+#   ip link — Network interface status
+#   ip neigh — ARP/neighbor table
+#   ss — Socket statistics (netstat replacement)
+#   Essential for: understanding network topology, ARP issues
+#
+# iputils — ICMP and basic utilities
+#   ping — ICMP echo requests (connectivity)
+#   arping — ARP ping (layer 2 discovery)
+#   tracepath — Route tracing with MTU discovery
+#   Essential for: quick connectivity checks
+#
+# netcat-openbsd — TCP/UDP socket manipulation
+#   nc -zv — Test port connectivity
+#   nc -l — Listening on port (simple server)
+#   Essential for: port testing, debugging socket issues
+
+# ====================================================================
+# GROUP 7: ADVANCED NETWORKING
+# ====================================================================
+# socat — TCP/UDP relay, multiplexer, powerful socket manipulator
+#         Used for: forwarding ports, debugging protocol issues
+#         Why: More powerful than netcat for complex scenarios
+#
+# mtr — Route tracing with real-time statistics
+#       Shows: latency, packet loss per hop
+#       Better than: traceroute (real-time updates)
+#
+# nmap — Network scanner for port discovery
+#        Used for: scanning ports, service discovery
+#        Note: light version (no NSE scripts)
+#
+# iperf3 — Bandwidth testing between containers
+#          Used for: measuring network performance
+#          Example: iperf3 -s on one pod, iperf3 -c pod1 on another
+#
+# ethtool — NIC tuning and diagnostics
+#           Used for: checking NIC statistics, offload settings
+#
+# iftop — Real-time bandwidth per-host
+#         Used for: identifying noisy neighbors
+#         Better than: nethogs (not in Alpine)
+#
+# tcpdump — Packet capture
+#           Used for: capturing packets for analysis
+#           Note: Analysis done in power variant with tshark
+
+# ====================================================================
+# GROUP 8: SYSTEM INSPECTION
+# ====================================================================
+# htop — Interactive process viewer (colored, sortable)
+#        Better than: top (more user-friendly)
+#
+# strace — System call tracing
+#          Used for: understanding what process is doing
+#          Example: strace -e openat curl http://example.com
+#
+# lsof — Open file descriptors
+#        Used for: finding what files a process has open
+#        Example: lsof -p $(pgrep nginx)
+#
+# procps — Process utilities
+#   ps — Process listing (familiar interface)
+#   top — Process monitoring
+#   kill, nice, renice — Process control
+#
+# psmisc — More process utilities
+#   pstree — Process hierarchy (better than ps)
+#   killall — Kill by process name
+#   fuser — Find processes using resources
+
+apk add --no-cache \
+      bash \
+      bash-completion \
+      git \
+      htop \
+      vim \
+      less \
+      file \
+      bind-tools \
+      curl \
+      wget \
+      iproute2 \
+      iputils \
+      netcat-openbsd \
+      socat \
+      mtr \
+      nmap \
+      iperf3 \
+      ethtool \
+      iftop \
+      tcpdump \
+      jq \
+      lsof \
+      procps \
+      psmisc \
+      strace \
+      tar \
+      gzip

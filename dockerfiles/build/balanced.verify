@@ -1,0 +1,76 @@
+#!/bin/sh
+set -eux
+
+echo "=== DebugBox Balanced: Verifying Shell & Editors ===" && \
+bash --version >/dev/null && \
+echo "  bash ✓" && \
+vim --version >/dev/null && \
+echo "  vim ✓" && \
+git --version >/dev/null && \
+echo "  git ✓" && \
+\
+echo "=== DebugBox Balanced: Verifying Filesystem ===" && \
+file --version >/dev/null && \
+echo "  file ✓" && \
+tar --version >/dev/null && \
+echo "  tar ✓" && \
+\
+echo "=== DebugBox Balanced: Verifying Data Inspection ===" && \
+jq --version >/dev/null && \
+echo "  jq ✓" && \
+yq --version >/dev/null && \
+echo "  yq ✓" && \
+\
+echo "=== DebugBox Balanced: Verifying HTTP/HTTPS ===" && \
+curl --version >/dev/null && \
+echo "  curl ✓" && \
+wget --version >/dev/null && \
+echo "  wget ✓" && \
+\
+echo "=== DebugBox Balanced: Verifying Basic Networking ===" && \
+dig -v >/dev/null 2>&1 && \
+echo "  dig ✓" && \
+command -v nslookup >/dev/null && \
+echo "  nslookup ✓" && \
+ip -V >/dev/null && \
+echo "  ip ✓" && \
+ping -V >/dev/null 2>&1 && \
+echo "  ping ✓" && \
+nc -h >/dev/null 2>&1 && \
+echo "  netcat-openbsd ✓" && \
+\
+echo "=== DebugBox Balanced: Verifying Advanced Networking ===" && \
+socat -V >/dev/null 2>&1 && \
+echo "  socat ✓" && \
+mtr --version >/dev/null 2>&1 && \
+echo "  mtr ✓" && \
+nmap --version >/dev/null && \
+echo "  nmap ✓" && \
+iperf3 --version >/dev/null && \
+echo "  iperf3 ✓" && \
+ethtool --version >/dev/null 2>&1 && \
+echo "  ethtool ✓" && \
+command -v iftop >/dev/null && \
+echo "  iftop ✓" && \
+tcpdump --version >/dev/null 2>&1 && \
+echo "  tcpdump ✓" && \
+\
+echo "=== DebugBox Balanced: Verifying System Inspection ===" && \
+htop --version >/dev/null && \
+echo "  htop ✓" && \
+strace --version >/dev/null && \
+echo "  strace ✓" && \
+lsof -v >/dev/null 2>&1 && \
+echo "  lsof ✓" && \
+ps --version >/dev/null && \
+echo "  procps ✓" && \
+pstree --version >/dev/null 2>&1 && \
+echo "  psmisc ✓" && \
+\
+echo "=== DebugBox Balanced: Verifying Kubernetes Integration ===" && \
+kubectx --help >/dev/null 2>&1 && \
+echo "  kubectx ✓" && \
+kubens --help >/dev/null 2>&1 && \
+echo "  kubens ✓" && \
+\
+echo ""

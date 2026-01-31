@@ -2,10 +2,59 @@
 #
 # Recommended daily-driver debugging image for Kubernetes and cloud-native work.
 # Balances capability and size for most real-world troubleshooting scenarios.
+#
+# PURPOSE:
+#   Provides comprehensive debugging tools in a reasonable size (~46 MB).
+#   Designed as the go-to image for DevOps, SREs, and platform engineers.
+#   Covers 95% of daily Kubernetes troubleshooting needs.
+#
+# USE CASES:
+#   - Pod networking issues (tcpdump, strace, netstat)
+#   - Log inspection and parsing (jq, yq, grep, less)
+#   - Performance analysis (htop, iftop, iperf3)
+#   - System troubleshooting (lsof, strace, ps)
+#   - Cluster context switching (kubectx, kubens)
+#   - Config editing and file management (vim, git, tar, gzip)
+#   - Network path analysis (mtr, nmap, socat)
+#   - Bandwidth testing and iperf benchmarks
+#
+# TRADE-OFFS:
+#   - Uses bash (1.5 MB) instead of ash (4 KB)
+#   - Includes vim but not nano (lightweight editor in power)
+#   - No deep packet filtering (ngrep in power)
+#   - No firewall/routing internals (iptables, nftables in power)
+#
+# COMPARISON:
+#   lite (14 MB):     Basic connectivity only
+#   balanced (46 MB): Daily driver ← YOU ARE HERE
+#   power (104 MB):   Full SRE forensics
+#
+# SHELL:
+#   Uses /bin/bash with full features:
+#   - Functions, aliases, scripting
+#   - Tab-completion for common tools
+#   - History and editing modes
+#   - Subshells and process substitution
 
-# ---- kubectx / kubens builder ----
+# ====================================================================
+# MULTI-STAGE BUILD: kubectx / kubens
+# ====================================================================
+# Build kubectx and kubens from source for:
+#   - Smaller binary size (stripped with -s -w)
+#   - Full control over version
+#   - Transparency and auditability
+#
+# kubectx — Switch Kubernetes contexts
+#           Used for: multi-cluster debugging
+#           Example: kubectx context-name
+#
+# kubens — Switch Kubernetes namespaces
+#          Used for: namespace-scoped debugging
+#          Example: kubens kube-system
+#
+# See: https://github.com/ahmetb/kubectx
+
 FROM golang:1.25-alpine AS kubectx-builder
-# FROM ghcr.io/ibtisam-iq/debugbox-golang:1.25-alpine AS kubectx-builder
 
 ARG KUBECTX_VERSION=v0.9.5
 WORKDIR /src
@@ -22,46 +71,151 @@ RUN CGO_ENABLED=0 go build -trimpath \
       -ldflags="-s -w -X main.version=${KUBECTX_VERSION}" \
       -o kubens ./cmd/kubens
 
-# ---- runtime image ----
+# ====================================================================
+# RUNTIME IMAGE
+# ====================================================================
+
 FROM ghcr.io/ibtisam-iq/debugbox-base:latest
+
+# ====================================================================
+# OCI IMAGE LABELS
+# ====================================================================
+# Metadata following OCI Image Spec v1.0.2
+# https://github.com/opencontainers/image-spec/blob/main/annotations.md
+#
+# Variant-specific labels defined here (unique per image):
+#   - title, description, version, variant, base.name
+#
+# Shared labels injected by CI workflow (common across all variants):
+#   - licenses, url, source, documentation, vendor, authors
+#
+# Auto-generated labels injected by docker/metadata-action:
+#   - created (RFC 3339 timestamp), revision (git SHA)
+# ====================================================================
+
+LABEL org.opencontainers.image.title="DebugBox Balanced" \
+      org.opencontainers.image.description="Balanced debugging image for everyday Kubernetes and cloud-native troubleshooting" \
+      org.opencontainers.image.version="1.0.0" \
+      org.opencontainers.image.variant="balanced" \
+      org.opencontainers.image.base.name="ghcr.io/ibtisam-iq/debugbox-base:latest"
+
+# ====================================================================
+# KUBERNETES TOOLS
+# ====================================================================
+# Copy pre-built kubectx and kubens binaries from builder stage
 
 COPY --from=kubectx-builder /src/kubectx /usr/local/bin/kubectx
 COPY --from=kubectx-builder /src/kubens  /usr/local/bin/kubens
 
-ENV PAGER=less
+# ====================================================================
+# BALANCED PACKAGES — Daily Driver Tools
+# ====================================================================
+# Carefully selected packages grouped by function.
+# Each tool justifies its inclusion with a specific problem it solves.
+#
+# SELECTION PHILOSOPHY:
+#   - No bloat: Every tool has a clear purpose
+#   - Complementary: Tools work together to solve real problems
+#   - Standard: Tools found in most SRE/DevOps toolkits
+#   - Size-conscious: Skip niche tools (those go in power variant)
+#
+# Total: ~25 tools across 8 functional groups
+# See build/balanced.packages for Group 1-8 details.
 
-# OCI labels
-LABEL org.opencontainers.image.title="DebugBox Balanced" \
-      org.opencontainers.image.description="Balanced debugging image for everyday Kubernetes and cloud-native troubleshooting" \
-      org.opencontainers.image.version="1.0.0"
-
-# Copy shared package definitions into the image
-COPY dockerfiles/common/ /common/
+# Copy package definitions into the image
+COPY dockerfiles/build/ /tmp/build/
       
 # Install Balanced packages
 # - Shared package set from balanced.packages
 # - Balanced-only tool: yq (via distro package)
-RUN set -eux; \
-    sh /common/balanced.packages; \
+RUN set -eux && \
+    sh /tmp/build/balanced.packages && \
     apk add --no-cache yq
 
-# Verify balanced debugging tools
-RUN set -eux; \
-    sh /common/balanced.verify; \
-    rm -rf /common; \
+# ====================================================================
+# VERIFICATION — Test All Tools
+# ====================================================================
+# Verify every tool works. Catches missing dependencies at build time.
+# Organized by functional group for clarity.
+
+RUN set -eux && \
+    sh /tmp/build/balanced.verify && \
+    rm -rf /tmp/build && \
     echo "DebugBox Balanced tools verified"
 
-# DebugBox Balanced — shell helpers
-# Loaded automatically via /etc/profile.d
-RUN set -eux; \
-    mkdir -p /etc/profile.d; \
-    printf '%s\n' \
-      '# DebugBox Balanced — shell helpers' \
-      '# Loaded automatically via /etc/profile.d' \
-      'json() { jq . "$@" 2>/dev/null || cat "$@"; }' \
-      'yaml() { yq . "$@" 2>/dev/null || cat "$@"; }' \
-      > /etc/profile.d/debugbox-balanced.sh; \
-    chmod 0644 /etc/profile.d/debugbox-balanced.sh
+# Set pager for scrolling output (less installed via balanced.packages)
+ENV PAGER=less
 
-# Default command — interactive Bash shell
+# ====================================================================
+# SHELL HELPERS & ALIASES
+# ====================================================================
+# Convenience functions and aliases for bash shell.
+#
+# Inherited from base /etc/profile.d/debugbox-base-profile.sh:
+#   - ll()  — ls -alF
+#   - PS1   — color-coded prompt
+#
+# Balanced adds:
+#   - json() — JSON pretty-printer
+#   - yaml() — YAML pretty-printer
+#   - ports() — Show listening ports
+#   - connections() — Show active connections
+#   - routes() — Show routing table
+#
+# These make common debugging tasks one command away.
+
+RUN set -eux && \
+    mkdir -p /etc/profile.d && \
+    printf '%s\n' \
+      '# DebugBox Balanced — Shell Helpers & Aliases' \
+      '# Loaded automatically via /etc/profile.d (bash)' \
+      '' \
+      '# === File Listing ===' \
+      '# ll() is inherited from debugbox-base-profile.sh' \
+      '' \
+      '# === Data Inspection ===' \
+      '# json() — Pretty-print JSON with fallback' \
+      '#   Usage: echo "{...}" | json' \
+      '#          json file.json' \
+      'json() {' \
+      '  jq . "$@" 2>/dev/null || cat "$@"' \
+      '}' \
+      '' \
+      '# yaml() — Pretty-print YAML with fallback' \
+      '#   Usage: kubectl get pod -o yaml | yaml' \
+      '#          yaml config.yaml' \
+      'yaml() {' \
+      '  yq . "$@" 2>/dev/null || cat "$@"' \
+      '}' \
+      '' \
+      '# === Network Inspection ===' \
+      '# ports() — Show all listening ports (TCP & UDP)' \
+      'alias ports="netstat -tulpn"' \
+      '' \
+      '# connections() — Show all active connections' \
+      'alias connections="ss -tulpn"' \
+      '' \
+      '# routes() — Show IP routing table' \
+      'alias routes="ip route show"' \
+      '' \
+      '# === Kubernetes ===' \
+      '# Show current context and namespace' \
+      'alias k8s-info="echo Context: $(kubectx -c 2>/dev/null || echo unknown); echo Namespace: $(kubens -c 2>/dev/null || echo unknown)"' \
+      > /etc/profile.d/debugbox-balanced-profile.sh && \
+    \
+    chmod 0644 /etc/profile.d/debugbox-balanced-profile.sh && \
+    \
+    echo "DebugBox Balanced: shell helpers configured ✓"
+
+# ====================================================================
+# DEFAULT SHELL
+# ====================================================================
+# Use /bin/bash for full shell features:
+#   - Functions and complex scripts
+#   - Aliases and history expansion
+#   - Tab-completion
+#   - Subshells and process substitution
+#
+# Login shell (-l) sources /etc/profile and /etc/profile.d/*
+
 CMD ["/bin/bash", "-l"]
