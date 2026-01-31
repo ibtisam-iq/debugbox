@@ -73,6 +73,33 @@ docker run -it --user 1000:1000 ghcr.io/ibtisam-iq/debugbox-lite
 
 ---
 
+## Known Ignored Vulnerabilities
+
+We use automated Trivy scanning on every build/release to block HIGH/CRITICAL vulnerabilities in the Alpine base and most dependencies. However, some static Go binaries (specifically **kubens** from ahmetb/kubectx) embed older versions of third-party Go modules:
+
+- `golang.org/x/net` (v0.8.0)
+- `golang.org/x/oauth2` (pre-v0.27.0)
+
+These trigger the following HIGH-severity findings in Trivy:
+
+- **CVE-2023-39325** (HTTP/2 rapid stream resets causing server resource exhaustion)  
+  - Fixed in golang.org/x/net v0.17.0  
+  - **Why ignored**: This is a server-side DoS vulnerability. kubens is a client-only tool with no exposed HTTP/2 server in DebugBox containers. Not exploitable in our runtime context (ephemeral debug pods).
+
+- **CVE-2025-22868** (Unexpected memory consumption during malformed token parsing in oauth2/jws)  
+  - Fixed in golang.org/x/oauth2 v0.27.0  
+  - **Why ignored**: kubens may parse OAuth tokens, but in DebugBox usage (trusted Kubernetes clusters, no untrusted inputs), malformed tokens from attackers are not a realistic threat vector. Low exploitability in isolated debug sessions.
+
+- **CVE-2025-61728** (HIGH) in yq binary (golang stdlib archive/zip DoS via malicious ZIP index)
+  - Fixed in Go 1.25.6 / 1.24.12
+  - **Why ignored**: yq in DebugBox processes trusted Kubernetes YAML output only — no malicious ZIP archives fed to it. Low exploitability in ephemeral debug pods.  
+
+These are suppressed via `.trivyignore` (see repository root) to avoid false-positive build failures. The kubectx project has not yet bumped these dependencies in recent releases (last stable v0.9.5 from 2023). We monitor upstream and will rebuild with updated versions if they become available or if risk assessment changes.
+
+For full transparency, these are **not** vulnerabilities in the DebugBox base or core tooling — only in one optional utility binary.
+
+---
+
 ## Important Notes
 
 DebugBox is a **debugging utility** for:
@@ -102,5 +129,5 @@ Thank you to security researchers who report issues responsibly.
 
 ---
 
-**Last Updated:** January 27, 2026  
+**Last Updated:** January 31, 2026  
 **Maintained By:** DebugBox Core Team
