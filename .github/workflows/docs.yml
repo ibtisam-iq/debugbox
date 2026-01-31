@@ -126,7 +126,7 @@ jobs:
       # ------------------------------------------------------
       # QA: Broken link checker
       # ------------------------------------------------------
-      - name: QA – broken links
+      - name: QA - broken links
         uses: lycheeverse/lychee-action@v2
         with:
           args: '--no-progress --accept 200,429 site/'
@@ -136,9 +136,9 @@ jobs:
       # ------------------------------------------------------
       # QA: HTML validation
       # ------------------------------------------------------
-      # - name: QA – HTML validation
+      # - name: QA - HTML validation
       #  run: html5validator --root site --blacklist robots.txt --ignore "autocomplete" "autocorrect" "autocapitalize" "No \"p\" element in scope"
-      - name: QA – HTML validation
+      - name: QA - HTML validation
         uses: Cyb3r-Jak3/html5validator-action@v7.2.0
         with:
           root: site/
@@ -243,56 +243,37 @@ jobs:
 
       # - run: echo "debugbox.ibtisam-iq.com" > site/CNAME
       # Let it copy from docs/CNAME via mkdocs build
-
-      # =====================================================
-      # 🚀 RELEASE FLOW (TAG PUSH)
-      # =====================================================
-      # This runs ONLY when:
-      # github.ref looks like:
-      #   refs/tags/v1.0.0
-      #
-      # Meaning:
-      # - A real release
-      # - Create frozen docs
-      # - Update latest pointer
-      # =====================================================
+      
+      # ----------------------------------------------------
+      # Deploy documentation using Mike
+      # ----------------------------------------------------
       - name: Deploy frozen version (release)
         if: startsWith(github.ref, 'refs/tags/v')
         run: |
           VERSION="${GITHUB_REF_NAME}"
-
-          echo "Releasing documentation for ${VERSION}"
-
-          # Creates:
-          # /v1.0.0  (frozen forever)
-          # Updates:
-          # /latest  -> points to this version
-          mike deploy --push --update-aliases "${VERSION}" latest
-
-          # Ensure homepage opens on /latest
-          mike set-default --push latest
+          echo "Deploying frozen docs for ${VERSION}"
+          mike deploy --push "${VERSION}"
+          mike deploy --push dev
+          mike set-default --push "${VERSION}"
 
 
-      # =====================================================
-      # 📝 DOCS UPDATE FLOW (MAIN BRANCH)
-      # =====================================================
-      # This runs ONLY when:
-      # github.ref == refs/heads/main
-      #
-      # Meaning:
-      # - No release
-      # - Just docs changes
-      # - Update latest only
-      # =====================================================
-      - name: Deploy latest docs (no release)
+      # ----------------------------------------------------
+      # Update dev preview for main branch
+      # ----------------------------------------------------
+      - name: Update dev preview (main branch)
         if: github.ref == 'refs/heads/main'
         run: |
-          echo "Updating latest documentation"
+          echo "Updating dev preview from main"
+          mike deploy --push dev
+          
 
-          # Updates ONLY /latest
-          # Does NOT touch:
-          # /v1.0.0, /v1.0.1, etc.
-          mike deploy --push latest
-          # Use mike set-default only when a new version is introduced.
-          # Never use it for normal docs updates.
-          # mike set-default --push latest
+# ============================================================
+# NOTES
+# ============================================================
+# Documentation URLs:
+#
+# https://debugbox.ibtisam-iq.com/          → redirects to /latest
+# https://debugbox.ibtisam-iq.com/latest/   → shows /1.0.0/ (last release)
+# https://debugbox.ibtisam-iq.com/dev/      → shows current main (live updates)
+# https://debugbox.ibtisam-iq.com/1.0.0/    → frozen
+# https://debugbox.ibtisam-iq.com/1.0.1/    → frozen (when released)

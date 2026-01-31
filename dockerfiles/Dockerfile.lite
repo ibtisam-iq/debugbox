@@ -49,10 +49,7 @@ FROM ghcr.io/ibtisam-iq/debugbox-base:latest
 #   - created (RFC 3339 timestamp), revision (git SHA)
 # ====================================================================
 
-LABEL org.opencontainers.image.title="DebugBox Lite" \
-      org.opencontainers.image.description="Minimal debugging image for quick Kubernetes connectivity checks and ephemeral containers" \
-      org.opencontainers.image.version="1.0.0" \
-      org.opencontainers.image.variant="lite" \
+LABEL org.opencontainers.image.variant="lite" \
       org.opencontainers.image.base.name="ghcr.io/ibtisam-iq/debugbox-base:latest"
 
 # ====================================================================

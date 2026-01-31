@@ -93,10 +93,7 @@ FROM ghcr.io/ibtisam-iq/debugbox-base:latest
 #   - created (RFC 3339 timestamp), revision (git SHA)
 # ====================================================================
 
-LABEL org.opencontainers.image.title="DebugBox Balanced" \
-      org.opencontainers.image.description="Balanced debugging image for everyday Kubernetes and cloud-native troubleshooting" \
-      org.opencontainers.image.version="1.0.0" \
-      org.opencontainers.image.variant="balanced" \
+LABEL org.opencontainers.image.variant="balanced" \
       org.opencontainers.image.base.name="ghcr.io/ibtisam-iq/debugbox-base:latest"
 
 # ====================================================================

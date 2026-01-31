@@ -100,10 +100,7 @@ FROM ghcr.io/ibtisam-iq/debugbox-base:latest
 #   - created (RFC 3339 timestamp), revision (git SHA)
 # ====================================================================
 
-LABEL org.opencontainers.image.title="DebugBox Power" \
-      org.opencontainers.image.description="Advanced SRE-grade debugging image for deep network forensics and infrastructure troubleshooting" \
-      org.opencontainers.image.version="1.0.0" \
-      org.opencontainers.image.variant="power" \
+LABEL org.opencontainers.image.variant="power" \
       org.opencontainers.image.base.name="ghcr.io/ibtisam-iq/debugbox-base:latest"
 
 # ====================================================================

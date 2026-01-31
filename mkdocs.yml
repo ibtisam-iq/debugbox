@@ -208,6 +208,8 @@ markdown_extensions:
       emoji_index: !!python/name:material.extensions.emoji.twemoji
       emoji_generator: !!python/name:material.extensions.emoji.to_svg
 
+  - mike:
+      version_selector: true
 
 # ------------------------------------------------------------
 # 6. PLUGINS (Minimal, intentional)
