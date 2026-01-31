@@ -1,118 +1,56 @@
 name: Release
 
-# ============================================================
-# Purpose: Build and publish production images to registries
-# ============================================================
-# This workflow:
-# - Builds production-ready multi-arch images (amd64, arm64)
-# - Injects OCI labels for metadata compliance
-# - Scans with Trivy for security vulnerabilities
-# - Publishes to GitHub Container Registry (GHCR) and Docker Hub
-#
-# IMPORTANT:
-# - base variant is maintained separately (manual push)
-# - Only publishes: lite, balanced, power variants
-#
-# Triggered by version tags (e.g., v1.0.0)
-# ============================================================
-
-# ============================================================
-# Trigger Configuration
-# ============================================================
 on:
-  # Production release via version tags
   push:
     tags:
-      - "v*.*.*"  # Matches: v1.0.0, v1.2.3, v2.0.0-beta, etc.
-
-  # Manual trigger (useful for re-releases or testing)
+      - 'v*.*.*'
   workflow_dispatch:
 
-# ============================================================
-# Permissions (Principle of Least Privilege)
-# ============================================================
 permissions:
-  contents: read   # Read repository contents
-  packages: write  # Push to GitHub Container Registry (GHCR)
+  contents: read
+  packages: write
 
-# ============================================================
-# Jobs
-# ============================================================
 jobs:
-  build-and-publish:
-    name: Build & Publish Release Images
+  release:
+    name: Build, Scan & Push (Atomic)
     runs-on: ubuntu-latest
-
-    # ========================================================
-    # Matrix Strategy: Build lite, balanced, power variants
-    # ========================================================
-    # Note: base variant excluded (maintained manually)
-    # ========================================================
-    strategy:
-      matrix:
-        variant: [lite, balanced, power]
-      fail-fast: true
-
     steps:
-      # =====================================================
-      # Checkout
-      # =====================================================
-      - name: Checkout repository
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-      # =====================================================
-      # Extract Release Version from Git Tag
-      # =====================================================
-      # Example: refs/tags/v1.0.0 → 1.0.0
-      # =====================================================
-      - name: Extract release version
+      - name: Extract version
         id: version
         run: |
           VERSION="${GITHUB_REF#refs/tags/v}"
           echo "version=${VERSION}" >> $GITHUB_OUTPUT
 
-      # =====================================================
-      # Multi-Architecture Support (QEMU)
-      # =====================================================
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v3
         with:
           platforms: amd64,arm64
 
-      # =====================================================
-      # Docker Buildx (Multi-platform builds)
-      # =====================================================
-      - name: Set up Docker Buildx
+      - name: Set up Buildx
         uses: docker/setup-buildx-action@v3
 
-      # =====================================================
-      # Security: Install Trivy Scanner
-      # =====================================================
-      # Final safety gate before publishing images
-      # =====================================================
-      - name: Install Trivy
-        run: |
-          set -e
-          curl -sfL https://raw.githubusercontent.com/aquasecurity/trivy/main/contrib/install.sh \
-            | sh -s -- -b /usr/local/bin v0.68.2
-          trivy --version
+      - name: Login to GHCR
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
 
-      # =====================================================
-      # Metadata: Extract OCI Labels for ${{ matrix.variant }}
-      # =====================================================
-      # Generates standard OCI labels for the variant.
-      # Auto-generates: created (timestamp), revision (git SHA)
-      # Custom labels: licenses, url, source, documentation, vendor, authors
-      #
-      # These labels are injected into the image Config.Labels
-      # =====================================================
-      - name: Extract metadata for ${{ matrix.variant }}
+      - name: Login to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+      - name: Set up Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Extract metadata
         id: meta
         uses: docker/metadata-action@v5
         with:
-          images: |
-            ghcr.io/ibtisam-iq/debugbox-${{ matrix.variant }}
-            docker.io/${{ secrets.DOCKERHUB_USERNAME }}/debugbox-${{ matrix.variant }}
+          images: ghcr.io/ibtisam-iq/debugbox
           labels: |
             org.opencontainers.image.licenses=MIT
             org.opencontainers.image.url=https://github.com/ibtisam-iq/debugbox
@@ -121,86 +59,93 @@ jobs:
             org.opencontainers.image.vendor=Ibtisam IQ
             org.opencontainers.image.authors=Muhammad Ibtisam <contact@ibtisam-iq.com>
 
-      # =====================================================
-      # Login: GitHub Container Registry (GHCR)
-      # =====================================================
-      - name: Login to GHCR
-        uses: docker/login-action@v3
-        with:
-          registry: ghcr.io
-          username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
-
-      # =====================================================
-      # Login: Docker Hub
-      # =====================================================
-      - name: Login to Docker Hub
-        uses: docker/login-action@v3
-        with:
-          username: ${{ secrets.DOCKERHUB_USERNAME }}
-          password: ${{ secrets.DOCKERHUB_TOKEN }}
-
-      # =====================================================
-      # Build & Push: ${{ matrix.variant }} variant
-      # =====================================================
-      # Builds the variant for both architectures (amd64, arm64).
-      #
-      # Label injection flow:
-      #   1. Variant-specific labels from Dockerfile
-      #   2. Shared labels from metadata-action (above)
-      #   3. Auto-generated labels (created, revision)
-      #   → All merged into final image Config.Labels
-      #
-      # Tags applied:
-      #   - Versioned: ghcr.io/.../debugbox-lite:1.0.0
-      #   - Latest: ghcr.io/.../debugbox-lite:latest
-      #   - Docker Hub: docker.io/.../debugbox-lite:1.0.0
-      #   - Docker Hub: docker.io/.../debugbox-lite:latest
-      #
-      # Special case for balanced (default variant):
-      #   - Also tagged as: debugbox:1.0.0, debugbox:latest
-      # =====================================================
-      - name: Build & push ${{ matrix.variant }} image
-        uses: docker/build-push-action@v6
-        with:
-          context: .
-          file: dockerfiles/Dockerfile.${{ matrix.variant }}
-          platforms: linux/amd64,linux/arm64
-          push: true
-          # Tag strategy:
-          # - Variant-specific: debugbox-${variant}:version + :latest on GHCR & Docker Hub
-          # - For balanced only: unqualified debugbox:version + :latest on both registries
-          tags: |
-            ghcr.io/ibtisam-iq/debugbox-${{ matrix.variant }}:${{ steps.version.outputs.version }}
-            ghcr.io/ibtisam-iq/debugbox-${{ matrix.variant }}:latest
-            docker.io/${{ secrets.DOCKERHUB_USERNAME }}/debugbox-${{ matrix.variant }}:${{ steps.version.outputs.version }}
-            docker.io/${{ secrets.DOCKERHUB_USERNAME }}/debugbox-${{ matrix.variant }}:latest
-            ${{ matrix.variant == 'balanced' && format('ghcr.io/ibtisam-iq/debugbox:{0}', steps.version.outputs.version) || '' }}
-            ${{ matrix.variant == 'balanced' && 'ghcr.io/ibtisam-iq/debugbox:latest' || '' }}
-            ${{ matrix.variant == 'balanced' && format('docker.io/{0}/debugbox:{1}', secrets.DOCKERHUB_USERNAME, steps.version.outputs.version) || '' }}
-            ${{ matrix.variant == 'balanced' && format('docker.io/{0}/debugbox:latest', secrets.DOCKERHUB_USERNAME) || '' }}
-          labels: ${{ steps.meta.outputs.labels }}
-          # ↑ Injects ALL shared labels + auto-generated created/revision
-          # No build-args needed for labels!
-
-      # =====================================================
-      # Security: Trivy Vulnerability Scan
-      # =====================================================
-      # Scans the published image for security vulnerabilities.
-      #
-      # Configuration:
-      # - severity: HIGH,CRITICAL
-      #   Only report high/critical issues (skip low/medium)
-      #
-      # - exit-code: 1
-      #   Fail release if any HIGH/CRITICAL vulnerabilities found
-      #
-      # This is the final safety gate before images are public.
-      # =====================================================
-      - name: Trivy security scan - ${{ matrix.variant }}
+      # Stage 1: Build amd64 only for scanning
+      - name: Build all variants (amd64 for scan)
         run: |
-          trivy image \
-            --severity HIGH,CRITICAL \
-            --exit-code 1 \
-            ghcr.io/ibtisam-iq/debugbox-${{ matrix.variant }}:${{ steps.version.outputs.version }}
+          set -e
+          variants=("lite" "balanced" "power")
+          VERSION="${{ steps.version.outputs.version }}"
+          echo "Building all variants (amd64 for scanning)..."
+          for variant in "${variants[@]}"; do
+            echo "Building $variant (amd64)..."
+            docker buildx build \
+              --file dockerfiles/Dockerfile.$variant \
+              --platform linux/amd64 \
+              --tag scan-$variant:$VERSION \
+              --output type=docker,dest=/tmp/$variant-amd64.tar \
+              .
+            echo "Exported $variant to /tmp/$variant-amd64.tar"
+          done
 
+      - name: Install Trivy
+        run: |
+          curl -sfL https://raw.githubusercontent.com/aquasecurity/trivy/main/contrib/install.sh \
+            | sh -s -- -b /usr/local/bin v0.68.2
+          trivy --version
+
+      # Stage 2: Scan all variants
+      - name: Scan all variants
+        run: |
+          set -e
+          variants=("lite" "balanced" "power")
+          VERSION="${{ steps.version.outputs.version }}"
+          echo "Scanning all variants for HIGH/CRITICAL vulnerabilities..."
+          for variant in "${variants[@]}"; do
+            echo "Scanning $variant..."
+            trivy image \
+              --input /tmp/$variant-amd64.tar \
+              --severity HIGH,CRITICAL \
+              --exit-code 1 \
+              scan-$variant:$VERSION
+            echo "Scan passed for $variant"
+          done
+
+      # Stage 3: Push multi-platform only if all scans passed
+      - name: Push all variants (multi-platform)
+        run: |
+          set -e
+          variants=("lite" "balanced" "power")
+          VERSION="${{ steps.version.outputs.version }}"
+          LABELS="${{ steps.meta.outputs.labels }}"
+          echo "Pushing all variants (amd64+arm64)..."
+          for variant in "${variants[@]}"; do
+            echo "Pushing $variant..."
+            docker buildx build \
+              --file dockerfiles/Dockerfile.$variant \
+              --platform linux/amd64,linux/arm64 \
+              --tag ghcr.io/ibtisam-iq/debugbox-$variant:$VERSION \
+              --tag ghcr.io/ibtisam-iq/debugbox-$variant:latest \
+              --tag docker.io/${{ secrets.DOCKERHUB_USERNAME }}/debugbox-$variant:$VERSION \
+              --tag docker.io/${{ secrets.DOCKERHUB_USERNAME }}/debugbox-$variant:latest \
+              --push \
+              .
+            echo "Pushed $variant"
+          done
+
+          # Unqualified tags for balanced (single build)
+          echo "Pushing balanced as unqualified debugbox..."
+          docker buildx build \
+            --file dockerfiles/Dockerfile.balanced \
+            --platform linux/amd64,linux/arm64 \
+            --tag ghcr.io/ibtisam-iq/debugbox:$VERSION \
+            --tag ghcr.io/ibtisam-iq/debugbox:latest \
+            --tag docker.io/${{ secrets.DOCKERHUB_USERNAME }}/debugbox:$VERSION \
+            --tag docker.io/${{ secrets.DOCKERHUB_USERNAME }}/debugbox:latest \
+            $(echo "$LABELS" | sed 's/^/--label /') \
+            --push \
+            .
+
+      - name: Release summary
+        run: |
+          VERSION="${{ steps.version.outputs.version }}"
+          echo ""
+          echo "Release v${VERSION} completed successfully!"
+          echo ""
+          echo "Published images:"
+          echo " • ghcr.io/ibtisam-iq/debugbox-lite:${VERSION}"
+          echo " • ghcr.io/ibtisam-iq/debugbox-balanced:${VERSION}"
+          echo " • ghcr.io/ibtisam-iq/debugbox-power:${VERSION}"
+          echo " • ghcr.io/ibtisam-iq/debugbox:${VERSION} (balanced alias)"
+          echo ""
+          echo "All variants passed security scanning"
+          echo "Multi-platform: linux/amd64, linux/arm64"
