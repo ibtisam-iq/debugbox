@@ -168,13 +168,14 @@ jobs:
           platforms: linux/amd64,linux/arm64
           load: true
           # push: true
+          # Tag strategy:
+          # - Variant-specific: debugbox-${variant}:version + :latest on GHCR & Docker Hub
+          # - For balanced only: unqualified debugbox:version + :latest on both registries
           tags: |
-            # Always publish variant-specific tags
             ghcr.io/ibtisam-iq/debugbox-${{ matrix.variant }}:${{ steps.version.outputs.version }}
             ghcr.io/ibtisam-iq/debugbox-${{ matrix.variant }}:latest
             docker.io/${{ secrets.DOCKERHUB_USERNAME }}/debugbox-${{ matrix.variant }}:${{ steps.version.outputs.version }}
             docker.io/${{ secrets.DOCKERHUB_USERNAME }}/debugbox-${{ matrix.variant }}:latest
-            # Additionally publish default tags for balanced variant
             ${{ matrix.variant == 'balanced' && format('ghcr.io/ibtisam-iq/debugbox:{0}', steps.version.outputs.version) || '' }}
             ${{ matrix.variant == 'balanced' && 'ghcr.io/ibtisam-iq/debugbox:latest' || '' }}
             ${{ matrix.variant == 'balanced' && format('docker.io/{0}/debugbox:{1}', secrets.DOCKERHUB_USERNAME, steps.version.outputs.version) || '' }}
