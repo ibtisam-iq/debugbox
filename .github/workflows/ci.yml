@@ -26,6 +26,7 @@ on:
       - 'tests/**'                  # Test script changes
       - 'scripts/**'                # Build script changes
       - '.github/workflows/ci.yml'  # Workflow changes
+      - '.trivyignore'              # Trivy config changes
 
   # Validate pull requests
   pull_request:
