@@ -208,24 +208,19 @@ markdown_extensions:
       emoji_index: !!python/name:material.extensions.emoji.twemoji
       emoji_generator: !!python/name:material.extensions.emoji.to_svg
 
-  - mike:
-      version_selector: true
-
 # ------------------------------------------------------------
 # 6. PLUGINS (Minimal, intentional)
 # ------------------------------------------------------------
 
 plugins:
 
-  # Full-text client-side search
   - search
-
+  - mike
   # Macros plugin
   # Enables:
   # - Reusable variables
   # - Version strings
   # - Conditional content
-  # Very useful in product docs
   - macros
 
   - git-revision-date-localized:
