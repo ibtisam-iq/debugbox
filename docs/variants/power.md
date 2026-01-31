@@ -1,6 +1,6 @@
 # Power Variant
 
-**~110 MB** — Full SRE-grade forensics toolkit.
+**~104 MB** — Full SRE-grade forensics toolkit.
 
 The **power** variant includes everything from balanced, plus advanced tools for deep investigation.
 
@@ -50,7 +50,7 @@ python3 -c "import requests; print(requests.get('https://api.ipify.org').text)"
 
 ## Image Details
 
-- Compressed size: ~110 MB
+- Compressed size: ~104 MB
 - Architectures: `linux/amd64`, `linux/arm64`
 
 Pull:

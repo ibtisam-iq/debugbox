@@ -1,6 +1,6 @@
 # Lite Variant
 
-**~15 MB** — Minimal and lightning-fast.
+**~14 MB** — Minimal and lightning-fast.
 
 The **lite** variant is optimized for scenarios where pull speed and image size matter most.
 
@@ -44,7 +44,7 @@ yq '.metadata.name' config.yaml
 
 ## Image Details
 
-- Compressed size: ~15 MB
+- Compressed size: ~14 MB
 - Architectures: `linux/amd64`, `linux/arm64`
 
 Pull:

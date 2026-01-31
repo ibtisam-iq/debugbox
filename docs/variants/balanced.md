@@ -1,6 +1,6 @@
 # Balanced Variant (Recommended)
 
-**~48 MB** — The sweet spot for daily debugging.
+**~46 MB** — The sweet spot for daily debugging.
 
 The **balanced** variant is the **default** and recommended choice for nearly all troubleshooting tasks.
 
@@ -49,7 +49,7 @@ vim /tmp/log.txt
 
 ## Image Details
 
-- Compressed size: ~48 MB
+- Compressed size: ~46 MB
 - Architectures: `linux/amd64`, `linux/arm64`
 - **Default image**: `ghcr.io/ibtisam-iq/debugbox` → balanced
 

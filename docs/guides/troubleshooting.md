@@ -79,7 +79,7 @@ kubectl run debug --rm -it --image=ghcr.io/ibtisam-iq/debugbox --restart=Never
 
 **Solution:** Use **lite** variant for fastest startup:
 ```bash
---image=ghcr.io/ibtisam-iq/debugbox-lite   # ~15 MB
+--image=ghcr.io/ibtisam-iq/debugbox-lite   # ~14 MB
 ```
 
 Pre-pull on nodes if recurring:

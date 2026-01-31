@@ -3,13 +3,13 @@
 **A lightweight, variant-based debugging container suite**  
 for Kubernetes and Docker environments.
 
-Pull **only what you need** — from 15 MB quick checks to 110 MB full forensics.
+Choose exactly the right size for your debugging task — no bloat, no waiting.
 
 | Variant       | Size      | Best For                              | Pull Command                                      |
 |---------------|-----------|---------------------------------------|---------------------------------------------------|
-| **lite**      | ~15 MB   | Network/DNS checks                    | `ghcr.io/ibtisam-iq/debugbox-lite`               |
-| **balanced** (default) | ~48 MB   | Daily Kubernetes troubleshooting      | `ghcr.io/ibtisam-iq/debugbox`                    |
-| **power**     | ~110 MB  | Packet capture & deep forensics        | `ghcr.io/ibtisam-iq/debugbox-power`              |
+| **lite**      | ~14 MB   | Network/DNS checks                    | `ghcr.io/ibtisam-iq/debugbox-lite`               |
+| **balanced** (default) | ~46 MB   | Daily Kubernetes troubleshooting      | `ghcr.io/ibtisam-iq/debugbox`                    |
+| **power**     | ~104 MB  | Packet capture & deep forensics        | `ghcr.io/ibtisam-iq/debugbox-power`              |
 
 Also available on Docker Hub: `mibtisam/debugbox*`
 
@@ -46,15 +46,19 @@ kubectl exec -it my-pod -- curl
 # curl: not found
 ```
 
-Alternatives like `netshoot` are great but **208 MB** — too heavy for simple checks.
+Alternatives like `netshoot` are great but **201 MB** — too heavy for simple checks.
 
 DebugBox gives you **three focused variants** so you pull:
 
-- **15 MB** for basic connectivity
-- **48 MB** for daily debugging
-- **110 MB** only when you need `tshark` or `nftables`
+- **14.4 MB** for basic connectivity
+- **46.2 MB** for daily debugging
+- **104 MB** only when you need `tshark` or `nftables`
+
+No bloat. No 200 MB waits. Just the right size for the job.
 
 **Faster pulls. Faster debugging.**
+
+> Sizes measured via `docker save | gzip -c | wc -c` — reflects actual compressed download size from registry.
 
 ---
 

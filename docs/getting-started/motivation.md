@@ -13,7 +13,7 @@ Modern production containers (distroless, scratch, minimal Alpine) ship **withou
 
 Existing solutions help, but:
 
-- `netshoot`: Great tools, but **208 MB** — overkill for a simple `curl`
+- `netshoot`: Great tools, but **201 MB** — overkill for a simple `curl`
 - `busybox`: Tiny (1.5 MB), but lacks real debugging tools
 
 ## The DebugBox Solution
@@ -22,9 +22,9 @@ Existing solutions help, but:
 
 | Variant    | Size    | When to Use                              |
 |------------|---------|------------------------------------------|
-| lite       | ~15 MB | Quick network/DNS checks                 |
-| balanced   | ~48 MB | Daily Kubernetes troubleshooting (default) |
-| power      | ~110 MB| Deep forensics, packet capture           |
+| lite       | ~14 MB | Quick network/DNS checks                 |
+| balanced   | ~46 MB | Daily Kubernetes troubleshooting (default) |
+| power      | ~104 MB| Deep forensics, packet capture           |
 
 **Result:** Up to **4.3× faster pulls** than alternatives for common cases.
 
@@ -33,7 +33,7 @@ Existing solutions help, but:
 | Feature                | DebugBox     | netshoot    | busybox   |
 |------------------------|--------------|-------------|-----------|
 | Multiple size options  | ✓ (3 variants) | ✗           | ✗         |
-| Smallest option        | 15 MB        | 208 MB      | 1.5 MB    |
+| Smallest option        | 14 MB        | 201 MB      | 1.5 MB    |
 | Kubernetes-focused     | ✓            | ✓           | ✗         |
 | Multi-arch support     | ✓            | ✓           | ✓         |
 | Deterministic builds   | ✓            | ✗           | ✗         |
