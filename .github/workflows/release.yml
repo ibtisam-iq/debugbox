@@ -65,11 +65,17 @@ jobs:
       # =====================================================
       # Example: refs/tags/v1.0.0 → 1.0.0
       # =====================================================
+      
       - name: Extract release version
         id: version
         run: |
-          VERSION="${GITHUB_REF#refs/tags/v}"
+          if [[ "$GITHUB_REF" == refs/tags/* ]]; then
+            VERSION="${GITHUB_REF#refs/tags/v}"
+          else
+            VERSION="${GITHUB_SHA:0:7}"
+          fi
           echo "version=${VERSION}" >> $GITHUB_OUTPUT
+          echo "Using version tag: ${VERSION}"
 
       # =====================================================
       # Multi-Architecture Support (QEMU)
@@ -166,8 +172,8 @@ jobs:
           context: .
           file: dockerfiles/Dockerfile.${{ matrix.variant }}
           platforms: linux/amd64,linux/arm64
+          push: false
           load: true
-          # push: true
           # Tag strategy:
           # - Variant-specific: debugbox-${variant}:version + :latest on GHCR & Docker Hub
           # - For balanced only: unqualified debugbox:version + :latest on both registries
