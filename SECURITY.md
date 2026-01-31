@@ -93,7 +93,10 @@ These trigger the following HIGH-severity findings in Trivy:
 - **CVE-2025-61728** (HIGH) in yq binary (golang stdlib archive/zip DoS via malicious ZIP index)
   - Fixed in Go 1.25.6 / 1.24.12
   - **Why ignored**: yq in DebugBox processes trusted Kubernetes YAML output only — no malicious ZIP archives fed to it. Low exploitability in ephemeral debug pods.  
-
+- **CVE-2025-61726** (HIGH) in yq binary (golang stdlib net/url DoS via unlimited path segments)
+  - Fixed in Go 1.25.6 / 1.24.12
+  - **Why ignored**: yq only parses trusted Kubernetes manifests/logs in ephemeral debug containers. No untrusted/malicious URLs are fed to yq. Low to no exploitability in intended use.
+  
 These are suppressed via `.trivyignore` (see repository root) to avoid false-positive build failures. The kubectx project has not yet bumped these dependencies in recent releases (last stable v0.9.5 from 2023). We monitor upstream and will rebuild with updated versions if they become available or if risk assessment changes.
 
 For full transparency, these are **not** vulnerabilities in the DebugBox base or core tooling — only in one optional utility binary.
