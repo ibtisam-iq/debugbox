@@ -1,0 +1,163 @@
+# DebugBox Product Manifest
+#
+# This file documents the user-visible contract of DebugBox images.
+# It describes what tools, shell behavior, helpers, and environment
+# guarantees are provided by each variant.
+#
+# Build and implementation details live in Dockerfiles.
+
+base:
+  description: "Shared foundation for all DebugBox variants"
+
+  packages:
+    - ca-certificates
+
+  shell:
+    default: ash
+    helpers:
+      - ll()   # ls -alF wrapper
+
+  environment:
+    editor: vi
+    locale: C.UTF-8
+    prompt: "[debugbox \\w]$"
+
+
+variants:
+  lite:
+    description: "Minimal, fast-pull image for ephemeral Kubernetes debugging"
+
+    tools:
+      networking:
+        - curl
+        - netcat-openbsd
+        - iproute2
+        - iputils
+        - bind-tools
+
+      data:
+        - jq
+        - yq    # YAML (apk version)
+
+    shell:
+      default: ash
+      helpers:
+        - json()
+        - yaml()
+
+    environment:
+      editor: vi
+      locale: C.UTF-8
+
+
+  balanced:
+    description: "Recommended daily-driver image for cloud-native debugging"
+    includes: lite
+
+    tools:
+      shell-and-ux:
+        - bash
+        - bash-completion
+        - less
+
+      editors:
+        - vim
+
+      version-control:
+        - git
+
+      filesystem:
+        - file
+        - tar
+        - gzip
+
+      networking:
+        - tcpdump
+        - socat
+        - nmap
+        - mtr
+        - iperf3
+        - ethtool
+        - iftop
+
+      system:
+        - htop
+        - strace
+        - lsof
+        - procps
+        - psmisc
+
+      kubernetes:
+        - kubectx
+        - kubens
+
+    shell:
+      default: bash
+      helpers:
+        - json()
+        - yaml()
+
+    environment:
+      pager: less
+      editor: vim
+      locale: C.UTF-8
+
+
+  power:
+    description: "Full SRE-grade image for deep system and network forensics"
+    includes: balanced
+
+    tools:
+      editors:
+        - vim       # inherited default editor
+        - nano      # power-only addition
+
+      networking-deep:
+        - tshark
+        - fping
+        - speedtest-cli
+        - nmap-nping
+        - nmap-scripts
+
+      system-internals:
+        - ltrace
+
+      routing:
+        - iptables
+        - nftables
+        - conntrack-tools
+        - bird
+        - bridge-utils
+
+      scripting:
+        - py3-pip
+
+      control-plane:
+        - yq   # pinned upstream binary (not apk)
+
+    shell:
+      default: bash
+      helpers:
+        - json()
+        - yaml()
+        - sniff()
+
+    environment:
+      pager: less
+      editor: vim       # default editor, nano is also available
+      locale: C.UTF-8
+
+
+notes:
+  - Helpers are loaded via /etc/profile.d
+  - All images run as root by design
+  - Lite prioritizes speed and small size
+  - Balanced prioritizes daily usability
+  - Power prioritizes determinism and SRE workflows
+  - Python tooling (pip3) is available in Power variant
+
+
+contributing:
+  - "Group tools by function, not by package name"
+  - "Document behavioral changes here when Dockerfiles change"
+  - "Avoid copying build or verification logic into this file"
