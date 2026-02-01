@@ -43,21 +43,6 @@ jobs:
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
-      - name: Set up Buildx
-        uses: docker/setup-buildx-action@v3
-
-      - name: Extract metadata
-        id: meta
-        uses: docker/metadata-action@v5
-        with:
-          images: ghcr.io/ibtisam-iq/debugbox
-          labels: |
-            org.opencontainers.image.licenses=MIT
-            org.opencontainers.image.url=https://github.com/ibtisam-iq/debugbox
-            org.opencontainers.image.source=https://github.com/ibtisam-iq/debugbox
-            org.opencontainers.image.documentation=https://debugbox.ibtisam-iq.com
-            org.opencontainers.image.vendor=Ibtisam IQ
-            org.opencontainers.image.authors=Muhammad Ibtisam <contact@ibtisam-iq.com>
 
       # Stage 1: Build amd64 only for scanning
       - name: Build all variants (amd64 for scan)
@@ -101,37 +86,44 @@ jobs:
           done
 
       # Stage 3: Push multi-platform only if all scans passed
-      - name: Push all variants (multi-platform)
+      - name: Push all variants & unqualified (atomic)
         run: |
           set -e
           variants=("lite" "balanced" "power")
           VERSION="${{ steps.version.outputs.version }}"
-          LABELS="${{ steps.meta.outputs.labels }}"
-          echo "Pushing all variants (amd64+arm64)..."
+          BUILD_DATE=$(date -u +'%Y-%m-%dT%H:%M:%SZ')
+          VCS_REF="${{ github.sha }}"
+
+          echo "All scans passed — starting atomic push..."
+
           for variant in "${variants[@]}"; do
             echo "Pushing $variant..."
             docker buildx build \
-              --file dockerfiles/Dockerfile.$variant \
+              --file "dockerfiles/Dockerfile.$variant" \
               --platform linux/amd64,linux/arm64 \
-              --tag ghcr.io/ibtisam-iq/debugbox-$variant:$VERSION \
-              --tag ghcr.io/ibtisam-iq/debugbox-$variant:latest \
-              --tag docker.io/${{ secrets.DOCKERHUB_USERNAME }}/debugbox-$variant:$VERSION \
-              --tag docker.io/${{ secrets.DOCKERHUB_USERNAME }}/debugbox-$variant:latest \
+              --build-arg BUILD_DATE="$BUILD_DATE" \
+              --build-arg VCS_REF="$VCS_REF" \
+              --build-arg VERSION="$VERSION" \
+              --tag "ghcr.io/ibtisam-iq/debugbox-$variant:$VERSION" \
+              --tag "ghcr.io/ibtisam-iq/debugbox-$variant:latest" \
+              --tag "docker.io/${{ secrets.DOCKERHUB_USERNAME }}/debugbox-$variant:$VERSION" \
+              --tag "docker.io/${{ secrets.DOCKERHUB_USERNAME }}/debugbox-$variant:latest" \
               --push \
               .
             echo "Pushed $variant"
           done
 
-          # Unqualified tags for balanced (single build)
           echo "Pushing balanced as unqualified debugbox..."
           docker buildx build \
-            --file dockerfiles/Dockerfile.balanced \
+            --file "dockerfiles/Dockerfile.balanced" \
             --platform linux/amd64,linux/arm64 \
-            --tag ghcr.io/ibtisam-iq/debugbox:$VERSION \
-            --tag ghcr.io/ibtisam-iq/debugbox:latest \
-            --tag docker.io/${{ secrets.DOCKERHUB_USERNAME }}/debugbox:$VERSION \
-            --tag docker.io/${{ secrets.DOCKERHUB_USERNAME }}/debugbox:latest \
-            $(echo "$LABELS" | sed 's/^/--label /') \
+            --build-arg BUILD_DATE="$BUILD_DATE" \
+            --build-arg VCS_REF="$VCS_REF" \
+            --build-arg VERSION="$VERSION" \
+            --tag "ghcr.io/ibtisam-iq/debugbox:$VERSION" \
+            --tag "ghcr.io/ibtisam-iq/debugbox:latest" \
+            --tag "docker.io/${{ secrets.DOCKERHUB_USERNAME }}/debugbox:$VERSION" \
+            --tag "docker.io/${{ secrets.DOCKERHUB_USERNAME }}/debugbox:latest" \
             --push \
             .
 
@@ -146,6 +138,3 @@ jobs:
           echo " • ghcr.io/ibtisam-iq/debugbox-balanced:${VERSION}"
           echo " • ghcr.io/ibtisam-iq/debugbox-power:${VERSION}"
           echo " • ghcr.io/ibtisam-iq/debugbox:${VERSION} (balanced alias)"
-          echo ""
-          echo "All variants passed security scanning"
-          echo "Multi-platform: linux/amd64, linux/arm64"

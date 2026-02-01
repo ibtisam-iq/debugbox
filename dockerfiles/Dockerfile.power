@@ -84,24 +84,25 @@ RUN CGO_ENABLED=0 go build -trimpath \
 
 FROM ghcr.io/ibtisam-iq/debugbox-base:latest
 
-# ====================================================================
-# OCI IMAGE LABELS
-# ====================================================================
-# Metadata following OCI Image Spec v1.0.2
-# https://github.com/opencontainers/image-spec/blob/main/annotations.md
-#
-# Variant-specific labels defined here (unique per image):
-#   - title, description, version, variant, base.name
-#
-# Shared labels injected by CI workflow (common across all variants):
-#   - licenses, url, source, documentation, vendor, authors
-#
-# Auto-generated labels injected by docker/metadata-action:
-#   - created (RFC 3339 timestamp), revision (git SHA)
-# ====================================================================
+# Build args for OCI labels (passed from workflow)
+ARG BUILD_DATE
+ARG VCS_REF
+ARG VERSION
 
-LABEL org.opencontainers.image.variant="power" \
+# OCI IMAGE LABELS
+LABEL org.opencontainers.image.title="DebugBox Power" \
+      org.opencontainers.image.description="Advanced SRE-grade network forensics and troubleshooting image" \
+      org.opencontainers.image.variant="power" \
       org.opencontainers.image.base.name="ghcr.io/ibtisam-iq/debugbox-base:latest"
+      org.opencontainers.image.created="${BUILD_DATE}" \
+      org.opencontainers.image.revision="${VCS_REF}" \
+      org.opencontainers.image.version="${VERSION}" \
+      org.opencontainers.image.licenses="MIT" \
+      org.opencontainers.image.url="https://github.com/ibtisam-iq/debugbox" \
+      org.opencontainers.image.source="https://github.com/ibtisam-iq/debugbox" \
+      org.opencontainers.image.documentation="https://debugbox.ibtisam-iq.com" \
+      org.opencontainers.image.vendor="Ibtisam IQ" \
+      org.opencontainers.image.authors="Muhammad Ibtisam <contact@ibtisam-iq.com>"
 
 # ====================================================================
 # KUBERNETES TOOLS
