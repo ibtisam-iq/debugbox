@@ -252,7 +252,7 @@ jobs:
         run: |
           VERSION="${GITHUB_REF_NAME}"
           echo "Deploying frozen docs for ${VERSION}"
-          mike deploy --push "${VERSION}" --update-aliases latest
+          mike deploy --push --update-aliases "${VERSION}" latest
           mike set-default --push latest
           mike deploy --push dev
           echo "Deployed ${VERSION} and updated 'latest' alias"
@@ -278,3 +278,8 @@ jobs:
 # https://debugbox.ibtisam-iq.com/dev/      → shows current main (live updates)
 # https://debugbox.ibtisam-iq.com/1.0.0/    → frozen
 # https://debugbox.ibtisam-iq.com/1.0.1/    → frozen (when released)
+
+# Correct syntax
+# The --update-aliases flag must come before the version, and the aliases come after the version:
+# mike deploy [OPTIONS] <version> [aliases...]  
+# mike deploy --push --update-aliases "1.0.0" latest stable
