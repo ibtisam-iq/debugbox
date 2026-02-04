@@ -16,7 +16,7 @@
         <link rel="canonical" href="https://debugbox.ibtisam-iq.com/dev/guides/troubleshooting/">
       
       
-        <link rel="prev" href="../examples/">
+        <link rel="prev" href="../bandwidth-savings/">
       
       
         <link rel="next" href="../../reference/manifest/">
@@ -975,6 +975,34 @@
                 
   
   
+  
+  
+    <li class="md-nav__item">
+      <a href="../bandwidth-savings/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Bandwidth Savings
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
     
   
   
@@ -1038,6 +1066,18 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#common-issues" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Common Issues
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Common Issues">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
   <a href="#image-pull-failures" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1047,30 +1087,41 @@
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
-  <a href="#tool-not-found-eg-bash-tcpdump-vim" class="md-nav__link">
+        
+          <li class="md-nav__item">
+  <a href="#tool-not-found-command-not-found" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Tool Not Found (e.g., bash, tcpdump, vim)
+        Tool Not Found / Command Not Found
       
     </span>
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
-  <a href="#permission-denied-tcpdump-raw-sockets" class="md-nav__link">
+        
+          <li class="md-nav__item">
+  <a href="#permission-denied-tcpdump-iptables-conntrack-tshark" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Permission Denied (tcpdump, raw sockets)
+        Permission Denied (tcpdump, iptables, conntrack, tshark)
       
     </span>
   </a>
   
 </li>
+        
+          <li class="md-nav__item">
+  <a href="#container-exits-immediately" class="md-nav__link">
+    <span class="md-ellipsis">
       
-        <li class="md-nav__item">
+        Container Exits Immediately
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#kubectl-debug-not-working" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1080,8 +1131,19 @@
   </a>
   
 </li>
+        
+          <li class="md-nav__item">
+  <a href="#dns-not-working-inside-container" class="md-nav__link">
+    <span class="md-ellipsis">
       
-        <li class="md-nav__item">
+        DNS Not Working Inside Container
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#slow-image-pull" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1091,37 +1153,31 @@
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
-  <a href="#dns-issues-inside-container" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        DNS Issues Inside Container
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
+        
+          <li class="md-nav__item">
   <a href="#architecture-mismatch-arm64-nodes" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Architecture Mismatch (arm64 nodes)
+        Architecture Mismatch (ARM64 nodes)
       
     </span>
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
-  <a href="#container-exits-immediately" class="md-nav__link">
+        
+          <li class="md-nav__item">
+  <a href="#no-such-file-or-directory-on-vimnano-commands" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Container Exits Immediately
+        "No such file or directory" on vim/nano commands
       
     </span>
   </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -1133,45 +1189,6 @@
       
     </span>
   </a>
-  
-    <nav class="md-nav" aria-label="Frequently Asked Questions">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#does-debugbox-include-kubectl" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Does DebugBox include kubectl?
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#can-i-run-non-root" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Can I run non-root?
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#why-no-helm-k9s-etc" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Why no helm, k9s, etc.?
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
       
@@ -1426,6 +1443,18 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#common-issues" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Common Issues
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Common Issues">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
   <a href="#image-pull-failures" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1435,30 +1464,41 @@
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
-  <a href="#tool-not-found-eg-bash-tcpdump-vim" class="md-nav__link">
+        
+          <li class="md-nav__item">
+  <a href="#tool-not-found-command-not-found" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Tool Not Found (e.g., bash, tcpdump, vim)
+        Tool Not Found / Command Not Found
       
     </span>
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
-  <a href="#permission-denied-tcpdump-raw-sockets" class="md-nav__link">
+        
+          <li class="md-nav__item">
+  <a href="#permission-denied-tcpdump-iptables-conntrack-tshark" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Permission Denied (tcpdump, raw sockets)
+        Permission Denied (tcpdump, iptables, conntrack, tshark)
       
     </span>
   </a>
   
 </li>
+        
+          <li class="md-nav__item">
+  <a href="#container-exits-immediately" class="md-nav__link">
+    <span class="md-ellipsis">
       
-        <li class="md-nav__item">
+        Container Exits Immediately
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#kubectl-debug-not-working" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1468,8 +1508,19 @@
   </a>
   
 </li>
+        
+          <li class="md-nav__item">
+  <a href="#dns-not-working-inside-container" class="md-nav__link">
+    <span class="md-ellipsis">
       
-        <li class="md-nav__item">
+        DNS Not Working Inside Container
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#slow-image-pull" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1479,37 +1530,31 @@
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
-  <a href="#dns-issues-inside-container" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        DNS Issues Inside Container
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
+        
+          <li class="md-nav__item">
   <a href="#architecture-mismatch-arm64-nodes" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Architecture Mismatch (arm64 nodes)
+        Architecture Mismatch (ARM64 nodes)
       
     </span>
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
-  <a href="#container-exits-immediately" class="md-nav__link">
+        
+          <li class="md-nav__item">
+  <a href="#no-such-file-or-directory-on-vimnano-commands" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Container Exits Immediately
+        "No such file or directory" on vim/nano commands
       
     </span>
   </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -1521,45 +1566,6 @@
       
     </span>
   </a>
-  
-    <nav class="md-nav" aria-label="Frequently Asked Questions">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#does-debugbox-include-kubectl" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Does DebugBox include kubectl?
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#can-i-run-non-root" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Can I run non-root?
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#why-no-helm-k9s-etc" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Why no helm, k9s, etc.?
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
       
@@ -1600,151 +1606,427 @@
 
 
 <h1 id="troubleshooting-faq">Troubleshooting &amp; FAQ<a class="headerlink" href="#troubleshooting-faq" title="Permanent link">&para;</a></h1>
-<p>Common issues, solutions, and frequently asked questions when using DebugBox.</p>
-<h2 id="image-pull-failures">Image Pull Failures<a class="headerlink" href="#image-pull-failures" title="Permanent link">&para;</a></h2>
-<p><strong>Symptoms:</strong> <code>ImagePullBackOff</code>, <code>ErrImagePull</code></p>
-<p><strong>Causes &amp; Solutions:</strong></p>
+<h2 id="common-issues">Common Issues<a class="headerlink" href="#common-issues" title="Permanent link">&para;</a></h2>
+<h3 id="image-pull-failures">Image Pull Failures<a class="headerlink" href="#image-pull-failures" title="Permanent link">&para;</a></h3>
+<p><strong>Symptoms:</strong> <code>ImagePullBackOff</code>, <code>ErrImagePull</code>, <code>FailedToResolveImage</code></p>
+<p><strong>Step 1: Verify image name syntax</strong>
+<div class="highlight"><pre><span></span><code><span class="c1"># Correct formats</span>
+ghcr.io/ibtisam-iq/debugbox<span class="w">              </span><span class="c1"># balanced (default)</span>
+ghcr.io/ibtisam-iq/debugbox:lite<span class="w">         </span><span class="c1"># lightweight</span>
+ghcr.io/ibtisam-iq/debugbox:power<span class="w">        </span><span class="c1"># full forensics</span>
+ghcr.io/ibtisam-iq/debugbox:1.0.0<span class="w">        </span><span class="c1"># production (pinned)</span>
+ghcr.io/ibtisam-iq/debugbox:lite-1.0.0<span class="w">   </span><span class="c1"># lite pinned version</span>
+</code></pre></div></p>
+<p><strong>Step 2: Check network connectivity</strong>
+<div class="highlight"><pre><span></span><code><span class="c1"># From your node, can you reach GHCR?</span>
+kubectl<span class="w"> </span>run<span class="w"> </span>net-test<span class="w"> </span>--rm<span class="w"> </span>-it<span class="w"> </span>--image<span class="o">=</span>busybox<span class="w"> </span>--restart<span class="o">=</span>Never<span class="w"> </span>--<span class="w"> </span>wget<span class="w"> </span>-O-<span class="w"> </span>https://ghcr.io
+
+<span class="c1"># If timeout/blocked, GHCR is unreachable (firewall, proxy, DNS)</span>
+</code></pre></div></p>
+<p><strong>Step 3: If GHCR unreachable or auth required</strong></p>
 <ul>
 <li>
-<p><strong>Wrong tag/name:</strong> Verify exact image name
-  <div class="highlight"><pre><span></span><code><span class="c1"># Correct examples</span>
-ghcr.io/ibtisam-iq/debugbox<span class="w">              </span><span class="c1"># balanced</span>
-ghcr.io/ibtisam-iq/debugbox-lite
-ghcr.io/ibtisam-iq/debugbox-power:v1.0.0
+<p><strong>Option A:</strong> Configure image pull secret for <code>ghcr.io</code>
+  <div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>create<span class="w"> </span>secret<span class="w"> </span>docker-registry<span class="w"> </span>ghcr-secret<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--docker-server<span class="o">=</span>ghcr.io<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--docker-username<span class="o">=</span>&lt;token&gt;<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--docker-password<span class="o">=</span>&lt;token&gt;
+
+kubectl<span class="w"> </span>patch<span class="w"> </span>serviceaccount<span class="w"> </span>default<span class="w"> </span>-p<span class="w"> </span><span class="s1">&#39;{&quot;imagePullSecrets&quot;:[{&quot;name&quot;:&quot;ghcr-secret&quot;}]}&#39;</span>
 </code></pre></div></p>
 </li>
 <li>
-<p><strong>GHCR authentication required</strong> (common in private clusters):
-  Configure image pull secret for <code>ghcr.io</code> or use Docker Hub mirror:
+<p><strong>Option B:</strong> Use Docker Hub mirror (if available)
   <div class="highlight"><pre><span></span><code>--image<span class="o">=</span>docker.io/mibtisam/debugbox
 </code></pre></div></p>
 </li>
 <li>
-<p><strong>Network restrictions:</strong> Pre-pull on nodes or use internal mirror</p>
+<p><strong>Option C:</strong> Pre-pull to nodes (if you have node access)
+  <div class="highlight"><pre><span></span><code><span class="c1"># On each node</span>
+docker<span class="w"> </span>pull<span class="w"> </span>ghcr.io/ibtisam-iq/debugbox:lite
+</code></pre></div></p>
 </li>
 </ul>
-<h2 id="tool-not-found-eg-bash-tcpdump-vim">Tool Not Found (e.g., bash, tcpdump, vim)<a class="headerlink" href="#tool-not-found-eg-bash-tcpdump-vim" title="Permanent link">&para;</a></h2>
-<p><strong>Symptoms:</strong> <code>command not found</code></p>
-<p><strong>Diagnosis &amp; Solution:</strong></p>
-<p>Use the correct variant:</p>
+<p><strong>Step 4: Check pod events for details</strong>
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>describe<span class="w"> </span>pod<span class="w"> </span>debug-pod
+<span class="c1"># Look for &quot;Events&quot; section with specific error</span>
+</code></pre></div></p>
+<hr />
+<h3 id="tool-not-found-command-not-found">Tool Not Found / Command Not Found<a class="headerlink" href="#tool-not-found-command-not-found" title="Permanent link">&para;</a></h3>
+<p><strong>Symptoms:</strong> <code>bash: command not found</code>, <code>vim: not found</code>, <code>tcpdump: not found</code></p>
+<p><strong>Cause:</strong> Using wrong variant. Each variant has different tools.</p>
+<p><strong>Solution: Pick right variant</strong></p>
 <table>
 <thead>
 <tr>
-<th>Missing Tool</th>
-<th>Required Variant</th>
-<th>Command Example</th>
+<th>Tool Missing</th>
+<th>Variant</th>
+<th>Image</th>
+<th>Why</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td><code>bash</code>, <code>vim</code></td>
-<td>balanced+</td>
-<td><code>ghcr.io/ibtisam-iq/debugbox</code></td>
+<td>bash, sh, ash</td>
+<td>lite+</td>
+<td>Need balanced+</td>
+<td>Lite has only ash (minimal shell)</td>
 </tr>
 <tr>
-<td><code>tcpdump</code>, <code>strace</code></td>
-<td>balanced+</td>
-<td><code>ghcr.io/ibtisam-iq/debugbox</code></td>
+<td>vim, git, curl</td>
+<td>lite</td>
+<td>Need balanced+</td>
+<td>Lite is ~14MB minimal</td>
 </tr>
 <tr>
-<td><code>tshark</code>, <code>nftables</code></td>
-<td>power</td>
-<td><code>ghcr.io/ibtisam-iq/debugbox-power</code></td>
+<td>tcpdump, strace, lsof</td>
+<td>lite</td>
+<td>Need balanced+</td>
+<td>Lite doesn't have advanced tools</td>
+</tr>
+<tr>
+<td>tshark, nftables, ltrace</td>
+<td>balanced</td>
+<td>Need power</td>
+<td>Power adds forensics tools</td>
+</tr>
+<tr>
+<td>bird, brctl, speedtest</td>
+<td>balanced</td>
+<td>Need power</td>
+<td>Power adds advanced networking</td>
+</tr>
+<tr>
+<td>iptables, conntrack</td>
+<td>balanced*</td>
+<td>Need power</td>
+<td>*Available in balanced but needs NET_ADMIN capability</td>
 </tr>
 </tbody>
 </table>
-<p>Lite only has <code>ash</code>, <code>curl</code>, <code>dig</code>, <code>jq</code>, <code>yq</code>.</p>
-<h2 id="permission-denied-tcpdump-raw-sockets">Permission Denied (tcpdump, raw sockets)<a class="headerlink" href="#permission-denied-tcpdump-raw-sockets" title="Permanent link">&para;</a></h2>
-<p><strong>Symptoms:</strong> <code>tcpdump: permission denied</code> or similar</p>
-<p><strong>Cause:</strong> Missing Linux capabilities (<code>NET_ADMIN</code>, <code>NET_RAW</code>)</p>
+<p><strong>Tool availability by variant:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Variant</th>
+<th>Size</th>
+<th>Includes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>lite</strong></td>
+<td>~14 MB</td>
+<td>curl, wget, dig, nslookup, jq, yq, ash, vi</td>
+</tr>
+<tr>
+<td><strong>balanced</strong></td>
+<td>~46 MB</td>
+<td>lite + bash, git, vim, tcpdump, strace, lsof, ps, top, htop, nc, socat, mtr, nmap, iperf3, and 10+ more</td>
+</tr>
+<tr>
+<td><strong>power</strong></td>
+<td>~104 MB</td>
+<td>balanced + tshark, ngrep, ltrace, nping, nmap-scripts, openssl, iptables, nftables, conntrack, bird, brctl, python3, nano, speedtest-cli, and more</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Quick fix:</strong>
+<div class="highlight"><pre><span></span><code><span class="c1"># If tool not found, try balanced</span>
+kubectl<span class="w"> </span>debug<span class="w"> </span>my-pod<span class="w"> </span>-it<span class="w"> </span>--image<span class="o">=</span>ghcr.io/ibtisam-iq/debugbox
+
+<span class="c1"># If still not found, try power</span>
+kubectl<span class="w"> </span>debug<span class="w"> </span>my-pod<span class="w"> </span>-it<span class="w"> </span>--image<span class="o">=</span>ghcr.io/ibtisam-iq/debugbox:power
+</code></pre></div></p>
+<hr />
+<h3 id="permission-denied-tcpdump-iptables-conntrack-tshark">Permission Denied (tcpdump, iptables, conntrack, tshark)<a class="headerlink" href="#permission-denied-tcpdump-iptables-conntrack-tshark" title="Permanent link">&para;</a></h3>
+<p><strong>Symptoms:</strong>
+<div class="highlight"><pre><span></span><code>tcpdump: permission denied
+iptables: permission denied
+conntrack v1.4.8: Operation failed: sorry, you must be root or get CAP_NET_ADMIN capability
+tshark: Couldn&#39;t run dumpcap in child process: Operation not permitted
+</code></pre></div></p>
+<p><strong>Root cause:</strong> Missing Linux capabilities (NET_ADMIN, NET_RAW)</p>
+<p><strong>Quick diagnosis:</strong>
+<div class="highlight"><pre><span></span><code><span class="c1"># Which capability do you need?</span>
+tcpdump,<span class="w"> </span>tshark,<span class="w"> </span>ngrep<span class="w"> </span>→<span class="w"> </span>NET_RAW
+iptables,<span class="w"> </span>nftables,<span class="w"> </span>conntrack,<span class="w"> </span>brctl<span class="w"> </span>→<span class="w"> </span>NET_ADMIN
+
+<span class="c1"># Check current capabilities</span>
+grep<span class="w"> </span>Cap<span class="w"> </span>/proc/self/status
+</code></pre></div></p>
+<p><strong>Solutions (in priority order):</strong></p>
+<p><strong>Option 1: Use manifest with capabilities (Recommended)</strong>
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span>https://raw.githubusercontent.com/ibtisam-iq/debugbox/main/examples/power-debug-pod.yaml
+kubectl<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>-it<span class="w"> </span>debug-power<span class="w"> </span>--<span class="w"> </span>bash
+
+<span class="c1"># Now these work:</span>
+tshark<span class="w"> </span>-i<span class="w"> </span>eth0
+iptables<span class="w"> </span>-L<span class="w"> </span>-nv
+conntrack<span class="w"> </span>-L
+</code></pre></div></p>
+<p><strong>Option 2: Add capabilities to kubectl run</strong>
+<div class="highlight"><pre><span></span><code><span class="c1"># For packet capture</span>
+kubectl<span class="w"> </span>run<span class="w"> </span>debug<span class="w"> </span>--rm<span class="w"> </span>-it<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--image<span class="o">=</span>ghcr.io/ibtisam-iq/debugbox:power<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--overrides<span class="o">=</span><span class="s1">&#39;{&quot;spec&quot;:{&quot;containers&quot;:[{&quot;name&quot;:&quot;debug&quot;,&quot;securityContext&quot;:{&quot;capabilities&quot;:{&quot;add&quot;:[&quot;NET_RAW&quot;]}}}]}}&#39;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--restart<span class="o">=</span>Never
+
+<span class="c1"># For firewall tools</span>
+kubectl<span class="w"> </span>run<span class="w"> </span>debug<span class="w"> </span>--rm<span class="w"> </span>-it<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--image<span class="o">=</span>ghcr.io/ibtisam-iq/debugbox:power<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--overrides<span class="o">=</span><span class="s1">&#39;{&quot;spec&quot;:{&quot;containers&quot;:[{&quot;name&quot;:&quot;debug&quot;,&quot;securityContext&quot;:{&quot;capabilities&quot;:{&quot;add&quot;:[&quot;NET_ADMIN&quot;]}}}]}}&#39;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--restart<span class="o">=</span>Never
+</code></pre></div></p>
+<p><strong>Option 3: Docker equivalent</strong>
+<div class="highlight"><pre><span></span><code><span class="c1"># For packet capture</span>
+docker<span class="w"> </span>run<span class="w"> </span>--rm<span class="w"> </span>-it<span class="w"> </span>--cap-add<span class="o">=</span>NET_RAW<span class="w"> </span>ghcr.io/ibtisam-iq/debugbox:power
+
+<span class="c1"># For firewall/routing</span>
+docker<span class="w"> </span>run<span class="w"> </span>--rm<span class="w"> </span>-it<span class="w"> </span>--cap-add<span class="o">=</span>NET_ADMIN<span class="w"> </span>ghcr.io/ibtisam-iq/debugbox:power
+
+<span class="c1"># For both</span>
+docker<span class="w"> </span>run<span class="w"> </span>--rm<span class="w"> </span>-it<span class="w"> </span>--cap-add<span class="o">=</span>NET_RAW<span class="w"> </span>--cap-add<span class="o">=</span>NET_ADMIN<span class="w"> </span>ghcr.io/ibtisam-iq/debugbox:power
+</code></pre></div></p>
+<hr />
+<h3 id="container-exits-immediately">Container Exits Immediately<a class="headerlink" href="#container-exits-immediately" title="Permanent link">&para;</a></h3>
+<p><strong>Symptoms:</strong> Pod runs for 1 second and exits. <code>Status: Completed</code> but you wanted interactive shell.</p>
+<p><strong>Cause 1: Missing <code>-it</code> flags</strong>
+<div class="highlight"><pre><span></span><code><span class="c1"># ❌ Wrong - pod exits immediately</span>
+kubectl<span class="w"> </span>run<span class="w"> </span>debug<span class="w"> </span>--image<span class="o">=</span>ghcr.io/ibtisam-iq/debugbox<span class="w"> </span>--restart<span class="o">=</span>Never
+
+<span class="c1"># ✅ Correct - keeps container running</span>
+kubectl<span class="w"> </span>run<span class="w"> </span>debug<span class="w"> </span>-it<span class="w"> </span>--image<span class="o">=</span>ghcr.io/ibtisam-iq/debugbox<span class="w"> </span>--restart<span class="o">=</span>Never
+</code></pre></div></p>
+<p><strong>Cause 2: Wrong command</strong>
+<div class="highlight"><pre><span></span><code><span class="c1"># ❌ Pod exits when `sleep 5` finishes</span>
+kubectl<span class="w"> </span>run<span class="w"> </span>debug<span class="w"> </span>-it<span class="w"> </span>--image<span class="o">=</span>ghcr.io/ibtisam-iq/debugbox<span class="w"> </span>--command<span class="w"> </span>--<span class="w"> </span>sleep<span class="w"> </span><span class="m">5</span>
+
+<span class="c1"># ✅ Keep running</span>
+kubectl<span class="w"> </span>run<span class="w"> </span>debug<span class="w"> </span>-it<span class="w"> </span>--image<span class="o">=</span>ghcr.io/ibtisam-iq/debugbox<span class="w"> </span>--restart<span class="o">=</span>Never
+</code></pre></div></p>
+<hr />
+<h3 id="kubectl-debug-not-working">kubectl debug Not Working<a class="headerlink" href="#kubectl-debug-not-working" title="Permanent link">&para;</a></h3>
+<p><strong>Symptoms:</strong> <code>kubectl debug: command not found</code> or <code>error: debug is not a kubectl command</code></p>
+<p><strong>Cause:</strong> kubectl debug is only available in Kubernetes 1.23+</p>
+<p><strong>Check version:</strong>
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>version<span class="w"> </span>--short
+<span class="c1"># Output: v1.23.0 or higher needed</span>
+</code></pre></div></p>
 <p><strong>Solutions:</strong></p>
-<ul>
-<li>
-<p>For ephemeral containers: Kubernetes drops capabilities by default in newer versions
-  Use standalone pod instead:
-  <div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>run<span class="w"> </span>debug<span class="w"> </span>--rm<span class="w"> </span>-it<span class="w"> </span>--image<span class="o">=</span>ghcr.io/ibtisam-iq/debugbox<span class="w"> </span>--restart<span class="o">=</span>Never
+<p><strong>If K8s &lt; 1.23:</strong> Use kubectl run instead
+<div class="highlight"><pre><span></span><code><span class="c1"># Instead of:</span>
+kubectl<span class="w"> </span>debug<span class="w"> </span>my-pod<span class="w"> </span>-it<span class="w"> </span>--image<span class="o">=</span>ghcr.io/ibtisam-iq/debugbox
+
+<span class="c1"># Use:</span>
+kubectl<span class="w"> </span>run<span class="w"> </span>debug<span class="w"> </span>--rm<span class="w"> </span>-it<span class="w"> </span>--image<span class="o">=</span>ghcr.io/ibtisam-iq/debugbox<span class="w"> </span>--restart<span class="o">=</span>Never
 </code></pre></div></p>
-</li>
-<li>
-<p>Or add capabilities explicitly (requires cluster privileges):
-  <div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>debug<span class="w"> </span>my-pod<span class="w"> </span>-it<span class="w"> </span>--image<span class="o">=</span>ghcr.io/ibtisam-iq/debugbox<span class="w"> </span>--cap-add<span class="o">=</span>NET_ADMIN,NET_RAW
+<p><strong>If kubectl is old:</strong> Update kubectl locally
+<div class="highlight"><pre><span></span><code><span class="c1"># macOS</span>
+brew<span class="w"> </span>upgrade<span class="w"> </span>kubernetes-cli
+
+<span class="c1"># Linux</span>
+curl<span class="w"> </span>-LO<span class="w"> </span><span class="s2">&quot;https://dl.k8s.io/release/</span><span class="k">$(</span>curl<span class="w"> </span>-L<span class="w"> </span>-s<span class="w"> </span>https://dl.k8s.io/release/stable.txt<span class="k">)</span><span class="s2">/bin/linux/amd64/kubectl&quot;</span>
+
+<span class="c1"># Windows</span>
+choco<span class="w"> </span>upgrade<span class="w"> </span>kubernetes-cli
 </code></pre></div></p>
-</li>
-</ul>
-<h2 id="kubectl-debug-not-working">kubectl debug Not Working<a class="headerlink" href="#kubectl-debug-not-working" title="Permanent link">&para;</a></h2>
-<p><strong>Symptoms:</strong> Command fails or "debug subcommand not available"</p>
-<p><strong>Check:</strong></p>
-<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>version<span class="w"> </span>--short<span class="w">                  </span><span class="c1"># Needs v1.23+</span>
-kubectl<span class="w"> </span>api-versions<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>debugging<span class="w">    </span><span class="c1"># Should show debugging.k8s.io/v1</span>
-</code></pre></div>
-<p><strong>Alternative:</strong> Always use standalone pod:
-<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>run<span class="w"> </span>debug<span class="w"> </span>--rm<span class="w"> </span>-it<span class="w"> </span>--image<span class="o">=</span>ghcr.io/ibtisam-iq/debugbox<span class="w"> </span>--restart<span class="o">=</span>Never
+<hr />
+<h3 id="dns-not-working-inside-container">DNS Not Working Inside Container<a class="headerlink" href="#dns-not-working-inside-container" title="Permanent link">&para;</a></h3>
+<p><strong>Symptoms:</strong>
+<div class="highlight"><pre><span></span><code>dig<span class="w"> </span>example.com<span class="w"> </span>→<span class="w"> </span>timeout/SERVFAIL
+nslookup<span class="w"> </span>kubernetes.default<span class="w"> </span>→<span class="w"> </span>no<span class="w"> </span>answer
+curl<span class="w"> </span>http://my-service.default.svc.cluster.local<span class="w"> </span>→<span class="w"> </span>Connection<span class="w"> </span>refused
 </code></pre></div></p>
-<h2 id="slow-image-pull">Slow Image Pull<a class="headerlink" href="#slow-image-pull" title="Permanent link">&para;</a></h2>
-<p><strong>Solution:</strong> Use <strong>lite</strong> variant for fastest startup:
-<div class="highlight"><pre><span></span><code>--image<span class="o">=</span>ghcr.io/ibtisam-iq/debugbox-lite<span class="w">   </span><span class="c1"># ~14 MB</span>
-</code></pre></div></p>
-<p>Pre-pull on nodes if recurring:
-<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>nodes<span class="w"> </span>-o<span class="w"> </span><span class="nv">jsonpath</span><span class="o">=</span><span class="s1">&#39;{range .items[*]}{.metadata.name}{&quot;\n&quot;}{end}&#39;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>xargs<span class="w"> </span>-I<span class="o">{}</span><span class="w"> </span>kubectl<span class="w"> </span>ssh<span class="w"> </span><span class="o">{}</span><span class="w"> </span>--<span class="w"> </span>docker<span class="w"> </span>pull<span class="w"> </span>ghcr.io/ibtisam-iq/debugbox
-</code></pre></div></p>
-<h2 id="dns-issues-inside-container">DNS Issues Inside Container<a class="headerlink" href="#dns-issues-inside-container" title="Permanent link">&para;</a></h2>
-<p><strong>Symptoms:</strong> <code>dig</code> fails, no resolution</p>
-<p><strong>Check:</strong></p>
+<p><strong>Step 1: Check resolv.conf</strong>
 <div class="highlight"><pre><span></span><code>cat<span class="w"> </span>/etc/resolv.conf
-</code></pre></div>
-<ul>
-<li>In <code>kubectl debug</code>: Should match target pod (usually correct)</li>
-<li>In standalone pod: Uses pod's DNS (cluster DNS)</li>
-<li>If broken: May be cluster-wide CoreDNS issue</li>
-</ul>
-<p>Test known-good domain:
-<div class="highlight"><pre><span></span><code>dig<span class="w"> </span>google.com
+<span class="c1"># Should show cluster DNS server (usually 10.96.0.10 for minikube)</span>
 </code></pre></div></p>
-<h2 id="architecture-mismatch-arm64-nodes">Architecture Mismatch (arm64 nodes)<a class="headerlink" href="#architecture-mismatch-arm64-nodes" title="Permanent link">&para;</a></h2>
-<p><strong>Symptoms:</strong> <code>exec format error</code>, image pull fails</p>
-<p><strong>Solution:</strong> DebugBox images are multi-arch — no special tag needed.</p>
-<p>Verify node arch:
-<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>nodes<span class="w"> </span>-o<span class="w"> </span><span class="nv">jsonpath</span><span class="o">=</span><span class="s1">&#39;{range .items[*]}{.metadata.name}{&quot;\t&quot;}{.status.nodeInfo.architecture}{&quot;\n&quot;}{end}&#39;</span>
+<p><strong>Step 2: Test specific DNS server</strong>
+<div class="highlight"><pre><span></span><code>dig<span class="w"> </span>@10.96.0.10<span class="w"> </span>kubernetes.default
+dig<span class="w"> </span>@8.8.8.8<span class="w"> </span>google.com<span class="w">  </span><span class="c1"># If you can reach internet</span>
 </code></pre></div></p>
-<p>All variants support <code>amd64</code> and <code>arm64</code>.</p>
-<h2 id="container-exits-immediately">Container Exits Immediately<a class="headerlink" href="#container-exits-immediately" title="Permanent link">&para;</a></h2>
-<p><strong>Cause:</strong> Missing <code>-it</code> or <code>--rm</code> with no TTY</p>
-<p><strong>Fix:</strong> Always include interactive flags:
-<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>run<span class="w"> </span>debug<span class="w"> </span>--rm<span class="w"> </span>-it<span class="w"> </span>--image<span class="o">=</span>ghcr.io/ibtisam-iq/debugbox<span class="w"> </span>--restart<span class="o">=</span>Never
+<p><strong>Step 3: If DNS broken, check cluster</strong>
+<div class="highlight"><pre><span></span><code><span class="c1"># From your local machine:</span>
+kubectl<span class="w"> </span>get<span class="w"> </span>pods<span class="w"> </span>-n<span class="w"> </span>kube-system<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>coredns
+kubectl<span class="w"> </span>logs<span class="w"> </span>-n<span class="w"> </span>kube-system<span class="w"> </span>&lt;coredns-pod-name&gt;
+
+<span class="c1"># Check if CoreDNS service exists</span>
+kubectl<span class="w"> </span>get<span class="w"> </span>svc<span class="w"> </span>-n<span class="w"> </span>kube-system<span class="w"> </span>kube-dns
 </code></pre></div></p>
+<p><strong>Step 4: Quick workaround</strong>
+<div class="highlight"><pre><span></span><code><span class="c1"># Add manual DNS entry inside container</span>
+<span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;nameserver 8.8.8.8&quot;</span><span class="w"> </span>&gt;&gt;<span class="w"> </span>/etc/resolv.conf
+dig<span class="w"> </span>google.com<span class="w">  </span><span class="c1"># Should work now</span>
+
+<span class="c1"># Or use IP directly if you have it</span>
+curl<span class="w"> </span>http://10.1.2.3:8080/health<span class="w">  </span><span class="c1"># Instead of hostname</span>
+</code></pre></div></p>
+<hr />
+<h3 id="slow-image-pull">Slow Image Pull<a class="headerlink" href="#slow-image-pull" title="Permanent link">&para;</a></h3>
+<p><strong>Symptoms:</strong> Pod takes 30+ seconds to start, image pull takes most of time</p>
+<p><strong>Option 1: Use lite (fastest)</strong>
+<div class="highlight"><pre><span></span><code>--image<span class="o">=</span>ghcr.io/ibtisam-iq/debugbox:lite<span class="w">  </span><span class="c1"># 14 MB (~1-2 seconds)</span>
+</code></pre></div></p>
+<p><strong>Option 2: Pre-pull image to nodes</strong> (for frequent use)
+<div class="highlight"><pre><span></span><code><span class="c1"># Manually on each node</span>
+docker<span class="w"> </span>pull<span class="w"> </span>ghcr.io/ibtisam-iq/debugbox:lite
+
+<span class="c1"># Or via DaemonSet (automatic on all nodes)</span>
+kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span>-<span class="w"> </span><span class="s">&lt;&lt;EOF</span>
+<span class="s">apiVersion: apps/v1</span>
+<span class="s">kind: DaemonSet</span>
+<span class="s">metadata:</span>
+<span class="s">  name: debugbox-prepull</span>
+<span class="s">  namespace: kube-system</span>
+<span class="s">spec:</span>
+<span class="s">  selector:</span>
+<span class="s">    matchLabels:</span>
+<span class="s">      app: debugbox-prepull</span>
+<span class="s">  template:</span>
+<span class="s">    metadata:</span>
+<span class="s">      labels:</span>
+<span class="s">        app: debugbox-prepull</span>
+<span class="s">    spec:</span>
+<span class="s">      containers:</span>
+<span class="s">      - name: prepull</span>
+<span class="s">        image: ghcr.io/ibtisam-iq/debugbox:lite</span>
+<span class="s">        command: [&quot;sleep&quot;, &quot;999999&quot;]</span>
+<span class="s">      terminationGracePeriodSeconds: 0</span>
+<span class="s">EOF</span>
+
+<span class="c1"># Clean up when done</span>
+kubectl<span class="w"> </span>delete<span class="w"> </span>daemonset<span class="w"> </span>debugbox-prepull<span class="w"> </span>-n<span class="w"> </span>kube-system
+</code></pre></div></p>
+<p><strong>Option 3: Check network</strong>
+<div class="highlight"><pre><span></span><code><span class="c1"># From your node, test GHCR connection</span>
+docker<span class="w"> </span>pull<span class="w"> </span>ghcr.io/ibtisam-iq/debugbox:lite
+
+<span class="c1"># If slow, could be:</span>
+<span class="c1"># - Firewall/proxy slowing downloads</span>
+<span class="c1"># - Regional GHCR mirror slow</span>
+<span class="c1"># - Network congestion</span>
+</code></pre></div></p>
+<hr />
+<h3 id="architecture-mismatch-arm64-nodes">Architecture Mismatch (ARM64 nodes)<a class="headerlink" href="#architecture-mismatch-arm64-nodes" title="Permanent link">&para;</a></h3>
+<p><strong>Symptoms:</strong> <code>exec format error</code>, pod fails to run on ARM nodes</p>
+<p><strong>Status:</strong> NOT AN ISSUE - DebugBox images are multi-arch</p>
+<p><strong>Verification:</strong>
+<div class="highlight"><pre><span></span><code><span class="c1"># Check your node architecture</span>
+kubectl<span class="w"> </span>get<span class="w"> </span>nodes<span class="w"> </span>-o<span class="w"> </span><span class="nv">jsonpath</span><span class="o">=</span><span class="s1">&#39;{range .items[*]}{.metadata.name}{&quot;\t&quot;}{.status.nodeInfo.architecture}{&quot;\n&quot;}{end}}&#39;</span>
+
+<span class="c1"># All DebugBox variants support:</span>
+<span class="c1"># - amd64 (Intel/AMD)</span>
+<span class="c1"># - arm64 (Apple Silicon, AWS Graviton, Raspberry Pi)</span>
+
+<span class="c1"># Images include both architectures</span>
+docker<span class="w"> </span>buildx<span class="w"> </span>build<span class="w"> </span>--platform<span class="w"> </span>linux/amd64,linux/arm64<span class="w"> </span>-t<span class="w"> </span>debugbox<span class="w"> </span>.
+</code></pre></div></p>
+<p><strong>If you still get exec format error:</strong>
+<div class="highlight"><pre><span></span><code><span class="c1"># Check if you&#39;re actually on the right architecture</span>
+uname<span class="w"> </span>-m
+
+<span class="c1"># If mismatch, the image might be corrupted - try re-pulling</span>
+docker<span class="w"> </span>rmi<span class="w"> </span>ghcr.io/ibtisam-iq/debugbox:lite
+docker<span class="w"> </span>pull<span class="w"> </span>ghcr.io/ibtisam-iq/debugbox:lite
+</code></pre></div></p>
+<hr />
+<h3 id="no-such-file-or-directory-on-vimnano-commands">"No such file or directory" on vim/nano commands<a class="headerlink" href="#no-such-file-or-directory-on-vimnano-commands" title="Permanent link">&para;</a></h3>
+<p><strong>Symptoms:</strong> <code>vim: command not found</code> (when you use lite) but you swear you saw it before</p>
+<p><strong>Cause:</strong> Using lite variant. Lite only has <code>vi</code>, not full <code>vim</code></p>
+<p><strong>Solution:</strong>
+<div class="highlight"><pre><span></span><code><span class="c1"># Lite has minimal vi</span>
+--image<span class="o">=</span>ghcr.io/ibtisam-iq/debugbox:lite<span class="w"> </span>→<span class="w"> </span>vi<span class="w"> </span>only
+
+<span class="c1"># Use balanced for full vim</span>
+--image<span class="o">=</span>ghcr.io/ibtisam-iq/debugbox<span class="w"> </span>→<span class="w"> </span>vim<span class="w"> </span>available
+
+<span class="c1"># Use power for nano too</span>
+--image<span class="o">=</span>ghcr.io/ibtisam-iq/debugbox:power<span class="w"> </span>→<span class="w"> </span>vim<span class="w"> </span>+<span class="w"> </span>nano
+</code></pre></div></p>
+<hr />
 <h2 id="frequently-asked-questions">Frequently Asked Questions<a class="headerlink" href="#frequently-asked-questions" title="Permanent link">&para;</a></h2>
-<h3 id="does-debugbox-include-kubectl">Does DebugBox include kubectl?<a class="headerlink" href="#does-debugbox-include-kubectl" title="Permanent link">&para;</a></h3>
-<p><strong>No — intentionally.</strong></p>
-<p>DebugBox is a <strong>debugging toolbox</strong>, not a Kubernetes client. Including <code>kubectl</code> would:</p>
+<p><strong>Q: Does DebugBox include kubectl?</strong><br />
+A: No — intentionally. DebugBox is for low-level debugging inside containers. Use <code>kubectl</code> locally and pipe output to DebugBox if needed.</p>
+<p><strong>Q: Can I run as non-root?</strong><br />
+A: Yes. Most tools work fine as non-root. Only tools needing raw sockets (tcpdump, tshark) or system access (strace, iptables) require root/capabilities.</p>
+<p><strong>Q: Why no helm, k9s, or kustomize?</strong><br />
+A: DebugBox focuses on debugging inside containers (network, processes, files). Deployment/management tools are out of scope.</p>
+<p><strong>Q: Does DebugBox work with Kubernetes 1.18?</strong><br />
+A: Yes for most things. <code>kubectl debug</code> requires 1.23+. Use <code>kubectl run</code> for older clusters.</p>
+<p><strong>Q: Can I use DebugBox outside Kubernetes?</strong><br />
+A: Absolutely. It's just a Docker container:
+<div class="highlight"><pre><span></span><code>docker<span class="w"> </span>run<span class="w"> </span>-it<span class="w"> </span>ghcr.io/ibtisam-iq/debugbox
+docker<span class="w"> </span>run<span class="w"> </span>-it<span class="w"> </span>ghcr.io/ibtisam-iq/debugbox:lite
+docker<span class="w"> </span>run<span class="w"> </span>-it<span class="w"> </span>ghcr.io/ibtisam-iq/debugbox:power
+</code></pre></div></p>
+<p><strong>Q: When should I use each variant?</strong></p>
 <ul>
-<li>Bloat image size</li>
-<li>Duplicate your workstation capability</li>
-<li>Encourage insecure control-plane access</li>
+<li><strong>Lite:</strong> You only need DNS/HTTP checks (saves bandwidth)</li>
+<li><strong>Balanced:</strong> Default for most debugging (best balance)</li>
+<li><strong>Power:</strong> You need packet analysis, firewall debugging, or Python scripting</li>
 </ul>
-<p><strong>Pattern:</strong> Run <code>kubectl</code> locally and pipe output:
-<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>logs<span class="w"> </span>my-pod<span class="w"> </span><span class="p">|</span><span class="w"> </span>kubectl<span class="w"> </span>run<span class="w"> </span>debug<span class="w"> </span>--rm<span class="w"> </span>-it<span class="w"> </span>--image<span class="o">=</span>ghcr.io/ibtisam-iq/debugbox<span class="w"> </span>--restart<span class="o">=</span>Never<span class="w"> </span>--<span class="w"> </span>cat
+<p><strong>Q: What's included in lite?</strong><br />
+A: curl, wget, dig, nslookup, host, jq, yq, ash, vi, less</p>
+<p><strong>Q: How do I pin versions in production?</strong><br />
+A: Always use specific version tags:
+<div class="highlight"><pre><span></span><code>ghcr.io/ibtisam-iq/debugbox:1.0.0
+ghcr.io/ibtisam-iq/debugbox:lite-1.0.0
+ghcr.io/ibtisam-iq/debugbox:power-1.0.0
+</code></pre></div>
+Never use <code>:latest</code> in production manifests.</p>
+<p><strong>Q: Can I extend DebugBox with my own tools?</strong><br />
+A: Yes, create a custom image:
+<div class="highlight"><pre><span></span><code><span class="k">FROM</span><span class="w"> </span><span class="s">ghcr.io/ibtisam-iq/debugbox:1.0.0</span>
+<span class="k">RUN</span><span class="w"> </span>apk<span class="w"> </span>add<span class="w"> </span>--no-cache<span class="w"> </span>my-package-name
 </code></pre></div></p>
-<h3 id="can-i-run-non-root">Can I run non-root?<a class="headerlink" href="#can-i-run-non-root" title="Permanent link">&para;</a></h3>
-<p>Yes, but many tools (<code>tcpdump</code>, <code>strace</code>) require root.</p>
-<p>Override:
-<div class="highlight"><pre><span></span><code>docker<span class="w"> </span>run<span class="w"> </span>-it<span class="w"> </span>--rm<span class="w"> </span>--user<span class="w"> </span><span class="m">1000</span>:1000<span class="w"> </span>ghcr.io/ibtisam-iq/debugbox-lite
+<p><strong>Q: How often are new versions released?</strong><br />
+A: As needed. Track releases:
+<div class="highlight"><pre><span></span><code><span class="c1"># Check latest version</span>
+curl<span class="w"> </span>-s<span class="w"> </span>https://api.github.com/repos/ibtisam-iq/debugbox/releases/latest<span class="w"> </span><span class="p">|</span><span class="w"> </span>jq<span class="w"> </span><span class="s1">&#39;.tag_name&#39;</span>
+
+<span class="c1"># Or visit</span>
+https://github.com/ibtisam-iq/debugbox/releases
 </code></pre></div></p>
-<h3 id="why-no-helm-k9s-etc">Why no helm, k9s, etc.?<a class="headerlink" href="#why-no-helm-k9s-etc" title="Permanent link">&para;</a></h3>
-<p>DebugBox is <strong>focused on low-level debugging</strong> — network, system, process.<br />
-Deployment tools are out of scope to keep images small and secure.</p>
-<p>→ See <strong><a href="../../variants/overview/">Variants Overview</a></strong> for tool breakdown</p>
+<p><strong>Q: Does DebugBox work on Docker Desktop?</strong><br />
+A: Yes. <code>docker run -it ghcr.io/ibtisam-iq/debugbox</code> works on Mac/Windows/Linux.</p>
+<p><strong>Q: What if I need to debug a pod that's not running?</strong><br />
+A: You can't attach to a crashed pod. Options:
+<div class="highlight"><pre><span></span><code><span class="c1"># 1. Check logs</span>
+kubectl<span class="w"> </span>logs<span class="w"> </span>my-pod
+
+<span class="c1"># 2. Create a new pod with same image</span>
+kubectl<span class="w"> </span>run<span class="w"> </span>debug-pod<span class="w"> </span>--image<span class="o">=</span>my-image<span class="w"> </span>--restart<span class="o">=</span>Never<span class="w"> </span>-it
+
+<span class="c1"># 3. Use a sidecar pattern for permanent debugging</span>
+</code></pre></div></p>
+<p><strong>Q: How do I share debug sessions with colleagues?</strong><br />
+A: Use <code>socat</code> for port forwarding:
+<div class="highlight"><pre><span></span><code><span class="c1"># In debugbox pod</span>
+socat<span class="w"> </span>TCP-LISTEN:9000,fork<span class="w"> </span>TCP:target-service:8080
+
+<span class="c1"># Your colleague</span>
+curl<span class="w"> </span>localhost:9000
+</code></pre></div></p>
+<hr />
 <h2 id="still-stuck">Still Stuck?<a class="headerlink" href="#still-stuck" title="Permanent link">&para;</a></h2>
+<p><strong>1. Check the Examples</strong> → <a href="../examples/">Examples</a> has 40+ real scenarios</p>
+<p><strong>2. Check your cluster</strong> → Is CoreDNS running? Node ready?
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>nodes
+kubectl<span class="w"> </span>get<span class="w"> </span>pods<span class="w"> </span>-n<span class="w"> </span>kube-system<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>coredns
+</code></pre></div></p>
+<p><strong>3. Verify image access</strong> → Can you pull locally?
+<div class="highlight"><pre><span></span><code>docker<span class="w"> </span>pull<span class="w"> </span>ghcr.io/ibtisam-iq/debugbox:lite
+</code></pre></div></p>
+<p><strong>4. Open GitHub issue</strong> with:</p>
 <ul>
-<li>Review <strong><a href="../examples/">Examples</a></strong></li>
-<li>Check cluster logs: <code>kubectl logs -n kube-system coredns-...</code></li>
-<li>Open a GitHub issue with:<ul>
-<li>DebugBox variant/tag used</li>
-<li>Kubernetes/Docker version</li>
-<li>Exact command and error output</li>
+<li>DebugBox variant/version used: <code>ghcr.io/ibtisam-iq/debugbox:power-1.0.0</code></li>
+<li>Kubernetes version: <code>kubectl version --short</code></li>
+<li>Exact command: <code>kubectl debug my-pod -it --image=...</code></li>
+<li>Error message (full output, not summarized)</li>
+<li>Your cluster setup (minikube, EKS, GKE, etc.)</li>
 </ul>
-</li>
-</ul>
-<p>You're not alone — the community is here to help.</p>
+<p>→ <strong><a href="../examples/">Examples</a></strong> | <strong><a href="../../usage/kubernetes/">Kubernetes Usage</a></strong> | <strong><a href="../../usage/docker/">Docker Usage</a></strong> | <strong><a href="https://github.com/ibtisam-iq/debugbox/issues">GitHub Issues</a></strong></p>
 
 
 
@@ -1765,7 +2047,7 @@ Deployment tools are out of scope to keep images small and secure.</p>
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-custom" title="January 31, 2026 20:15:00 PKT">January 31, 2026 08:15:00 PM</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-custom" title="February 4, 2026 08:41:21 PKT">February 04, 2026 08:41:21 AM</span>
   </span>
 
     
@@ -1797,7 +2079,7 @@ Deployment tools are out of scope to keep images small and secure.</p>
       <nav class="md-footer__inner md-grid" aria-label="Footer" >
         
           
-          <a href="../examples/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Examples">
+          <a href="../bandwidth-savings/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Bandwidth Savings">
             <div class="md-footer__button md-icon">
               
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
@@ -1807,7 +2089,7 @@ Deployment tools are out of scope to keep images small and secure.</p>
                 Previous
               </span>
               <div class="md-ellipsis">
-                Examples
+                Bandwidth Savings
               </div>
             </div>
           </a>

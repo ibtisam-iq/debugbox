@@ -973,6 +973,34 @@
   
   
     <li class="md-nav__item">
+      <a href="../../guides/bandwidth-savings/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Bandwidth Savings
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../guides/troubleshooting/" class="md-nav__link">
         
   
@@ -1225,6 +1253,17 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#tlsssl-power-only" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        TLS/SSL (Power Only)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#routing-firewall-power-only" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1245,17 +1284,6 @@
     <span class="md-ellipsis">
       
         Guarantees
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#source-of-truth" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Source of Truth
       
     </span>
   </a>
@@ -1515,6 +1543,17 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#tlsssl-power-only" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        TLS/SSL (Power Only)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#routing-firewall-power-only" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1535,17 +1574,6 @@
     <span class="md-ellipsis">
       
         Guarantees
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#source-of-truth" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Source of Truth
       
     </span>
   </a>
@@ -1598,7 +1626,6 @@
 <th>Lite</th>
 <th>Balanced</th>
 <th>Power</th>
-<th>Notes</th>
 </tr>
 </thead>
 <tbody>
@@ -1608,7 +1635,6 @@
 <td>ash</td>
 <td><strong>bash</strong></td>
 <td>bash</td>
-<td>Balanced+ include bash-completion</td>
 </tr>
 <tr>
 <td>Prompt</td>
@@ -1616,7 +1642,6 @@
 <td>✓</td>
 <td>✓</td>
 <td>✓</td>
-<td><code>[debugbox \w]$</code></td>
 </tr>
 <tr>
 <td>Editor (default)</td>
@@ -1624,7 +1649,13 @@
 <td>vi</td>
 <td><strong>vim</strong></td>
 <td>vim</td>
-<td>nano added in power</td>
+</tr>
+<tr>
+<td>Additional editor</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+<td>nano</td>
 </tr>
 <tr>
 <td>Pager</td>
@@ -1632,15 +1663,13 @@
 <td>—</td>
 <td><strong>less</strong></td>
 <td>less</td>
-<td></td>
 </tr>
 <tr>
 <td>Locale</td>
-<td>✓</td>
-<td>✓</td>
-<td>✓</td>
-<td>✓</td>
-<td><code>C.UTF-8</code></td>
+<td>C.UTF-8</td>
+<td>C.UTF-8</td>
+<td>C.UTF-8</td>
+<td>C.UTF-8</td>
 </tr>
 </tbody>
 </table>
@@ -1649,7 +1678,6 @@
 <thead>
 <tr>
 <th>Helper</th>
-<th>Base</th>
 <th>Lite</th>
 <th>Balanced</th>
 <th>Power</th>
@@ -1662,32 +1690,84 @@
 <td>✓</td>
 <td>✓</td>
 <td>✓</td>
-<td>✓</td>
 <td><code>ls -alF</code> alias</td>
 </tr>
 <tr>
 <td><code>json()</code></td>
-<td>—</td>
 <td>✓</td>
 <td>✓</td>
 <td>✓</td>
-<td>Pretty-print JSON with jq</td>
+<td>Pretty-print JSON</td>
 </tr>
 <tr>
 <td><code>yaml()</code></td>
+<td>✓</td>
+<td>✓</td>
+<td>✓</td>
+<td>Pretty-print YAML</td>
+</tr>
+<tr>
+<td><code>ports()</code></td>
 <td>—</td>
 <td>✓</td>
 <td>✓</td>
+<td>List listening ports</td>
+</tr>
+<tr>
+<td><code>connections()</code></td>
+<td>—</td>
 <td>✓</td>
-<td>Pretty-print YAML with yq</td>
+<td>✓</td>
+<td>Show active connections</td>
+</tr>
+<tr>
+<td><code>routes()</code></td>
+<td>—</td>
+<td>✓</td>
+<td>✓</td>
+<td>Display routing table</td>
+</tr>
+<tr>
+<td><code>k8s-info</code></td>
+<td>—</td>
+<td>✓</td>
+<td>✓</td>
+<td>K8s context &amp; namespace</td>
 </tr>
 <tr>
 <td><code>sniff()</code></td>
 <td>—</td>
 <td>—</td>
+<td>✓</td>
+<td>Quick packet capture</td>
+</tr>
+<tr>
+<td><code>sniff-http()</code></td>
+<td>—</td>
 <td>—</td>
 <td>✓</td>
-<td>Quick tcpdump wrapper (power only)</td>
+<td>Capture HTTP (80/443)</td>
+</tr>
+<tr>
+<td><code>sniff-dns()</code></td>
+<td>—</td>
+<td>—</td>
+<td>✓</td>
+<td>Capture DNS queries</td>
+</tr>
+<tr>
+<td><code>cert-check()</code></td>
+<td>—</td>
+<td>—</td>
+<td>✓</td>
+<td>Inspect TLS certs</td>
+</tr>
+<tr>
+<td><code>conntrack-watch()</code></td>
+<td>—</td>
+<td>—</td>
+<td>✓</td>
+<td>Monitor connections</td>
 </tr>
 </tbody>
 </table>
@@ -1699,7 +1779,6 @@
 <th>Lite</th>
 <th>Balanced</th>
 <th>Power</th>
-<th>Notes</th>
 </tr>
 </thead>
 <tbody>
@@ -1708,119 +1787,114 @@
 <td>✓</td>
 <td>✓</td>
 <td>✓</td>
-<td></td>
 </tr>
 <tr>
 <td>netcat-openbsd</td>
 <td>✓</td>
 <td>✓</td>
 <td>✓</td>
-<td></td>
 </tr>
 <tr>
-<td>iproute2 (<code>ip</code>)</td>
+<td>iproute2 (ip)</td>
 <td>✓</td>
 <td>✓</td>
 <td>✓</td>
-<td></td>
 </tr>
 <tr>
-<td>iputils (<code>ping</code>)</td>
+<td>iputils (ping)</td>
 <td>✓</td>
 <td>✓</td>
 <td>✓</td>
-<td></td>
 </tr>
 <tr>
-<td>bind-tools (<code>dig</code>, <code>nslookup</code>)</td>
+<td>bind-tools (dig, nslookup)</td>
 <td>✓</td>
 <td>✓</td>
 <td>✓</td>
-<td></td>
 </tr>
 <tr>
 <td>tcpdump</td>
 <td>—</td>
 <td>✓</td>
 <td>✓</td>
-<td></td>
 </tr>
 <tr>
 <td>socat</td>
 <td>—</td>
 <td>✓</td>
 <td>✓</td>
-<td></td>
 </tr>
 <tr>
 <td>nmap</td>
 <td>—</td>
 <td>✓</td>
 <td>✓</td>
-<td></td>
 </tr>
 <tr>
 <td>mtr</td>
 <td>—</td>
 <td>✓</td>
 <td>✓</td>
-<td></td>
 </tr>
 <tr>
 <td>iperf3</td>
 <td>—</td>
 <td>✓</td>
 <td>✓</td>
-<td></td>
 </tr>
 <tr>
 <td>ethtool</td>
 <td>—</td>
 <td>✓</td>
 <td>✓</td>
-<td></td>
 </tr>
 <tr>
 <td>iftop</td>
 <td>—</td>
 <td>✓</td>
 <td>✓</td>
-<td></td>
 </tr>
 <tr>
 <td>tshark</td>
 <td>—</td>
 <td>—</td>
 <td>✓</td>
-<td>Wireshark CLI</td>
+</tr>
+<tr>
+<td>ngrep</td>
+<td>—</td>
+<td>—</td>
+<td>✓</td>
+</tr>
+<tr>
+<td>tcptraceroute</td>
+<td>—</td>
+<td>—</td>
+<td>✓</td>
 </tr>
 <tr>
 <td>fping</td>
 <td>—</td>
 <td>—</td>
 <td>✓</td>
-<td></td>
 </tr>
 <tr>
 <td>speedtest-cli</td>
 <td>—</td>
 <td>—</td>
 <td>✓</td>
-<td></td>
 </tr>
 <tr>
 <td>nmap-nping</td>
 <td>—</td>
 <td>—</td>
 <td>✓</td>
-<td></td>
 </tr>
 <tr>
-<td>nmap-scripts</td>
+<td>nmap-scripts (NSE)</td>
 <td>—</td>
 <td>—</td>
 <td>✓</td>
-<td>NSE scripts</td>
 </tr>
 </tbody>
 </table>
@@ -1832,7 +1906,6 @@
 <th>Lite</th>
 <th>Balanced</th>
 <th>Power</th>
-<th>Notes</th>
 </tr>
 </thead>
 <tbody>
@@ -1841,42 +1914,36 @@
 <td>—</td>
 <td>✓</td>
 <td>✓</td>
-<td></td>
 </tr>
 <tr>
 <td>strace</td>
 <td>—</td>
 <td>✓</td>
 <td>✓</td>
-<td></td>
 </tr>
 <tr>
 <td>lsof</td>
 <td>—</td>
 <td>✓</td>
 <td>✓</td>
-<td></td>
 </tr>
 <tr>
 <td>procps</td>
 <td>—</td>
 <td>✓</td>
 <td>✓</td>
-<td></td>
 </tr>
 <tr>
 <td>psmisc</td>
 <td>—</td>
 <td>✓</td>
 <td>✓</td>
-<td></td>
 </tr>
 <tr>
 <td>ltrace</td>
 <td>—</td>
 <td>—</td>
 <td>✓</td>
-<td>Library call tracing</td>
 </tr>
 </tbody>
 </table>
@@ -1888,7 +1955,6 @@
 <th>Lite</th>
 <th>Balanced</th>
 <th>Power</th>
-<th>Notes</th>
 </tr>
 </thead>
 <tbody>
@@ -1897,14 +1963,12 @@
 <td>—</td>
 <td>✓</td>
 <td>✓</td>
-<td>Context switching</td>
 </tr>
 <tr>
 <td>kubens</td>
 <td>—</td>
 <td>✓</td>
 <td>✓</td>
-<td>Namespace switching</td>
 </tr>
 </tbody>
 </table>
@@ -1916,7 +1980,6 @@
 <th>Lite</th>
 <th>Balanced</th>
 <th>Power</th>
-<th>Notes</th>
 </tr>
 </thead>
 <tbody>
@@ -1925,21 +1988,18 @@
 <td>✓</td>
 <td>✓</td>
 <td>✓</td>
-<td>JSON processing</td>
 </tr>
 <tr>
 <td>yq</td>
 <td>✓</td>
 <td>✓</td>
 <td>✓</td>
-<td>Lite/Balanced: Alpine package<br>Power: pinned v4.x binary (SHA-verified)</td>
 </tr>
 <tr>
 <td>python3 + pip3</td>
 <td>—</td>
 <td>—</td>
 <td>✓</td>
-<td>Ad-hoc scripting</td>
 </tr>
 </tbody>
 </table>
@@ -1970,6 +2030,21 @@
 <td>git</td>
 <td>—</td>
 <td>✓</td>
+<td>✓</td>
+</tr>
+</tbody>
+</table>
+<h3 id="tlsssl-power-only">TLS/SSL (Power Only)<a class="headerlink" href="#tlsssl-power-only" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Tool</th>
+<th>Power</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>openssl</td>
 <td>✓</td>
 </tr>
 </tbody>
@@ -2007,15 +2082,12 @@
 </table>
 <h2 id="guarantees">Guarantees<a class="headerlink" href="#guarantees" title="Permanent link">&para;</a></h2>
 <ul>
-<li><strong>Deterministic</strong>: Critical tools (e.g., <code>yq</code> in power) are version-pinned and SHA-verified</li>
-<li><strong>Transparent</strong>: Only documented tools are included — no hidden packages</li>
-<li><strong>Secure by default</strong>: Scanned with Trivy on every release</li>
-<li><strong>Root access</strong>: All images run as root for full debugging capability (ephemeral use only)</li>
+<li><strong>Deterministic:</strong> Critical tools (e.g., yq in power) are version-pinned and SHA-verified</li>
+<li><strong>Transparent:</strong> Only documented tools included — no hidden packages</li>
+<li><strong>Secure by default:</strong> Scanned with Trivy on every release</li>
+<li><strong>Root access:</strong> All images run as root for full debugging capability (ephemeral use only)</li>
 </ul>
-<h2 id="source-of-truth">Source of Truth<a class="headerlink" href="#source-of-truth" title="Permanent link">&para;</a></h2>
-<p>The raw manifest is maintained in <a href="../../manifest.yaml"><code>manifest.yaml</code></a>.<br />
-Any discrepancy between this page and the YAML file should be reported as a bug.</p>
-<p>→ Back to <strong><a href="../../variants/overview/">Variants Overview</a></strong> | <strong><a href="../../guides/examples/">Examples</a></strong> →</p>
+<p>→ <strong><a href="../../variants/overview/">Variants Overview</a></strong> | <strong><a href="../tags/">Image Tags</a></strong> | <strong><a href="../../guides/examples/">Examples</a></strong></p>
 
 
 
@@ -2036,7 +2108,7 @@ Any discrepancy between this page and the YAML file should be reported as a bug.
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-custom" title="January 27, 2026 05:59:07 PKT">January 27, 2026 05:59:07 AM</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-custom" title="February 4, 2026 08:41:21 PKT">February 04, 2026 08:41:21 AM</span>
   </span>
 
     

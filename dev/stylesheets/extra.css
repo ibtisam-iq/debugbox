@@ -25,9 +25,9 @@
 /* Improve table readability */
 .md-typeset table:not([class]) th,
 .md-typeset table:not([class]) td {
-  font-size: 0.95rem;      /* Slightly larger than default */
-  font-weight: 500;        /* Medium weight for better contrast */
-  padding: 0.8rem 1rem;    /* More breathing room */
+  font-size: 0.875rem;     /* Match body text size */
+  font-weight: 400;        /* Regular weight for consistency */
+  padding: 0.5rem 0.75rem; /* Tighter rows */
   vertical-align: top;
 }
 

@@ -724,10 +724,10 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#choosing-the-right-variant" class="md-nav__link">
+  <a href="#choosing-your-variant" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Choosing the Right Variant
+        Choosing Your Variant
       
     </span>
   </a>
@@ -739,6 +739,28 @@
     <span class="md-ellipsis">
       
         Detailed Pages
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#pulling-latest-vs-specific-version" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Pulling Latest vs. Specific Version
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#inheritance-model" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Inheritance Model
       
     </span>
   </a>
@@ -1047,6 +1069,34 @@
   
   
     <li class="md-nav__item">
+      <a href="../../guides/bandwidth-savings/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Bandwidth Savings
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../guides/troubleshooting/" class="md-nav__link">
         
   
@@ -1299,10 +1349,10 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#choosing-the-right-variant" class="md-nav__link">
+  <a href="#choosing-your-variant" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Choosing the Right Variant
+        Choosing Your Variant
       
     </span>
   </a>
@@ -1314,6 +1364,28 @@
     <span class="md-ellipsis">
       
         Detailed Pages
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#pulling-latest-vs-specific-version" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Pulling Latest vs. Specific Version
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#inheritance-model" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Inheritance Model
       
     </span>
   </a>
@@ -1346,14 +1418,14 @@
 
 
 <h1 id="variants-overview">Variants Overview<a class="headerlink" href="#variants-overview" title="Permanent link">&para;</a></h1>
-<p>DebugBox provides <strong>three purpose-built variants</strong> so you pull only what you need.</p>
+<p>DebugBox provides <strong>three purpose-built variants</strong> optimized for different use cases.</p>
 <table>
 <thead>
 <tr>
 <th>Variant</th>
 <th>Size</th>
-<th>Best For</th>
-<th>Pull Command</th>
+<th>Use When</th>
+<th>Image</th>
 </tr>
 </thead>
 <tbody>
@@ -1361,7 +1433,7 @@
 <td><strong>lite</strong></td>
 <td>~14 MB</td>
 <td>Quick network/DNS checks</td>
-<td><code>ghcr.io/ibtisam-iq/debugbox-lite</code></td>
+<td><code>ghcr.io/ibtisam-iq/debugbox:lite</code></td>
 </tr>
 <tr>
 <td><strong>balanced</strong> (default)</td>
@@ -1372,25 +1444,44 @@
 <tr>
 <td><strong>power</strong></td>
 <td>~104 MB</td>
-<td>Deep forensics &amp; packet analysis</td>
-<td><code>ghcr.io/ibtisam-iq/debugbox-power</code></td>
+<td>Deep forensics, packet capture</td>
+<td><code>ghcr.io/ibtisam-iq/debugbox:power</code></td>
 </tr>
 </tbody>
 </table>
-<p><strong>Recommendation:</strong> Start with <strong>balanced</strong> — it's the default and covers 90% of use cases.</p>
-<h2 id="choosing-the-right-variant">Choosing the Right Variant<a class="headerlink" href="#choosing-the-right-variant" title="Permanent link">&para;</a></h2>
+<h2 id="choosing-your-variant">Choosing Your Variant<a class="headerlink" href="#choosing-your-variant" title="Permanent link">&para;</a></h2>
 <ul>
-<li>Use <strong>lite</strong> when pull speed is critical (e.g., incident response, constrained bandwidth)</li>
-<li>Use <strong>balanced</strong> for general debugging (recommended default)</li>
-<li>Use <strong>power</strong> only when you need advanced tools like <code>tshark</code>, <code>nftables</code>, or <code>ltrace</code></li>
+<li><strong>Lite:</strong> For bandwidth constraints, init containers, edge devices. Limited to basic connectivity tools.</li>
+<li><strong>Balanced:</strong> Daily driver (recommended). TCP dump, system inspection, Kubernetes helpers included.</li>
+<li><strong>Power:</strong> When you need advanced forensics — packet analysis, routing, library tracing, Python scripting.</li>
 </ul>
 <h2 id="detailed-pages">Detailed Pages<a class="headerlink" href="#detailed-pages" title="Permanent link">&para;</a></h2>
 <ul>
-<li><strong><a href="../lite/">Lite Variant →</a></strong> — Minimal &amp; fast</li>
-<li><strong><a href="../balanced/">Balanced Variant →</a></strong> — Recommended daily driver</li>
-<li><strong><a href="../power/">Power Variant →</a></strong> — Full SRE toolkit</li>
+<li><strong><a href="../lite/">Lite</a></strong> — Minimal (14 MB)</li>
+<li><strong><a href="../balanced/">Balanced</a></strong> — Recommended (46 MB)</li>
+<li><strong><a href="../power/">Power</a></strong> — Comprehensive (104 MB)</li>
 </ul>
-<p>→ Complete tool list: <strong><a href="../../reference/manifest/">Tooling Manifest</a></strong></p>
+<h2 id="pulling-latest-vs-specific-version">Pulling Latest vs. Specific Version<a class="headerlink" href="#pulling-latest-vs-specific-version" title="Permanent link">&para;</a></h2>
+<p><strong>Latest (for development):</strong>
+<div class="highlight"><pre><span></span><code>docker<span class="w"> </span>pull<span class="w"> </span>ghcr.io/ibtisam-iq/debugbox:lite<span class="w">        </span><span class="c1"># Latest lite</span>
+docker<span class="w"> </span>pull<span class="w"> </span>ghcr.io/ibtisam-iq/debugbox<span class="w">             </span><span class="c1"># Latest balanced</span>
+docker<span class="w"> </span>pull<span class="w"> </span>ghcr.io/ibtisam-iq/debugbox:power<span class="w">       </span><span class="c1"># Latest power</span>
+</code></pre></div></p>
+<p><strong>Specific version (for production):</strong>
+<div class="highlight"><pre><span></span><code>docker<span class="w"> </span>pull<span class="w"> </span>ghcr.io/ibtisam-iq/debugbox:lite-1.0.0
+docker<span class="w"> </span>pull<span class="w"> </span>ghcr.io/ibtisam-iq/debugbox:1.0.0
+docker<span class="w"> </span>pull<span class="w"> </span>ghcr.io/ibtisam-iq/debugbox:power-1.0.0
+</code></pre></div></p>
+<p>→ <strong><a href="../../reference/tags/">Complete tag reference</a></strong></p>
+<h2 id="inheritance-model">Inheritance Model<a class="headerlink" href="#inheritance-model" title="Permanent link">&para;</a></h2>
+<p>All variants build on each other:</p>
+<ul>
+<li><strong>Lite</strong> — Base networking tools</li>
+<li><strong>Balanced</strong> — Lite + system inspection + Kubernetes helpers</li>
+<li><strong>Power</strong> — Balanced + packet analysis + advanced routing + scripting</li>
+</ul>
+<p>Every tool in lite is also in balanced and power.</p>
+<p>→ <strong><a href="../../reference/manifest/">Complete tool list</a></strong></p>
 
 
 
@@ -1411,7 +1502,7 @@
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-custom" title="January 31, 2026 20:15:00 PKT">January 31, 2026 08:15:00 PM</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-custom" title="February 4, 2026 08:41:21 PKT">February 04, 2026 08:41:21 AM</span>
   </span>
 
     
