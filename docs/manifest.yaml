@@ -15,12 +15,12 @@ base:
   shell:
     default: ash
     helpers:
-      - ll()   # ls -alF wrapper
+      - ll()                  # ls -alF wrapper
 
   environment:
     editor: vi
     locale: C.UTF-8
-    prompt: "[debugbox \\w]$"
+    prompt: "\\n\\u@\\h:\\w# (root) or $ (user) — with color support when in terminal"
 
 
 variants:
@@ -37,13 +37,13 @@ variants:
 
       data:
         - jq
-        - yq    # YAML (apk version)
+        - yq                  # YAML (apk version)
 
     shell:
       default: ash
       helpers:
-        - json()
-        - yaml()
+        - json()              # function: Pretty-print JSON with fallback
+        - yaml()              # function: Pretty-print YAML with fallback
 
     environment:
       editor: vi
@@ -62,6 +62,10 @@ variants:
 
       editors:
         - vim
+
+      http:
+        - curl                
+        - wget                # balanced addition
 
       version-control:
         - git
@@ -94,8 +98,12 @@ variants:
     shell:
       default: bash
       helpers:
-        - json()
-        - yaml()
+        - json()              
+        - yaml()              
+        - ports               # alias: netstat -tulpn (show listening ports)
+        - connections         # alias: ss -tulpn (show active connections)
+        - routes              # alias: ip route show (show routing table)
+        - k8s-info            # alias: show current K8s context + namespace
 
     environment:
       pager: less
@@ -109,15 +117,20 @@ variants:
 
     tools:
       editors:
-        - vim       # inherited default editor
-        - nano      # power-only addition
+        - vim                 # inherited default editor
+        - nano                # power-only addition
 
       networking-deep:
         - tshark
+        - ngrep            
+        - tcptraceroute    
         - fping
         - speedtest-cli
         - nmap-nping
         - nmap-scripts
+
+      tls-ssl:
+        - openssl            
 
       system-internals:
         - ltrace
@@ -133,18 +146,26 @@ variants:
         - py3-pip
 
       control-plane:
-        - yq   # pinned upstream binary (not apk)
+        - yq                  # pinned upstream binary (not apk)
 
     shell:
       default: bash
       helpers:
-        - json()
-        - yaml()
-        - sniff()
+        - json()              
+        - yaml()              
+        - ports               
+        - connections         
+        - routes              
+        - k8s-info            
+        - sniff()             # alias: tcpdump -i any -n -s 0 (quick packet capture)
+        - sniff-http()        # alias: capture HTTP traffic (ports 80/443)
+        - sniff-dns()         # alias: capture DNS queries (port 53)
+        - cert-check()        # function: inspect TLS certificates (openssl s_client wrapper)
+        - conntrack-watch()   # alias: watch active connections in real-time
 
     environment:
       pager: less
-      editor: vim       # default editor, nano is also available
+      editor: vim             # default editor, nano is also available
       locale: C.UTF-8
 
 
@@ -155,9 +176,14 @@ notes:
   - Balanced prioritizes daily usability
   - Power prioritizes determinism and SRE workflows
   - Python tooling (pip3) is available in Power variant
+  - Base prompt: user@hostname:workdir with # (root) or $ (user)
+  - Shell helpers in balanced: 6 total (json, yaml, ports, connections, routes, k8s-info)
+  - Shell helpers in power: 11 total (6 from balanced + sniff, sniff-http, sniff-dns, cert-check, conntrack-watch)
 
 
 contributing:
   - "Group tools by function, not by package name"
   - "Document behavioral changes here when Dockerfiles change"
   - "Avoid copying build or verification logic into this file"
+  - "Shell helpers should describe their purpose (function vs alias)"
+  - "New tools must include brief description for 'why power only' or 'why balanced+'"

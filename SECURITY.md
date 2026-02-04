@@ -66,7 +66,7 @@ DebugBox intentionally runs as root to enable common debugging tasks (e.g., `tcp
 
 Users can override with non-root if needed:
 ```bash
-docker run -it --user 1000:1000 ghcr.io/ibtisam-iq/debugbox-lite
+docker run -it --user 1000:1000 ghcr.io/ibtisam-iq/debugbox:lite
 ```
 
 > Note: Some tools may require elevated privileges.

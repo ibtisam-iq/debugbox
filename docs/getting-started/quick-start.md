@@ -8,7 +8,7 @@ Get debugging in seconds.
 kubectl debug my-pod -it --image=ghcr.io/ibtisam-iq/debugbox
 ```
 
-This attaches an **ephemeral debugging container** (balanced variant) with the same network/process namespace as your pod.
+Attaches an ephemeral debugging container with the same network/process namespace as your pod.
 
 ## Standalone Debugging Session
 
@@ -18,33 +18,39 @@ kubectl run debug --rm -it \
   --restart=Never
 ```
 
-## Inside the Container
-
-You now have access to:
-
-```bash
-curl https://example.com
-dig kubernetes.default.svc.cluster.local
-tcpdump -i eth0 port 443 -c 5
-htop
-strace -p 1
-vim /etc/hosts
-```
-
 ## Choose the Right Variant
 
-| Need                          | Variant   | Image Tag                                      |
-|-------------------------------|-----------|------------------------------------------------|
-| Quick network/DNS check       | **lite**     | `ghcr.io/ibtisam-iq/debugbox-lite`          |
-| General troubleshooting       | **balanced** (default) | `ghcr.io/ibtisam-iq/debugbox`     |
-| Packet capture / deep forensics | **power**    | `ghcr.io/ibtisam-iq/debugbox-power`       |
+| Need | Variant | Image |
+|------|---------|-------|
+| Quick DNS/connectivity | lite | `ghcr.io/ibtisam-iq/debugbox:lite` |
+| General troubleshooting (recommended) | balanced | `ghcr.io/ibtisam-iq/debugbox` |
+| Packet capture & forensics | power | `ghcr.io/ibtisam-iq/debugbox:power` |
 
 **When in doubt, use balanced** — it's the default.
 
+## What Can I Do Inside?
+
+Once inside the container, you have access to comprehensive debugging tools:
+
+→ **[Complete tool list with examples](../guides/examples.md)**
+
+**Quick examples:**
+```bash
+# Network testing
+curl -I https://ibtisam-iq.com
+dig kubernetes.default.svc.cluster.local
+
+# Process inspection
+ps aux
+htop
+
+# Network monitoring
+tcpdump -i eth0 port 443 -c 5
+
+# File editing
+vim /tmp/debug.log
+```
+
 ## Next Steps
 
-- **[Installation details →](installation.md)** (registries, tags, multi-arch)
-- **[Full variant comparison →](../variants/overview.md)**
-- **[Complete tool list →](../reference/manifest.md)**
-
-→ Ready for real scenarios? Check the **[Examples](../guides/examples.md)**
+→ **[Installation details](installation.md)** | **[Full variant comparison](../variants/overview.md)** | **[Real-world examples](../guides/examples.md)**

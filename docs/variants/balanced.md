@@ -2,62 +2,84 @@
 
 **~46 MB** — The sweet spot for daily debugging.
 
-The **balanced** variant is the **default** and recommended choice for nearly all troubleshooting tasks.
+The default and recommended choice for nearly all Kubernetes troubleshooting tasks.
 
 ## When to Use Balanced
 
-Ideal for:
+- Debugging running application pods
+- Daily Kubernetes workflows and incident response
+- Process tracing, network inspection, system diagnostics
+- **When in doubt, start here**
 
-- Debugging running application pods (`kubectl debug`)
-- Daily Kubernetes workflows
-- Process, network, and system inspection
-- When you're unsure — start here
+## Pull Tags
 
-**Upgrade to power** only if you need packet analysis or advanced routing tools.
-
-## Key Additions Over Lite
-
-| Category          | Tools Added                                      |
-|-------------------|--------------------------------------------------|
-| Shell & UX        | `bash` + completion, `less`                      |
-| Editors           | `vim`                                            |
-| Networking        | `tcpdump`, `socat`, `nmap`, `mtr`, `iperf3`, `ethtool`, `iftop` |
-| System            | `htop`, `strace`, `lsof`, `procps`, `psmisc`     |
-| Kubernetes        | `kubectx`, `kubens`                              |
-| Filesystem/VCS    | `git`, `file`, `tar`, `gzip`                     |
-
-→ Full details: **[Tooling Manifest](../reference/manifest.md)**
-
-## Example Usage
-
+**Latest:**
 ```bash
-# Most common: debug a running pod
+ghcr.io/ibtisam-iq/debugbox              # Most common
+ghcr.io/ibtisam-iq/debugbox:latest
+ghcr.io/ibtisam-iq/debugbox:balanced
+```
+
+**Production (pinned version):**
+```bash
+ghcr.io/ibtisam-iq/debugbox:1.0.0        # Short form (recommended)
+ghcr.io/ibtisam-iq/debugbox:balanced-1.0.0  # Explicit form
+```
+
+## Quick Usage
+
+### Kubernetes (Most Common)
+```bash
+# Default — balanced variant
 kubectl debug my-pod -it --image=ghcr.io/ibtisam-iq/debugbox
 
-# Or standalone session
+# Explicit tag
+kubectl debug my-pod -it --image=ghcr.io/ibtisam-iq/debugbox:balanced
+
+# Standalone
 kubectl run debug --rm -it --image=ghcr.io/ibtisam-iq/debugbox --restart=Never
 ```
 
-Inside:
+### Docker
 ```bash
-kubens monitoring
-tcpdump -i eth0 port 8080 -c 10
-strace -p 1234
-htop
-vim /tmp/log.txt
+docker run -it ghcr.io/ibtisam-iq/debugbox
+docker run -it ghcr.io/ibtisam-iq/debugbox:1.0.0  # Production
 ```
 
-## Image Details
+## What's Included
 
-- Compressed size: ~46 MB
-- Architectures: `linux/amd64`, `linux/arm64`
-- **Default image**: `ghcr.io/ibtisam-iq/debugbox` → balanced
+Balanced includes **all lite tools** plus **21 additional packages** for system debugging, process inspection, and Kubernetes workflows.
 
-Pull:
-```bash
-ghcr.io/ibtisam-iq/debugbox:latest
-```
+→ **[Complete balanced tool list with examples](../guides/examples.md#variant-balanced-46-mb-default)**
 
-## Navigation
+**Key additions over lite:**
 
-← **[Lite Variant](lite.md)** | **[Variants Overview](overview.md)** | **[Power Variant](power.md)** →
+- **Shell & Editors:** bash, vim, nano
+- **Process Tools:** strace, lsof, htop, ps, top
+- **Network Advanced:** tcpdump, socat, nmap, mtr, iperf3, iftop
+- **Kubernetes Helpers:** kubectx, kubens
+- **Version Control:** git
+- **Compression:** tar, gzip
+
+## Shell Helpers
+
+Balanced includes **6+ custom shell functions** for rapid debugging:
+
+→ **[Complete shell helper reference with examples](../guides/examples.md#helper-functions-shell)**
+
+**Quick reference:**
+
+- `ll()` — `ls -alF` alias
+- `json()` / `yaml()` — Pretty-print data
+- `ports()` — List listening ports
+- `connections()` — Show active connections
+- `routes()` — Display routing table
+- `k8s-info` — Current Kubernetes context
+
+## When to Switch
+
+**Downgrade to [Lite](lite.md)?** Save 32 MB if you only need basic connectivity.  
+
+**Upgrade to [Power](power.md)?** Need packet analysis, routing tools, or scripting.
+
+→ **[Variants Overview](overview.md)** | **[Real-world examples](../guides/examples.md)** | **[Troubleshooting](../guides/troubleshooting.md)**

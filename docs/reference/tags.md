@@ -1,39 +1,97 @@
 # Image Tags & Registries
 
-DebugBox images are published to two identical registries.
+DebugBox is published to **two identical registries** with **20 tags per release** using a single-repository variant strategy.
 
 ## Registries
 
-| Registry              | Base Path                          | Recommended For          |
-|-----------------------|------------------------------------|--------------------------|
-| **GHCR** (primary)    | `ghcr.io/ibtisam-iq/`              | GitHub users, faster pulls |
-| **Docker Hub** (mirror) | `docker.io/mibtisam/`            | Broad compatibility      |
+| Registry | URL | Primary? |
+|----------|-----|----------|
+| **GitHub Container Registry (GHCR)** | `ghcr.io/ibtisam-iq/debugbox` | Yes (recommended) |
+| **Docker Hub** | `docker.io/mibtisam/debugbox` | Mirror |
 
-Examples:
+## Tag Strategy
+
+All three variants in **one repository** with **variant-based tagging**:
+
+### Primary Tags (Variant Discovery)
+
 ```bash
-ghcr.io/ibtisam-iq/debugbox          # balanced
-ghcr.io/ibtisam-iq/debugbox-lite
-docker.io/mibtisam/debugbox-power
+ghcr.io/ibtisam-iq/debugbox:lite         # Latest lite
+ghcr.io/ibtisam-iq/debugbox:balanced     # Latest balanced
+ghcr.io/ibtisam-iq/debugbox:power        # Latest power
 ```
 
-## Tags
+### Floating Version Tags (Latest per Variant)
 
-- **Version tags**: `v1.0.0`, `v1.0.1`, `v1.1.0` (semantic versioning)
-- **`:latest`**: Always points to newest stable release (not pre-releases)
-
-## Default Variant
-
-Unqualified names resolve to **balanced**:
-```
-ghcr.io/ibtisam-iq/debugbox == ghcr.io/ibtisam-iq/debugbox-balanced
-ghcr.io/ibtisam-iq/debugbox:latest == ghcr.io/ibtisam-iq/debugbox-balanced:latest
+```bash
+ghcr.io/ibtisam-iq/debugbox:lite-latest
+ghcr.io/ibtisam-iq/debugbox:balanced-latest
+ghcr.io/ibtisam-iq/debugbox:power-latest
 ```
 
-## Recommendations
+### Pinned Version Tags (Production)
 
-| Use Case              | Tag Recommendation                  |
-|-----------------------|-------------------------------------|
-| Development / testing | `:latest`                           |
-| Production / CI/CD    | Pinned version (`:v1.0.0`)          |
+```bash
+ghcr.io/ibtisam-iq/debugbox:lite-1.0.0         # Immutable
+ghcr.io/ibtisam-iq/debugbox:balanced-1.0.0
+ghcr.io/ibtisam-iq/debugbox:power-1.0.0
+```
 
-→ **[Quick Start](../getting-started/quick-start.md)** | **[Release Process](https://github.com/ibtisam-iq/debugbox/blob/main/RELEASE.md)** →
+### Default Aliases (Convenience, Balanced Only)
+
+```bash
+ghcr.io/ibtisam-iq/debugbox:latest     # Alias to balanced-latest
+ghcr.io/ibtisam-iq/debugbox:1.0.0      # Alias to balanced-1.0.0
+```
+
+## Quick Reference
+
+| Use Case | Example |
+|----------|---------|
+| Development (latest balanced) | `ghcr.io/ibtisam-iq/debugbox` |
+| Latest lite | `ghcr.io/ibtisam-iq/debugbox:lite` |
+| Latest power | `ghcr.io/ibtisam-iq/debugbox:power` |
+| Production (balanced) | `ghcr.io/ibtisam-iq/debugbox:1.0.0` |
+| Production (lite) | `ghcr.io/ibtisam-iq/debugbox:lite-1.0.0` |
+| Production (power) | `ghcr.io/ibtisam-iq/debugbox:power-1.0.0` |
+
+## Best Practices
+
+**Development:**
+
+- Use `:latest` or variant name for interactive debugging
+- Example: `docker run -it ghcr.io/ibtisam-iq/debugbox:lite`
+
+**Production & CI/CD:**
+
+- **Always pin specific version and variant**
+- Never use `:latest` in production manifests
+- Example: `ghcr.io/ibtisam-iq/debugbox:balanced-1.0.0`
+
+## Versioning
+
+DebugBox follows **Semantic Versioning** (MAJOR.MINOR.PATCH):
+
+- `v1.0.0` — First stable release
+- `v1.0.1` — Patch (bug fix)
+- `v1.1.0` — Minor (features, backward compatible)
+- `v2.0.0` — Major (breaking changes)
+
+**Key Rules:**
+
+- Released versions are immutable
+- Older versions remain available forever
+- `:latest` always points to newest stable (never pre-releases)
+
+## Total Tags Per Release
+
+| Category | Pattern | Count |
+|----------|---------|-------|
+| Primary discovery | `:lite`, `:balanced`, `:power` | 3 |
+| Floating version | `:-latest` (3 variants) | 3 |
+| Pinned version | `:-1.0.0` (3 variants) | 3 |
+| Default aliases | `:latest`, `:1.0.0` | 2 |
+| **Per registry** | — | **11 tags** |
+| **Both registries** | GHCR + Docker Hub | **20 tags** |
+
+→ **[Installation](../getting-started/installation.md)** | **[Variants Overview](../variants/overview.md)** | **[Quick Start](../getting-started/quick-start.md)**

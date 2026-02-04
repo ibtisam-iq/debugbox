@@ -252,9 +252,10 @@ jobs:
         run: |
           VERSION="${GITHUB_REF_NAME}"
           echo "Deploying frozen docs for ${VERSION}"
-          mike deploy --push "${VERSION}"
+          mike deploy --push "${VERSION}" --update-aliases latest
+          mike set-default --push latest
           mike deploy --push dev
-          mike set-default --push "${VERSION}"
+          echo "Deployed ${VERSION} and updated 'latest' alias"
 
 
       # ----------------------------------------------------

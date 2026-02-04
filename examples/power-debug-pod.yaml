@@ -1,0 +1,22 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: debug-power
+  labels:
+    app: debugbox
+    variant: power
+spec:
+  containers:
+  - name: debugbox
+    image: ghcr.io/ibtisam-iq/debugbox:power
+    command: ["/bin/bash"]
+    securityContext:
+      # Don't use privileged unless absolutely necessary
+      privileged: false
+      capabilities:
+        add:
+        - NET_ADMIN  # Required for: conntrack, nft, iptables, ip route manipulation
+        - NET_RAW    # Required for: tshark, tcpdump, raw packet capture
+    tty: true
+    stdin: true
+  restartPolicy: Never

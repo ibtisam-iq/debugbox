@@ -2,62 +2,118 @@
 
 **~104 MB** — Full SRE-grade forensics toolkit.
 
-The **power** variant includes everything from balanced, plus advanced tools for deep investigation.
+Everything from balanced, plus advanced tools for deep system and network investigation.
 
 ## When to Use Power
 
-Use only when you need:
+- Detailed packet analysis with tshark
+- Library-level tracing (ltrace)
+- Advanced routing and firewall debugging
+- Custom Python scripting
+- Deep incident forensics
+- **Not recommended for routine tasks — stick with balanced to save bandwidth**
 
-- Detailed packet analysis (`tshark`)
-- Library-level tracing (`ltrace`)
-- Firewall/routing debugging (`nftables`, `bird`, `conntrack-tools`)
-- Custom Python scripting (`pip3`)
-- High-precision network testing
+## ⚠️ Linux Capabilities Required
 
-**Do not use power** for routine tasks — stick with balanced to save time and bandwidth.
+Power variant tools like `tshark`, `conntrack`, `iptables`, and `nftables` require **additional Linux capabilities** to function:
 
-## Key Additions Over Balanced
+- **NET_RAW** — For packet capture (tshark, tcpdump, ngrep)
+- **NET_ADMIN** — For firewall/routing (iptables, nftables, conntrack, brctl)
 
-| Category            | Tools Added                                      |
-|---------------------|--------------------------------------------------|
-| Packet Analysis     | `tshark`                                         |
-| Advanced Network    | `fping`, `speedtest-cli`, `nmap-nping`, `nmap-scripts` |
-| System Internals    | `ltrace`                                         |
-| Routing & Firewall  | `iptables`, `nftables`, `conntrack-tools`, `bird`, `bridge-utils` |
-| Scripting           | Python 3 + `pip3`                                |
-| Editors             | `nano` (in addition to `vim`)                    |
-| YAML Processing     | Pinned `yq` v4.x binary (SHA-verified)           |
+→ **[Kubernetes capability setup](../usage/kubernetes.md#power-variant-with-capabilities)**  
+→ **[Docker capability setup](../usage/docker.md#power-variant-with-capabilities)**
 
-→ Full details: **[Tooling Manifest](../reference/manifest.md)**
+## Pull Tags
 
-## Example Usage
-
+**Latest:**
 ```bash
-kubectl run debug-power --rm -it \
-  --image=ghcr.io/ibtisam-iq/debugbox-power \
-  --restart=Never
+ghcr.io/ibtisam-iq/debugbox:power
+ghcr.io/ibtisam-iq/debugbox:power-latest
 ```
 
-Inside:
+**Production (pinned version):**
 ```bash
-tshark -i eth0 -f "port 443"
-nft list ruleset
-conntrack -L
-ltrace -p 1234
-pip3 install requests
-python3 -c "import requests; print(requests.get('https://api.ipify.org').text)"
+ghcr.io/ibtisam-iq/debugbox:power-1.0.0
 ```
 
-## Image Details
+## Quick Usage
 
-- Compressed size: ~104 MB
-- Architectures: `linux/amd64`, `linux/arm64`
+### Kubernetes
 
-Pull:
+**With capabilities (recommended for advanced tools):**
 ```bash
-ghcr.io/ibtisam-iq/debugbox-power:latest
+# Apply pre-made manifest
+kubectl apply -f https://raw.githubusercontent.com/ibtisam-iq/debugbox/main/examples/power-debug-pod.yaml
+kubectl exec -it debug-power -- bash
 ```
 
-## Navigation
+**Basic usage (no capabilities):**
+```bash
+kubectl debug my-pod -it --image=ghcr.io/ibtisam-iq/debugbox:power
+kubectl run debug --rm -it --image=ghcr.io/ibtisam-iq/debugbox:power --restart=Never
+```
 
-← **[Balanced Variant](balanced.md)** | **[Variants Overview](overview.md)** →
+### Docker
+
+**With capabilities:**
+```bash
+docker run --rm -it \
+  --cap-add=NET_ADMIN \
+  --cap-add=NET_RAW \
+  ghcr.io/ibtisam-iq/debugbox:power
+```
+
+**Basic usage:**
+```bash
+docker run -it ghcr.io/ibtisam-iq/debugbox:power
+docker run -it ghcr.io/ibtisam-iq/debugbox:power-1.0.0  # Production
+```
+
+## What's Included
+
+Power includes **all balanced tools** plus **14 advanced forensics packages** for packet analysis, TLS inspection, routing, and scripting.
+
+→ **[Complete power tool list with examples](../guides/examples.md#variant-power-104-mb-full-forensics)**
+
+**Key additions over balanced:**
+
+- **Packet Analysis:** tshark, ngrep (requires NET_RAW)
+- **TLS/SSL:** openssl
+- **Routing & Firewall:** iptables, nftables, conntrack, bird, brctl (requires NET_ADMIN)
+- **Advanced Network:** tcptraceroute, fping, speedtest-cli, nmap-nping, nmap-scripts
+- **System Internals:** ltrace
+- **Scripting:** Python 3 + pip3
+- **Editors:** nano (in addition to vim)
+
+## Shell Helpers
+
+Power includes **all balanced helpers** plus **4 advanced network functions**:
+
+→ **[Complete shell helper reference with examples](../guides/examples.md#helper-functions-shell)**
+
+**Power-exclusive helpers:**
+
+- `sniff()` — Quick packet capture with smart filters
+- `sniff-http()` — Capture HTTP traffic (ports 80/443)
+- `sniff-dns()` — Capture DNS queries (port 53)
+- `cert-check()` — Inspect TLS certificates from servers
+- `conntrack-watch()` — Monitor active connections in real-time
+
+## Tool Capability Matrix
+
+| Tool | Capability Required | Works Without? |
+|------|---------------------|----------------|
+| openssl, ltrace, python3 | None | ✅ Yes |
+| tshark, ngrep | NET_RAW | ❌ No |
+| iptables, nftables, conntrack, brctl | NET_ADMIN | ❌ No |
+| tcptraceroute, fping, nmap-nping | None | ✅ Yes |
+
+→ **[Detailed capability setup guide](../guides/examples.md#capability-requirements-reference)**
+
+## When to Downgrade
+
+**Most tasks use [Balanced Variant](balanced.md).** Downgrade to save 58 MB.  
+
+**For speed, use [Lite Variant](lite.md).** Saves 90 MB.
+
+→ **[Variants Overview](overview.md)** | **[Real-world examples](../guides/examples.md)** | **[Troubleshooting](../guides/troubleshooting.md)**

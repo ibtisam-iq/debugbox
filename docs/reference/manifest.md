@@ -18,99 +18,111 @@ Tools marked with ✓ are included in that variant and all higher tiers.
 
 ### Shell & Environment
 
-| Feature                  | Base | Lite | Balanced | Power | Notes                                      |
-|--------------------------|------|------|----------|-------|--------------------------------------------|
-| Default shell            | ash  | ash  | **bash** | bash  | Balanced+ include bash-completion          |
-| Prompt                   | ✓    | ✓    | ✓        | ✓     | `[debugbox \w]$`                           |
-| Editor (default)         | vi   | vi   | **vim**  | vim   | nano added in power                        |
-| Pager                    | —    | —    | **less** | less  |                                            |
-| Locale                   | ✓    | ✓    | ✓        | ✓     | `C.UTF-8`                                  |
+| Feature | Base | Lite | Balanced | Power |
+|---------|------|------|----------|-------|
+| Default shell | ash | ash | **bash** | bash |
+| Prompt | ✓ | ✓ | ✓ | ✓ |
+| Editor (default) | vi | vi | **vim** | vim |
+| Additional editor | — | — | — | nano |
+| Pager | — | — | **less** | less |
+| Locale | C.UTF-8 | C.UTF-8 | C.UTF-8 | C.UTF-8 |
 
 ### Shell Helpers (/etc/profile.d)
 
-| Helper     | Base | Lite | Balanced | Power | Description                          |
-|------------|------|------|----------|-------|--------------------------------------|
-| `ll()`     | ✓    | ✓    | ✓        | ✓     | `ls -alF` alias                      |
-| `json()`   | —    | ✓    | ✓        | ✓     | Pretty-print JSON with jq            |
-| `yaml()`   | —    | ✓    | ✓        | ✓     | Pretty-print YAML with yq            |
-| `sniff()`  | —    | —    | —        | ✓     | Quick tcpdump wrapper (power only)   |
+| Helper | Lite | Balanced | Power | Description |
+|--------|------|----------|-------|-------------|
+| `ll()` | ✓ | ✓ | ✓ | `ls -alF` alias |
+| `json()` | ✓ | ✓ | ✓ | Pretty-print JSON |
+| `yaml()` | ✓ | ✓ | ✓ | Pretty-print YAML |
+| `ports()` | — | ✓ | ✓ | List listening ports |
+| `connections()` | — | ✓ | ✓ | Show active connections |
+| `routes()` | — | ✓ | ✓ | Display routing table |
+| `k8s-info` | — | ✓ | ✓ | K8s context & namespace |
+| `sniff()` | — | — | ✓ | Quick packet capture |
+| `sniff-http()` | — | — | ✓ | Capture HTTP (80/443) |
+| `sniff-dns()` | — | — | ✓ | Capture DNS queries |
+| `cert-check()` | — | — | ✓ | Inspect TLS certs |
+| `conntrack-watch()` | — | — | ✓ | Monitor connections |
 
 ### Networking
 
-| Tool              | Lite | Balanced | Power | Notes                                      |
-|-------------------|------|----------|-------|--------------------------------------------|
-| curl              | ✓    | ✓        | ✓     |                                            |
-| netcat-openbsd    | ✓    | ✓        | ✓     |                                            |
-| iproute2 (`ip`)   | ✓    | ✓        | ✓     |                                            |
-| iputils (`ping`)  | ✓    | ✓        | ✓     |                                            |
-| bind-tools (`dig`, `nslookup`) | ✓    | ✓        | ✓     |                                            |
-| tcpdump           | —    | ✓        | ✓     |                                            |
-| socat             | —    | ✓        | ✓     |                                            |
-| nmap              | —    | ✓        | ✓     |                                            |
-| mtr               | —    | ✓        | ✓     |                                            |
-| iperf3            | —    | ✓        | ✓     |                                            |
-| ethtool           | —    | ✓        | ✓     |                                            |
-| iftop             | —    | ✓        | ✓     |                                            |
-| tshark            | —    | —        | ✓     | Wireshark CLI                              |
-| fping             | —    | —        | ✓     |                                            |
-| speedtest-cli     | —    | —        | ✓     |                                            |
-| nmap-nping        | —    | —        | ✓     |                                            |
-| nmap-scripts      | —    | —        | ✓     | NSE scripts                                |
+| Tool | Lite | Balanced | Power |
+|------|------|----------|-------|
+| curl | ✓ | ✓ | ✓ |
+| netcat-openbsd | ✓ | ✓ | ✓ |
+| iproute2 (ip) | ✓ | ✓ | ✓ |
+| iputils (ping) | ✓ | ✓ | ✓ |
+| bind-tools (dig, nslookup) | ✓ | ✓ | ✓ |
+| tcpdump | — | ✓ | ✓ |
+| socat | — | ✓ | ✓ |
+| nmap | — | ✓ | ✓ |
+| mtr | — | ✓ | ✓ |
+| iperf3 | — | ✓ | ✓ |
+| ethtool | — | ✓ | ✓ |
+| iftop | — | ✓ | ✓ |
+| tshark | — | — | ✓ |
+| ngrep | — | — | ✓ |
+| tcptraceroute | — | — | ✓ |
+| fping | — | — | ✓ |
+| speedtest-cli | — | — | ✓ |
+| nmap-nping | — | — | ✓ |
+| nmap-scripts (NSE) | — | — | ✓ |
 
 ### System & Process
 
-| Tool              | Lite | Balanced | Power | Notes                                      |
-|-------------------|------|----------|-------|--------------------------------------------|
-| htop              | —    | ✓        | ✓     |                                            |
-| strace            | —    | ✓        | ✓     |                                            |
-| lsof              | —    | ✓        | ✓     |                                            |
-| procps            | —    | ✓        | ✓     |                                            |
-| psmisc            | —    | ✓        | ✓     |                                            |
-| ltrace            | —    | —        | ✓     | Library call tracing                       |
+| Tool | Lite | Balanced | Power |
+|------|------|----------|-------|
+| htop | — | ✓ | ✓ |
+| strace | — | ✓ | ✓ |
+| lsof | — | ✓ | ✓ |
+| procps | — | ✓ | ✓ |
+| psmisc | — | ✓ | ✓ |
+| ltrace | — | — | ✓ |
 
 ### Kubernetes & Control Plane
 
-| Tool              | Lite | Balanced | Power | Notes                                      |
-|-------------------|------|----------|-------|--------------------------------------------|
-| kubectx           | —    | ✓        | ✓     | Context switching                          |
-| kubens            | —    | ✓        | ✓     | Namespace switching                        |
+| Tool | Lite | Balanced | Power |
+|------|------|----------|-------|
+| kubectx | — | ✓ | ✓ |
+| kubens | — | ✓ | ✓ |
 
 ### Data Processing & Scripting
 
-| Tool              | Lite | Balanced | Power | Notes                                      |
-|-------------------|------|----------|-------|--------------------------------------------|
-| jq                | ✓    | ✓        | ✓     | JSON processing                            |
-| yq                | ✓    | ✓        | ✓     | Lite/Balanced: Alpine package<br>Power: pinned v4.x binary (SHA-verified) |
-| python3 + pip3    | —    | —        | ✓     | Ad-hoc scripting                           |
+| Tool | Lite | Balanced | Power |
+|------|------|----------|-------|
+| jq | ✓ | ✓ | ✓ |
+| yq | ✓ | ✓ | ✓ |
+| python3 + pip3 | — | — | ✓ |
 
 ### Filesystem & Version Control
 
-| Tool              | Lite | Balanced | Power |
-|-------------------|------|----------|------|
-| file              | —    | ✓        | ✓    |
-| tar, gzip         | —    | ✓        | ✓    |
-| git               | —    | ✓        | ✓    |
+| Tool | Lite | Balanced | Power |
+|------|------|----------|-------|
+| file | — | ✓ | ✓ |
+| tar, gzip | — | ✓ | ✓ |
+| git | — | ✓ | ✓ |
+
+### TLS/SSL (Power Only)
+
+| Tool | Power |
+|------|-------|
+| openssl | ✓ |
 
 ### Routing & Firewall (Power Only)
 
-| Tool              | Power |
-|-------------------|-------|
-| iptables          | ✓     |
-| nftables          | ✓     |
-| conntrack-tools   | ✓     |
-| bird              | ✓     |
-| bridge-utils      | ✓     |
+| Tool | Power |
+|------|-------|
+| iptables | ✓ |
+| nftables | ✓ |
+| conntrack-tools | ✓ |
+| bird | ✓ |
+| bridge-utils | ✓ |
 
 ## Guarantees
 
-- **Deterministic**: Critical tools (e.g., `yq` in power) are version-pinned and SHA-verified
-- **Transparent**: Only documented tools are included — no hidden packages
-- **Secure by default**: Scanned with Trivy on every release
-- **Root access**: All images run as root for full debugging capability (ephemeral use only)
+- **Deterministic:** Critical tools (e.g., yq in power) are version-pinned and SHA-verified
+- **Transparent:** Only documented tools included — no hidden packages
+- **Secure by default:** Scanned with Trivy on every release
+- **Root access:** All images run as root for full debugging capability (ephemeral use only)
 
-## Source of Truth
-
-The raw manifest is maintained in [`manifest.yaml`](../manifest.yaml).  
-Any discrepancy between this page and the YAML file should be reported as a bug.
-
-→ Back to **[Variants Overview](../variants/overview.md)** | **[Examples](../guides/examples.md)** →
+→ **[Variants Overview](../variants/overview.md)** | **[Image Tags](tags.md)** | **[Examples](../guides/examples.md)**

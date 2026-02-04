@@ -2,56 +2,64 @@
 
 **~14 MB** — Minimal and lightning-fast.
 
-The **lite** variant is optimized for scenarios where pull speed and image size matter most.
+Perfect for quick network diagnostics and bandwidth-constrained environments.
 
 ## When to Use Lite
 
-Perfect for:
-
-- Quick network or DNS checks during incidents
-- Ephemeral debugging in bandwidth-constrained environments
+- Quick DNS resolution checks
+- API connectivity verification
+- Bandwidth-constrained networks or edge clusters
 - Init containers or fast pod startup
-- When you only need basic connectivity tools
+- When you only need basic networking tools
 
-**Avoid lite** if you need `tcpdump`, `strace`, `vim`, or Kubernetes context switching.
+## Pull Tags
 
-## Key Tools
-
-| Category     | Tools                                      |
-|--------------|--------------------------------------------|
-| Networking   | `curl`, `netcat-openbsd`, `iproute2`, `iputils`, `bind-tools` (dig, nslookup) |
-| Data         | `jq`, `yq` (Alpine package)                |
-| Shell        | `ash` (BusyBox)                            |
-
-→ Full details: **[Tooling Manifest](../reference/manifest.md)**
-
-## Example Usage
-
+**Latest:**
 ```bash
-kubectl run debug-lite --rm -it \
-  --image=ghcr.io/ibtisam-iq/debugbox-lite \
-  --restart=Never
+ghcr.io/ibtisam-iq/debugbox:lite
+ghcr.io/ibtisam-iq/debugbox:lite-latest
 ```
 
-Inside:
+**Production (pinned version):**
 ```bash
-curl -I https://kubernetes.io
-dig kubernetes.default.svc.cluster.local
-ip route
-jq . < config.json
-yq '.metadata.name' config.yaml
+ghcr.io/ibtisam-iq/debugbox:lite-1.0.0
 ```
 
-## Image Details
+## Quick Usage
 
-- Compressed size: ~14 MB
-- Architectures: `linux/amd64`, `linux/arm64`
-
-Pull:
+### Kubernetes
 ```bash
-ghcr.io/ibtisam-iq/debugbox-lite:latest
+# Debug pod with lite variant
+kubectl debug my-pod -it --image=ghcr.io/ibtisam-iq/debugbox:lite
+
+# Standalone session
+kubectl run debug --rm -it --image=ghcr.io/ibtisam-iq/debugbox:lite --restart=Never
 ```
 
-## Navigation
+### Docker
+```bash
+docker run -it ghcr.io/ibtisam-iq/debugbox:lite
+docker run ghcr.io/ibtisam-iq/debugbox:lite curl https://ibtisam-iq.com
+```
 
-→ **[Balanced Variant (recommended)](balanced.md)** | **[Variants Overview](overview.md)** →
+## What's Included
+
+Lite includes **8 essential networking packages** optimized for fast pulls and basic connectivity testing.
+
+→ **[Complete lite tool list with examples](../guides/examples.md#variant-lite-14-mb)**
+
+**Key categories:**
+
+- HTTP/HTTPS clients (curl)
+- DNS tools (dig, nslookup, host)
+- Data processors (jq, yq)
+- Basic networking (netcat, ip, ping)
+- Minimal shell (ash, vi)
+
+## When to Upgrade
+
+**Need more tools?** → **[Balanced Variant](balanced.md)** adds bash, tcpdump, vim, strace, and Kubernetes helpers (+32 MB)
+
+**Need forensics?** → **[Power Variant](power.md)** adds packet analysis, routing, and Python scripting (+90 MB)
+
+→ **[Variants Overview](overview.md)** | **[Real-world examples](../guides/examples.md)** | **[Troubleshooting](../guides/troubleshooting.md)**

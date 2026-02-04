@@ -86,7 +86,9 @@ jobs:
           done
 
       # Stage 3: Push multi-platform only if all scans passed
-      - name: Push all variants & unqualified (atomic)
+      - name: Push all variants (atomic, 20 tags)
+        env:
+          DOCKER_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
         run: |
           set -e
           variants=("lite" "balanced" "power")
@@ -94,38 +96,45 @@ jobs:
           BUILD_DATE=$(date -u +'%Y-%m-%dT%H:%M:%SZ')
           VCS_REF="${{ github.sha }}"
 
-          echo "All scans passed — starting atomic push..."
+          echo "All scans passed — starting atomic push (20 tags)..."
 
           for variant in "${variants[@]}"; do
             echo "Pushing $variant..."
+            
+            # Build tag list for each variant (quoted for safety)
+            TAGS=(
+              "--tag" "ghcr.io/ibtisam-iq/debugbox:$variant"
+              "--tag" "ghcr.io/ibtisam-iq/debugbox:$variant-latest"
+              "--tag" "ghcr.io/ibtisam-iq/debugbox:$variant-$VERSION"
+              "--tag" "docker.io/$DOCKER_USERNAME/debugbox:$variant"
+              "--tag" "docker.io/$DOCKER_USERNAME/debugbox:$variant-latest"
+              "--tag" "docker.io/$DOCKER_USERNAME/debugbox:$variant-$VERSION"
+            )
+            
+            # Add balanced aliases (2 extra tags: :latest and :VERSION)
+            if [ "$variant" = "balanced" ]; then
+              TAGS+=(
+                "--tag" "ghcr.io/ibtisam-iq/debugbox:latest"
+                "--tag" "ghcr.io/ibtisam-iq/debugbox:$VERSION"
+                "--tag" "docker.io/$DOCKER_USERNAME/debugbox:latest"
+                "--tag" "docker.io/$DOCKER_USERNAME/debugbox:$VERSION"
+              )
+            fi
+            
+            # Single atomic push per variant
             docker buildx build \
               --file "dockerfiles/Dockerfile.$variant" \
               --platform linux/amd64,linux/arm64 \
               --build-arg BUILD_DATE="$BUILD_DATE" \
               --build-arg VCS_REF="$VCS_REF" \
               --build-arg VERSION="$VERSION" \
-              --tag "ghcr.io/ibtisam-iq/debugbox-$variant:$VERSION" \
-              --tag "ghcr.io/ibtisam-iq/debugbox-$variant:latest" \
-              --tag "docker.io/${{ secrets.DOCKERHUB_USERNAME }}/debugbox-$variant:$VERSION" \
-              --tag "docker.io/${{ secrets.DOCKERHUB_USERNAME }}/debugbox-$variant:latest" \
+              "${TAGS[@]}" \
+              --pull \
               --push \
               .
+            
             echo "Pushed $variant"
           done
-
-          echo "Pushing balanced as unqualified debugbox..."
-          docker buildx build \
-            --file "dockerfiles/Dockerfile.balanced" \
-            --platform linux/amd64,linux/arm64 \
-            --build-arg BUILD_DATE="$BUILD_DATE" \
-            --build-arg VCS_REF="$VCS_REF" \
-            --build-arg VERSION="$VERSION" \
-            --tag "ghcr.io/ibtisam-iq/debugbox:$VERSION" \
-            --tag "ghcr.io/ibtisam-iq/debugbox:latest" \
-            --tag "docker.io/${{ secrets.DOCKERHUB_USERNAME }}/debugbox:$VERSION" \
-            --tag "docker.io/${{ secrets.DOCKERHUB_USERNAME }}/debugbox:latest" \
-            --push \
-            .
 
       - name: Release summary
         run: |
@@ -133,8 +142,27 @@ jobs:
           echo ""
           echo "Release v${VERSION} completed successfully!"
           echo ""
-          echo "Published images:"
-          echo " • ghcr.io/ibtisam-iq/debugbox-lite:${VERSION}"
-          echo " • ghcr.io/ibtisam-iq/debugbox-balanced:${VERSION}"
-          echo " • ghcr.io/ibtisam-iq/debugbox-power:${VERSION}"
-          echo " • ghcr.io/ibtisam-iq/debugbox:${VERSION} (balanced alias)"
+          echo "Published images (20 tags across 2 registries):"
+          echo ""
+          echo "Lite variant:"
+          echo "  • ghcr.io/ibtisam-iq/debugbox:lite"
+          echo "  • ghcr.io/ibtisam-iq/debugbox:lite-latest"
+          echo "  • ghcr.io/ibtisam-iq/debugbox:lite-${VERSION}"
+          echo ""
+          echo "Balanced variant (default):"
+          echo "  • ghcr.io/ibtisam-iq/debugbox:balanced"
+          echo "  • ghcr.io/ibtisam-iq/debugbox:balanced-latest"
+          echo "  • ghcr.io/ibtisam-iq/debugbox:balanced-${VERSION}"
+          echo "  • ghcr.io/ibtisam-iq/debugbox:latest (alias)"
+          echo "  • ghcr.io/ibtisam-iq/debugbox:${VERSION} (alias)"
+          echo ""
+          echo "Power variant:"
+          echo "  • ghcr.io/ibtisam-iq/debugbox:power"
+          echo "  • ghcr.io/ibtisam-iq/debugbox:power-latest"
+          echo "  • ghcr.io/ibtisam-iq/debugbox:power-${VERSION}"
+          echo ""
+          echo "All variants passed security scanning"
+          echo "Multi-platform: linux/amd64, linux/arm64"
+          echo ""
+          echo "📝 Next: Create GitHub Release manually at:"
+          echo "   https://github.com/ibtisam-iq/debugbox/releases/new?tag=v${VERSION}"

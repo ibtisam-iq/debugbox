@@ -1,17 +1,25 @@
 # DebugBox
 
+[![Docker Pulls](https://img.shields.io/docker/pulls/mibtisam/debugbox?logo=docker&label=Docker%20Hub&logoColor=white)](https://hub.docker.com/r/mibtisam/debugbox)
+[![GitHub Container Registry](https://img.shields.io/badge/GHCR-Available-brightgreen?logo=github&logoColor=white)](https://github.com/ibtisam-iq/debugbox/pkgs/container/debugbox)
+[![Multi-Arch](https://img.shields.io/badge/Multi--Arch-amd64%20%7C%20arm64-blue?logo=docker&logoColor=white)](https://github.com/ibtisam-iq/debugbox)
+
+[![Trivy Scanning](https://img.shields.io/badge/Security-Trivy%20Scanned-blue?logo=aqua&logoColor=white)](https://github.com/aquasecurity/trivy)
+[![Powered by Alpine](https://img.shields.io/badge/Powered%20by-Alpine%20Linux-0D597F?logo=alpine-linux&logoColor=white)](https://alpinelinux.org/)
+[![Kubernetes Ready](https://img.shields.io/badge/Kubernetes-Ready-326ce5?logo=kubernetes&logoColor=white)](https://kubernetes.io/)
+
 **A lightweight, variant-based debugging container suite**  
 for Kubernetes and Docker environments.
 
 Choose exactly the right size for your debugging task — no bloat, no waiting.
 
-| Variant       | Size      | Best For                              | Pull Command                                      |
-|---------------|-----------|---------------------------------------|---------------------------------------------------|
-| **lite**      | ~14 MB   | Network/DNS checks                    | `ghcr.io/ibtisam-iq/debugbox-lite`               |
-| **balanced** (default) | ~46 MB   | Daily Kubernetes troubleshooting      | `ghcr.io/ibtisam-iq/debugbox`                    |
-| **power**     | ~104 MB  | Packet capture & deep forensics        | `ghcr.io/ibtisam-iq/debugbox-power`              |
+| Variant | Size | Best For | Image |
+|---------|------|----------|-------|
+| **lite** | ~14 MB | Network/DNS checks | `ghcr.io/ibtisam-iq/debugbox:lite` |
+| **balanced** (default) | ~46 MB | Daily Kubernetes troubleshooting | `ghcr.io/ibtisam-iq/debugbox` |
+| **power** | ~104 MB | Packet capture & deep forensics | `ghcr.io/ibtisam-iq/debugbox:power` |
 
-Also available on Docker Hub: `mibtisam/debugbox*`
+Also available on Docker Hub: `mibtisam/debugbox:*`
 
 Supports **amd64** and **arm64** (Apple Silicon, Graviton, Raspberry Pi) out of the box.
 
@@ -31,34 +39,21 @@ Or launch a standalone session:
 kubectl run debug --rm -it --image=ghcr.io/ibtisam-iq/debugbox --restart=Never
 ```
 
-Now you're inside with `curl`, `dig`, `tcpdump`, `vim`, `strace`, and more.
+Now you're inside with curl, dig, tcpdump, vim, strace, and more.
 
-→ **[Full quick start guide](getting-started/quick-start.md)**
+→ **[Full quick start guide](getting-started/quick-start.md)** | **[Installation](getting-started/installation.md)**
 
 ---
 
 ## Why DebugBox?
 
-Modern pods often lack basic tools:
+Modern pods often lack basic debugging tools. DebugBox gives you **three focused variants** so you only pull what you need.
 
-```bash
-kubectl exec -it my-pod -- curl
-# curl: not found
-```
-
-Alternatives like `netshoot` are great but **201 MB** — too heavy for simple checks.
-
-DebugBox gives you **three focused variants** so you pull:
-
-- **14.4 MB** for basic connectivity
-- **46.2 MB** for daily debugging
-- **104 MB** only when you need `tshark` or `nftables`
-
-No bloat. No 200 MB waits. Just the right size for the job.
+> 14 MB for basic connectivity · 46 MB for daily debugging · 104 MB only when you need advanced forensics
 
 **Faster pulls. Faster debugging.**
 
-> Sizes measured via `docker save | gzip -c | wc -c` — reflects actual compressed download size from registry.
+→ **[See the full motivation](getting-started/motivation.md)**
 
 ---
 
@@ -94,17 +89,8 @@ No bloat. No 200 MB waits. Just the right size for the job.
 
 ---
 
-## Features
-
-- **Multi-architecture** – Seamless on x86, ARM, Apple Silicon
-- **Deterministic builds** – Critical tools pinned with SHA verification
-- **Security scanned** – Trivy blocks HIGH/CRITICAL on every release
-- **Runs as root** – By design, for full debugging access (ephemeral use only)
-
----
-
 **Ready to debug faster?**
-  
-Start with the [Quick Start](getting-started/quick-start.md) or [choose your variant](variants/overview.md).
 
-Built and maintained by [@ibtisam-iq](https://github.com/ibtisam-iq) · [MIT License](https://github.com/ibtisam-iq/debugbox/blob/main/LICENSE)
+Start with [Quick Start](getting-started/quick-start.md) or [choose your variant](variants/overview.md).
+
+Built with ❤️ by [@ibtisam-iq](https://github.com/ibtisam-iq) · [MIT License](https://github.com/ibtisam-iq/debugbox/blob/main/LICENSE)

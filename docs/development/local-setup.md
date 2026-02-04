@@ -1,55 +1,272 @@
 # Local Development Setup
 
-How to build and test DebugBox locally.
+Build, test, and contribute to DebugBox locally.
 
 ## Prerequisites
 
-- Docker (or Podman)
-- Make
-- Git
+- **Docker** (or Podman with `alias docker=podman`)
+- **Make** (GNU make)
+- **Git**
+- **Python 3.8+** (for MkDocs documentation preview)
 
-## Clone the Repository
+## Clone & Setup
 
 ```bash
 git clone https://github.com/ibtisam-iq/debugbox.git
 cd debugbox
 ```
 
-## Common Commands
+## Build Commands
 
-| Command              | Description                              |
-|----------------------|------------------------------------------|
-| `make build-all`     | Build all variants (amd64 + arm64)       |
-| `make build-lite`    | Build only lite variant                  |
-| `make test-all`      | Run smoke tests on all variants          |
-| `make scan`          | Security scan with Trivy                 |
-| `make lint`          | Lint Dockerfiles with hadolint           |
+### Build All Variants (Multi-Architecture)
 
-## Multi-Architecture Builds
+Builds all three variants for both amd64 and arm64:
 
-Default builds both platforms:
 ```bash
-make build-balanced        # amd64 + arm64
+make build-all
 ```
 
-Force single platform:
-```bash
-PLATFORM=linux/arm64 make build-power
+**Output:**
+```
+debugbox:lite-local
+debugbox:balanced-local
+debugbox:power-local
 ```
 
-## Preview Documentation
+### Build Single Variant
+
+```bash
+make build-lite      # ~14 MB
+make build-balanced  # ~46 MB
+make build-power     # ~104 MB
+```
+
+### Build for Specific Architecture
+
+```bash
+PLATFORM=linux/arm64 make build-balanced
+PLATFORM=linux/amd64 make build-power
+PLATFORM=linux/amd64,linux/arm64 make build-all
+```
+
+### Skip Cache (Fresh Build)
+
+```bash
+NO_CACHE=true make build-all
+```
+
+## Quality Checks
+
+### Lint Dockerfiles
+
+Runs **hadolint** to check Dockerfile syntax and best practices:
+
+```bash
+make lint
+```
+
+Uses local `hadolint` if available, otherwise runs containerized version.
+
+### Security Scanning
+
+Scans images with **Trivy** for vulnerabilities (HIGH/CRITICAL only):
+
+```bash
+make scan
+```
+
+Requires `build-all` first (auto-triggered).
+
+## Test Commands
+
+### Run All Tests
+
+Executes smoke tests on all three variants:
+
+```bash
+make test-all
+```
+
+Auto-builds and lints first.
+
+### Test Single Variant
+
+```bash
+make test-lite
+make test-balanced
+make test-power
+```
+
+**What's tested:** Each variant runs `tests/smoke.sh` to verify:
+- Essential tools are present
+- Shells work correctly
+- Network tools function
+- Helpers are available (balanced+)
+
+### Manual Testing
+
+```bash
+# Interactive shell in lite
+docker run -it debugbox:lite-local sh
+
+# Test balanced with tcpdump
+docker run -it debugbox:balanced-local bash
+tcpdump --version
+
+# Test power with python
+docker run -it debugbox:power-local bash
+python3 --version
+```
+
+## Documentation Preview
+
+### Install Dependencies
 
 ```bash
 pip install -r requirements.txt
+```
+
+### Start Local Server
+
+```bash
 mkdocs serve
 ```
 
-Open http://localhost:8000
+Opens at **http://localhost:8000** with live reload.
 
-## Contributing
+### Build Static Docs
 
-Want to add a tool or fix a bug?
+```bash
+mkdocs build
+# Output in ./site/
+```
 
-→ See the full guidelines: [CONTRIBUTING.md on GitHub](https://github.com/ibtisam-iq/debugbox/blob/main/CONTRIBUTING.md)
+## Development Workflow
 
-→ Release process: [RELEASE.md on GitHub](https://github.com/ibtisam-iq/debugbox/blob/main/RELEASE.md)
+### Make a Change
+
+1. **Edit Dockerfile:**
+   ```bash
+   vim dockerfiles/Dockerfile.balanced
+   ```
+
+2. **Edit docs:**
+   ```bash
+   vim docs/manifest.yaml
+   ```
+
+3. **Build locally:**
+   ```bash
+   make build-balanced
+   ```
+
+4. **Test your changes:**
+   ```bash
+   make test-balanced
+   ```
+
+5. **Preview docs:**
+   ```bash
+   mkdocs serve
+   ```
+
+### Quality Gates
+
+Before committing, run the full pipeline:
+
+```bash
+make lint        # ✅ Dockerfile syntax
+make build-all   # ✅ All variants build
+make test-all    # ✅ All tests pass
+make scan        # ✅ No vulnerabilities
+```
+
+Or shortcut:
+
+```bash
+make push-all    # Runs lint → build-all → test-all → scan
+```
+
+(Won't actually push without GHCR credentials)
+
+## Make Targets Reference
+
+| Command | Purpose |
+|---------|---------|
+| `make help` | Show all available commands |
+| `make build-all` | Build all variants (amd64 + arm64) |
+| `make build-<variant>` | Build single variant (lite/balanced/power) |
+| `make test-all` | Test all variants |
+| `make test-<variant>` | Test single variant |
+| `make lint` | Lint all Dockerfiles |
+| `make scan` | Security scan with Trivy |
+| `make push-all` | Full pipeline (lint → build → test → scan) |
+| `make clean` | Remove local images |
+
+## Environment Variables
+
+| Variable | Default | Description |
+|----------|---------|-------------|
+| `VERSION` | `git describe --tags` or `dev` | Image version tag |
+| `LOCAL_TAG` | `local` | Local build tag suffix |
+| `PLATFORM` | `linux/amd64,linux/arm64` | Target architectures |
+| `NO_CACHE` | `false` | Disable Docker build cache |
+| `REGISTRY_GHCR` | `ghcr.io/ibtisam-iq/debugbox` | Target registry |
+
+**Example:**
+```bash
+VERSION=1.0.0 PLATFORM=linux/amd64 NO_CACHE=true make build-all
+```
+
+## Troubleshooting
+
+### Docker not found
+
+```bash
+# Install Docker Desktop or Docker Engine
+# Or use Podman
+alias docker=podman
+```
+
+### Make not found
+
+```bash
+# macOS
+brew install make
+
+# Ubuntu/Debian
+sudo apt install make
+
+# Alpine
+apk add make
+```
+
+### Build fails with permission error
+
+```bash
+# Ensure Docker daemon is running
+sudo systemctl start docker
+
+# Or use Docker Desktop (Mac/Windows)
+```
+
+### Trivy scan errors
+
+```bash
+# Install Trivy
+curl -sfL https://raw.githubusercontent.com/aquasecurity/trivy/main/contrib/install.sh | sh -s -- -b /usr/local/bin
+
+# Or skip scan
+make build-all test-all
+```
+
+### MkDocs port already in use
+
+```bash
+# Use different port
+mkdocs serve --dev-addr=127.0.0.1:8001
+```
+
+## Next Steps
+
+→ **[Contributing Guidelines](https://github.com/ibtisam-iq/debugbox/blob/main/CONTRIBUTING.md)** | **[Release Process](https://github.com/ibtisam-iq/debugbox/blob/main/RELEASE.md)** | **[Architecture](../reference/manifest.md)**
