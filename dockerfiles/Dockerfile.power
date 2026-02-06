@@ -1,66 +1,7 @@
 # DebugBox — Power variant
-#
-# Full-featured SRE-grade debugging and network forensics image.
-# Comprehensive tools for deep system and network troubleshooting.
-#
-# PURPOSE:
-#   Provides all Balanced tools PLUS advanced forensics, routing internals,
-#   deep packet analysis, and SRE-grade scripting capabilities (~104 MB).
-#   Use when Balanced isn't enough—for incident response, forensics, and
-#   infrastructure troubleshooting at scale.
-#
-# USE CASES:
-#   - Deep packet capture and analysis (tcpdump, tshark, ngrep)
-#   - Network packet forensics with TUI (termshark)
-#   - Firewall and routing troubleshooting (iptables, nftables, bird)
-#   - Connection tracking and netflow (conntrack, iftop, iptraf-ng)
-#   - Advanced tracing (tcptraceroute, trippy, ltrace)
-#   - TLS/certificate inspection (openssl, cert-check helpers)
-#   - Dynamic script writing (Python with pip)
-#   - Incident response and forensics workflows
-#   - Load testing and performance benchmarking
-#
-# TRADE-OFFS:
-#   - Largest image (104 MB) — only use when needed
-#   - Uses bash (1.5 MB) — inherits from balanced
-#   - Includes both vim AND nano — editor flexibility
-#   - Firewall tools require CAP_NET_ADMIN in pod
-#   - Python packages may need compilation
-#
-# COMPARISON:
-#   lite (14 MB):     Basic connectivity only
-#   balanced (46 MB): Daily driver
-#   power (104 MB):   Full SRE forensics ← YOU ARE HERE
-#
-# SHELL:
-#   Uses /bin/bash with full features (inherited from balanced):
-#   - Functions, aliases, scripting
-#   - Tab-completion for common tools
-#   - History and editing modes
-#   - Subshells and process substitution
-#
-# PHILOSOPHY:
-#   "If a tool solves an SRE problem, include it."
-#   No size constraints. No trade-offs. Full capability.
+# Advanced SRE-grade debugging and network forensics image (~104 MB).
 
-# ====================================================================
-# MULTI-STAGE BUILD: kubectx / kubens
-# ====================================================================
-# Build kubectx and kubens from source for:
-#   - Smaller binary size (stripped with -s -w)
-#   - Full control over version
-#   - Transparency and auditability
-#
-# kubectx — Switch Kubernetes contexts
-#           Used for: multi-cluster debugging
-#           Example: kubectx context-name
-#
-# kubens — Switch Kubernetes namespaces
-#          Used for: namespace-scoped debugging
-#          Example: kubens kube-system
-#
-# See: https://github.com/ahmetb/kubectx
-
+# Build kubectx/kubens from source
 FROM golang:1.25-alpine AS kubectx-builder
 
 ARG KUBECTX_VERSION=v0.9.5
@@ -78,10 +19,7 @@ RUN CGO_ENABLED=0 go build -trimpath \
       -ldflags="-s -w -X main.version=${KUBECTX_VERSION}" \
       -o kubens ./cmd/kubens
 
-# ====================================================================
-# RUNTIME IMAGE
-# ====================================================================
-
+# Runtime image
 FROM ghcr.io/ibtisam-iq/debugbox-base:latest
 
 # Build args for OCI labels (passed from workflow)
@@ -104,48 +42,23 @@ LABEL org.opencontainers.image.title="DebugBox Power" \
       org.opencontainers.image.vendor="Ibtisam IQ" \
       org.opencontainers.image.authors="Muhammad Ibtisam <contact@ibtisam-iq.com>"
 
-# ====================================================================
-# KUBERNETES TOOLS
-# ====================================================================
-# Copy pre-built kubectx and kubens binaries from builder stage
-
+# Copy Kubernetes context switchers
 COPY --from=kubectx-builder /src/kubectx /usr/local/bin/kubectx
 COPY --from=kubectx-builder /src/kubens  /usr/local/bin/kubens
 
-# ====================================================================
-# POWER PACKAGES — Full SRE-Grade Tools
-# ====================================================================
-# All balanced packages PLUS advanced forensics and routing tools.
-# Grouped by function with clear justifications.
-#
-# Total: ~45 tools across 12 functional groups
-# See build/balanced.packages for Group 1-8 and build/power.packages for Group 9-12 details.
-
-# Copy package definitions into the image
+# Install power package set (balanced + advanced tools)
 COPY dockerfiles/build/ /tmp/build/
-      
-# Install Power packages
-# - Shared package set from balanced.packages
-# - Power-only tools from power.packages
 RUN set -eux && \
     sh /tmp/build/balanced.packages && \
     sh /tmp/build/power.packages
 
-# Install Power-only pinned binaries
+# Install pinned upstream binaries
 COPY scripts/ /tmp/scripts
-
-# Power uses pinned upstream yq binary for full feature set and reproducibility
 RUN set -eux && \
-    # chmod +x /tmp/scripts/install-yq-binary && \
     sh /tmp/scripts/install-yq-binary && \
     rm -rf /tmp/scripts
 
-# ====================================================================
-# VERIFICATION — Test All Tools
-# ====================================================================
-# Comprehensive verification of all 45+ tools.
-# Organized by group for clarity and debugging.
-
+# Verify installed tools
 RUN set -eux && \
     sh /tmp/build/balanced.verify && \
     sh /tmp/build/power.verify && \
@@ -153,29 +66,9 @@ RUN set -eux && \
     echo "=== DebugBox Power: ALL TOOLS VERIFIED ✓ ===" && \
     echo "Ready for SRE-grade debugging and forensics."
 
-# Set pager for scrolling output (less installed via balanced.packages)
 ENV PAGER=less
 
-# ====================================================================
-# SHELL HELPERS & ALIASES
-# ====================================================================
-# Power-specific convenience functions and aliases.
-#
-# Inherited from balanced /etc/profile.d/debugbox-balanced-profile.sh:
-#   - json() — JSON pretty-printer
-#   - yaml() — YAML pretty-printer
-#   - ports — netstat -tulpn
-#   - connections — ss -tulpn
-#   - routes — ip route show
-#   - k8s-info — current context + namespace
-#
-# Power adds:
-#   - Packet capture helpers (sniff, sniff-http, sniff-dns)
-#   - TLS/certificate inspection (cert-check)
-#   - Routing and firewall helpers (conntrack-watch)
-#
-# These helpers enable quick incident response workflows.
-
+# Shell helpers for advanced debugging and forensics
 RUN set -eux && \
     mkdir -p /etc/profile.d && \
     printf '%s\n' \
@@ -249,17 +142,5 @@ RUN set -eux && \
     chmod 0644 /etc/profile.d/debugbox-power-profile.sh && \
     \
     echo "DebugBox Power: shell helpers configured ✓"
-
-# ====================================================================
-# DEFAULT SHELL
-# ====================================================================
-# Use /bin/bash for full shell features (inherited from balanced).
-# Login shell (-l) sources /etc/profile and /etc/profile.d/*
-#
-# Power users can leverage:
-#   - Complex bash scripts
-#   - Function definitions
-#   - Process substitution
-#   - Advanced pipelines
 
 CMD ["/bin/bash", "-l"]

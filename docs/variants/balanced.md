@@ -22,7 +22,7 @@ ghcr.io/ibtisam-iq/debugbox:balanced
 
 **Production (pinned version):**
 ```bash
-ghcr.io/ibtisam-iq/debugbox:1.0.0        # Short form (recommended)
+ghcr.io/ibtisam-iq/debugbox:1.0.0           # Short form (recommended)
 ghcr.io/ibtisam-iq/debugbox:balanced-1.0.0  # Explicit form
 ```
 
@@ -78,8 +78,8 @@ Balanced includes **6+ custom shell functions** for rapid debugging:
 
 ## When to Switch
 
-**Downgrade to [Lite](lite.md)?** Save 32 MB if you only need basic connectivity.  
+**Downgrade to [Lite Variant](lite.md)?** Save 32 MB if you only need basic connectivity.
 
-**Upgrade to [Power](power.md)?** Need packet analysis, routing tools, or scripting.
+**Upgrade to [Power Variant](power.md)?** Need packet analysis, routing tools, or scripting.
 
-→ **[Variants Overview](overview.md)** | **[Real-world examples](../guides/examples.md)** | **[Troubleshooting](../guides/troubleshooting.md)**
+→ **[Variants overview](overview.md)** | **[Real-world examples](../guides/examples.md)** | **[Troubleshooting](../guides/troubleshooting.md)**

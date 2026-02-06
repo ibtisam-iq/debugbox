@@ -20,7 +20,7 @@ Power variant tools like `tshark`, `conntrack`, `iptables`, and `nftables` requi
 - **NET_RAW** — For packet capture (tshark, tcpdump, ngrep)
 - **NET_ADMIN** — For firewall/routing (iptables, nftables, conntrack, brctl)
 
-→ **[Kubernetes capability setup](../usage/kubernetes.md#power-variant-with-capabilities)**  
+→ **[Kubernetes capability setup](../usage/kubernetes.md#power-variant-with-capabilities)**
 → **[Docker capability setup](../usage/docker.md#power-variant-with-capabilities)**
 
 ## Pull Tags
@@ -87,7 +87,7 @@ Power includes **all balanced tools** plus **14 advanced forensics packages** fo
 
 ## Shell Helpers
 
-Power includes **all balanced helpers** plus **4 advanced network functions**:
+Power includes **all balanced helpers** plus **5 advanced network functions**:
 
 → **[Complete shell helper reference with examples](../guides/examples.md#helper-functions-shell)**
 
@@ -112,8 +112,8 @@ Power includes **all balanced helpers** plus **4 advanced network functions**:
 
 ## When to Downgrade
 
-**Most tasks use [Balanced Variant](balanced.md).** Downgrade to save 58 MB.  
+**Most tasks use [Balanced Variant](balanced.md).** Downgrade to save 58 MB.
 
 **For speed, use [Lite Variant](lite.md).** Saves 90 MB.
 
-→ **[Variants Overview](overview.md)** | **[Real-world examples](../guides/examples.md)** | **[Troubleshooting](../guides/troubleshooting.md)**
+→ **[Variants overview](overview.md)** | **[Real-world examples](../guides/examples.md)** | **[Troubleshooting](../guides/troubleshooting.md)**

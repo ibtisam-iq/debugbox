@@ -1,5 +1,8 @@
 # DebugBox
 
+**A lightweight, variant-based debugging container suite**
+for Kubernetes and Docker environments.
+
 [![Docker Pulls](https://img.shields.io/docker/pulls/mibtisam/debugbox?logo=docker&label=Docker%20Hub&logoColor=white)](https://hub.docker.com/r/mibtisam/debugbox)
 [![GitHub Container Registry](https://img.shields.io/badge/GHCR-Available-brightgreen?logo=github&logoColor=white)](https://github.com/ibtisam-iq/debugbox/pkgs/container/debugbox)
 [![Multi-Arch](https://img.shields.io/badge/Multi--Arch-amd64%20%7C%20arm64-blue?logo=docker&logoColor=white)](https://github.com/ibtisam-iq/debugbox)
@@ -7,9 +10,6 @@
 [![Trivy Scanning](https://img.shields.io/badge/Security-Trivy%20Scanned-blue?logo=aqua&logoColor=white)](https://github.com/aquasecurity/trivy)
 [![Powered by Alpine](https://img.shields.io/badge/Powered%20by-Alpine%20Linux-0D597F?logo=alpine-linux&logoColor=white)](https://alpinelinux.org/)
 [![Kubernetes Ready](https://img.shields.io/badge/Kubernetes-Ready-326ce5?logo=kubernetes&logoColor=white)](https://kubernetes.io/)
-
-**A lightweight, variant-based debugging container suite**  
-for Kubernetes and Docker environments.
 
 Choose exactly the right size for your debugging task — no bloat, no waiting.
 
@@ -61,29 +61,29 @@ Modern pods often lack basic debugging tools. DebugBox gives you **three focused
 
 <div class="grid cards" markdown>
 
-- **[:material-run-fast: Getting Started](getting-started/quick-start.md)**  
+- **[:material-run-fast: Getting Started](getting-started/quick-start.md)**
   First steps, installation, motivation
 
-- **[:material-layers: Variants](variants/overview.md)**  
+- **[:material-layers: Variants](variants/overview.md)**
   Compare lite · balanced · power and choose the right one
 
-- **[:material-kubernetes: Kubernetes Usage](usage/kubernetes.md)**  
+- **[:material-kubernetes: Kubernetes Usage](usage/kubernetes.md)**
   `kubectl debug`, ephemeral containers, sidecar patterns
 
-- **[:material-docker: Docker Usage](usage/docker.md)**  
+- **[:material-docker: Docker Usage](usage/docker.md)**
   Network namespace sharing, host inspection
 
-- **[:material-tools: Tooling Manifest](reference/manifest.md)**  
+- **[:material-tools: Tooling Manifest](reference/manifest.md)**
   Complete list of included tools per variant
 
-- **[:material-book-open-page-variant: Examples](guides/examples.md)**  
-  Real-world debugging recipes
+- **[:material-book-open-page-variant: Examples](guides/examples.md)**
+  Real-world debugging scenarios
 
-- **[:material-shield-check: Security](security/policy.md)**  
+- **[:material-shield-check: Security](security/policy.md)**
   Reporting, scanning, design trade-offs
 
-- **[:material-console-line: Development](development/local-setup.md)**  
-  Build, test locally
+- **[:material-console-line: Development](development/local-setup.md)**
+  Build, test and scan locally
 
 </div>
 

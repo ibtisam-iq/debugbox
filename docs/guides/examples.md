@@ -41,7 +41,7 @@ kubectl run net-debug --rm -it --image=ghcr.io/ibtisam-iq/debugbox --restart=Nev
 
 # HTTP endpoint testing
 curl -v http://my-service:8080/health
-curl -I https://example.com  # Headers only
+curl -I https://example.com        # Headers only
 wget -O- http://my-service/status  # Alternative HTTP client
 
 # Basic connectivity
@@ -49,8 +49,8 @@ ping -c 4 my-service.default.svc.cluster.local
 
 # Port testing
 nc -zv my-service 8080  # Check if port is open
-nc -l 9000  # Listen on port (in one terminal)
-nc my-service 9000  # Connect (in another terminal)
+nc -l 9000              # Listen on port (in one terminal)
+nc my-service 9000      # Connect (in another terminal)
 
 # Test specific ports
 echo "GET / HTTP/1.0\r\n" | nc example.com 80
@@ -90,17 +90,17 @@ ip -s link show eth0
 kubectl debug my-app -it --image=ghcr.io/ibtisam-iq/debugbox
 
 # Active connections
-ss -tunap  # All TCP/UDP connections with processes
-ss -tulnp  # Listening sockets only
-ss -t state established  # Established TCP connections
+ss -tunap                 # All TCP/UDP connections with processes
+ss -tulnp                 # Listening sockets only
+ss -t state established   # Established TCP connections
 
 # Legacy netstat (from procps)
-netstat -tulnp  # Listening ports
+netstat -tulnp            # Listening ports
 
 # What's using a specific port?
 lsof -i :8080
 lsof -i TCP:80
-lsof -p $(pgrep nginx)  # Files opened by nginx
+lsof -p $(pgrep nginx)    # Files opened by nginx
 ```
 
 ---
@@ -218,7 +218,7 @@ kubectl run capture --rm -it --image=ghcr.io/ibtisam-iq/debugbox --restart=Never
 # Capture packets
 tcpdump -i eth0 -w /tmp/capture.pcap port 443
 tcpdump -i eth0 -n 'tcp port 80'  # Filter by port
-tcpdump -i eth0 'host 10.0.0.1'  # Filter by host
+tcpdump -i eth0 'host 10.0.0.1'   # Filter by host
 ```
 
 ### Advanced Analysis (Power + NET_RAW)
@@ -317,8 +317,8 @@ kubectl debug my-app -it --image=ghcr.io/ibtisam-iq/debugbox
 
 # Trace system calls
 strace -p $(pgrep nginx)
-strace -e trace=network -p 1234  # Network calls only
-strace -e trace=file -p 1234  # File operations only
+strace -e trace=network -p 1234    # Network calls only
+strace -e trace=file -p 1234       # File operations only
 strace -c curl http://example.com  # Call summary
 
 # Power variant: Library call tracing
@@ -328,7 +328,7 @@ ltrace -c curl http://example.com  # Library call summary
 
 # Open files
 lsof -p 1234
-lsof /var/log/app.log  # What process has this file open?
+lsof /var/log/app.log              # What process has this file open?
 ```
 
 ---
@@ -460,7 +460,7 @@ kubectl debug my-app -it --image=ghcr.io/ibtisam-iq/debugbox
 
 # Identify file type
 file /tmp/unknown-file
-file -i /tmp/binary  # MIME type
+file -i /tmp/binary     # MIME type
 
 # Archive operations
 tar -czf backup.tar.gz /app/logs/
@@ -475,7 +475,7 @@ zgrep "error" file.gz
 
 # Edit files
 vim /etc/config.yaml
-nano /etc/config.yaml  # Power variant, easier for beginners
+nano /etc/config.yaml   # Power variant, easier for beginners
 
 # Page through output
 ps aux | less
@@ -651,4 +651,4 @@ kubectl get secret my-tls -o jsonpath='{.data.tls\.crt}' | base64 -d | \
 
 ---
 
-→ **[Kubernetes Usage](../usage/kubernetes.md)** | **[Docker Usage](../usage/docker.md)** | **[Troubleshooting](troubleshooting.md)** | **[Variants](../variants/overview.md)**
+→ **[Kubernetes usage](../usage/kubernetes.md)** | **[Docker usage](../usage/docker.md)** | **[Troubleshooting](troubleshooting.md)** | **[Variants overview](../variants/overview.md)**

@@ -1,93 +1,53 @@
 # ============================================================
-# DebugBox — Production Documentation Configuration
-# Inspired by Trivy (aquasecurity/trivy)
-#
-# Purpose:
-# - Real open-source product documentation
-# - Version-aware (via Mike)
-# - Stable, predictable, release-aligned
-# - NOT a portfolio or blog-style docs site
+# DebugBox Documentation Configuration
 # ============================================================
 
-
 # ------------------------------------------------------------
-# 1. SITE IDENTITY (Product metadata)
+# Site Identity
 # ------------------------------------------------------------
 
-# Official product name
-# Used in browser title, header, SEO metadata
 site_name: DebugBox
-
-# Author / maintainer name
 site_author: Muhammad Ibtisam
-
-# Canonical production URL
-# MUST be final deployed URL (SEO, sitemap, OpenGraph)
 site_url: https://debugbox.ibtisam-iq.com/
-
-# Short, product-oriented description
-# This is NOT marketing fluff — it defines product scope
 site_description: >
   Lightweight, variant-based debugging container suite
   for Kubernetes and Docker environments.
 
-# Explicit docs directory
-# Required for:
-# - Mike
-# - Overrides
-# - Clean repo structure
 docs_dir: docs
 
-
 # ------------------------------------------------------------
-# 2. SOURCE CODE INTEGRATION (GitHub)
+# Repository
 # ------------------------------------------------------------
 
-# Repository URL
-# Enables repo icon, source links, credibility
 repo_url: https://github.com/ibtisam-iq/debugbox
-
-# Label shown in UI
-# "GitHub" is intentional (Trivy-style), not repo name
 repo_name: GitHub
 
-# Edit URI
-# Using "blob" instead of "edit" is intentional:
-# - Prevents random edit clicks
-# - Encourages PR-based contributions
-# - Matches professional OSS behavior
+# Use blob (not edit) to encourage PR-based contributions
 edit_uri: blob/main/docs/
 
-# Default, Keep implicit
-# site_dir: site            # MkDocs' default output directory
-# use_directory_urls: true  # MkDocs' default URL style
-# strict: true              # Already using --strict in CI
-
 # ------------------------------------------------------------
-# 3. COPYRIGHT (Dynamic, production-safe)
-# ------------------------------------------------------------
-
 # Copyright
+# ------------------------------------------------------------
+
 copyright: Copyright &copy; 2026 DebugBox
 
-
 # ------------------------------------------------------------
-# 4. THEME — MATERIAL FOR MKDOCS
+# Theme
 # ------------------------------------------------------------
 
 theme:
   name: material
 
   palette:
-    # Palette toggle for light mode
+    # Light mode
     - scheme: default
       primary: blue
       accent: cyan
       toggle:
         icon: material/brightness-7
         name: Switch to dark mode
-    
-    # Palette toggle for dark mode
+
+    # Dark mode
     - scheme: slate
       primary: blue
       accent: cyan
@@ -95,165 +55,83 @@ theme:
         icon: material/brightness-4
         name: Switch to light mode
 
-  # Custom overrides directory
-  # Enables:
-  # - Custom footer
-  # - Header tweaks
-  # - Analytics injection
-  # - Advanced UI control
-  # This is a POWER feature — use responsibly
-  # custom_dir: docs/overrides
-
-  # UI language
   language: en
 
-  # Branding
   logo: images/favicon.svg
   favicon: images/favicon.ico
 
-  # Typography
-  # Inter is used by Trivy and modern SaaS products
   font:
     text: Inter
 
-  # ----------------------------------------------------------
-  # Theme Features (Behavior, not decoration)
-  # ----------------------------------------------------------
   features:
-
-    # Top-level product navigation
     - navigation.tabs
-
-    # Tabs remain visible on scroll
     - navigation.tabs.sticky
-
-    # Logical section grouping in sidebar
     - navigation.sections
-
-    # Footer navigation (important for product docs)
     - navigation.footer
-
-    # Edit page button (read-only view, not direct edit)
     - content.action.edit
-
-    # Linked tab selection (OS / distro / runtime switches)
     - content.tabs.link
-
-    # Annotated code blocks (explaining config lines)
     - content.code.annotate
-
-    # Copy button for code blocks
     - content.code.copy
 
-
 # ------------------------------------------------------------
-# 5. MARKDOWN EXTENSIONS (Restrained & Stable)
+# Markdown Extensions
 # ------------------------------------------------------------
-# Philosophy:
-# - Predictable rendering
-# - Version-safe
-# - No decorative noise
-# - Focus on clarity and diagrams
 
 markdown_extensions:
-
-  # Abbreviations (professional docs feature)
-  # Example: K8s → Kubernetes (hover)
   - abbr
-
-  # Admonitions (NOTE, WARNING, IMPORTANT)
   - admonition
-
-  # Attribute lists (layout control)
   - attr_list
-
-  # Definition lists
   - def_list
-
-  # Footnotes (formal documentation)
   - footnotes
-
-  # Allow Markdown inside HTML blocks
   - md_in_html
-
-  # Table of contents with anchor links
   - toc:
       permalink: true
-
-  # Syntax highlighting
-  - pymdownx.highlight
-
-  # Collapsible sections
+  - pymdownx.highlight:
+      line_spans: __span
   - pymdownx.details
-
-  # Automatic linking (URLs, issues, PRs)
   - pymdownx.magiclink
 
-  # Superfences — REQUIRED for Mermaid
+  # Mermaid diagram support
   - pymdownx.superfences:
       custom_fences:
         - name: mermaid
           class: mermaid
           format: !!python/name:pymdownx.superfences.fence_code_format
 
-  # Tabbed content blocks
   - pymdownx.tabbed:
       alternate_style: true
-
-  # Task lists (GitHub-style checkboxes)
   - pymdownx.tasklist:
       clickable_checkbox: true
-
   - pymdownx.emoji:
       emoji_index: !!python/name:material.extensions.emoji.twemoji
       emoji_generator: !!python/name:material.extensions.emoji.to_svg
 
 # ------------------------------------------------------------
-# 6. PLUGINS (Minimal, intentional)
+# Plugins
 # ------------------------------------------------------------
 
 plugins:
-
   - search
-  - mike
-  # Macros plugin
-  # Enables:
-  # - Reusable variables
-  # - Version strings
-  # - Conditional content
   - macros
-
   - git-revision-date-localized:
-      type: custom                  
+      type: custom
       custom_format: "%B %d, %Y %I:%M:%S %p"
       enable_creation_date: false
       fallback_to_build_date: false
       timezone: Asia/Karachi
       locale: en
 
-      
 # ------------------------------------------------------------
-# 7. EXTRA CONFIG (Versioning & Metadata)
+# Extra Configuration
 # ------------------------------------------------------------
 
 extra:
-
-  # Hide "Made with MkDocs"
   generator: false
 
-  # ----------------------------------------------------------
-  # VERSIONING (MIKE)
-  # ----------------------------------------------------------
-  # IMPORTANT:
-  # - Mike does NOTHING until you run `mike deploy`
-  # - Safe to keep enabled from day one
-  # - Versions freeze ONLY when you decide
+  # Mike versioning support
   version:
     provider: mike
 
-  # ----------------------------------------------------------
-  # SOCIAL LINKS (Professional profiles)
-  # ----------------------------------------------------------
   social:
     - icon: fontawesome/brands/linkedin
       link: https://www.linkedin.com/in/ibtisam-iq/
@@ -262,15 +140,13 @@ extra:
     - icon: fontawesome/solid/globe
       link: https://ibtisam-iq.com
 
-
-# ------------------------------------------------------------
-# 8. ADDITIONAL CONFIGURATION (CSS, Nav)
-# ------------------------------------------------------------
-
 extra_css:
   - stylesheets/extra.css
 
-# Navigation (adjust paths to match which md files you actually create)
+# ------------------------------------------------------------
+# Navigation
+# ------------------------------------------------------------
+
 nav:
   - Overview: index.md
   - Getting Started:

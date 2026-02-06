@@ -1,16 +1,8 @@
 # ============================================================
 # DebugBox Makefile
 # Author: Muhammad Ibtisam
-# Purpose: OSS-grade build, test, lint, scan, release
+# Purpose: Local development, testing, and quality checks
 # ============================================================
-
-# -------------------------------
-# Load environment
-# -------------------------------
-ifneq (,$(wildcard .env))
-	include .env
-	export
-endif
 
 # -------------------------------
 # Project metadata
@@ -20,14 +12,8 @@ VARIANTS          := lite balanced power
 DOCKERFILES_DIR   := dockerfiles
 TESTS_DIR         := tests
 
-# Versioning (OSS-safe)
-VERSION ?= $(shell git describe --tags --dirty --always 2>/dev/null || echo dev)
+# Local build configuration
 LOCAL_TAG ?= local
-
-# Registry
-REGISTRY_GHCR ?= ghcr.io/ibtisam-iq/$(IMAGE_NAME)
-
-# Build configuration
 PLATFORM  ?= linux/amd64,linux/arm64
 NO_CACHE  ?= false
 
@@ -45,7 +31,7 @@ DOCKER_BUILD := docker buildx build
 .PHONY: help
 help:
 	@echo ""
-	@echo "DebugBox — Open Source Makefile"
+	@echo "DebugBox — Local Development Makefile"
 	@echo ""
 	@echo "Build:"
 	@echo "  make build-<variant>     Build image (lite | balanced | power)"
@@ -57,15 +43,14 @@ help:
 	@echo ""
 	@echo "Quality:"
 	@echo "  make lint                Lint Dockerfiles (hadolint)"
-	@echo "  make scan                Scan images (trivy)"
+	@echo "  make scan                Security scan (trivy)"
+	@echo "  make check               Run all checks (lint + build + test + scan)"
 	@echo ""
-	@echo "Release:"
-	@echo "  make push-<variant>      Push image to GHCR"
-	@echo "  make push-all            Push all variants"
-	@echo "  make release             Tag + push (maintainers only)"
+	@echo "Cleanup:"
+	@echo "  make clean               Remove local images"
 	@echo ""
 	@echo "Args:"
-	@echo "  PLATFORM=linux/arm64     Override platforms"
+	@echo "  PLATFORM=linux/amd64     Override platforms"
 	@echo "  NO_CACHE=true            Disable build cache"
 	@echo ""
 
@@ -96,14 +81,6 @@ define docker_test
 			fi"
 endef
 
-define docker_push
-	@echo "==> Pushing $(REGISTRY_GHCR):$1-$(VERSION)"
-	docker tag \
-		$(IMAGE_NAME):$1-$(LOCAL_TAG) \
-		$(REGISTRY_GHCR):$1-$(VERSION)
-	docker push $(REGISTRY_GHCR):$1-$(VERSION)
-endef
-
 # -------------------------------
 # Lint
 # -------------------------------
@@ -122,10 +99,11 @@ lint:
 				-v $(PWD):/work \
 				-w /work \
 				$(HADOLINT_IMAGE) \
-				$(DOCKERFILES_DIR)/Dockerfile.$$f || exit 1; \
+				hadolint $(DOCKERFILES_DIR)/Dockerfile.$$f || exit 1; \
 		done; \
 	fi
-	@echo "Dockerfile lint passed"
+	@echo "✅ Dockerfile lint passed"
+	@echo ""
 
 # -------------------------------
 # Build
@@ -139,6 +117,8 @@ build-all: lint
 	@for v in $(VARIANTS); do \
 		$(MAKE) build-$$v || exit 1; \
 	done
+	@echo "✅ All variants built"
+	@echo ""
 
 # -------------------------------
 # Test
@@ -152,6 +132,8 @@ test-all: build-all
 	@for v in $(VARIANTS); do \
 		$(MAKE) test-$$v || exit 1; \
 	done
+	@echo "✅ All tests passed"
+	@echo ""
 
 # -------------------------------
 # Security scan
@@ -165,29 +147,16 @@ scan: build-all
 			--exit-code 1 \
 			$(IMAGE_NAME):$$v-$(LOCAL_TAG) || exit 1; \
 	done
-	@echo "All scans clean"
+	@echo "✅ All scans clean"
+	@echo ""
 
 # -------------------------------
-# Push
+# Pre-release check (runs everything)
 # -------------------------------
-.PHONY: push-%
-push-%:
-	$(call docker_push,$*)
-
-.PHONY: push-all
-push-all: build-all test-all scan
-	@for v in $(VARIANTS); do \
-		$(MAKE) push-$$v || exit 1; \
-	done
-
-# -------------------------------
-# Release (maintainers only)
-# -------------------------------
-.PHONY: release
-release: push-all
-	@echo "==> Releasing $(VERSION)"
-	@git tag $(VERSION)
-	@git push origin $(VERSION)
+.PHONY: check
+check: lint build-all test-all scan
+	@echo "✅ All quality checks passed!"
+	@echo ""
 
 # -------------------------------
 # Cleanup
@@ -197,7 +166,7 @@ clean:
 	@echo "==> Cleaning local images"
 	@for v in $(VARIANTS); do \
 		docker rmi -f $(IMAGE_NAME):$$v-$(LOCAL_TAG) >/dev/null 2>&1 || true; \
-		docker rmi -f $(IMAGE_NAME):$$v-scan       >/dev/null 2>&1 || true; \
 	done
 	@docker image prune -f >/dev/null
-	@echo "Cleanup complete"
+	@echo "✅ Cleanup complete"
+	@echo ""

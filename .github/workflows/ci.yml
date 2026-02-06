@@ -1,100 +1,47 @@
 name: CI
 
-# ============================================================
-# Purpose: Validate Docker images on every code change
-# ============================================================
-# This workflow:
-# - Builds all variants (base, lite, balanced, power)
-# - Tests on both architectures (amd64, arm64)
-# - Validates with Trivy security scanner
-# - Runs smoke tests to ensure basic functionality
-#
-# This is CI ONLY - does not publish images.
-# Publishing is handled by the release workflow.
-# ============================================================
-
-# ============================================================
-# Trigger Configuration
-# ============================================================
 on:
-  # Continuous integration on main branch
   push:
     branches:
       - main
     paths:
-      - 'dockerfiles/**'            # Dockerfile changes
-      - 'tests/**'                  # Test script changes
-      - 'scripts/**'                # Build script changes
-      - '.github/workflows/ci.yml'  # Workflow changes
-      - '.trivyignore'              # Trivy config changes
-
-  # Validate pull requests
+      - 'dockerfiles/**'
+      - 'tests/**'
+      - 'scripts/**'
+      - '.github/workflows/ci.yml'
+      - '.trivyignore'
   pull_request:
     paths:
       - 'dockerfiles/**'
       - 'tests/**'
       - 'scripts/**'
       - '.github/workflows/ci.yml'
-
-  # Manual trigger (useful for debugging)
   workflow_dispatch:
 
-# ============================================================
-# Permissions (Principle of Least Privilege)
-# ============================================================
 permissions:
   contents: read
 
-# ============================================================
-# Jobs
-# ============================================================
 jobs:
   build-and-smoke-test:
     name: Build & Test
     runs-on: ubuntu-latest
-    
-    # ========================================================
-    # Matrix Strategy: Test all combinations
-    # ========================================================
-    # This creates parallel jobs for:
-    # - 2 architectures (amd64, arm64)
-    # - 4 variants (base, lite, balanced, power)
-    # Total: 8 parallel jobs
-    # ========================================================
     strategy:
       matrix:
         arch: [amd64, arm64]
         variant: [base, lite, balanced, power]
       fail-fast: true
-
     steps:
-      # =====================================================
-      # Checkout
-      # =====================================================
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      # =====================================================
-      # Multi-Architecture Support (QEMU)
-      # =====================================================
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v3
         with:
           platforms: ${{ matrix.arch }}
 
-      # =====================================================
-      # Docker Buildx (Multi-platform builds)
-      # =====================================================
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
-      
-      # =====================================================
-      # Metadata: Extract common labels
-      # =====================================================
-      # Extracts common OCI labels applied to all variants.
-      # Auto-generates: created (timestamp), revision (git SHA)
-      # Custom labels: licenses, url, source, vendor, authors
-      # =====================================================
+
       - name: Extract metadata for ${{ matrix.variant }}
         id: meta
         uses: docker/metadata-action@v5
@@ -108,33 +55,13 @@ jobs:
             org.opencontainers.image.vendor=Ibtisam IQ
             org.opencontainers.image.authors=Muhammad Ibtisam <contact@ibtisam-iq.com>
 
-      # =====================================================
-      # Security: Install Trivy Scanner
-      # =====================================================
       - name: Install Trivy
         run: |
           set -e
           curl -sfL https://raw.githubusercontent.com/aquasecurity/trivy/main/contrib/install.sh \
-            | sh -s -- -b /usr/local/bin v0.68.2
+            | sh -s -- -b /usr/local/bin v0.69.1
           trivy --version
 
-      # =====================================================
-      # Build: Multi-Architecture Image with Auto-Injected Labels
-      # =====================================================
-      # Builds the specified variant for the target architecture.
-      #
-      # Label injection flow:
-      #   1. Variant-specific labels from Dockerfile
-      #   2. Shared labels from metadata-action (above)
-      #   3. Auto-generated labels (created, revision)
-      #   → All merged into final image Config.Labels
-      #
-      # Key settings:
-      #   - platforms: Targets amd64 or arm64
-      #   - load: true → Loads image into local Docker daemon for testing
-      #   - push: false → CI only, no registry push
-      #   - labels: → Injects all workflow-generated labels
-      # =====================================================
       - name: Build ${{ matrix.variant }} image for ${{ matrix.arch }}
         uses: docker/build-push-action@v6
         with:
@@ -145,16 +72,7 @@ jobs:
           push: false
           tags: debugbox-${{ matrix.variant }}:ci
           labels: ${{ steps.meta.outputs.labels }}
-          # ↑ Injects ALL shared labels + auto-generated created/revision
-          # No build-args needed for labels!
-          # build-args: |
-          #  BUILD_DATE=${{ fromJSON(steps.meta.outputs.json).labels['org.opencontainers.image.created'] }}
-          #  VCS_REF=${{ github.sha }}
-          #  BASE_DIGEST=${{ fromJSON(steps.meta.outputs.json).base.digest }}
-      
-      # =====================================================
-      # Verify: OCI Labels & Image Metadata
-      # =====================================================
+
       - name: Verify labels and report size
         run: |
           # Display all labels (sorted alphabetically)
@@ -163,23 +81,12 @@ jobs:
             --format='{{json .Config.Labels}}' | \
             jq -r 'to_entries | sort_by(.key) | .[] | "  \(.key) = \(.value)"'
           echo "::endgroup::"
-    
+
           # Compressed size (what gets pulled from registry)
           SIZE_BYTES=$(docker save debugbox-${{ matrix.variant }}:ci | gzip -c | wc -c)
           SIZE_MB=$(awk "BEGIN {printf \"%.2f\", $SIZE_BYTES / 1024 / 1024}")
           echo "📦 [${{ matrix.arch }}] ${{ matrix.variant }} compressed: ${SIZE_MB} MB"
 
-      # =====================================================
-      # Test: Smoke Test
-      # =====================================================
-      # Runs basic sanity checks on the image.
-      #
-      # Skipped for 'base' variant
-      # For other variants (lite, balanced, power):
-      # - Runs /tests/ci-smoke.sh script
-      # - Verifies basic tools are present
-      # - Confirms entry point works
-      # =====================================================
       - name: CI smoke test - ${{ matrix.variant }}
         if: matrix.variant != 'base'
         run: |
@@ -187,20 +94,7 @@ jobs:
             -v ${{ github.workspace }}/tests:/tests:ro \
             debugbox-${{ matrix.variant }}:ci \
             sh /tests/ci-smoke.sh
-
-      # =====================================================
-      # Security: Trivy Vulnerability Scan
-      # =====================================================
-      # Scans the built image for security vulnerabilities.
-      #
-      # Configuration:
-      # - severity: HIGH,CRITICAL
-      #   Only report high/critical issues (skip low/medium)
-      #
-      # - exit-code: 1
-      #   Fail CI if any HIGH/CRITICAL vulnerabilities found
-      #
-      # =====================================================
+            
       - name: Trivy security scan
         # if: matrix.variant != 'base'
         run: |

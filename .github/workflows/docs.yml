@@ -1,143 +1,50 @@
 name: Docs
 
 on:
-
-  # ----------------------------------------------------------
-  # 1️⃣ PUSH EVENTS
-  # ----------------------------------------------------------
   push:
-
-    # ---- Branch pushes ----
-    # This triggers the workflow when code is pushed to `main`
-    # Example:
-    #   git commit
-    #   git push origin main
-    #
-    # Use-case:
-    # - Documentation fixes
-    # - Typo corrections
-    # - Non-release changes
-    branches: [ main ]
-
-    # ---- Tag pushes ----
-    # This triggers the workflow ONLY when a tag matching `v*` is pushed
-    # Examples:
-    #   v1.0.0
-    #   v1.0.1
-    #   v2.3.4
-    #
-    # This is the OFFICIAL release signal
-    # Tags = frozen documentation versions
+    branches:
+      - main
     tags:
       - "v*.*.*"
-
-
-  # ----------------------------------------------------------
-  # 2️⃣ PULL REQUEST EVENTS
-  # ----------------------------------------------------------
   pull_request:
-
-    # Trigger when a PR targets the `main` branch
-    # Use-case:
-    # - Preview docs before merge
-    # - Review changes safely
-    branches: [ main ]
-
-
-  # ----------------------------------------------------------
-  # 3️⃣ MANUAL TRIGGER
-  # ----------------------------------------------------------
-  # Allows you to manually run this workflow from GitHub UI
+    branches:
+      - main
   workflow_dispatch:
 
-
-# ============================================================
-# PERMISSIONS
-# ============================================================
 permissions:
-  contents: write   # Required for pushing to gh-pages (Mike)
-  pages: write      # Required for GitHub Pages
-  id-token: write   # Required for Pages authentication
+  contents: write
+  pages: write
+  id-token: write
 
-
-# ============================================================
-# JOBS
-# ============================================================
 jobs:
-
-  # ==========================================================
-  # JOB 1: BUILD + QUALITY CHECKS
-  # ==========================================================
   build-and-quality:
-
-    # The VM this job runs on
     runs-on: ubuntu-latest
-
     steps:
-
-      # ------------------------------------------------------
-      # Checkout repository
-      # ------------------------------------------------------
       - uses: actions/checkout@v4
         with:
-          # fetch-depth: 0 is CRITICAL
-          # It ensures:
-          # - Full git history
-          # - Tags are available
-          # Without this, Mike cannot work correctly
-          fetch-depth: 0
+          fetch-depth: 0  # Required for Mike versioning
 
-
-      # ------------------------------------------------------
-      # Setup Python
-      # ------------------------------------------------------
       - uses: actions/setup-python@v5
         with:
           python-version: "3.11"
 
-
-      # ------------------------------------------------------
-      # Cache pip dependencies
-      # Speeds up repeated workflow runs
-      # ------------------------------------------------------
       - uses: actions/cache@v4
         with:
           path: ~/.cache/pip
           key: pip-${{ hashFiles('requirements.txt', 'requirements-dev.txt') }}
 
-
-      # ------------------------------------------------------
-      # Install documentation dependencies
-      # ------------------------------------------------------
       - run: pip install -r requirements.txt
       - run: pip install -r requirements-dev.txt
 
-
-      # ------------------------------------------------------
-      # Build documentation strictly
-      # Fails if:
-      # - Broken markdown
-      # - Invalid config
-      # ------------------------------------------------------
       - name: Build site
         run: mkdocs build --strict
 
-
-      # ------------------------------------------------------
-      # QA: Broken link checker
-      # ------------------------------------------------------
       - name: QA - broken links
         uses: lycheeverse/lychee-action@v2
         with:
           args: '--no-progress --accept 200,429 site/'
           fail: false
 
-
-      # ------------------------------------------------------
-      # QA: HTML validation
-      # ------------------------------------------------------
-      # - name: QA - HTML validation
-      #  run: html5validator --root site --blacklist robots.txt --ignore "autocomplete" "autocorrect" "autocapitalize" "No \"p\" element in scope"
       - name: QA - HTML validation
         uses: Cyb3r-Jak3/html5validator-action@v7.2.0
         with:
@@ -145,108 +52,59 @@ jobs:
           extra: '--ignore-re "Attribute \"(autocomplete|autocorrect|autocapitalize)\" not allowed"'
         continue-on-error: true
 
-  # ==========================================================
-  # JOB 2: PREVIEW (ONLY FOR PULL REQUESTS)
-  # ==========================================================
   preview:
-
-    # This job ONLY runs after build-and-quality
     needs: build-and-quality
-
-    # IMPORTANT:
-    # This job runs ONLY if the event is a pull request
     if: github.event_name == 'pull_request'
-
     runs-on: ubuntu-latest
-
     permissions:
       contents: write
-
     steps:
       - uses: actions/checkout@v4
 
       - uses: actions/setup-python@v5
         with:
           python-version: "3.11"
-      
+
       - uses: actions/cache@v4
         with:
           path: ~/.cache/pip
           key: pip-${{ hashFiles('requirements.txt') }}
-      
+
       - run: pip install -r requirements.txt
-      
       - run: mkdocs build
 
-      # ------------------------------------------------------
-      # Deploy PR preview
-      # Each PR gets its own temporary preview URL
-      # ------------------------------------------------------
       - name: Deploy preview
         uses: rossjrw/pr-preview-action@v1
         with:
           source_dir: ./site
           umbrella_dir: previews
 
-
-  # ==========================================================
-  # JOB 3: DEPLOY (PRODUCTION DOCS)
-  # ==========================================================
   deploy:
-
-    # Deploy only after build succeeds
     needs: build-and-quality
-
-    # Do NOT run deploy for pull requests
     if: github.event_name != 'pull_request'
-
     runs-on: ubuntu-latest
-
     permissions:
       contents: write
-
     steps:
-
-      # ------------------------------------------------------
-      # Checkout repository
-      # ------------------------------------------------------
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
 
-
-      # ------------------------------------------------------
-      # Setup Python
-      # ------------------------------------------------------
       - uses: actions/setup-python@v5
         with:
           python-version: "3.11"
 
-
-      # ------------------------------------------------------
-      # Install MkDocs + Mike
-      # ------------------------------------------------------
       - uses: actions/cache@v4
         with:
           path: ~/.cache/pip
           key: pip-${{ hashFiles('requirements.txt') }}
       - run: pip install -r requirements.txt
 
-      # ------------------------------------------------------
-      # Configure Git identity
-      # Required for pushing gh-pages commits
-      # ------------------------------------------------------
       - name: Configure git
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
 
-      # - run: echo "debugbox.ibtisam-iq.com" > site/CNAME
-      # Let it copy from docs/CNAME via mkdocs build
-      
-      # ----------------------------------------------------
-      # Deploy documentation using Mike
-      # ----------------------------------------------------
       - name: Deploy frozen version (release)
         if: startsWith(github.ref, 'refs/tags/v')
         run: |
@@ -257,29 +115,8 @@ jobs:
           mike deploy --push dev
           echo "Deployed ${VERSION} and updated 'latest' alias"
 
-
-      # ----------------------------------------------------
-      # Update dev preview for main branch
-      # ----------------------------------------------------
       - name: Update dev preview (main branch)
         if: github.ref == 'refs/heads/main'
         run: |
           echo "Updating dev preview from main"
           mike deploy --push dev
-          
-
-# ============================================================
-# NOTES
-# ============================================================
-# Documentation URLs:
-#
-# https://debugbox.ibtisam-iq.com/          → redirects to /latest
-# https://debugbox.ibtisam-iq.com/latest/   → shows /1.0.0/ (last release)
-# https://debugbox.ibtisam-iq.com/dev/      → shows current main (live updates)
-# https://debugbox.ibtisam-iq.com/1.0.0/    → frozen
-# https://debugbox.ibtisam-iq.com/1.0.1/    → frozen (when released)
-
-# Correct syntax
-# The --update-aliases flag must come before the version, and the aliases come after the version:
-# mike deploy [OPTIONS] <version> [aliases...]  
-# mike deploy --push --update-aliases "1.0.0" latest stable

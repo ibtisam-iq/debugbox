@@ -118,4 +118,4 @@ docker compose exec debugbox-power bash
 | Packet capture | power + caps | `docker run -it --rm --cap-add=NET_RAW ghcr.io/ibtisam-iq/debugbox:power` |
 | Firewall/routing | power + caps | `docker run -it --rm --cap-add=NET_ADMIN ghcr.io/ibtisam-iq/debugbox:power` |
 
-→ **[Kubernetes Usage](kubernetes.md)** | **[Real-world examples](../guides/examples.md)** | **[Troubleshooting](../guides/troubleshooting.md)**
+→ **[Kubernetes usage](kubernetes.md)** | **[Real-world examples](../guides/examples.md)** | **[Troubleshooting](../guides/troubleshooting.md)**

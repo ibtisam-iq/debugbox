@@ -2,7 +2,7 @@
 set -eu
 
 # ------------------------------------------------------------
-# DebugBox Smoke Test (infra-bootstrap enhanced)
+# DebugBox Smoke Test
 # ------------------------------------------------------------
 
 LIB_URL="https://raw.githubusercontent.com/ibtisam-iq/infra-bootstrap/main/scripts/lib/common.sh"
@@ -26,7 +26,7 @@ if command -v curl >/dev/null 2>&1; then
         . "$LIB_PATH"
         LIB_LOADED=true
     else
-        echo "[WARNING] Failed to download infra-bootstrap common library"    
+        echo "[WARNING] Failed to download infra-bootstrap common library"
     fi
 else
     echo "[WARNING] curl not available to download infra-bootstrap common library"

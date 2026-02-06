@@ -39,7 +39,7 @@ kubectl run debug --rm -it --image=ghcr.io/ibtisam-iq/debugbox:lite --restart=Ne
 ### Docker
 ```bash
 docker run -it ghcr.io/ibtisam-iq/debugbox:lite
-docker run ghcr.io/ibtisam-iq/debugbox:lite curl https://ibtisam-iq.com
+docker run ghcr.io/ibtisam-iq/debugbox:lite curl -I https://ibtisam-iq.com
 ```
 
 ## What's Included
@@ -62,4 +62,4 @@ Lite includes **8 essential networking packages** optimized for fast pulls and b
 
 **Need forensics?** → **[Power Variant](power.md)** adds packet analysis, routing, and Python scripting (+90 MB)
 
-→ **[Variants Overview](overview.md)** | **[Real-world examples](../guides/examples.md)** | **[Troubleshooting](../guides/troubleshooting.md)**
+→ **[Variants overview](overview.md)** | **[Real-world examples](../guides/examples.md)** | **[Troubleshooting](../guides/troubleshooting.md)**

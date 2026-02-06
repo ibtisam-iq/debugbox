@@ -46,7 +46,6 @@ make build-power     # ~104 MB
 ```bash
 PLATFORM=linux/arm64 make build-balanced
 PLATFORM=linux/amd64 make build-power
-PLATFORM=linux/amd64,linux/arm64 make build-all
 ```
 
 ### Skip Cache (Fresh Build)
@@ -138,7 +137,7 @@ Opens at **http://localhost:8000** with live reload.
 
 ```bash
 mkdocs build
-# Output in ./site/
+# Output in site/
 ```
 
 ## Development Workflow
@@ -184,10 +183,8 @@ make scan        # ✅ No vulnerabilities
 Or shortcut:
 
 ```bash
-make push-all    # Runs lint → build-all → test-all → scan
+make check       # Runs lint → build-all → test-all → scan
 ```
-
-(Won't actually push without GHCR credentials)
 
 ## Make Targets Reference
 
@@ -200,33 +197,23 @@ make push-all    # Runs lint → build-all → test-all → scan
 | `make test-<variant>` | Test single variant |
 | `make lint` | Lint all Dockerfiles |
 | `make scan` | Security scan with Trivy |
-| `make push-all` | Full pipeline (lint → build → test → scan) |
+| `make check` | Full pipeline (lint → build → test → scan) |
 | `make clean` | Remove local images |
 
 ## Environment Variables
 
 | Variable | Default | Description |
 |----------|---------|-------------|
-| `VERSION` | `git describe --tags` or `dev` | Image version tag |
 | `LOCAL_TAG` | `local` | Local build tag suffix |
 | `PLATFORM` | `linux/amd64,linux/arm64` | Target architectures |
 | `NO_CACHE` | `false` | Disable Docker build cache |
-| `REGISTRY_GHCR` | `ghcr.io/ibtisam-iq/debugbox` | Target registry |
 
 **Example:**
 ```bash
-VERSION=1.0.0 PLATFORM=linux/amd64 NO_CACHE=true make build-all
+PLATFORM=linux/amd64 NO_CACHE=true make build-all
 ```
 
 ## Troubleshooting
-
-### Docker not found
-
-```bash
-# Install Docker Desktop or Docker Engine
-# Or use Podman
-alias docker=podman
-```
 
 ### Make not found
 
@@ -236,9 +223,6 @@ brew install make
 
 # Ubuntu/Debian
 sudo apt install make
-
-# Alpine
-apk add make
 ```
 
 ### Build fails with permission error
@@ -250,11 +234,45 @@ sudo systemctl start docker
 # Or use Docker Desktop (Mac/Windows)
 ```
 
+### Build fails with `exec /bin/sh: exec format error`
+
+This happens when building for multiple architectures on a system **without binfmt/QEMU support**.
+
+Choose **one** of the following:
+
+**Option 1: Enable multi-architecture builds (recommended)**
+
+Use this if you want to build for `linux/amd64` and `linux/arm64`:
+
+```bash
+docker run --privileged --rm tonistiigi/binfmt --install all
+```
+
+**Option 2: Build for a single architecture**
+
+Use this if you don’t want multi-arch builds.
+
+First, check your system architecture:
+
+```bash
+uname -m
+```
+
+Then build accordingly:
+
+```bash
+# amd64 systems
+PLATFORM=linux/amd64 make build-lite
+
+# arm64 systems
+PLATFORM=linux/arm64 make build-lite
+```
+
 ### Trivy scan errors
 
 ```bash
 # Install Trivy
-curl -sfL https://raw.githubusercontent.com/aquasecurity/trivy/main/contrib/install.sh | sh -s -- -b /usr/local/bin
+curl -sfL https://raw.githubusercontent.com/aquasecurity/trivy/main/contrib/install.sh | sudo sh -s -- -b /usr/local/bin v0.69.1
 
 # Or skip scan
 make build-all test-all

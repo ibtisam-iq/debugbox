@@ -2,12 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
-The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),  
+The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
-## [1.0.0] - 2026-01-27
+## [1.0.0] - 2026-02-06
 
 ### Added
 - Initial stable release of DebugBox – a suite of debugging container images for Kubernetes and Docker environments
@@ -25,5 +25,5 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 For full details on variants and included tools, see [`docs/manifest.yaml`](docs/manifest.yaml).
 
-For release process and support policy, see [`RELEASE.md`](RELEASE.md).  
+For release process and support policy, see [`RELEASE.md`](RELEASE.md).
 For security practices, see [`SECURITY.md`](SECURITY.md).

@@ -171,4 +171,4 @@ kubectl exec -it app-with-debug-power -c debugbox -- bash
 
 4. **Only add capabilities when needed** — standard kubectl debug doesn't need them.
 
-→ **[Docker Usage](docker.md)** | **[Real-world examples](../guides/examples.md)** | **[Troubleshooting](../guides/troubleshooting.md)**
+→ **[Docker usage](docker.md)** | **[Real-world examples](../guides/examples.md)** | **[Troubleshooting](../guides/troubleshooting.md)**

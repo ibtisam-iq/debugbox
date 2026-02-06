@@ -1,35 +1,5 @@
 # DebugBox — Lite variant
-#
-# Minimal, fast-pull debugging image for Kubernetes ephemeral containers.
-# Optimized for quick network diagnostics and basic troubleshooting.
-#
-# PURPOSE:
-#   Provides essential networking tools in the smallest possible image (~14 MB).
-#   Ideal for resource-constrained clusters, bandwidth-limited environments,
-#   and simple connectivity checks. Fast pull time is the priority.
-#
-# USE CASES:
-#   - DNS resolution checks (dig, nslookup)
-#   - HTTP/HTTPS connectivity testing (curl)
-#   - TCP/UDP port scanning (netcat)
-#   - IP routing and interface inspection (ip, ping, arping)
-#   - JSON/YAML log inspection (jq, yq)
-#   - Quick network diagnostics in edge clusters
-#
-# TRADE-OFFS:
-#   - Uses ash shell (not bash) for minimal footprint
-#   - No tcpdump, strace, or advanced tools (use balanced/power for those)
-#   - No bash-completion (ash doesn't support it)
-#   - Limited to read-only debugging (no vim, nano)
-#
-# TOOLING PHILOSOPHY:
-#   Each tool solves a specific problem. No bloat, no alternatives.
-#   curl   → HTTP requests (wget commented as alternative if needed)
-#   jq/yq  → Parse JSON/YAML logs
-#   dig    → DNS resolution troubleshooting
-#   ip     → Network configuration inspection
-#   ping   → ICMP connectivity testing
-#   nc     → TCP/UDP port connectivity
+# Minimal debugging image for quick Kubernetes network diagnostics (~14 MB).
 
 FROM ghcr.io/ibtisam-iq/debugbox-base:latest
 
@@ -53,48 +23,7 @@ LABEL org.opencontainers.image.title="DebugBox Lite" \
       org.opencontainers.image.vendor="Ibtisam IQ" \
       org.opencontainers.image.authors="Muhammad Ibtisam <contact@ibtisam-iq.com>"
 
-# ====================================================================
-# NETWORKING & DIAGNOSTICS PACKAGES
-# ====================================================================
-# Core tools for network troubleshooting, grouped by function:
-#
-# === HTTP/HTTPS ===
-# curl             — HTTP/HTTPS requests (primary tool)
-#
-# === DNS RESOLUTION ===
-# bind-tools       — DNS utilities (dig, nslookup, host)
-#   dig            — Query DNS records with full output
-#   nslookup       — Simple DNS lookup
-#   host           — IP/hostname lookups
-#
-# === IP NETWORK TOOLS ===
-# iproute2         — Advanced IP networking (ip command)
-#   ip route       — Show/modify routing table
-#   ip addr        — Show IP addresses and interfaces
-#   ip link        — Show network interfaces
-#   ip neigh       — Show ARP/neighbor table
-#   ss             — Socket statistics (netstat replacement)
-#
-# iputils          — ICMP and basic utilities (ping, arping, tracepath)
-#   ping           — ICMP echo request (connectivity test)
-#   arping         — ARP ping (layer 2 discovery)
-#   tracepath      — Route tracing with MTU discovery
-#
-# === TCP/UDP CONNECTIVITY ===
-# netcat-openbsd   — TCP/UDP socket manipulation
-#   nc -zv         — Test port connectivity (zero-I/O, verbose)
-#   nc -l          — Listen on port (simple server)
-#   nc -u          — UDP mode
-#
-# === DATA INSPECTION ===
-# jq               — JSON parser (essential for log inspection)
-#   jq .           — Pretty-print JSON
-#   jq '.field'    — Extract JSON fields
-#
-# yq               — YAML parser (inspect K8s manifests, configs)
-#   yq .           — Pretty-print YAML
-#   yq '.spec'     — Extract YAML fields
-
+# Networking and data inspection tools
 RUN set -eux && \
     apk add --no-cache \
       curl \
@@ -106,62 +35,23 @@ RUN set -eux && \
       yq && \
     echo "DebugBox Lite: packages installed"
 
-# ====================================================================
-# VERIFICATION — Test All Tools
-# ====================================================================
-# Verify that every installed tool works.
-# This catches missing dependencies at build time.
-#
-# Testing strategy:
-#   - Version check (--version, -v) for tools that support it
-#   - Existence check (command -v) for tools with unreliable exit codes
-#   - Grouped by functionality for clear build output
-
+# Verify installed tools
 RUN set -eux && \
     echo "=== DebugBox Lite: Verification Starting ===" && \
-    \
-    echo "Verifying HTTP/HTTPS tools..." && \
     curl --version >/dev/null && echo "  ✓ curl" && \
-    \
-    echo "Verifying DNS resolution tools..." && \
     dig -v >/dev/null 2>&1 && echo "  ✓ dig" && \
     command -v nslookup >/dev/null && echo "  ✓ nslookup" && \
     command -v host >/dev/null && echo "  ✓ host" && \
-    \
-    echo "Verifying IP networking tools..." && \
     ip -V >/dev/null && echo "  ✓ ip" && \
     ping -V >/dev/null 2>&1 && echo "  ✓ ping" && \
     command -v arping >/dev/null && echo "  ✓ arping" && \
     command -v tracepath >/dev/null && echo "  ✓ tracepath" && \
-    \
-    echo "Verifying TCP/UDP tools..." && \
     nc -h >/dev/null 2>&1 && echo "  ✓ netcat" && \
-    \
-    echo "Verifying data inspection tools..." && \
     jq --version >/dev/null && echo "  ✓ jq" && \
     yq --version >/dev/null && echo "  ✓ yq" && \
-    \
-    echo "" && \
-    echo "=== ALL TOOLS VERIFIED ✓ ===" && \
-    echo "Image ready for Kubernetes debugging"
+    echo "=== ALL TOOLS VERIFIED ✓ ==="
 
-# ====================================================================
-# SHELL HELPERS — Data Inspection Functions
-# ====================================================================
-# Add convenience functions to shell profile.
-# Inherited from base image /etc/profile.d/debugbox-base-profile.sh:
-#   - ll()  — ls -alF (list all files)
-#   - PS1   — color-coded prompt with UID awareness
-#
-# Adding Lite-specific helpers:
-#   - json() — Pretty-print JSON with fallback to raw output
-#   - yaml() — Pretty-print YAML with fallback to raw output
-#
-# These helpers handle errors gracefully:
-#   echo '{"key":"value"}' | json       ✓ works
-#   cat invalid.json | json             ✓ falls back to cat
-#   kubectl get pod -o yaml | yaml      ✓ works
-
+# Shell helpers for JSON/YAML inspection
 RUN set -eux && \
     mkdir -p /etc/profile.d && \
     printf '%s\n' \
@@ -193,16 +83,5 @@ RUN set -eux && \
     chmod 0644 /etc/profile.d/debugbox-lite-profile.sh && \
     \
     echo "DebugBox Lite: shell helpers configured ✓"
-
-# ====================================================================
-# DEFAULT SHELL
-# ====================================================================
-# Use ash (BusyBox shell) for minimal footprint.
-# ash is included in Alpine base, no additional packages needed.
-#
-# Variants comparison:
-#   - lite:    /bin/ash (4 KB, minimal features)
-#   - balanced: /bin/bash (1.5 MB, full features)
-#   - power:   /bin/bash (1.5 MB, full features)
 
 CMD ["/bin/ash", "-l"]
