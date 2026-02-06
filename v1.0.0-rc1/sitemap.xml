@@ -2,74 +2,74 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
          <loc>https://debugbox.ibtisam-iq.com/v1.0.0-rc1/</loc>
-         <lastmod>2026-02-04</lastmod>
+         <lastmod>2026-02-06</lastmod>
     </url>
     <url>
          <loc>https://debugbox.ibtisam-iq.com/v1.0.0-rc1/development/local-setup/</loc>
-         <lastmod>2026-02-04</lastmod>
+         <lastmod>2026-02-06</lastmod>
     </url>
     <url>
          <loc>https://debugbox.ibtisam-iq.com/v1.0.0-rc1/getting-started/installation/</loc>
-         <lastmod>2026-02-04</lastmod>
+         <lastmod>2026-02-06</lastmod>
     </url>
     <url>
          <loc>https://debugbox.ibtisam-iq.com/v1.0.0-rc1/getting-started/motivation/</loc>
-         <lastmod>2026-02-04</lastmod>
+         <lastmod>2026-02-06</lastmod>
     </url>
     <url>
          <loc>https://debugbox.ibtisam-iq.com/v1.0.0-rc1/getting-started/quick-start/</loc>
-         <lastmod>2026-02-04</lastmod>
+         <lastmod>2026-02-06</lastmod>
     </url>
     <url>
          <loc>https://debugbox.ibtisam-iq.com/v1.0.0-rc1/guides/bandwidth-savings/</loc>
-         <lastmod>2026-02-04</lastmod>
+         <lastmod>2026-02-06</lastmod>
     </url>
     <url>
          <loc>https://debugbox.ibtisam-iq.com/v1.0.0-rc1/guides/examples/</loc>
-         <lastmod>2026-02-04</lastmod>
+         <lastmod>2026-02-06</lastmod>
     </url>
     <url>
          <loc>https://debugbox.ibtisam-iq.com/v1.0.0-rc1/guides/troubleshooting/</loc>
-         <lastmod>2026-02-04</lastmod>
+         <lastmod>2026-02-06</lastmod>
     </url>
     <url>
          <loc>https://debugbox.ibtisam-iq.com/v1.0.0-rc1/reference/manifest/</loc>
-         <lastmod>2026-02-04</lastmod>
+         <lastmod>2026-02-06</lastmod>
     </url>
     <url>
          <loc>https://debugbox.ibtisam-iq.com/v1.0.0-rc1/reference/multi-arch/</loc>
-         <lastmod>2026-02-04</lastmod>
+         <lastmod>2026-02-06</lastmod>
     </url>
     <url>
          <loc>https://debugbox.ibtisam-iq.com/v1.0.0-rc1/reference/tags/</loc>
-         <lastmod>2026-02-04</lastmod>
+         <lastmod>2026-02-06</lastmod>
     </url>
     <url>
          <loc>https://debugbox.ibtisam-iq.com/v1.0.0-rc1/security/policy/</loc>
-         <lastmod>2026-02-04</lastmod>
+         <lastmod>2026-02-06</lastmod>
     </url>
     <url>
          <loc>https://debugbox.ibtisam-iq.com/v1.0.0-rc1/usage/docker/</loc>
-         <lastmod>2026-02-04</lastmod>
+         <lastmod>2026-02-06</lastmod>
     </url>
     <url>
          <loc>https://debugbox.ibtisam-iq.com/v1.0.0-rc1/usage/kubernetes/</loc>
-         <lastmod>2026-02-04</lastmod>
+         <lastmod>2026-02-06</lastmod>
     </url>
     <url>
          <loc>https://debugbox.ibtisam-iq.com/v1.0.0-rc1/variants/balanced/</loc>
-         <lastmod>2026-02-04</lastmod>
+         <lastmod>2026-02-06</lastmod>
     </url>
     <url>
          <loc>https://debugbox.ibtisam-iq.com/v1.0.0-rc1/variants/lite/</loc>
-         <lastmod>2026-02-04</lastmod>
+         <lastmod>2026-02-06</lastmod>
     </url>
     <url>
          <loc>https://debugbox.ibtisam-iq.com/v1.0.0-rc1/variants/overview/</loc>
-         <lastmod>2026-02-04</lastmod>
+         <lastmod>2026-02-06</lastmod>
     </url>
     <url>
          <loc>https://debugbox.ibtisam-iq.com/v1.0.0-rc1/variants/power/</loc>
-         <lastmod>2026-02-04</lastmod>
+         <lastmod>2026-02-06</lastmod>
     </url>
 </urlset>

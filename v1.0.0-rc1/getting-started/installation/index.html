@@ -1432,32 +1432,32 @@
 <h1 id="installation">Installation<a class="headerlink" href="#installation" title="Permanent link">&para;</a></h1>
 <p>DebugBox is a container image — <strong>no installation required</strong>.</p>
 <p>Simply pull from either registry:</p>
-<div class="highlight"><pre><span></span><code><span class="c1"># GHCR (recommended, faster)</span>
-ghcr.io/ibtisam-iq/debugbox<span class="w">              </span><span class="c1"># balanced (default)</span>
-ghcr.io/ibtisam-iq/debugbox:lite
-ghcr.io/ibtisam-iq/debugbox:power
-
-<span class="c1"># Docker Hub (mirror)</span>
-mibtisam/debugbox
-mibtisam/debugbox:lite
-mibtisam/debugbox:power
-</code></pre></div>
+<div class="highlight"><pre><span></span><code><span id="__span-0-1"><span class="c1"># GHCR (recommended, faster)</span>
+</span><span id="__span-0-2">ghcr.io/ibtisam-iq/debugbox<span class="w">              </span><span class="c1"># balanced (default)</span>
+</span><span id="__span-0-3">ghcr.io/ibtisam-iq/debugbox:lite
+</span><span id="__span-0-4">ghcr.io/ibtisam-iq/debugbox:power
+</span><span id="__span-0-5">
+</span><span id="__span-0-6"><span class="c1"># Docker Hub (mirror)</span>
+</span><span id="__span-0-7">mibtisam/debugbox
+</span><span id="__span-0-8">mibtisam/debugbox:lite
+</span><span id="__span-0-9">mibtisam/debugbox:power
+</span></code></pre></div>
 <p>All images support <strong>amd64</strong> (Intel/AMD) and <strong>arm64</strong> (Apple Silicon, Graviton, Raspberry Pi).</p>
 <p><strong>Note:</strong> Unqualified names (<code>debugbox</code>) always refer to the <strong>balanced</strong> variant.</p>
 <h2 id="tag-formats">Tag Formats<a class="headerlink" href="#tag-formats" title="Permanent link">&para;</a></h2>
 <p>For production, always pin versions:</p>
-<div class="highlight"><pre><span></span><code>ghcr.io/ibtisam-iq/debugbox:1.0.0<span class="w">           </span><span class="c1"># Balanced v1.0.0</span>
-ghcr.io/ibtisam-iq/debugbox:lite-1.0.0<span class="w">      </span><span class="c1"># Lite v1.0.0</span>
-ghcr.io/ibtisam-iq/debugbox:power-1.0.0<span class="w">     </span><span class="c1"># Power v1.0.0</span>
-</code></pre></div>
+<div class="highlight"><pre><span></span><code><span id="__span-1-1">ghcr.io/ibtisam-iq/debugbox:1.0.0<span class="w">           </span><span class="c1"># Balanced v1.0.0</span>
+</span><span id="__span-1-2">ghcr.io/ibtisam-iq/debugbox:lite-1.0.0<span class="w">      </span><span class="c1"># Lite v1.0.0</span>
+</span><span id="__span-1-3">ghcr.io/ibtisam-iq/debugbox:power-1.0.0<span class="w">     </span><span class="c1"># Power v1.0.0</span>
+</span></code></pre></div>
 <p>→ <strong><a href="../../reference/tags/">Complete tag reference</a></strong></p>
 <h2 id="usage">Usage<a class="headerlink" href="#usage" title="Permanent link">&para;</a></h2>
 <h3 id="kubernetes">Kubernetes<a class="headerlink" href="#kubernetes" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>debug<span class="w"> </span>my-pod<span class="w"> </span>-it<span class="w"> </span>--image<span class="o">=</span>ghcr.io/ibtisam-iq/debugbox:1.0.0
-</code></pre></div>
+<div class="highlight"><pre><span></span><code><span id="__span-2-1">kubectl<span class="w"> </span>debug<span class="w"> </span>my-pod<span class="w"> </span>-it<span class="w"> </span>--image<span class="o">=</span>ghcr.io/ibtisam-iq/debugbox:1.0.0
+</span></code></pre></div>
 <h3 id="docker">Docker<a class="headerlink" href="#docker" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code>docker<span class="w"> </span>run<span class="w"> </span>-it<span class="w"> </span>ghcr.io/ibtisam-iq/debugbox:1.0.0
-</code></pre></div>
+<div class="highlight"><pre><span></span><code><span id="__span-3-1">docker<span class="w"> </span>run<span class="w"> </span>-it<span class="w"> </span>ghcr.io/ibtisam-iq/debugbox:1.0.0
+</span></code></pre></div>
 <p>→ <strong><a href="../../usage/kubernetes/">Kubernetes usage</a></strong> | <strong><a href="../../usage/docker/">Docker usage</a></strong></p>
 
 

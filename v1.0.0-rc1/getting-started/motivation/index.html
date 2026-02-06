@@ -1520,9 +1520,9 @@
 <h1 id="why-debugbox">Why DebugBox?<a class="headerlink" href="#why-debugbox" title="Permanent link">&para;</a></h1>
 <h2 id="the-problem">The Problem<a class="headerlink" href="#the-problem" title="Permanent link">&para;</a></h2>
 <p>Modern production containers often ship <strong>without basic debugging tools</strong>. When something breaks:</p>
-<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>-it<span class="w"> </span>my-pod<span class="w"> </span>--<span class="w"> </span>curl
-<span class="c1"># curl: not found</span>
-</code></pre></div>
+<div class="highlight"><pre><span></span><code><span id="__span-0-1">kubectl<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>-it<span class="w"> </span>my-pod<span class="w"> </span>--<span class="w"> </span>curl
+</span><span id="__span-0-2"><span class="c1"># curl: not found</span>
+</span></code></pre></div>
 <p>Distroless, scratch, and minimal Alpine images are great for production — but they leave you blind when debugging.</p>
 <h2 id="existing-solutions">Existing Solutions<a class="headerlink" href="#existing-solutions" title="Permanent link">&para;</a></h2>
 <ul>
@@ -1650,9 +1650,9 @@
 </table>
 <p>On bandwidth-constrained networks, this is <strong>hours saved per month</strong>.</p>
 <h3 id="speed-example">Speed Example<a class="headerlink" href="#speed-example" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code>netshoot @ 100 Mbps:     0m16s (201.67 MB)
-DebugBox lite @ 100 Mbps: 0m1s (14.36 MB)
-</code></pre></div>
+<div class="highlight"><pre><span></span><code><span id="__span-1-1">netshoot @ 100 Mbps:     0m16s (201.67 MB)
+</span><span id="__span-1-2">DebugBox lite @ 100 Mbps: 0m1s (14.36 MB)
+</span></code></pre></div>
 <p>→ Start with <a href="../quick-start/">Quick Start</a> or <a href="../../variants/overview/">explore variants</a></p>
 
 
