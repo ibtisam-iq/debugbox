@@ -1,7 +1,8 @@
 # DebugBox — Base image
 # Shared foundation for all DebugBox variants (lite, balanced, power)
 #
-# BUILD COMMAND: docker buildx build --platform linux/amd64,linux/arm64 -t ghcr.io/ibtisam-iq/debugbox-base:latest -f dockerfiles/Dockerfile.base --push .
+# Push Command: docker buildx build --platform linux/amd64,linux/arm64 \
+#                    -t ghcr.io/ibtisam-iq/debugbox-base:latest -f dockerfiles/Dockerfile.base --push .
 
 FROM alpine:3.20.9
 
