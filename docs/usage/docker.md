@@ -28,11 +28,6 @@ docker run --rm -it \
   ghcr.io/ibtisam-iq/debugbox:power
 ```
 
-**What each capability enables:**
-
-- `NET_ADMIN` — conntrack, nft, iptables, ip route manipulation
-- `NET_RAW` — tshark, tcpdump, raw packet capture
-
 ## Share Another Container's Network
 
 Inspect another container's network namespace:
@@ -58,7 +53,7 @@ Save packet captures or logs to host:
 ```bash
 docker run -it --rm \
   -v $(pwd)/captures:/captures \
-  --cap-add=NET_RAW \
+  --cap-add=NET_ADMIN \
   ghcr.io/ibtisam-iq/debugbox:power
 
 # Inside
@@ -115,7 +110,7 @@ docker compose exec debugbox-power bash
 |------|---------|------------|
 | Quick connectivity test | lite | `docker run -it --rm ghcr.io/ibtisam-iq/debugbox:lite` |
 | General debugging | balanced | `docker run -it --rm ghcr.io/ibtisam-iq/debugbox` |
-| Packet capture | power + caps | `docker run -it --rm --cap-add=NET_RAW ghcr.io/ibtisam-iq/debugbox:power` |
+| Packet capture | power + caps | `docker run -it --rm --cap-add=NET_ADMIN ghcr.io/ibtisam-iq/debugbox:power` |
 | Firewall/routing | power + caps | `docker run -it --rm --cap-add=NET_ADMIN ghcr.io/ibtisam-iq/debugbox:power` |
 
-→ **[Kubernetes usage](kubernetes.md)** | **[Real-world examples](../guides/examples.md)** | **[Troubleshooting](../guides/troubleshooting.md)**
+→ **[Kubernetes Usage](kubernetes.md)** | **[Real-world Examples](../guides/examples.md)** | **[Troubleshooting](../guides/troubleshooting.md)**

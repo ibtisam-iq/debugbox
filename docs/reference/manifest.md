@@ -2,7 +2,7 @@
 
 The **authoritative** list of tools, shell behavior, and environment guarantees in each DebugBox variant.
 
-This page is derived from the source-of-truth [`manifest.yaml`](../manifest.yaml) in the repository.
+This page is derived from the source-of-truth [`manifest.yaml`](https://github.com/ibtisam-iq/debugbox/blob/main/docs/manifest.yaml) in the repository.
 
 All variants run as **root** by design (required for debugging privileges).
 

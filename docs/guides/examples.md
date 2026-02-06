@@ -221,9 +221,11 @@ tcpdump -i eth0 -n 'tcp port 80'  # Filter by port
 tcpdump -i eth0 'host 10.0.0.1'   # Filter by host
 ```
 
-### Advanced Analysis (Power + NET_RAW)
+### Advanced Analysis (Power + NET_ADMIN)
 ```bash
-kubectl apply -f https://raw.githubusercontent.com/ibtisam-iq/debugbox/main/examples/power-debug-pod.yaml
+kubectl apply -f \
+  https://raw.githubusercontent.com/ibtisam-iq/debugbox/main/examples/power-debug-pod.yaml
+
 kubectl exec -it debug-power -- bash
 
 # Live packet analysis with tshark
@@ -365,7 +367,9 @@ openssl req -x509 -newkey rsa:2048 -keyout key.pem -out cert.pem -days 365 -node
 
 ```bash
 # Apply manifest with NET_ADMIN capability
-kubectl apply -f https://raw.githubusercontent.com/ibtisam-iq/debugbox/main/examples/power-debug-pod.yaml
+kubectl apply -f \
+  https://raw.githubusercontent.com/ibtisam-iq/debugbox/main/examples/power-debug-pod.yaml
+
 kubectl exec -it debug-power -- bash
 
 # iptables inspection
@@ -400,6 +404,9 @@ conntrack -L
 **Tools:** `brctl` (bridge-utils) (power + NET_ADMIN)
 
 ```bash
+kubectl apply -f \
+  https://raw.githubusercontent.com/ibtisam-iq/debugbox/main/examples/power-debug-pod.yaml
+
 kubectl exec -it debug-power -- bash
 
 # List bridges
@@ -492,8 +499,8 @@ kubectl logs my-pod | less
 kubectl run git-debug --rm -it --image=ghcr.io/ibtisam-iq/debugbox --restart=Never
 
 # Clone repository for configs
-git clone https://github.com/example/configs.git
-cd configs
+git clone https://github.com/ibtisam-iq/debugbox.git
+cd debugbox
 
 # Check configuration
 git log --oneline
@@ -554,7 +561,7 @@ echo '{"test":"value"}' | json
 kubectl get pod my-pod -o yaml | yaml
 ```
 
-**Power-only helpers** (require NET_RAW/NET_ADMIN):
+**Power-only helpers** (require NET_ADMIN):
 ```bash
 kubectl exec -it debug-power -- bash
 
@@ -636,19 +643,13 @@ kubectl get secret my-tls -o jsonpath='{.data.tls\.crt}' | base64 -d | \
 | Tool | Capability | Docker | Kubernetes |
 |------|-----------|--------|------------|
 | **Most tools** | None | Standard run | kubectl run/debug |
-| **tshark** | NET_RAW | `--cap-add=NET_RAW` | [Use manifest](https://raw.githubusercontent.com/ibtisam-iq/debugbox/main/examples/power-debug-pod.yaml) |
-| **ngrep** | NET_RAW | `--cap-add=NET_RAW` | Use manifest |
+| **tshark** | NET_ADMIN | `--cap-add=NET_ADMIN` | [Use manifest](https://raw.githubusercontent.com/ibtisam-iq/debugbox/main/examples/power-debug-pod.yaml) |
+| **ngrep** | NET_ADMIN | `--cap-add=NET_ADMIN` | Use manifest |
 | **iptables** | NET_ADMIN | `--cap-add=NET_ADMIN` | Use manifest |
 | **nftables** | NET_ADMIN | `--cap-add=NET_ADMIN` | Use manifest |
 | **conntrack** | NET_ADMIN | `--cap-add=NET_ADMIN` | Use manifest |
 | **brctl** | NET_ADMIN | `--cap-add=NET_ADMIN` | Use manifest |
 
-**Quick reference:**
-
-- 🟢 **Standard debugging:** No capabilities needed (95% of use cases)
-- 🟡 **Packet analysis:** NET_RAW required
-- 🔴 **Firewall/routing:** NET_ADMIN required
-
 ---
 
-→ **[Kubernetes usage](../usage/kubernetes.md)** | **[Docker usage](../usage/docker.md)** | **[Troubleshooting](troubleshooting.md)** | **[Variants overview](../variants/overview.md)**
+→ **[Kubernetes Usage](../usage/kubernetes.md)** | **[Docker Usage](../usage/docker.md)** | **[Troubleshooting](troubleshooting.md)** | **[Variants Overview](../variants/overview.md)**

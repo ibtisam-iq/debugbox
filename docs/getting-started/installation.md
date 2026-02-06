@@ -44,4 +44,4 @@ kubectl debug my-pod -it --image=ghcr.io/ibtisam-iq/debugbox:1.0.0
 docker run -it ghcr.io/ibtisam-iq/debugbox:1.0.0
 ```
 
-→ **[Kubernetes usage](../usage/kubernetes.md)** | **[Docker usage](../usage/docker.md)**
+→ **[Kubernetes Usage](../usage/kubernetes.md)** | **[Docker Usage](../usage/docker.md)**

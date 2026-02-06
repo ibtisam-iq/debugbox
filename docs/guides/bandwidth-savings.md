@@ -209,4 +209,4 @@ spec:
 
 **Choose right size. Save bandwidth. Debug faster. 🚀**
 
-**Next step:** [See Image Tags guide](../reference/tags.md) for production pinning strategy.
+**Next step:** [See Image Tags Guide](../reference/tags.md) for production pinning strategy.

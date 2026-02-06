@@ -32,7 +32,7 @@ kubectl run net-test --rm -it --image=busybox --restart=Never -- wget -O- https:
     --docker-server=ghcr.io \
     --docker-username=<token> \
     --docker-password=<token>
-  
+
   kubectl patch serviceaccount default -p '{"imagePullSecrets":[{"name":"ghcr-secret"}]}'
   ```
 
@@ -106,8 +106,7 @@ tshark: Couldn't run dumpcap in child process: Operation not permitted
 **Quick diagnosis:**
 ```bash
 # Which capability do you need?
-tcpdump, tshark, ngrep → NET_RAW
-iptables, nftables, conntrack, brctl → NET_ADMIN
+tshark, ngrep, iptables, nftables, conntrack, brctl → NET_ADMIN
 
 # Check current capabilities
 grep Cap /proc/self/status
@@ -143,13 +142,6 @@ kubectl run debug --rm -it \
 
 **Option 3: Docker equivalent**
 ```bash
-# For packet capture
-docker run --rm -it --cap-add=NET_RAW ghcr.io/ibtisam-iq/debugbox:power
-
-# For firewall/routing
-docker run --rm -it --cap-add=NET_ADMIN ghcr.io/ibtisam-iq/debugbox:power
-
-# For both
 docker run --rm -it --cap-add=NET_RAW --cap-add=NET_ADMIN ghcr.io/ibtisam-iq/debugbox:power
 ```
 
@@ -366,19 +358,19 @@ docker pull ghcr.io/ibtisam-iq/debugbox:lite
 
 ## Frequently Asked Questions
 
-**Q: Does DebugBox include kubectl?**  
+**Q: Does DebugBox include kubectl?**
 A: No — intentionally. DebugBox is for low-level debugging inside containers. Use `kubectl` locally and pipe output to DebugBox if needed.
 
-**Q: Can I run as non-root?**  
-A: Yes. Most tools work fine as non-root. Only tools needing raw sockets (tcpdump, tshark) or system access (strace, iptables) require root/capabilities.
+**Q: Can I run as non-root?**
+A: Yes. Most tools work fine as non-root. Only tools needing raw sockets (tshark) or system access (strace, iptables) require root/capabilities.
 
-**Q: Why no helm, k9s, or kustomize?**  
+**Q: Why no helm, k9s, or kustomize?**
 A: DebugBox focuses on debugging inside containers (network, processes, files). Deployment/management tools are out of scope.
 
-**Q: Does DebugBox work with Kubernetes 1.18?**  
+**Q: Does DebugBox work with Kubernetes 1.18?**
 A: Yes for most things. `kubectl debug` requires 1.23+. Use `kubectl run` for older clusters.
 
-**Q: Can I use DebugBox outside Kubernetes?**  
+**Q: Can I use DebugBox outside Kubernetes?**
 A: Absolutely. It's just a Docker container:
 ```bash
 docker run -it ghcr.io/ibtisam-iq/debugbox
@@ -387,15 +379,15 @@ docker run -it ghcr.io/ibtisam-iq/debugbox:power
 ```
 
 **Q: When should I use each variant?**
- 
+
 - **Lite:** You only need DNS/HTTP checks (saves bandwidth)
 - **Balanced:** Default for most debugging (best balance)
 - **Power:** You need packet analysis, firewall debugging, or Python scripting
 
-**Q: What's included in lite?**  
+**Q: What's included in lite?**
 A: curl, wget, dig, nslookup, host, jq, yq, ash, vi, less
 
-**Q: How do I pin versions in production?**  
+**Q: How do I pin versions in production?**
 A: Always use specific version tags:
 ```bash
 ghcr.io/ibtisam-iq/debugbox:1.0.0
@@ -404,14 +396,14 @@ ghcr.io/ibtisam-iq/debugbox:power-1.0.0
 ```
 Never use `:latest` in production manifests.
 
-**Q: Can I extend DebugBox with my own tools?**  
+**Q: Can I extend DebugBox with my own tools?**
 A: Yes, create a custom image:
 ```dockerfile
 FROM ghcr.io/ibtisam-iq/debugbox:1.0.0
 RUN apk add --no-cache my-package-name
 ```
 
-**Q: How often are new versions released?**  
+**Q: How often are new versions released?**
 A: As needed. Track releases:
 ```bash
 # Check latest version
@@ -421,10 +413,10 @@ curl -s https://api.github.com/repos/ibtisam-iq/debugbox/releases/latest | jq '.
 https://github.com/ibtisam-iq/debugbox/releases
 ```
 
-**Q: Does DebugBox work on Docker Desktop?**  
+**Q: Does DebugBox work on Docker Desktop?**
 A: Yes. `docker run -it ghcr.io/ibtisam-iq/debugbox` works on Mac/Windows/Linux.
 
-**Q: What if I need to debug a pod that's not running?**  
+**Q: What if I need to debug a pod that's not running?**
 A: You can't attach to a crashed pod. Options:
 ```bash
 # 1. Check logs
@@ -436,7 +428,7 @@ kubectl run debug-pod --image=my-image --restart=Never -it
 # 3. Use a sidecar pattern for permanent debugging
 ```
 
-**Q: How do I share debug sessions with colleagues?**  
+**Q: How do I share debug sessions with colleagues?**
 A: Use `socat` for port forwarding:
 ```bash
 # In debugbox pod

@@ -53,4 +53,4 @@ vim /tmp/debug.log
 
 ## Next Steps
 
-→ **[Installation details](installation.md)** | **[Full variant comparison](../variants/overview.md)** | **[Real-world examples](../guides/examples.md)**
+→ **[Installation](installation.md)** | **[Variants Overview](../variants/overview.md)** | **[Real-world Examples](../guides/examples.md)**

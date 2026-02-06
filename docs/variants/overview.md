@@ -48,4 +48,4 @@ All variants build on each other:
 
 Every tool in lite is also in balanced and power.
 
-→ **[Complete tool list](../reference/manifest.md)**
+→ **[Complete Tool List](../reference/manifest.md)**

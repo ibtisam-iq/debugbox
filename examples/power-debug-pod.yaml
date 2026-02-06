@@ -15,8 +15,8 @@ spec:
       privileged: false
       capabilities:
         add:
-        - NET_ADMIN  # Required for: conntrack, nft, iptables, ip route manipulation
-        - NET_RAW    # Required for: tshark, tcpdump, raw packet capture
+        - NET_ADMIN
+        - NET_RAW
     tty: true
     stdin: true
   restartPolicy: Never

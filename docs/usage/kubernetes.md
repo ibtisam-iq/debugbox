@@ -38,7 +38,9 @@ Exit with `exit` or `Ctrl+C` to delete the pod.
 
 ### Apply Pre-Made Manifest (Recommended)
 ```bash
-kubectl apply -f https://raw.githubusercontent.com/ibtisam-iq/debugbox/main/examples/power-debug-pod.yaml
+kubectl apply -f \
+  https://raw.githubusercontent.com/ibtisam-iq/debugbox/main/examples/power-debug-pod.yaml
+
 kubectl exec -it debug-power -- bash
 ```
 
@@ -56,17 +58,12 @@ spec:
     securityContext:
       capabilities:
         add:
-        - NET_ADMIN  # For conntrack, nft, iptables
-        - NET_RAW    # For tshark, tcpdump, packet capture
+        - NET_ADMIN
+        - NET_RAW
     tty: true
     stdin: true
   restartPolicy: Never
 ```
-
-**What each capability enables:**
-
-- `NET_ADMIN` — conntrack, nft, iptables, ip route manipulation
-- `NET_RAW` — tshark, tcpdump, raw packet capture
 
 **Delete when done:**
 ```bash
@@ -171,4 +168,4 @@ kubectl exec -it app-with-debug-power -c debugbox -- bash
 
 4. **Only add capabilities when needed** — standard kubectl debug doesn't need them.
 
-→ **[Docker usage](docker.md)** | **[Real-world examples](../guides/examples.md)** | **[Troubleshooting](../guides/troubleshooting.md)**
+→ **[Docker Usage](docker.md)** | **[Real-world Examples](../guides/examples.md)** | **[Troubleshooting](../guides/troubleshooting.md)**

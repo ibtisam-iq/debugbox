@@ -15,10 +15,7 @@ Everything from balanced, plus advanced tools for deep system and network invest
 
 ## ⚠️ Linux Capabilities Required
 
-Power variant tools like `tshark`, `conntrack`, `iptables`, and `nftables` require **additional Linux capabilities** to function:
-
-- **NET_RAW** — For packet capture (tshark, tcpdump, ngrep)
-- **NET_ADMIN** — For firewall/routing (iptables, nftables, conntrack, brctl)
+Power variant tools like `tshark`, `conntrack`, `iptables`, and `nftables` require **additional Linux capabilities** to function.
 
 → **[Kubernetes capability setup](../usage/kubernetes.md#power-variant-with-capabilities)**
 → **[Docker capability setup](../usage/docker.md#power-variant-with-capabilities)**
@@ -43,13 +40,16 @@ ghcr.io/ibtisam-iq/debugbox:power-1.0.0
 **With capabilities (recommended for advanced tools):**
 ```bash
 # Apply pre-made manifest
-kubectl apply -f https://raw.githubusercontent.com/ibtisam-iq/debugbox/main/examples/power-debug-pod.yaml
+kubectl apply -f \
+  https://raw.githubusercontent.com/ibtisam-iq/debugbox/main/examples/power-debug-pod.yaml
+
 kubectl exec -it debug-power -- bash
 ```
 
 **Basic usage (no capabilities):**
 ```bash
 kubectl debug my-pod -it --image=ghcr.io/ibtisam-iq/debugbox:power
+
 kubectl run debug --rm -it --image=ghcr.io/ibtisam-iq/debugbox:power --restart=Never
 ```
 
@@ -99,21 +99,10 @@ Power includes **all balanced helpers** plus **5 advanced network functions**:
 - `cert-check()` — Inspect TLS certificates from servers
 - `conntrack-watch()` — Monitor active connections in real-time
 
-## Tool Capability Matrix
-
-| Tool | Capability Required | Works Without? |
-|------|---------------------|----------------|
-| openssl, ltrace, python3 | None | ✅ Yes |
-| tshark, ngrep | NET_RAW | ❌ No |
-| iptables, nftables, conntrack, brctl | NET_ADMIN | ❌ No |
-| tcptraceroute, fping, nmap-nping | None | ✅ Yes |
-
-→ **[Detailed capability setup guide](../guides/examples.md#capability-requirements-reference)**
-
 ## When to Downgrade
 
 **Most tasks use [Balanced Variant](balanced.md).** Downgrade to save 58 MB.
 
 **For speed, use [Lite Variant](lite.md).** Saves 90 MB.
 
-→ **[Variants overview](overview.md)** | **[Real-world examples](../guides/examples.md)** | **[Troubleshooting](../guides/troubleshooting.md)**
+→ **[Variants Overview](overview.md)** | **[Real-world Examples](../guides/examples.md)** | **[Troubleshooting](../guides/troubleshooting.md)**

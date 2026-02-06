@@ -82,4 +82,4 @@ Balanced includes **6+ custom shell functions** for rapid debugging:
 
 **Upgrade to [Power Variant](power.md)?** Need packet analysis, routing tools, or scripting.
 
-→ **[Variants overview](overview.md)** | **[Real-world examples](../guides/examples.md)** | **[Troubleshooting](../guides/troubleshooting.md)**
+→ **[Variants Overview](overview.md)** | **[Real-world Examples](../guides/examples.md)** | **[Troubleshooting](../guides/troubleshooting.md)**
