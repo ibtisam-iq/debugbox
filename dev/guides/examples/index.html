@@ -2040,465 +2040,465 @@
 <hr />
 <h2 id="dns-troubleshooting">DNS Troubleshooting<a class="headerlink" href="#dns-troubleshooting" title="Permanent link">&para;</a></h2>
 <p><strong>Tools:</strong> <code>dig</code>, <code>nslookup</code>, <code>host</code> (bind-tools)</p>
-<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>run<span class="w"> </span>dns-debug<span class="w"> </span>--rm<span class="w"> </span>-it<span class="w"> </span>--image<span class="o">=</span>ghcr.io/ibtisam-iq/debugbox:lite<span class="w"> </span>--restart<span class="o">=</span>Never
-
-<span class="c1"># Detailed DNS query</span>
-dig<span class="w"> </span>my-service.default.svc.cluster.local
-
-<span class="c1"># Quick lookup</span>
-nslookup<span class="w"> </span>my-service.default.svc.cluster.local
-
-<span class="c1"># Simple hostname resolution</span>
-host<span class="w"> </span>kubernetes.default
-
-<span class="c1"># Check specific DNS server</span>
-dig<span class="w"> </span>@8.8.8.8<span class="w"> </span>example.com
-
-<span class="c1"># Trace DNS resolution path</span>
-dig<span class="w"> </span>+trace<span class="w"> </span>example.com
-
-<span class="c1"># Check DNS search domains</span>
-cat<span class="w"> </span>/etc/resolv.conf
-</code></pre></div>
+<div class="highlight"><pre><span></span><code><span id="__span-0-1">kubectl<span class="w"> </span>run<span class="w"> </span>dns-debug<span class="w"> </span>--rm<span class="w"> </span>-it<span class="w"> </span>--image<span class="o">=</span>ghcr.io/ibtisam-iq/debugbox:lite<span class="w"> </span>--restart<span class="o">=</span>Never
+</span><span id="__span-0-2">
+</span><span id="__span-0-3"><span class="c1"># Detailed DNS query</span>
+</span><span id="__span-0-4">dig<span class="w"> </span>my-service.default.svc.cluster.local
+</span><span id="__span-0-5">
+</span><span id="__span-0-6"><span class="c1"># Quick lookup</span>
+</span><span id="__span-0-7">nslookup<span class="w"> </span>my-service.default.svc.cluster.local
+</span><span id="__span-0-8">
+</span><span id="__span-0-9"><span class="c1"># Simple hostname resolution</span>
+</span><span id="__span-0-10">host<span class="w"> </span>kubernetes.default
+</span><span id="__span-0-11">
+</span><span id="__span-0-12"><span class="c1"># Check specific DNS server</span>
+</span><span id="__span-0-13">dig<span class="w"> </span>@8.8.8.8<span class="w"> </span>example.com
+</span><span id="__span-0-14">
+</span><span id="__span-0-15"><span class="c1"># Trace DNS resolution path</span>
+</span><span id="__span-0-16">dig<span class="w"> </span>+trace<span class="w"> </span>example.com
+</span><span id="__span-0-17">
+</span><span id="__span-0-18"><span class="c1"># Check DNS search domains</span>
+</span><span id="__span-0-19">cat<span class="w"> </span>/etc/resolv.conf
+</span></code></pre></div>
 <hr />
 <h2 id="service-connectivity">Service Connectivity<a class="headerlink" href="#service-connectivity" title="Permanent link">&para;</a></h2>
 <p><strong>Tools:</strong> <code>curl</code>, <code>wget</code>, <code>ping</code>, <code>nc</code> (netcat), <code>telnet</code></p>
-<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>run<span class="w"> </span>net-debug<span class="w"> </span>--rm<span class="w"> </span>-it<span class="w"> </span>--image<span class="o">=</span>ghcr.io/ibtisam-iq/debugbox<span class="w"> </span>--restart<span class="o">=</span>Never
-
-<span class="c1"># HTTP endpoint testing</span>
-curl<span class="w"> </span>-v<span class="w"> </span>http://my-service:8080/health
-curl<span class="w"> </span>-I<span class="w"> </span>https://example.com<span class="w">  </span><span class="c1"># Headers only</span>
-wget<span class="w"> </span>-O-<span class="w"> </span>http://my-service/status<span class="w">  </span><span class="c1"># Alternative HTTP client</span>
-
-<span class="c1"># Basic connectivity</span>
-ping<span class="w"> </span>-c<span class="w"> </span><span class="m">4</span><span class="w"> </span>my-service.default.svc.cluster.local
-
-<span class="c1"># Port testing</span>
-nc<span class="w"> </span>-zv<span class="w"> </span>my-service<span class="w"> </span><span class="m">8080</span><span class="w">  </span><span class="c1"># Check if port is open</span>
-nc<span class="w"> </span>-l<span class="w"> </span><span class="m">9000</span><span class="w">  </span><span class="c1"># Listen on port (in one terminal)</span>
-nc<span class="w"> </span>my-service<span class="w"> </span><span class="m">9000</span><span class="w">  </span><span class="c1"># Connect (in another terminal)</span>
-
-<span class="c1"># Test specific ports</span>
-<span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;GET / HTTP/1.0\r\n&quot;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>nc<span class="w"> </span>example.com<span class="w"> </span><span class="m">80</span>
-</code></pre></div>
+<div class="highlight"><pre><span></span><code><span id="__span-1-1">kubectl<span class="w"> </span>run<span class="w"> </span>net-debug<span class="w"> </span>--rm<span class="w"> </span>-it<span class="w"> </span>--image<span class="o">=</span>ghcr.io/ibtisam-iq/debugbox<span class="w"> </span>--restart<span class="o">=</span>Never
+</span><span id="__span-1-2">
+</span><span id="__span-1-3"><span class="c1"># HTTP endpoint testing</span>
+</span><span id="__span-1-4">curl<span class="w"> </span>-v<span class="w"> </span>http://my-service:8080/health
+</span><span id="__span-1-5">curl<span class="w"> </span>-I<span class="w"> </span>https://example.com<span class="w">        </span><span class="c1"># Headers only</span>
+</span><span id="__span-1-6">wget<span class="w"> </span>-O-<span class="w"> </span>http://my-service/status<span class="w">  </span><span class="c1"># Alternative HTTP client</span>
+</span><span id="__span-1-7">
+</span><span id="__span-1-8"><span class="c1"># Basic connectivity</span>
+</span><span id="__span-1-9">ping<span class="w"> </span>-c<span class="w"> </span><span class="m">4</span><span class="w"> </span>my-service.default.svc.cluster.local
+</span><span id="__span-1-10">
+</span><span id="__span-1-11"><span class="c1"># Port testing</span>
+</span><span id="__span-1-12">nc<span class="w"> </span>-zv<span class="w"> </span>my-service<span class="w"> </span><span class="m">8080</span><span class="w">  </span><span class="c1"># Check if port is open</span>
+</span><span id="__span-1-13">nc<span class="w"> </span>-l<span class="w"> </span><span class="m">9000</span><span class="w">              </span><span class="c1"># Listen on port (in one terminal)</span>
+</span><span id="__span-1-14">nc<span class="w"> </span>my-service<span class="w"> </span><span class="m">9000</span><span class="w">      </span><span class="c1"># Connect (in another terminal)</span>
+</span><span id="__span-1-15">
+</span><span id="__span-1-16"><span class="c1"># Test specific ports</span>
+</span><span id="__span-1-17"><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;GET / HTTP/1.0\r\n&quot;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>nc<span class="w"> </span>example.com<span class="w"> </span><span class="m">80</span>
+</span></code></pre></div>
 <hr />
 <h2 id="network-interface-ip-configuration">Network Interface &amp; IP Configuration<a class="headerlink" href="#network-interface-ip-configuration" title="Permanent link">&para;</a></h2>
 <p><strong>Tools:</strong> <code>ip</code> (iproute2), <code>ifconfig</code> (legacy alternative)</p>
-<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>debug<span class="w"> </span>my-app<span class="w"> </span>-it<span class="w"> </span>--image<span class="o">=</span>ghcr.io/ibtisam-iq/debugbox
-
-<span class="c1"># Show all interfaces</span>
-ip<span class="w"> </span>addr
-ip<span class="w"> </span>link<span class="w"> </span>show
-
-<span class="c1"># Routing table</span>
-ip<span class="w"> </span>route
-ip<span class="w"> </span>route<span class="w"> </span>get<span class="w"> </span><span class="m">8</span>.8.8.8<span class="w">  </span><span class="c1"># Show route to specific IP</span>
-
-<span class="c1"># ARP/Neighbor table</span>
-ip<span class="w"> </span>neigh
-
-<span class="c1"># Interface statistics</span>
-ip<span class="w"> </span>-s<span class="w"> </span>link<span class="w"> </span>show<span class="w"> </span>eth0
-</code></pre></div>
+<div class="highlight"><pre><span></span><code><span id="__span-2-1">kubectl<span class="w"> </span>debug<span class="w"> </span>my-app<span class="w"> </span>-it<span class="w"> </span>--image<span class="o">=</span>ghcr.io/ibtisam-iq/debugbox
+</span><span id="__span-2-2">
+</span><span id="__span-2-3"><span class="c1"># Show all interfaces</span>
+</span><span id="__span-2-4">ip<span class="w"> </span>addr
+</span><span id="__span-2-5">ip<span class="w"> </span>link<span class="w"> </span>show
+</span><span id="__span-2-6">
+</span><span id="__span-2-7"><span class="c1"># Routing table</span>
+</span><span id="__span-2-8">ip<span class="w"> </span>route
+</span><span id="__span-2-9">ip<span class="w"> </span>route<span class="w"> </span>get<span class="w"> </span><span class="m">8</span>.8.8.8<span class="w">  </span><span class="c1"># Show route to specific IP</span>
+</span><span id="__span-2-10">
+</span><span id="__span-2-11"><span class="c1"># ARP/Neighbor table</span>
+</span><span id="__span-2-12">ip<span class="w"> </span>neigh
+</span><span id="__span-2-13">
+</span><span id="__span-2-14"><span class="c1"># Interface statistics</span>
+</span><span id="__span-2-15">ip<span class="w"> </span>-s<span class="w"> </span>link<span class="w"> </span>show<span class="w"> </span>eth0
+</span></code></pre></div>
 <hr />
 <h2 id="socket-connection-analysis">Socket &amp; Connection Analysis<a class="headerlink" href="#socket-connection-analysis" title="Permanent link">&para;</a></h2>
 <p><strong>Tools:</strong> <code>ss</code>, <code>netstat</code>, <code>lsof</code></p>
-<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>debug<span class="w"> </span>my-app<span class="w"> </span>-it<span class="w"> </span>--image<span class="o">=</span>ghcr.io/ibtisam-iq/debugbox
-
-<span class="c1"># Active connections</span>
-ss<span class="w"> </span>-tunap<span class="w">  </span><span class="c1"># All TCP/UDP connections with processes</span>
-ss<span class="w"> </span>-tulnp<span class="w">  </span><span class="c1"># Listening sockets only</span>
-ss<span class="w"> </span>-t<span class="w"> </span>state<span class="w"> </span>established<span class="w">  </span><span class="c1"># Established TCP connections</span>
-
-<span class="c1"># Legacy netstat (from procps)</span>
-netstat<span class="w"> </span>-tulnp<span class="w">  </span><span class="c1"># Listening ports</span>
-
-<span class="c1"># What&#39;s using a specific port?</span>
-lsof<span class="w"> </span>-i<span class="w"> </span>:8080
-lsof<span class="w"> </span>-i<span class="w"> </span>TCP:80
-lsof<span class="w"> </span>-p<span class="w"> </span><span class="k">$(</span>pgrep<span class="w"> </span>nginx<span class="k">)</span><span class="w">  </span><span class="c1"># Files opened by nginx</span>
-</code></pre></div>
+<div class="highlight"><pre><span></span><code><span id="__span-3-1">kubectl<span class="w"> </span>debug<span class="w"> </span>my-app<span class="w"> </span>-it<span class="w"> </span>--image<span class="o">=</span>ghcr.io/ibtisam-iq/debugbox
+</span><span id="__span-3-2">
+</span><span id="__span-3-3"><span class="c1"># Active connections</span>
+</span><span id="__span-3-4">ss<span class="w"> </span>-tunap<span class="w">                 </span><span class="c1"># All TCP/UDP connections with processes</span>
+</span><span id="__span-3-5">ss<span class="w"> </span>-tulnp<span class="w">                 </span><span class="c1"># Listening sockets only</span>
+</span><span id="__span-3-6">ss<span class="w"> </span>-t<span class="w"> </span>state<span class="w"> </span>established<span class="w">   </span><span class="c1"># Established TCP connections</span>
+</span><span id="__span-3-7">
+</span><span id="__span-3-8"><span class="c1"># Legacy netstat (from procps)</span>
+</span><span id="__span-3-9">netstat<span class="w"> </span>-tulnp<span class="w">            </span><span class="c1"># Listening ports</span>
+</span><span id="__span-3-10">
+</span><span id="__span-3-11"><span class="c1"># What&#39;s using a specific port?</span>
+</span><span id="__span-3-12">lsof<span class="w"> </span>-i<span class="w"> </span>:8080
+</span><span id="__span-3-13">lsof<span class="w"> </span>-i<span class="w"> </span>TCP:80
+</span><span id="__span-3-14">lsof<span class="w"> </span>-p<span class="w"> </span><span class="k">$(</span>pgrep<span class="w"> </span>nginx<span class="k">)</span><span class="w">    </span><span class="c1"># Files opened by nginx</span>
+</span></code></pre></div>
 <hr />
 <h2 id="route-tracing">Route Tracing<a class="headerlink" href="#route-tracing" title="Permanent link">&para;</a></h2>
 <p><strong>Tools:</strong> <code>mtr</code>, <code>tracepath</code>, <code>tcptraceroute</code> (power)</p>
-<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>run<span class="w"> </span>trace-debug<span class="w"> </span>--rm<span class="w"> </span>-it<span class="w"> </span>--image<span class="o">=</span>ghcr.io/ibtisam-iq/debugbox<span class="w"> </span>--restart<span class="o">=</span>Never
-
-<span class="c1"># Real-time route tracing with statistics</span>
-mtr<span class="w"> </span>example.com
-mtr<span class="w"> </span>-c<span class="w"> </span><span class="m">10</span><span class="w"> </span>-r<span class="w"> </span>example.com<span class="w">  </span><span class="c1"># 10 cycles, report mode</span>
-
-<span class="c1"># Path MTU discovery</span>
-tracepath<span class="w"> </span>example.com
-
-<span class="c1"># TCP-based traceroute (power variant)</span>
-kubectl<span class="w"> </span>run<span class="w"> </span>trace-power<span class="w"> </span>--rm<span class="w"> </span>-it<span class="w"> </span>--image<span class="o">=</span>ghcr.io/ibtisam-iq/debugbox:power<span class="w"> </span>--restart<span class="o">=</span>Never
-tcptraceroute<span class="w"> </span>example.com<span class="w"> </span><span class="m">443</span>
-</code></pre></div>
+<div class="highlight"><pre><span></span><code><span id="__span-4-1">kubectl<span class="w"> </span>run<span class="w"> </span>trace-debug<span class="w"> </span>--rm<span class="w"> </span>-it<span class="w"> </span>--image<span class="o">=</span>ghcr.io/ibtisam-iq/debugbox<span class="w"> </span>--restart<span class="o">=</span>Never
+</span><span id="__span-4-2">
+</span><span id="__span-4-3"><span class="c1"># Real-time route tracing with statistics</span>
+</span><span id="__span-4-4">mtr<span class="w"> </span>example.com
+</span><span id="__span-4-5">mtr<span class="w"> </span>-c<span class="w"> </span><span class="m">10</span><span class="w"> </span>-r<span class="w"> </span>example.com<span class="w">  </span><span class="c1"># 10 cycles, report mode</span>
+</span><span id="__span-4-6">
+</span><span id="__span-4-7"><span class="c1"># Path MTU discovery</span>
+</span><span id="__span-4-8">tracepath<span class="w"> </span>example.com
+</span><span id="__span-4-9">
+</span><span id="__span-4-10"><span class="c1"># TCP-based traceroute (power variant)</span>
+</span><span id="__span-4-11">kubectl<span class="w"> </span>run<span class="w"> </span>trace-power<span class="w"> </span>--rm<span class="w"> </span>-it<span class="w"> </span>--image<span class="o">=</span>ghcr.io/ibtisam-iq/debugbox:power<span class="w"> </span>--restart<span class="o">=</span>Never
+</span><span id="__span-4-12">tcptraceroute<span class="w"> </span>example.com<span class="w"> </span><span class="m">443</span>
+</span></code></pre></div>
 <hr />
 <h2 id="port-scanning-discovery">Port Scanning &amp; Discovery<a class="headerlink" href="#port-scanning-discovery" title="Permanent link">&para;</a></h2>
 <p><strong>Tools:</strong> <code>nmap</code>, <code>nping</code> (power), NSE scripts (power)</p>
-<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>run<span class="w"> </span>scan-debug<span class="w"> </span>--rm<span class="w"> </span>-it<span class="w"> </span>--image<span class="o">=</span>ghcr.io/ibtisam-iq/debugbox<span class="w"> </span>--restart<span class="o">=</span>Never
-
-<span class="c1"># Basic port scan</span>
-nmap<span class="w"> </span>-p<span class="w"> </span><span class="m">80</span>,443,8080<span class="w"> </span>my-service
-nmap<span class="w"> </span>-p-<span class="w"> </span>my-service<span class="w">  </span><span class="c1"># All ports (slow)</span>
-
-<span class="c1"># Service detection</span>
-nmap<span class="w"> </span>-sV<span class="w"> </span>my-service
-
-<span class="c1"># Power variant: Advanced scanning</span>
-kubectl<span class="w"> </span>run<span class="w"> </span>scan-power<span class="w"> </span>--rm<span class="w"> </span>-it<span class="w"> </span>--image<span class="o">=</span>ghcr.io/ibtisam-iq/debugbox:power<span class="w"> </span>--restart<span class="o">=</span>Never
-
-<span class="c1"># Custom packet crafting</span>
-nping<span class="w"> </span>--tcp<span class="w"> </span>-p<span class="w"> </span><span class="m">80</span>,443<span class="w"> </span>example.com
-nping<span class="w"> </span>--icmp<span class="w"> </span>example.com
-
-<span class="c1"># NSE scripts for vulnerability detection</span>
-nmap<span class="w"> </span>--script<span class="w"> </span>vuln<span class="w"> </span>example.com
-nmap<span class="w"> </span>--script<span class="w"> </span>http-enum<span class="w"> </span>my-service
-</code></pre></div>
+<div class="highlight"><pre><span></span><code><span id="__span-5-1">kubectl<span class="w"> </span>run<span class="w"> </span>scan-debug<span class="w"> </span>--rm<span class="w"> </span>-it<span class="w"> </span>--image<span class="o">=</span>ghcr.io/ibtisam-iq/debugbox<span class="w"> </span>--restart<span class="o">=</span>Never
+</span><span id="__span-5-2">
+</span><span id="__span-5-3"><span class="c1"># Basic port scan</span>
+</span><span id="__span-5-4">nmap<span class="w"> </span>-p<span class="w"> </span><span class="m">80</span>,443,8080<span class="w"> </span>my-service
+</span><span id="__span-5-5">nmap<span class="w"> </span>-p-<span class="w"> </span>my-service<span class="w">  </span><span class="c1"># All ports (slow)</span>
+</span><span id="__span-5-6">
+</span><span id="__span-5-7"><span class="c1"># Service detection</span>
+</span><span id="__span-5-8">nmap<span class="w"> </span>-sV<span class="w"> </span>my-service
+</span><span id="__span-5-9">
+</span><span id="__span-5-10"><span class="c1"># Power variant: Advanced scanning</span>
+</span><span id="__span-5-11">kubectl<span class="w"> </span>run<span class="w"> </span>scan-power<span class="w"> </span>--rm<span class="w"> </span>-it<span class="w"> </span>--image<span class="o">=</span>ghcr.io/ibtisam-iq/debugbox:power<span class="w"> </span>--restart<span class="o">=</span>Never
+</span><span id="__span-5-12">
+</span><span id="__span-5-13"><span class="c1"># Custom packet crafting</span>
+</span><span id="__span-5-14">nping<span class="w"> </span>--tcp<span class="w"> </span>-p<span class="w"> </span><span class="m">80</span>,443<span class="w"> </span>example.com
+</span><span id="__span-5-15">nping<span class="w"> </span>--icmp<span class="w"> </span>example.com
+</span><span id="__span-5-16">
+</span><span id="__span-5-17"><span class="c1"># NSE scripts for vulnerability detection</span>
+</span><span id="__span-5-18">nmap<span class="w"> </span>--script<span class="w"> </span>vuln<span class="w"> </span>example.com
+</span><span id="__span-5-19">nmap<span class="w"> </span>--script<span class="w"> </span>http-enum<span class="w"> </span>my-service
+</span></code></pre></div>
 <hr />
 <h2 id="bandwidth-testing">Bandwidth Testing<a class="headerlink" href="#bandwidth-testing" title="Permanent link">&para;</a></h2>
 <p><strong>Tools:</strong> <code>iperf3</code>, <code>speedtest-cli</code> (power)</p>
-<div class="highlight"><pre><span></span><code><span class="c1"># Network performance between pods</span>
-<span class="c1"># Server (terminal 1)</span>
-kubectl<span class="w"> </span>run<span class="w"> </span>iperf-server<span class="w"> </span>--image<span class="o">=</span>ghcr.io/ibtisam-iq/debugbox<span class="w"> </span>--command<span class="w"> </span>--<span class="w"> </span>iperf3<span class="w"> </span>-s
-
-<span class="c1"># Client (terminal 2)</span>
-kubectl<span class="w"> </span>run<span class="w"> </span>iperf-client<span class="w"> </span>--rm<span class="w"> </span>-it<span class="w"> </span>--image<span class="o">=</span>ghcr.io/ibtisam-iq/debugbox<span class="w"> </span>--command<span class="w"> </span>--<span class="w"> </span>iperf3<span class="w"> </span>-c<span class="w"> </span>iperf-server<span class="w"> </span>-t<span class="w"> </span><span class="m">30</span>
-
-<span class="c1"># Internet bandwidth test (power variant)</span>
-kubectl<span class="w"> </span>run<span class="w"> </span>speedtest<span class="w"> </span>--rm<span class="w"> </span>-it<span class="w"> </span>--image<span class="o">=</span>ghcr.io/ibtisam-iq/debugbox:power<span class="w"> </span>--restart<span class="o">=</span>Never
-speedtest-cli
-</code></pre></div>
+<div class="highlight"><pre><span></span><code><span id="__span-6-1"><span class="c1"># Network performance between pods</span>
+</span><span id="__span-6-2"><span class="c1"># Server (terminal 1)</span>
+</span><span id="__span-6-3">kubectl<span class="w"> </span>run<span class="w"> </span>iperf-server<span class="w"> </span>--image<span class="o">=</span>ghcr.io/ibtisam-iq/debugbox<span class="w"> </span>--command<span class="w"> </span>--<span class="w"> </span>iperf3<span class="w"> </span>-s
+</span><span id="__span-6-4">
+</span><span id="__span-6-5"><span class="c1"># Client (terminal 2)</span>
+</span><span id="__span-6-6">kubectl<span class="w"> </span>run<span class="w"> </span>iperf-client<span class="w"> </span>--rm<span class="w"> </span>-it<span class="w"> </span>--image<span class="o">=</span>ghcr.io/ibtisam-iq/debugbox<span class="w"> </span>--command<span class="w"> </span>--<span class="w"> </span>iperf3<span class="w"> </span>-c<span class="w"> </span>iperf-server<span class="w"> </span>-t<span class="w"> </span><span class="m">30</span>
+</span><span id="__span-6-7">
+</span><span id="__span-6-8"><span class="c1"># Internet bandwidth test (power variant)</span>
+</span><span id="__span-6-9">kubectl<span class="w"> </span>run<span class="w"> </span>speedtest<span class="w"> </span>--rm<span class="w"> </span>-it<span class="w"> </span>--image<span class="o">=</span>ghcr.io/ibtisam-iq/debugbox:power<span class="w"> </span>--restart<span class="o">=</span>Never
+</span><span id="__span-6-10">speedtest-cli
+</span></code></pre></div>
 <hr />
 <h2 id="bandwidth-monitoring">Bandwidth Monitoring<a class="headerlink" href="#bandwidth-monitoring" title="Permanent link">&para;</a></h2>
 <p><strong>Tools:</strong> <code>iftop</code></p>
-<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>run<span class="w"> </span>monitor<span class="w"> </span>--rm<span class="w"> </span>-it<span class="w"> </span>--image<span class="o">=</span>ghcr.io/ibtisam-iq/debugbox<span class="w"> </span>--restart<span class="o">=</span>Never
-
-<span class="c1"># Real-time bandwidth per connection</span>
-iftop<span class="w"> </span>-i<span class="w"> </span>eth0
-iftop<span class="w"> </span>-i<span class="w"> </span>eth0<span class="w"> </span>-n<span class="w">  </span><span class="c1"># Don&#39;t resolve hostnames</span>
-iftop<span class="w"> </span>-i<span class="w"> </span>eth0<span class="w"> </span>-P<span class="w">  </span><span class="c1"># Show port numbers</span>
-</code></pre></div>
+<div class="highlight"><pre><span></span><code><span id="__span-7-1">kubectl<span class="w"> </span>run<span class="w"> </span>monitor<span class="w"> </span>--rm<span class="w"> </span>-it<span class="w"> </span>--image<span class="o">=</span>ghcr.io/ibtisam-iq/debugbox<span class="w"> </span>--restart<span class="o">=</span>Never
+</span><span id="__span-7-2">
+</span><span id="__span-7-3"><span class="c1"># Real-time bandwidth per connection</span>
+</span><span id="__span-7-4">iftop<span class="w"> </span>-i<span class="w"> </span>eth0
+</span><span id="__span-7-5">iftop<span class="w"> </span>-i<span class="w"> </span>eth0<span class="w"> </span>-n<span class="w">  </span><span class="c1"># Don&#39;t resolve hostnames</span>
+</span><span id="__span-7-6">iftop<span class="w"> </span>-i<span class="w"> </span>eth0<span class="w"> </span>-P<span class="w">  </span><span class="c1"># Show port numbers</span>
+</span></code></pre></div>
 <hr />
 <h2 id="nic-diagnostics">NIC Diagnostics<a class="headerlink" href="#nic-diagnostics" title="Permanent link">&para;</a></h2>
 <p><strong>Tools:</strong> <code>ethtool</code></p>
-<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>run<span class="w"> </span>nic-debug<span class="w"> </span>--rm<span class="w"> </span>-it<span class="w"> </span>--image<span class="o">=</span>ghcr.io/ibtisam-iq/debugbox<span class="w"> </span>--restart<span class="o">=</span>Never
-
-<span class="c1"># Interface statistics</span>
-ethtool<span class="w"> </span>-S<span class="w"> </span>eth0
-
-<span class="c1"># Driver information</span>
-ethtool<span class="w"> </span>-i<span class="w"> </span>eth0
-
-<span class="c1"># Link status</span>
-ethtool<span class="w"> </span>eth0
-</code></pre></div>
+<div class="highlight"><pre><span></span><code><span id="__span-8-1">kubectl<span class="w"> </span>run<span class="w"> </span>nic-debug<span class="w"> </span>--rm<span class="w"> </span>-it<span class="w"> </span>--image<span class="o">=</span>ghcr.io/ibtisam-iq/debugbox<span class="w"> </span>--restart<span class="o">=</span>Never
+</span><span id="__span-8-2">
+</span><span id="__span-8-3"><span class="c1"># Interface statistics</span>
+</span><span id="__span-8-4">ethtool<span class="w"> </span>-S<span class="w"> </span>eth0
+</span><span id="__span-8-5">
+</span><span id="__span-8-6"><span class="c1"># Driver information</span>
+</span><span id="__span-8-7">ethtool<span class="w"> </span>-i<span class="w"> </span>eth0
+</span><span id="__span-8-8">
+</span><span id="__span-8-9"><span class="c1"># Link status</span>
+</span><span id="__span-8-10">ethtool<span class="w"> </span>eth0
+</span></code></pre></div>
 <hr />
 <h2 id="packet-capture-analysis">Packet Capture &amp; Analysis<a class="headerlink" href="#packet-capture-analysis" title="Permanent link">&para;</a></h2>
 <p><strong>Tools:</strong> <code>tcpdump</code>, <code>tshark</code> (power), <code>ngrep</code> (power)</p>
 <h3 id="basic-capture-all-variants">Basic Capture (All Variants)<a class="headerlink" href="#basic-capture-all-variants" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>run<span class="w"> </span>capture<span class="w"> </span>--rm<span class="w"> </span>-it<span class="w"> </span>--image<span class="o">=</span>ghcr.io/ibtisam-iq/debugbox<span class="w"> </span>--restart<span class="o">=</span>Never
-
-<span class="c1"># Capture packets</span>
-tcpdump<span class="w"> </span>-i<span class="w"> </span>eth0<span class="w"> </span>-w<span class="w"> </span>/tmp/capture.pcap<span class="w"> </span>port<span class="w"> </span><span class="m">443</span>
-tcpdump<span class="w"> </span>-i<span class="w"> </span>eth0<span class="w"> </span>-n<span class="w"> </span><span class="s1">&#39;tcp port 80&#39;</span><span class="w">  </span><span class="c1"># Filter by port</span>
-tcpdump<span class="w"> </span>-i<span class="w"> </span>eth0<span class="w"> </span><span class="s1">&#39;host 10.0.0.1&#39;</span><span class="w">  </span><span class="c1"># Filter by host</span>
-</code></pre></div>
+<div class="highlight"><pre><span></span><code><span id="__span-9-1">kubectl<span class="w"> </span>run<span class="w"> </span>capture<span class="w"> </span>--rm<span class="w"> </span>-it<span class="w"> </span>--image<span class="o">=</span>ghcr.io/ibtisam-iq/debugbox<span class="w"> </span>--restart<span class="o">=</span>Never
+</span><span id="__span-9-2">
+</span><span id="__span-9-3"><span class="c1"># Capture packets</span>
+</span><span id="__span-9-4">tcpdump<span class="w"> </span>-i<span class="w"> </span>eth0<span class="w"> </span>-w<span class="w"> </span>/tmp/capture.pcap<span class="w"> </span>port<span class="w"> </span><span class="m">443</span>
+</span><span id="__span-9-5">tcpdump<span class="w"> </span>-i<span class="w"> </span>eth0<span class="w"> </span>-n<span class="w"> </span><span class="s1">&#39;tcp port 80&#39;</span><span class="w">  </span><span class="c1"># Filter by port</span>
+</span><span id="__span-9-6">tcpdump<span class="w"> </span>-i<span class="w"> </span>eth0<span class="w"> </span><span class="s1">&#39;host 10.0.0.1&#39;</span><span class="w">   </span><span class="c1"># Filter by host</span>
+</span></code></pre></div>
 <h3 id="advanced-analysis-power-net_raw">Advanced Analysis (Power + NET_RAW)<a class="headerlink" href="#advanced-analysis-power-net_raw" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span>https://raw.githubusercontent.com/ibtisam-iq/debugbox/main/examples/power-debug-pod.yaml
-kubectl<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>-it<span class="w"> </span>debug-power<span class="w"> </span>--<span class="w"> </span>bash
-
-<span class="c1"># Live packet analysis with tshark</span>
-tshark<span class="w"> </span>-i<span class="w"> </span>eth0<span class="w"> </span>-f<span class="w"> </span><span class="s2">&quot;port 443&quot;</span>
-tshark<span class="w"> </span>-i<span class="w"> </span>eth0<span class="w"> </span>-Y<span class="w"> </span><span class="s2">&quot;http.request&quot;</span>
-tshark<span class="w"> </span>-r<span class="w"> </span>/tmp/capture.pcap<span class="w"> </span>-Y<span class="w"> </span><span class="s2">&quot;dns&quot;</span>
-
-<span class="c1"># Network grep</span>
-ngrep<span class="w"> </span>-d<span class="w"> </span>any<span class="w"> </span><span class="s2">&quot;GET&quot;</span><span class="w"> </span>tcp<span class="w"> </span>port<span class="w"> </span><span class="m">80</span>
-ngrep<span class="w"> </span><span class="s2">&quot;mystring&quot;</span><span class="w"> </span>tcp<span class="w"> </span>port<span class="w"> </span><span class="m">443</span>
-</code></pre></div>
+<div class="highlight"><pre><span></span><code><span id="__span-10-1">kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span>https://raw.githubusercontent.com/ibtisam-iq/debugbox/main/examples/power-debug-pod.yaml
+</span><span id="__span-10-2">kubectl<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>-it<span class="w"> </span>debug-power<span class="w"> </span>--<span class="w"> </span>bash
+</span><span id="__span-10-3">
+</span><span id="__span-10-4"><span class="c1"># Live packet analysis with tshark</span>
+</span><span id="__span-10-5">tshark<span class="w"> </span>-i<span class="w"> </span>eth0<span class="w"> </span>-f<span class="w"> </span><span class="s2">&quot;port 443&quot;</span>
+</span><span id="__span-10-6">tshark<span class="w"> </span>-i<span class="w"> </span>eth0<span class="w"> </span>-Y<span class="w"> </span><span class="s2">&quot;http.request&quot;</span>
+</span><span id="__span-10-7">tshark<span class="w"> </span>-r<span class="w"> </span>/tmp/capture.pcap<span class="w"> </span>-Y<span class="w"> </span><span class="s2">&quot;dns&quot;</span>
+</span><span id="__span-10-8">
+</span><span id="__span-10-9"><span class="c1"># Network grep</span>
+</span><span id="__span-10-10">ngrep<span class="w"> </span>-d<span class="w"> </span>any<span class="w"> </span><span class="s2">&quot;GET&quot;</span><span class="w"> </span>tcp<span class="w"> </span>port<span class="w"> </span><span class="m">80</span>
+</span><span id="__span-10-11">ngrep<span class="w"> </span><span class="s2">&quot;mystring&quot;</span><span class="w"> </span>tcp<span class="w"> </span>port<span class="w"> </span><span class="m">443</span>
+</span></code></pre></div>
 <hr />
 <h2 id="advanced-tcpudp-tools">Advanced TCP/UDP Tools<a class="headerlink" href="#advanced-tcpudp-tools" title="Permanent link">&para;</a></h2>
 <p><strong>Tools:</strong> <code>socat</code></p>
-<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>run<span class="w"> </span>socat-debug<span class="w"> </span>--rm<span class="w"> </span>-it<span class="w"> </span>--image<span class="o">=</span>ghcr.io/ibtisam-iq/debugbox<span class="w"> </span>--restart<span class="o">=</span>Never
-
-<span class="c1"># Port forwarding</span>
-socat<span class="w"> </span>TCP-LISTEN:8080,fork<span class="w"> </span>TCP:backend:8080
-
-<span class="c1"># UDP to TCP relay</span>
-socat<span class="w"> </span>UDP-LISTEN:53,fork<span class="w"> </span>TCP:dns-server:53
-
-<span class="c1"># Test SSL/TLS connection</span>
-socat<span class="w"> </span>-<span class="w"> </span>OPENSSL:example.com:443,verify<span class="o">=</span><span class="m">0</span>
-
-<span class="c1"># Create simple HTTP server</span>
-<span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;HTTP/1.0 200 OK\r\n\r\nHello&quot;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>socat<span class="w"> </span>TCP-LISTEN:8000,reuseaddr,fork<span class="w"> </span>STDIO
-</code></pre></div>
+<div class="highlight"><pre><span></span><code><span id="__span-11-1">kubectl<span class="w"> </span>run<span class="w"> </span>socat-debug<span class="w"> </span>--rm<span class="w"> </span>-it<span class="w"> </span>--image<span class="o">=</span>ghcr.io/ibtisam-iq/debugbox<span class="w"> </span>--restart<span class="o">=</span>Never
+</span><span id="__span-11-2">
+</span><span id="__span-11-3"><span class="c1"># Port forwarding</span>
+</span><span id="__span-11-4">socat<span class="w"> </span>TCP-LISTEN:8080,fork<span class="w"> </span>TCP:backend:8080
+</span><span id="__span-11-5">
+</span><span id="__span-11-6"><span class="c1"># UDP to TCP relay</span>
+</span><span id="__span-11-7">socat<span class="w"> </span>UDP-LISTEN:53,fork<span class="w"> </span>TCP:dns-server:53
+</span><span id="__span-11-8">
+</span><span id="__span-11-9"><span class="c1"># Test SSL/TLS connection</span>
+</span><span id="__span-11-10">socat<span class="w"> </span>-<span class="w"> </span>OPENSSL:example.com:443,verify<span class="o">=</span><span class="m">0</span>
+</span><span id="__span-11-11">
+</span><span id="__span-11-12"><span class="c1"># Create simple HTTP server</span>
+</span><span id="__span-11-13"><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;HTTP/1.0 200 OK\r\n\r\nHello&quot;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>socat<span class="w"> </span>TCP-LISTEN:8000,reuseaddr,fork<span class="w"> </span>STDIO
+</span></code></pre></div>
 <hr />
 <h2 id="connectivity-testing-parallel">Connectivity Testing (Parallel)<a class="headerlink" href="#connectivity-testing-parallel" title="Permanent link">&para;</a></h2>
 <p><strong>Tools:</strong> <code>fping</code> (power), <code>arping</code></p>
-<div class="highlight"><pre><span></span><code><span class="c1"># Power variant</span>
-kubectl<span class="w"> </span>run<span class="w"> </span>ping-power<span class="w"> </span>--rm<span class="w"> </span>-it<span class="w"> </span>--image<span class="o">=</span>ghcr.io/ibtisam-iq/debugbox:power<span class="w"> </span>--restart<span class="o">=</span>Never
-
-<span class="c1"># Parallel ping multiple hosts</span>
-fping<span class="w"> </span>-a<span class="w"> </span><span class="m">10</span>.0.0.1<span class="w"> </span><span class="m">10</span>.0.0.2<span class="w"> </span><span class="m">10</span>.0.0.3
-fping<span class="w"> </span>-g<span class="w"> </span><span class="m">10</span>.0.0.0/24<span class="w">  </span><span class="c1"># Entire subnet</span>
-fping<span class="w"> </span>-u<span class="w"> </span><span class="m">10</span>.0.0.0/24<span class="w">  </span><span class="c1"># Unreachable hosts only</span>
-
-<span class="c1"># ARP-level ping (layer 2)</span>
-arping<span class="w"> </span>-I<span class="w"> </span>eth0<span class="w"> </span><span class="m">10</span>.0.0.1
-</code></pre></div>
+<div class="highlight"><pre><span></span><code><span id="__span-12-1"><span class="c1"># Power variant</span>
+</span><span id="__span-12-2">kubectl<span class="w"> </span>run<span class="w"> </span>ping-power<span class="w"> </span>--rm<span class="w"> </span>-it<span class="w"> </span>--image<span class="o">=</span>ghcr.io/ibtisam-iq/debugbox:power<span class="w"> </span>--restart<span class="o">=</span>Never
+</span><span id="__span-12-3">
+</span><span id="__span-12-4"><span class="c1"># Parallel ping multiple hosts</span>
+</span><span id="__span-12-5">fping<span class="w"> </span>-a<span class="w"> </span><span class="m">10</span>.0.0.1<span class="w"> </span><span class="m">10</span>.0.0.2<span class="w"> </span><span class="m">10</span>.0.0.3
+</span><span id="__span-12-6">fping<span class="w"> </span>-g<span class="w"> </span><span class="m">10</span>.0.0.0/24<span class="w">  </span><span class="c1"># Entire subnet</span>
+</span><span id="__span-12-7">fping<span class="w"> </span>-u<span class="w"> </span><span class="m">10</span>.0.0.0/24<span class="w">  </span><span class="c1"># Unreachable hosts only</span>
+</span><span id="__span-12-8">
+</span><span id="__span-12-9"><span class="c1"># ARP-level ping (layer 2)</span>
+</span><span id="__span-12-10">arping<span class="w"> </span>-I<span class="w"> </span>eth0<span class="w"> </span><span class="m">10</span>.0.0.1
+</span></code></pre></div>
 <hr />
 <h2 id="process-inspection">Process Inspection<a class="headerlink" href="#process-inspection" title="Permanent link">&para;</a></h2>
 <p><strong>Tools:</strong> <code>ps</code>, <code>top</code>, <code>htop</code>, <code>pstree</code>, <code>killall</code>, <code>fuser</code></p>
-<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>debug<span class="w"> </span>my-app<span class="w"> </span>-it<span class="w"> </span>--image<span class="o">=</span>ghcr.io/ibtisam-iq/debugbox
-
-<span class="c1"># Process listing</span>
-ps<span class="w"> </span>aux
-ps<span class="w"> </span>aux<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>nginx
-
-<span class="c1"># Interactive monitoring</span>
-top
-htop<span class="w">  </span><span class="c1"># Better UI</span>
-
-<span class="c1"># Process tree</span>
-pstree<span class="w"> </span>-p
-pstree<span class="w"> </span>-p<span class="w"> </span><span class="m">1</span><span class="w">  </span><span class="c1"># From specific PID</span>
-
-<span class="c1"># Kill by name</span>
-killall<span class="w"> </span>-9<span class="w"> </span>nginx
-
-<span class="c1"># Find process using file/port</span>
-fuser<span class="w"> </span>-v<span class="w"> </span>/var/log/app.log
-fuser<span class="w"> </span>-n<span class="w"> </span>tcp<span class="w"> </span><span class="m">8080</span>
-</code></pre></div>
+<div class="highlight"><pre><span></span><code><span id="__span-13-1">kubectl<span class="w"> </span>debug<span class="w"> </span>my-app<span class="w"> </span>-it<span class="w"> </span>--image<span class="o">=</span>ghcr.io/ibtisam-iq/debugbox
+</span><span id="__span-13-2">
+</span><span id="__span-13-3"><span class="c1"># Process listing</span>
+</span><span id="__span-13-4">ps<span class="w"> </span>aux
+</span><span id="__span-13-5">ps<span class="w"> </span>aux<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>nginx
+</span><span id="__span-13-6">
+</span><span id="__span-13-7"><span class="c1"># Interactive monitoring</span>
+</span><span id="__span-13-8">top
+</span><span id="__span-13-9">htop<span class="w">  </span><span class="c1"># Better UI</span>
+</span><span id="__span-13-10">
+</span><span id="__span-13-11"><span class="c1"># Process tree</span>
+</span><span id="__span-13-12">pstree<span class="w"> </span>-p
+</span><span id="__span-13-13">pstree<span class="w"> </span>-p<span class="w"> </span><span class="m">1</span><span class="w">  </span><span class="c1"># From specific PID</span>
+</span><span id="__span-13-14">
+</span><span id="__span-13-15"><span class="c1"># Kill by name</span>
+</span><span id="__span-13-16">killall<span class="w"> </span>-9<span class="w"> </span>nginx
+</span><span id="__span-13-17">
+</span><span id="__span-13-18"><span class="c1"># Find process using file/port</span>
+</span><span id="__span-13-19">fuser<span class="w"> </span>-v<span class="w"> </span>/var/log/app.log
+</span><span id="__span-13-20">fuser<span class="w"> </span>-n<span class="w"> </span>tcp<span class="w"> </span><span class="m">8080</span>
+</span></code></pre></div>
 <hr />
 <h2 id="system-call-tracing">System Call Tracing<a class="headerlink" href="#system-call-tracing" title="Permanent link">&para;</a></h2>
 <p><strong>Tools:</strong> <code>strace</code>, <code>ltrace</code> (power), <code>lsof</code></p>
-<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>debug<span class="w"> </span>my-app<span class="w"> </span>-it<span class="w"> </span>--image<span class="o">=</span>ghcr.io/ibtisam-iq/debugbox
-
-<span class="c1"># Trace system calls</span>
-strace<span class="w"> </span>-p<span class="w"> </span><span class="k">$(</span>pgrep<span class="w"> </span>nginx<span class="k">)</span>
-strace<span class="w"> </span>-e<span class="w"> </span><span class="nv">trace</span><span class="o">=</span>network<span class="w"> </span>-p<span class="w"> </span><span class="m">1234</span><span class="w">  </span><span class="c1"># Network calls only</span>
-strace<span class="w"> </span>-e<span class="w"> </span><span class="nv">trace</span><span class="o">=</span>file<span class="w"> </span>-p<span class="w"> </span><span class="m">1234</span><span class="w">  </span><span class="c1"># File operations only</span>
-strace<span class="w"> </span>-c<span class="w"> </span>curl<span class="w"> </span>http://example.com<span class="w">  </span><span class="c1"># Call summary</span>
-
-<span class="c1"># Power variant: Library call tracing</span>
-kubectl<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>-it<span class="w"> </span>debug-power<span class="w"> </span>--<span class="w"> </span>bash
-ltrace<span class="w"> </span>-p<span class="w"> </span><span class="k">$(</span>pgrep<span class="w"> </span>nginx<span class="k">)</span>
-ltrace<span class="w"> </span>-c<span class="w"> </span>curl<span class="w"> </span>http://example.com<span class="w">  </span><span class="c1"># Library call summary</span>
-
-<span class="c1"># Open files</span>
-lsof<span class="w"> </span>-p<span class="w"> </span><span class="m">1234</span>
-lsof<span class="w"> </span>/var/log/app.log<span class="w">  </span><span class="c1"># What process has this file open?</span>
-</code></pre></div>
+<div class="highlight"><pre><span></span><code><span id="__span-14-1">kubectl<span class="w"> </span>debug<span class="w"> </span>my-app<span class="w"> </span>-it<span class="w"> </span>--image<span class="o">=</span>ghcr.io/ibtisam-iq/debugbox
+</span><span id="__span-14-2">
+</span><span id="__span-14-3"><span class="c1"># Trace system calls</span>
+</span><span id="__span-14-4">strace<span class="w"> </span>-p<span class="w"> </span><span class="k">$(</span>pgrep<span class="w"> </span>nginx<span class="k">)</span>
+</span><span id="__span-14-5">strace<span class="w"> </span>-e<span class="w"> </span><span class="nv">trace</span><span class="o">=</span>network<span class="w"> </span>-p<span class="w"> </span><span class="m">1234</span><span class="w">    </span><span class="c1"># Network calls only</span>
+</span><span id="__span-14-6">strace<span class="w"> </span>-e<span class="w"> </span><span class="nv">trace</span><span class="o">=</span>file<span class="w"> </span>-p<span class="w"> </span><span class="m">1234</span><span class="w">       </span><span class="c1"># File operations only</span>
+</span><span id="__span-14-7">strace<span class="w"> </span>-c<span class="w"> </span>curl<span class="w"> </span>http://example.com<span class="w">  </span><span class="c1"># Call summary</span>
+</span><span id="__span-14-8">
+</span><span id="__span-14-9"><span class="c1"># Power variant: Library call tracing</span>
+</span><span id="__span-14-10">kubectl<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>-it<span class="w"> </span>debug-power<span class="w"> </span>--<span class="w"> </span>bash
+</span><span id="__span-14-11">ltrace<span class="w"> </span>-p<span class="w"> </span><span class="k">$(</span>pgrep<span class="w"> </span>nginx<span class="k">)</span>
+</span><span id="__span-14-12">ltrace<span class="w"> </span>-c<span class="w"> </span>curl<span class="w"> </span>http://example.com<span class="w">  </span><span class="c1"># Library call summary</span>
+</span><span id="__span-14-13">
+</span><span id="__span-14-14"><span class="c1"># Open files</span>
+</span><span id="__span-14-15">lsof<span class="w"> </span>-p<span class="w"> </span><span class="m">1234</span>
+</span><span id="__span-14-16">lsof<span class="w"> </span>/var/log/app.log<span class="w">              </span><span class="c1"># What process has this file open?</span>
+</span></code></pre></div>
 <hr />
 <h2 id="tlsssl-inspection">TLS/SSL Inspection<a class="headerlink" href="#tlsssl-inspection" title="Permanent link">&para;</a></h2>
 <p><strong>Tools:</strong> <code>openssl</code> (power)</p>
-<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>run<span class="w"> </span>ssl-debug<span class="w"> </span>--rm<span class="w"> </span>-it<span class="w"> </span>--image<span class="o">=</span>ghcr.io/ibtisam-iq/debugbox:power<span class="w"> </span>--restart<span class="o">=</span>Never
-
-<span class="c1"># Test SSL/TLS connection</span>
-openssl<span class="w"> </span>s_client<span class="w"> </span>-connect<span class="w"> </span>example.com:443
-openssl<span class="w"> </span>s_client<span class="w"> </span>-connect<span class="w"> </span>example.com:443<span class="w"> </span>-showcerts
-
-<span class="c1"># Check certificate expiry</span>
-<span class="nb">echo</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>openssl<span class="w"> </span>s_client<span class="w"> </span>-connect<span class="w"> </span>example.com:443<span class="w"> </span><span class="m">2</span>&gt;/dev/null<span class="w"> </span><span class="p">|</span><span class="w"> </span>openssl<span class="w"> </span>x509<span class="w"> </span>-noout<span class="w"> </span>-dates
-
-<span class="c1"># Verify certificate</span>
-openssl<span class="w"> </span>verify<span class="w"> </span>cert.pem
-
-<span class="c1"># Certificate details</span>
-openssl<span class="w"> </span>x509<span class="w"> </span>-in<span class="w"> </span>cert.pem<span class="w"> </span>-text<span class="w"> </span>-noout
-
-<span class="c1"># Generate test certificates</span>
-openssl<span class="w"> </span>req<span class="w"> </span>-x509<span class="w"> </span>-newkey<span class="w"> </span>rsa:2048<span class="w"> </span>-keyout<span class="w"> </span>key.pem<span class="w"> </span>-out<span class="w"> </span>cert.pem<span class="w"> </span>-days<span class="w"> </span><span class="m">365</span><span class="w"> </span>-nodes
-</code></pre></div>
+<div class="highlight"><pre><span></span><code><span id="__span-15-1">kubectl<span class="w"> </span>run<span class="w"> </span>ssl-debug<span class="w"> </span>--rm<span class="w"> </span>-it<span class="w"> </span>--image<span class="o">=</span>ghcr.io/ibtisam-iq/debugbox:power<span class="w"> </span>--restart<span class="o">=</span>Never
+</span><span id="__span-15-2">
+</span><span id="__span-15-3"><span class="c1"># Test SSL/TLS connection</span>
+</span><span id="__span-15-4">openssl<span class="w"> </span>s_client<span class="w"> </span>-connect<span class="w"> </span>example.com:443
+</span><span id="__span-15-5">openssl<span class="w"> </span>s_client<span class="w"> </span>-connect<span class="w"> </span>example.com:443<span class="w"> </span>-showcerts
+</span><span id="__span-15-6">
+</span><span id="__span-15-7"><span class="c1"># Check certificate expiry</span>
+</span><span id="__span-15-8"><span class="nb">echo</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>openssl<span class="w"> </span>s_client<span class="w"> </span>-connect<span class="w"> </span>example.com:443<span class="w"> </span><span class="m">2</span>&gt;/dev/null<span class="w"> </span><span class="p">|</span><span class="w"> </span>openssl<span class="w"> </span>x509<span class="w"> </span>-noout<span class="w"> </span>-dates
+</span><span id="__span-15-9">
+</span><span id="__span-15-10"><span class="c1"># Verify certificate</span>
+</span><span id="__span-15-11">openssl<span class="w"> </span>verify<span class="w"> </span>cert.pem
+</span><span id="__span-15-12">
+</span><span id="__span-15-13"><span class="c1"># Certificate details</span>
+</span><span id="__span-15-14">openssl<span class="w"> </span>x509<span class="w"> </span>-in<span class="w"> </span>cert.pem<span class="w"> </span>-text<span class="w"> </span>-noout
+</span><span id="__span-15-15">
+</span><span id="__span-15-16"><span class="c1"># Generate test certificates</span>
+</span><span id="__span-15-17">openssl<span class="w"> </span>req<span class="w"> </span>-x509<span class="w"> </span>-newkey<span class="w"> </span>rsa:2048<span class="w"> </span>-keyout<span class="w"> </span>key.pem<span class="w"> </span>-out<span class="w"> </span>cert.pem<span class="w"> </span>-days<span class="w"> </span><span class="m">365</span><span class="w"> </span>-nodes
+</span></code></pre></div>
 <hr />
 <h2 id="firewall-routing-net_admin-required">Firewall &amp; Routing (NET_ADMIN Required)<a class="headerlink" href="#firewall-routing-net_admin-required" title="Permanent link">&para;</a></h2>
 <p><strong>Tools:</strong> <code>iptables</code>, <code>nft</code> (nftables), <code>conntrack</code></p>
-<div class="highlight"><pre><span></span><code><span class="c1"># Apply manifest with NET_ADMIN capability</span>
-kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span>https://raw.githubusercontent.com/ibtisam-iq/debugbox/main/examples/power-debug-pod.yaml
-kubectl<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>-it<span class="w"> </span>debug-power<span class="w"> </span>--<span class="w"> </span>bash
-
-<span class="c1"># iptables inspection</span>
-iptables<span class="w"> </span>-L<span class="w"> </span>-nv
-iptables<span class="w"> </span>-L<span class="w"> </span>-nv<span class="w"> </span>-t<span class="w"> </span>nat
-iptables<span class="w"> </span>-L<span class="w"> </span>-nv<span class="w"> </span>-t<span class="w"> </span>mangle
-
-<span class="c1"># nftables (modern alternative)</span>
-nft<span class="w"> </span>list<span class="w"> </span>ruleset
-nft<span class="w"> </span>list<span class="w"> </span>table<span class="w"> </span>inet<span class="w"> </span>filter
-
-<span class="c1"># Connection tracking</span>
-conntrack<span class="w"> </span>-L
-conntrack<span class="w"> </span>-L<span class="w"> </span>-p<span class="w"> </span>tcp<span class="w"> </span>--dport<span class="w"> </span><span class="m">443</span>
-conntrack<span class="w"> </span>-E<span class="w">  </span><span class="c1"># Event monitoring</span>
-</code></pre></div>
+<div class="highlight"><pre><span></span><code><span id="__span-16-1"><span class="c1"># Apply manifest with NET_ADMIN capability</span>
+</span><span id="__span-16-2">kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span>https://raw.githubusercontent.com/ibtisam-iq/debugbox/main/examples/power-debug-pod.yaml
+</span><span id="__span-16-3">kubectl<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>-it<span class="w"> </span>debug-power<span class="w"> </span>--<span class="w"> </span>bash
+</span><span id="__span-16-4">
+</span><span id="__span-16-5"><span class="c1"># iptables inspection</span>
+</span><span id="__span-16-6">iptables<span class="w"> </span>-L<span class="w"> </span>-nv
+</span><span id="__span-16-7">iptables<span class="w"> </span>-L<span class="w"> </span>-nv<span class="w"> </span>-t<span class="w"> </span>nat
+</span><span id="__span-16-8">iptables<span class="w"> </span>-L<span class="w"> </span>-nv<span class="w"> </span>-t<span class="w"> </span>mangle
+</span><span id="__span-16-9">
+</span><span id="__span-16-10"><span class="c1"># nftables (modern alternative)</span>
+</span><span id="__span-16-11">nft<span class="w"> </span>list<span class="w"> </span>ruleset
+</span><span id="__span-16-12">nft<span class="w"> </span>list<span class="w"> </span>table<span class="w"> </span>inet<span class="w"> </span>filter
+</span><span id="__span-16-13">
+</span><span id="__span-16-14"><span class="c1"># Connection tracking</span>
+</span><span id="__span-16-15">conntrack<span class="w"> </span>-L
+</span><span id="__span-16-16">conntrack<span class="w"> </span>-L<span class="w"> </span>-p<span class="w"> </span>tcp<span class="w"> </span>--dport<span class="w"> </span><span class="m">443</span>
+</span><span id="__span-16-17">conntrack<span class="w"> </span>-E<span class="w">  </span><span class="c1"># Event monitoring</span>
+</span></code></pre></div>
 <p><strong>Docker:</strong>
-<div class="highlight"><pre><span></span><code>docker<span class="w"> </span>run<span class="w"> </span>--rm<span class="w"> </span>-it<span class="w"> </span>--cap-add<span class="o">=</span>NET_ADMIN<span class="w"> </span>ghcr.io/ibtisam-iq/debugbox:power
-
-<span class="c1"># Same commands work</span>
-iptables<span class="w"> </span>-L<span class="w"> </span>-nv
-nft<span class="w"> </span>list<span class="w"> </span>ruleset
-conntrack<span class="w"> </span>-L
-</code></pre></div></p>
+<div class="highlight"><pre><span></span><code><span id="__span-17-1">docker<span class="w"> </span>run<span class="w"> </span>--rm<span class="w"> </span>-it<span class="w"> </span>--cap-add<span class="o">=</span>NET_ADMIN<span class="w"> </span>ghcr.io/ibtisam-iq/debugbox:power
+</span><span id="__span-17-2">
+</span><span id="__span-17-3"><span class="c1"># Same commands work</span>
+</span><span id="__span-17-4">iptables<span class="w"> </span>-L<span class="w"> </span>-nv
+</span><span id="__span-17-5">nft<span class="w"> </span>list<span class="w"> </span>ruleset
+</span><span id="__span-17-6">conntrack<span class="w"> </span>-L
+</span></code></pre></div></p>
 <hr />
 <h2 id="bridge-networking">Bridge Networking<a class="headerlink" href="#bridge-networking" title="Permanent link">&para;</a></h2>
 <p><strong>Tools:</strong> <code>brctl</code> (bridge-utils) (power + NET_ADMIN)</p>
-<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>-it<span class="w"> </span>debug-power<span class="w"> </span>--<span class="w"> </span>bash
-
-<span class="c1"># List bridges</span>
-brctl<span class="w"> </span>show
-
-<span class="c1"># Show MAC address table</span>
-brctl<span class="w"> </span>showmacs<span class="w"> </span>br0
-
-<span class="c1"># Show STP info</span>
-brctl<span class="w"> </span>showstp<span class="w"> </span>br0
-</code></pre></div>
+<div class="highlight"><pre><span></span><code><span id="__span-18-1">kubectl<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>-it<span class="w"> </span>debug-power<span class="w"> </span>--<span class="w"> </span>bash
+</span><span id="__span-18-2">
+</span><span id="__span-18-3"><span class="c1"># List bridges</span>
+</span><span id="__span-18-4">brctl<span class="w"> </span>show
+</span><span id="__span-18-5">
+</span><span id="__span-18-6"><span class="c1"># Show MAC address table</span>
+</span><span id="__span-18-7">brctl<span class="w"> </span>showmacs<span class="w"> </span>br0
+</span><span id="__span-18-8">
+</span><span id="__span-18-9"><span class="c1"># Show STP info</span>
+</span><span id="__span-18-10">brctl<span class="w"> </span>showstp<span class="w"> </span>br0
+</span></code></pre></div>
 <hr />
 <h2 id="routing-protocols">Routing Protocols<a class="headerlink" href="#routing-protocols" title="Permanent link">&para;</a></h2>
 <p><strong>Tools:</strong> <code>bird</code> (power)</p>
-<div class="highlight"><pre><span></span><code><span class="c1"># Note: BIRD is a routing daemon, typically not running in debug container</span>
-<span class="c1"># Useful for testing BGP configurations if bird daemon is started separately</span>
-
-kubectl<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>-it<span class="w"> </span>debug-power<span class="w"> </span>--<span class="w"> </span>bash
-
-<span class="c1"># If bird daemon running</span>
-birdc<span class="w"> </span>show<span class="w"> </span>status
-birdc<span class="w"> </span>show<span class="w"> </span>route
-birdc<span class="w"> </span>show<span class="w"> </span>protocols
-</code></pre></div>
+<div class="highlight"><pre><span></span><code><span id="__span-19-1"><span class="c1"># Note: BIRD is a routing daemon, typically not running in debug container</span>
+</span><span id="__span-19-2"><span class="c1"># Useful for testing BGP configurations if bird daemon is started separately</span>
+</span><span id="__span-19-3">
+</span><span id="__span-19-4">kubectl<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>-it<span class="w"> </span>debug-power<span class="w"> </span>--<span class="w"> </span>bash
+</span><span id="__span-19-5">
+</span><span id="__span-19-6"><span class="c1"># If bird daemon running</span>
+</span><span id="__span-19-7">birdc<span class="w"> </span>show<span class="w"> </span>status
+</span><span id="__span-19-8">birdc<span class="w"> </span>show<span class="w"> </span>route
+</span><span id="__span-19-9">birdc<span class="w"> </span>show<span class="w"> </span>protocols
+</span></code></pre></div>
 <hr />
 <h2 id="data-processing">Data Processing<a class="headerlink" href="#data-processing" title="Permanent link">&para;</a></h2>
 <p><strong>Tools:</strong> <code>jq</code>, <code>yq</code></p>
-<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>run<span class="w"> </span>data-debug<span class="w"> </span>--rm<span class="w"> </span>-it<span class="w"> </span>--image<span class="o">=</span>ghcr.io/ibtisam-iq/debugbox:lite<span class="w"> </span>--restart<span class="o">=</span>Never
-
-<span class="c1"># JSON processing</span>
-curl<span class="w"> </span>-s<span class="w"> </span>https://api.github.com/users/octocat<span class="w"> </span><span class="p">|</span><span class="w"> </span>jq<span class="w"> </span><span class="s1">&#39;.name&#39;</span>
-kubectl<span class="w"> </span>get<span class="w"> </span>pods<span class="w"> </span>-o<span class="w"> </span>json<span class="w"> </span><span class="p">|</span><span class="w"> </span>jq<span class="w"> </span><span class="s1">&#39;.items[].metadata.name&#39;</span>
-<span class="nb">echo</span><span class="w"> </span><span class="s1">&#39;{&quot;name&quot;:&quot;test&quot;}&#39;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>jq<span class="w"> </span><span class="s1">&#39;.name&#39;</span>
-
-<span class="c1"># YAML processing</span>
-kubectl<span class="w"> </span>get<span class="w"> </span>pod<span class="w"> </span>my-pod<span class="w"> </span>-o<span class="w"> </span>yaml<span class="w"> </span><span class="p">|</span><span class="w"> </span>yq<span class="w"> </span><span class="s1">&#39;.spec.containers[].image&#39;</span>
-cat<span class="w"> </span>config.yaml<span class="w"> </span><span class="p">|</span><span class="w"> </span>yq<span class="w"> </span><span class="s1">&#39;.database.host&#39;</span>
-</code></pre></div>
+<div class="highlight"><pre><span></span><code><span id="__span-20-1">kubectl<span class="w"> </span>run<span class="w"> </span>data-debug<span class="w"> </span>--rm<span class="w"> </span>-it<span class="w"> </span>--image<span class="o">=</span>ghcr.io/ibtisam-iq/debugbox:lite<span class="w"> </span>--restart<span class="o">=</span>Never
+</span><span id="__span-20-2">
+</span><span id="__span-20-3"><span class="c1"># JSON processing</span>
+</span><span id="__span-20-4">curl<span class="w"> </span>-s<span class="w"> </span>https://api.github.com/users/octocat<span class="w"> </span><span class="p">|</span><span class="w"> </span>jq<span class="w"> </span><span class="s1">&#39;.name&#39;</span>
+</span><span id="__span-20-5">kubectl<span class="w"> </span>get<span class="w"> </span>pods<span class="w"> </span>-o<span class="w"> </span>json<span class="w"> </span><span class="p">|</span><span class="w"> </span>jq<span class="w"> </span><span class="s1">&#39;.items[].metadata.name&#39;</span>
+</span><span id="__span-20-6"><span class="nb">echo</span><span class="w"> </span><span class="s1">&#39;{&quot;name&quot;:&quot;test&quot;}&#39;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>jq<span class="w"> </span><span class="s1">&#39;.name&#39;</span>
+</span><span id="__span-20-7">
+</span><span id="__span-20-8"><span class="c1"># YAML processing</span>
+</span><span id="__span-20-9">kubectl<span class="w"> </span>get<span class="w"> </span>pod<span class="w"> </span>my-pod<span class="w"> </span>-o<span class="w"> </span>yaml<span class="w"> </span><span class="p">|</span><span class="w"> </span>yq<span class="w"> </span><span class="s1">&#39;.spec.containers[].image&#39;</span>
+</span><span id="__span-20-10">cat<span class="w"> </span>config.yaml<span class="w"> </span><span class="p">|</span><span class="w"> </span>yq<span class="w"> </span><span class="s1">&#39;.database.host&#39;</span>
+</span></code></pre></div>
 <hr />
 <h2 id="file-operations">File Operations<a class="headerlink" href="#file-operations" title="Permanent link">&para;</a></h2>
 <p><strong>Tools:</strong> <code>file</code>, <code>tar</code>, <code>gzip</code>, <code>vim</code>, <code>nano</code>, <code>less</code></p>
-<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>debug<span class="w"> </span>my-app<span class="w"> </span>-it<span class="w"> </span>--image<span class="o">=</span>ghcr.io/ibtisam-iq/debugbox
-
-<span class="c1"># Identify file type</span>
-file<span class="w"> </span>/tmp/unknown-file
-file<span class="w"> </span>-i<span class="w"> </span>/tmp/binary<span class="w">  </span><span class="c1"># MIME type</span>
-
-<span class="c1"># Archive operations</span>
-tar<span class="w"> </span>-czf<span class="w"> </span>backup.tar.gz<span class="w"> </span>/app/logs/
-tar<span class="w"> </span>-xzf<span class="w"> </span>backup.tar.gz
-tar<span class="w"> </span>-tzf<span class="w"> </span>backup.tar.gz<span class="w">  </span><span class="c1"># List contents</span>
-gzip<span class="w"> </span>large-file.log
-gunzip<span class="w"> </span>large-file.log.gz
-
-<span class="c1"># View compressed files</span>
-zcat<span class="w"> </span>file.gz<span class="w"> </span><span class="p">|</span><span class="w"> </span>less
-zgrep<span class="w"> </span><span class="s2">&quot;error&quot;</span><span class="w"> </span>file.gz
-
-<span class="c1"># Edit files</span>
-vim<span class="w"> </span>/etc/config.yaml
-nano<span class="w"> </span>/etc/config.yaml<span class="w">  </span><span class="c1"># Power variant, easier for beginners</span>
-
-<span class="c1"># Page through output</span>
-ps<span class="w"> </span>aux<span class="w"> </span><span class="p">|</span><span class="w"> </span>less
-kubectl<span class="w"> </span>logs<span class="w"> </span>my-pod<span class="w"> </span><span class="p">|</span><span class="w"> </span>less
-</code></pre></div>
+<div class="highlight"><pre><span></span><code><span id="__span-21-1">kubectl<span class="w"> </span>debug<span class="w"> </span>my-app<span class="w"> </span>-it<span class="w"> </span>--image<span class="o">=</span>ghcr.io/ibtisam-iq/debugbox
+</span><span id="__span-21-2">
+</span><span id="__span-21-3"><span class="c1"># Identify file type</span>
+</span><span id="__span-21-4">file<span class="w"> </span>/tmp/unknown-file
+</span><span id="__span-21-5">file<span class="w"> </span>-i<span class="w"> </span>/tmp/binary<span class="w">     </span><span class="c1"># MIME type</span>
+</span><span id="__span-21-6">
+</span><span id="__span-21-7"><span class="c1"># Archive operations</span>
+</span><span id="__span-21-8">tar<span class="w"> </span>-czf<span class="w"> </span>backup.tar.gz<span class="w"> </span>/app/logs/
+</span><span id="__span-21-9">tar<span class="w"> </span>-xzf<span class="w"> </span>backup.tar.gz
+</span><span id="__span-21-10">tar<span class="w"> </span>-tzf<span class="w"> </span>backup.tar.gz<span class="w">  </span><span class="c1"># List contents</span>
+</span><span id="__span-21-11">gzip<span class="w"> </span>large-file.log
+</span><span id="__span-21-12">gunzip<span class="w"> </span>large-file.log.gz
+</span><span id="__span-21-13">
+</span><span id="__span-21-14"><span class="c1"># View compressed files</span>
+</span><span id="__span-21-15">zcat<span class="w"> </span>file.gz<span class="w"> </span><span class="p">|</span><span class="w"> </span>less
+</span><span id="__span-21-16">zgrep<span class="w"> </span><span class="s2">&quot;error&quot;</span><span class="w"> </span>file.gz
+</span><span id="__span-21-17">
+</span><span id="__span-21-18"><span class="c1"># Edit files</span>
+</span><span id="__span-21-19">vim<span class="w"> </span>/etc/config.yaml
+</span><span id="__span-21-20">nano<span class="w"> </span>/etc/config.yaml<span class="w">   </span><span class="c1"># Power variant, easier for beginners</span>
+</span><span id="__span-21-21">
+</span><span id="__span-21-22"><span class="c1"># Page through output</span>
+</span><span id="__span-21-23">ps<span class="w"> </span>aux<span class="w"> </span><span class="p">|</span><span class="w"> </span>less
+</span><span id="__span-21-24">kubectl<span class="w"> </span>logs<span class="w"> </span>my-pod<span class="w"> </span><span class="p">|</span><span class="w"> </span>less
+</span></code></pre></div>
 <hr />
 <h2 id="version-control">Version Control<a class="headerlink" href="#version-control" title="Permanent link">&para;</a></h2>
 <p><strong>Tools:</strong> <code>git</code></p>
-<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>run<span class="w"> </span>git-debug<span class="w"> </span>--rm<span class="w"> </span>-it<span class="w"> </span>--image<span class="o">=</span>ghcr.io/ibtisam-iq/debugbox<span class="w"> </span>--restart<span class="o">=</span>Never
-
-<span class="c1"># Clone repository for configs</span>
-git<span class="w"> </span>clone<span class="w"> </span>https://github.com/example/configs.git
-<span class="nb">cd</span><span class="w"> </span>configs
-
-<span class="c1"># Check configuration</span>
-git<span class="w"> </span>log<span class="w"> </span>--oneline
-git<span class="w"> </span>show<span class="w"> </span>HEAD
-
-<span class="c1"># Fetch specific file from repo</span>
-git<span class="w"> </span>archive<span class="w"> </span>--remote<span class="o">=</span>https://github.com/example/repo<span class="w"> </span>HEAD:path/to/dir<span class="w"> </span>file.yaml<span class="w"> </span><span class="p">|</span><span class="w"> </span>tar<span class="w"> </span>-x
-</code></pre></div>
+<div class="highlight"><pre><span></span><code><span id="__span-22-1">kubectl<span class="w"> </span>run<span class="w"> </span>git-debug<span class="w"> </span>--rm<span class="w"> </span>-it<span class="w"> </span>--image<span class="o">=</span>ghcr.io/ibtisam-iq/debugbox<span class="w"> </span>--restart<span class="o">=</span>Never
+</span><span id="__span-22-2">
+</span><span id="__span-22-3"><span class="c1"># Clone repository for configs</span>
+</span><span id="__span-22-4">git<span class="w"> </span>clone<span class="w"> </span>https://github.com/example/configs.git
+</span><span id="__span-22-5"><span class="nb">cd</span><span class="w"> </span>configs
+</span><span id="__span-22-6">
+</span><span id="__span-22-7"><span class="c1"># Check configuration</span>
+</span><span id="__span-22-8">git<span class="w"> </span>log<span class="w"> </span>--oneline
+</span><span id="__span-22-9">git<span class="w"> </span>show<span class="w"> </span>HEAD
+</span><span id="__span-22-10">
+</span><span id="__span-22-11"><span class="c1"># Fetch specific file from repo</span>
+</span><span id="__span-22-12">git<span class="w"> </span>archive<span class="w"> </span>--remote<span class="o">=</span>https://github.com/example/repo<span class="w"> </span>HEAD:path/to/dir<span class="w"> </span>file.yaml<span class="w"> </span><span class="p">|</span><span class="w"> </span>tar<span class="w"> </span>-x
+</span></code></pre></div>
 <hr />
 <h2 id="python-scripting">Python Scripting<a class="headerlink" href="#python-scripting" title="Permanent link">&para;</a></h2>
 <p><strong>Tools:</strong> <code>pip3</code> / <code>python3</code> (power)</p>
-<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>run<span class="w"> </span>python-debug<span class="w"> </span>--rm<span class="w"> </span>-it<span class="w"> </span>--image<span class="o">=</span>ghcr.io/ibtisam-iq/debugbox:power<span class="w"> </span>--restart<span class="o">=</span>Never
-
-<span class="c1"># Install packages</span>
-pip3<span class="w"> </span>install<span class="w"> </span>requests<span class="w"> </span>netaddr<span class="w"> </span>scapy
-
-<span class="c1"># Quick Python debugging</span>
-python3<span class="w"> </span>-c<span class="w"> </span><span class="s2">&quot;import socket; print(socket.gethostbyname(&#39;example.com&#39;))&quot;</span>
-python3<span class="w"> </span>-c<span class="w"> </span><span class="s2">&quot;import requests; print(requests.get(&#39;http://example.com&#39;).status_code)&quot;</span>
-
-<span class="c1"># Interactive Python</span>
-python3
-&gt;&gt;&gt;<span class="w"> </span>import<span class="w"> </span>netaddr
-&gt;&gt;&gt;<span class="w"> </span><span class="nv">ip</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>netaddr.IPNetwork<span class="o">(</span><span class="s1">&#39;10.0.0.0/24&#39;</span><span class="o">)</span>
-&gt;&gt;&gt;<span class="w"> </span>list<span class="o">(</span>ip<span class="o">)[</span>:5<span class="o">]</span>
-</code></pre></div>
+<div class="highlight"><pre><span></span><code><span id="__span-23-1">kubectl<span class="w"> </span>run<span class="w"> </span>python-debug<span class="w"> </span>--rm<span class="w"> </span>-it<span class="w"> </span>--image<span class="o">=</span>ghcr.io/ibtisam-iq/debugbox:power<span class="w"> </span>--restart<span class="o">=</span>Never
+</span><span id="__span-23-2">
+</span><span id="__span-23-3"><span class="c1"># Install packages</span>
+</span><span id="__span-23-4">pip3<span class="w"> </span>install<span class="w"> </span>requests<span class="w"> </span>netaddr<span class="w"> </span>scapy
+</span><span id="__span-23-5">
+</span><span id="__span-23-6"><span class="c1"># Quick Python debugging</span>
+</span><span id="__span-23-7">python3<span class="w"> </span>-c<span class="w"> </span><span class="s2">&quot;import socket; print(socket.gethostbyname(&#39;example.com&#39;))&quot;</span>
+</span><span id="__span-23-8">python3<span class="w"> </span>-c<span class="w"> </span><span class="s2">&quot;import requests; print(requests.get(&#39;http://example.com&#39;).status_code)&quot;</span>
+</span><span id="__span-23-9">
+</span><span id="__span-23-10"><span class="c1"># Interactive Python</span>
+</span><span id="__span-23-11">python3
+</span><span id="__span-23-12">&gt;&gt;&gt;<span class="w"> </span>import<span class="w"> </span>netaddr
+</span><span id="__span-23-13">&gt;&gt;&gt;<span class="w"> </span><span class="nv">ip</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>netaddr.IPNetwork<span class="o">(</span><span class="s1">&#39;10.0.0.0/24&#39;</span><span class="o">)</span>
+</span><span id="__span-23-14">&gt;&gt;&gt;<span class="w"> </span>list<span class="o">(</span>ip<span class="o">)[</span>:5<span class="o">]</span>
+</span></code></pre></div>
 <hr />
 <h2 id="helper-functions-shell">Helper Functions (Shell)<a class="headerlink" href="#helper-functions-shell" title="Permanent link">&para;</a></h2>
 <p><strong>Built-in helpers</strong> (balanced &amp; power variants)</p>
-<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>run<span class="w"> </span>helper-demo<span class="w"> </span>--rm<span class="w"> </span>-it<span class="w"> </span>--image<span class="o">=</span>ghcr.io/ibtisam-iq/debugbox<span class="w"> </span>--restart<span class="o">=</span>Never
-
-<span class="c1"># List listening ports</span>
-ports
-
-<span class="c1"># Show active connections</span>
-connections
-
-<span class="c1"># Display routing table</span>
-routes
-
-<span class="c1"># Kubernetes context info (if kubeconfig available)</span>
-k8s-info
-
-<span class="c1"># Pretty-print JSON</span>
-<span class="nb">echo</span><span class="w"> </span><span class="s1">&#39;{&quot;test&quot;:&quot;value&quot;}&#39;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>json
-
-<span class="c1"># Pretty-print YAML</span>
-kubectl<span class="w"> </span>get<span class="w"> </span>pod<span class="w"> </span>my-pod<span class="w"> </span>-o<span class="w"> </span>yaml<span class="w"> </span><span class="p">|</span><span class="w"> </span>yaml
-</code></pre></div>
+<div class="highlight"><pre><span></span><code><span id="__span-24-1">kubectl<span class="w"> </span>run<span class="w"> </span>helper-demo<span class="w"> </span>--rm<span class="w"> </span>-it<span class="w"> </span>--image<span class="o">=</span>ghcr.io/ibtisam-iq/debugbox<span class="w"> </span>--restart<span class="o">=</span>Never
+</span><span id="__span-24-2">
+</span><span id="__span-24-3"><span class="c1"># List listening ports</span>
+</span><span id="__span-24-4">ports
+</span><span id="__span-24-5">
+</span><span id="__span-24-6"><span class="c1"># Show active connections</span>
+</span><span id="__span-24-7">connections
+</span><span id="__span-24-8">
+</span><span id="__span-24-9"><span class="c1"># Display routing table</span>
+</span><span id="__span-24-10">routes
+</span><span id="__span-24-11">
+</span><span id="__span-24-12"><span class="c1"># Kubernetes context info (if kubeconfig available)</span>
+</span><span id="__span-24-13">k8s-info
+</span><span id="__span-24-14">
+</span><span id="__span-24-15"><span class="c1"># Pretty-print JSON</span>
+</span><span id="__span-24-16"><span class="nb">echo</span><span class="w"> </span><span class="s1">&#39;{&quot;test&quot;:&quot;value&quot;}&#39;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>json
+</span><span id="__span-24-17">
+</span><span id="__span-24-18"><span class="c1"># Pretty-print YAML</span>
+</span><span id="__span-24-19">kubectl<span class="w"> </span>get<span class="w"> </span>pod<span class="w"> </span>my-pod<span class="w"> </span>-o<span class="w"> </span>yaml<span class="w"> </span><span class="p">|</span><span class="w"> </span>yaml
+</span></code></pre></div>
 <p><strong>Power-only helpers</strong> (require NET_RAW/NET_ADMIN):
-<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>-it<span class="w"> </span>debug-power<span class="w"> </span>--<span class="w"> </span>bash
-
-<span class="c1"># Quick packet capture</span>
-sniff<span class="w"> </span>tcp<span class="w"> </span>port<span class="w"> </span><span class="m">443</span>
-
-<span class="c1"># Capture HTTP traffic</span>
-sniff-http
-
-<span class="c1"># Capture DNS queries</span>
-sniff-dns
-
-<span class="c1"># Monitor connections</span>
-conntrack-watch
-
-<span class="c1"># Check TLS certificate</span>
-cert-check<span class="w"> </span>example.com
-</code></pre></div></p>
+<div class="highlight"><pre><span></span><code><span id="__span-25-1">kubectl<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>-it<span class="w"> </span>debug-power<span class="w"> </span>--<span class="w"> </span>bash
+</span><span id="__span-25-2">
+</span><span id="__span-25-3"><span class="c1"># Quick packet capture</span>
+</span><span id="__span-25-4">sniff<span class="w"> </span>tcp<span class="w"> </span>port<span class="w"> </span><span class="m">443</span>
+</span><span id="__span-25-5">
+</span><span id="__span-25-6"><span class="c1"># Capture HTTP traffic</span>
+</span><span id="__span-25-7">sniff-http
+</span><span id="__span-25-8">
+</span><span id="__span-25-9"><span class="c1"># Capture DNS queries</span>
+</span><span id="__span-25-10">sniff-dns
+</span><span id="__span-25-11">
+</span><span id="__span-25-12"><span class="c1"># Monitor connections</span>
+</span><span id="__span-25-13">conntrack-watch
+</span><span id="__span-25-14">
+</span><span id="__span-25-15"><span class="c1"># Check TLS certificate</span>
+</span><span id="__span-25-16">cert-check<span class="w"> </span>example.com
+</span></code></pre></div></p>
 <hr />
 <h2 id="configmapsecret-inspection">ConfigMap/Secret Inspection<a class="headerlink" href="#configmapsecret-inspection" title="Permanent link">&para;</a></h2>
 <p><strong>Combining local kubectl with DebugBox tools:</strong></p>
 <p>DebugBox doesn't include kubectl, but you can pipe from your local machine:</p>
-<div class="highlight"><pre><span></span><code><span class="c1"># Process ConfigMap with jq</span>
-kubectl<span class="w"> </span>get<span class="w"> </span>cm<span class="w"> </span>my-config<span class="w"> </span>-o<span class="w"> </span>json<span class="w"> </span><span class="p">|</span><span class="w"> </span>kubectl<span class="w"> </span>run<span class="w"> </span>jq-tool<span class="w"> </span>--rm<span class="w"> </span>-i<span class="w"> </span>--image<span class="o">=</span>ghcr.io/ibtisam-iq/debugbox:lite<span class="w"> </span>--restart<span class="o">=</span>Never<span class="w"> </span>--<span class="w"> </span>jq<span class="w"> </span><span class="s1">&#39;.data&#39;</span>
-
-<span class="c1"># Decode and inspect secret certificate</span>
-kubectl<span class="w"> </span>get<span class="w"> </span>secret<span class="w"> </span>my-tls<span class="w"> </span>-o<span class="w"> </span><span class="nv">jsonpath</span><span class="o">=</span><span class="s1">&#39;{.data.tls\.crt}&#39;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>base64<span class="w"> </span>-d<span class="w"> </span><span class="p">|</span><span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>kubectl<span class="w"> </span>run<span class="w"> </span>cert-tool<span class="w"> </span>--rm<span class="w"> </span>-i<span class="w"> </span>--image<span class="o">=</span>ghcr.io/ibtisam-iq/debugbox:power<span class="w"> </span>--restart<span class="o">=</span>Never<span class="w"> </span>--<span class="w"> </span>openssl<span class="w"> </span>x509<span class="w"> </span>-text<span class="w"> </span>-noout
-</code></pre></div>
+<div class="highlight"><pre><span></span><code><span id="__span-26-1"><span class="c1"># Process ConfigMap with jq</span>
+</span><span id="__span-26-2">kubectl<span class="w"> </span>get<span class="w"> </span>cm<span class="w"> </span>my-config<span class="w"> </span>-o<span class="w"> </span>json<span class="w"> </span><span class="p">|</span><span class="w"> </span>kubectl<span class="w"> </span>run<span class="w"> </span>jq-tool<span class="w"> </span>--rm<span class="w"> </span>-i<span class="w"> </span>--image<span class="o">=</span>ghcr.io/ibtisam-iq/debugbox:lite<span class="w"> </span>--restart<span class="o">=</span>Never<span class="w"> </span>--<span class="w"> </span>jq<span class="w"> </span><span class="s1">&#39;.data&#39;</span>
+</span><span id="__span-26-3">
+</span><span id="__span-26-4"><span class="c1"># Decode and inspect secret certificate</span>
+</span><span id="__span-26-5">kubectl<span class="w"> </span>get<span class="w"> </span>secret<span class="w"> </span>my-tls<span class="w"> </span>-o<span class="w"> </span><span class="nv">jsonpath</span><span class="o">=</span><span class="s1">&#39;{.data.tls\.crt}&#39;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>base64<span class="w"> </span>-d<span class="w"> </span><span class="p">|</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-26-6"><span class="w">  </span>kubectl<span class="w"> </span>run<span class="w"> </span>cert-tool<span class="w"> </span>--rm<span class="w"> </span>-i<span class="w"> </span>--image<span class="o">=</span>ghcr.io/ibtisam-iq/debugbox:power<span class="w"> </span>--restart<span class="o">=</span>Never<span class="w"> </span>--<span class="w"> </span>openssl<span class="w"> </span>x509<span class="w"> </span>-text<span class="w"> </span>-noout
+</span></code></pre></div>
 <hr />
 <h2 id="complete-tool-coverage-summary">Complete Tool Coverage Summary<a class="headerlink" href="#complete-tool-coverage-summary" title="Permanent link">&para;</a></h2>
 <h3 id="variant-lite-14-mb">Variant: <strong>Lite</strong> (~14 MB)<a class="headerlink" href="#variant-lite-14-mb" title="Permanent link">&para;</a></h3>
@@ -2601,7 +2601,7 @@ kubectl<span class="w"> </span>get<span class="w"> </span>secret<span class="w">
 <li>🔴 <strong>Firewall/routing:</strong> NET_ADMIN required</li>
 </ul>
 <hr />
-<p>→ <strong><a href="../../usage/kubernetes/">Kubernetes Usage</a></strong> | <strong><a href="../../usage/docker/">Docker Usage</a></strong> | <strong><a href="../troubleshooting/">Troubleshooting</a></strong> | <strong><a href="../../variants/overview/">Variants</a></strong></p>
+<p>→ <strong><a href="../../usage/kubernetes/">Kubernetes usage</a></strong> | <strong><a href="../../usage/docker/">Docker usage</a></strong> | <strong><a href="../troubleshooting/">Troubleshooting</a></strong> | <strong><a href="../../variants/overview/">Variants overview</a></strong></p>
 
 
 
@@ -2622,7 +2622,7 @@ kubectl<span class="w"> </span>get<span class="w"> </span>secret<span class="w">
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-custom" title="February 4, 2026 08:41:21 PKT">February 04, 2026 08:41:21 AM</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-custom" title="February 6, 2026 11:15:25 PKT">February 06, 2026 11:15:25 AM</span>
   </span>
 
     

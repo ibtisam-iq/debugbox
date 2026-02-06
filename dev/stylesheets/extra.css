@@ -25,9 +25,9 @@
 /* Improve table readability */
 .md-typeset table:not([class]) th,
 .md-typeset table:not([class]) td {
-  font-size: 0.875rem;     /* Match body text size */
-  font-weight: 400;        /* Regular weight for consistency */
-  padding: 0.5rem 0.75rem; /* Tighter rows */
+  font-size: 0.875rem;
+  font-weight: 400;
+  padding: 0.5rem 0.75rem;
   vertical-align: top;
 }
 
@@ -60,11 +60,25 @@
   color: var(--md-default-fg-color);
 }
 
-/* Optional: Style the entire date line */
+/* Style the entire date line */
 .md-source-file__fact {
   display: flex;
   align-items: center;
   gap: 0.25rem;
   font-size: 0.875rem;
   color: var(--md-default-fg-color--light);
+}
+
+/* Force word wrapping / breaking in code blocks */
+.md-typeset pre,
+.md-typeset code {
+  white-space: pre-wrap !important;       /* allow wrapping */
+  word-break: break-word !important;      /* break long words */
+  overflow-wrap: break-word !important;   /* modern equivalent / fallback */
+}
+
+/* Better look – prevent breaking in middle of words when possible */
+.md-typeset pre code {
+  word-break: normal;                     /* try to break at hyphens/spaces first */
+  overflow-wrap: anywhere;                /* break anywhere if needed */
 }

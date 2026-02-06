@@ -1442,14 +1442,14 @@
 <h1 id="quick-start">Quick Start<a class="headerlink" href="#quick-start" title="Permanent link">&para;</a></h1>
 <p>Get debugging in seconds.</p>
 <h2 id="debug-a-running-pod-most-common">Debug a Running Pod (Most Common)<a class="headerlink" href="#debug-a-running-pod-most-common" title="Permanent link">&para;</a></h2>
-<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>debug<span class="w"> </span>my-pod<span class="w"> </span>-it<span class="w"> </span>--image<span class="o">=</span>ghcr.io/ibtisam-iq/debugbox
-</code></pre></div>
+<div class="highlight"><pre><span></span><code><span id="__span-0-1">kubectl<span class="w"> </span>debug<span class="w"> </span>my-pod<span class="w"> </span>-it<span class="w"> </span>--image<span class="o">=</span>ghcr.io/ibtisam-iq/debugbox
+</span></code></pre></div>
 <p>Attaches an ephemeral debugging container with the same network/process namespace as your pod.</p>
 <h2 id="standalone-debugging-session">Standalone Debugging Session<a class="headerlink" href="#standalone-debugging-session" title="Permanent link">&para;</a></h2>
-<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>run<span class="w"> </span>debug<span class="w"> </span>--rm<span class="w"> </span>-it<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--image<span class="o">=</span>ghcr.io/ibtisam-iq/debugbox<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--restart<span class="o">=</span>Never
-</code></pre></div>
+<div class="highlight"><pre><span></span><code><span id="__span-1-1">kubectl<span class="w"> </span>run<span class="w"> </span>debug<span class="w"> </span>--rm<span class="w"> </span>-it<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-1-2"><span class="w">  </span>--image<span class="o">=</span>ghcr.io/ibtisam-iq/debugbox<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-1-3"><span class="w">  </span>--restart<span class="o">=</span>Never
+</span></code></pre></div>
 <h2 id="choose-the-right-variant">Choose the Right Variant<a class="headerlink" href="#choose-the-right-variant" title="Permanent link">&para;</a></h2>
 <table>
 <thead>
@@ -1482,20 +1482,20 @@
 <p>Once inside the container, you have access to comprehensive debugging tools:</p>
 <p>→ <strong><a href="../../guides/examples/">Complete tool list with examples</a></strong></p>
 <p><strong>Quick examples:</strong>
-<div class="highlight"><pre><span></span><code><span class="c1"># Network testing</span>
-curl<span class="w"> </span>-I<span class="w"> </span>https://ibtisam-iq.com
-dig<span class="w"> </span>kubernetes.default.svc.cluster.local
-
-<span class="c1"># Process inspection</span>
-ps<span class="w"> </span>aux
-htop
-
-<span class="c1"># Network monitoring</span>
-tcpdump<span class="w"> </span>-i<span class="w"> </span>eth0<span class="w"> </span>port<span class="w"> </span><span class="m">443</span><span class="w"> </span>-c<span class="w"> </span><span class="m">5</span>
-
-<span class="c1"># File editing</span>
-vim<span class="w"> </span>/tmp/debug.log
-</code></pre></div></p>
+<div class="highlight"><pre><span></span><code><span id="__span-2-1"><span class="c1"># Network testing</span>
+</span><span id="__span-2-2">curl<span class="w"> </span>-I<span class="w"> </span>https://ibtisam-iq.com
+</span><span id="__span-2-3">dig<span class="w"> </span>kubernetes.default.svc.cluster.local
+</span><span id="__span-2-4">
+</span><span id="__span-2-5"><span class="c1"># Process inspection</span>
+</span><span id="__span-2-6">ps<span class="w"> </span>aux
+</span><span id="__span-2-7">htop
+</span><span id="__span-2-8">
+</span><span id="__span-2-9"><span class="c1"># Network monitoring</span>
+</span><span id="__span-2-10">tcpdump<span class="w"> </span>-i<span class="w"> </span>eth0<span class="w"> </span>port<span class="w"> </span><span class="m">443</span><span class="w"> </span>-c<span class="w"> </span><span class="m">5</span>
+</span><span id="__span-2-11">
+</span><span id="__span-2-12"><span class="c1"># File editing</span>
+</span><span id="__span-2-13">vim<span class="w"> </span>/tmp/debug.log
+</span></code></pre></div></p>
 <h2 id="next-steps">Next Steps<a class="headerlink" href="#next-steps" title="Permanent link">&para;</a></h2>
 <p>→ <strong><a href="../installation/">Installation details</a></strong> | <strong><a href="../../variants/overview/">Full variant comparison</a></strong> | <strong><a href="../../guides/examples/">Real-world examples</a></strong></p>
 

@@ -1570,49 +1570,49 @@
 </ul>
 <h2 id="automatic-selection">Automatic Selection<a class="headerlink" href="#automatic-selection" title="Permanent link">&para;</a></h2>
 <p>Docker, containerd, and Kubernetes automatically pull the correct architecture for your platform — no manual configuration needed.</p>
-<div class="highlight"><pre><span></span><code><span class="c1"># Works seamlessly on both amd64 and arm64</span>
-docker<span class="w"> </span>pull<span class="w"> </span>ghcr.io/ibtisam-iq/debugbox:1.0.0
-kubectl<span class="w"> </span>debug<span class="w"> </span>my-pod<span class="w"> </span>-it<span class="w"> </span>--image<span class="o">=</span>ghcr.io/ibtisam-iq/debugbox:1.0.0
-</code></pre></div>
+<div class="highlight"><pre><span></span><code><span id="__span-0-1"><span class="c1"># Works seamlessly on both amd64 and arm64</span>
+</span><span id="__span-0-2">docker<span class="w"> </span>pull<span class="w"> </span>ghcr.io/ibtisam-iq/debugbox:1.0.0
+</span><span id="__span-0-3">kubectl<span class="w"> </span>debug<span class="w"> </span>my-pod<span class="w"> </span>-it<span class="w"> </span>--image<span class="o">=</span>ghcr.io/ibtisam-iq/debugbox:1.0.0
+</span></code></pre></div>
 <p>The registry returns the correct image for your CPU architecture automatically.</p>
 <h2 id="explicit-platform-rare">Explicit Platform (Rare)<a class="headerlink" href="#explicit-platform-rare" title="Permanent link">&para;</a></h2>
 <p>To explicitly request a specific architecture (for testing or compatibility):</p>
-<div class="highlight"><pre><span></span><code><span class="c1"># Force arm64 on an amd64 machine</span>
-docker<span class="w"> </span>pull<span class="w"> </span>--platform<span class="w"> </span>linux/arm64<span class="w"> </span>ghcr.io/ibtisam-iq/debugbox:1.0.0
-
-<span class="c1"># Run with specific platform</span>
-docker<span class="w"> </span>run<span class="w"> </span>--platform<span class="w"> </span>linux/arm64<span class="w"> </span>ghcr.io/ibtisam-iq/debugbox:1.0.0
-</code></pre></div>
+<div class="highlight"><pre><span></span><code><span id="__span-1-1"><span class="c1"># Force arm64 on an amd64 machine</span>
+</span><span id="__span-1-2">docker<span class="w"> </span>pull<span class="w"> </span>--platform<span class="w"> </span>linux/arm64<span class="w"> </span>ghcr.io/ibtisam-iq/debugbox:1.0.0
+</span><span id="__span-1-3">
+</span><span id="__span-1-4"><span class="c1"># Run with specific platform</span>
+</span><span id="__span-1-5">docker<span class="w"> </span>run<span class="w"> </span>--platform<span class="w"> </span>linux/arm64<span class="w"> </span>ghcr.io/ibtisam-iq/debugbox:1.0.0
+</span></code></pre></div>
 <h2 id="verify-inside-container">Verify Inside Container<a class="headerlink" href="#verify-inside-container" title="Permanent link">&para;</a></h2>
 <p>Check which architecture you're running:</p>
-<div class="highlight"><pre><span></span><code><span class="c1"># Command 1: Check CPU arch</span>
-uname<span class="w"> </span>-m
-<span class="c1"># Output: x86_64 → amd64</span>
-<span class="c1"># Output: aarch64 → arm64</span>
-
-<span class="c1"># Command 2: Check full uname info</span>
-uname<span class="w"> </span>-a
-
-<span class="c1"># Command 3: View CPU info</span>
-cat<span class="w"> </span>/proc/cpuinfo<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>processor
-</code></pre></div>
+<div class="highlight"><pre><span></span><code><span id="__span-2-1"><span class="c1"># Command 1: Check CPU arch</span>
+</span><span id="__span-2-2">uname<span class="w"> </span>-m
+</span><span id="__span-2-3"><span class="c1"># Output: x86_64 → amd64</span>
+</span><span id="__span-2-4"><span class="c1"># Output: aarch64 → arm64</span>
+</span><span id="__span-2-5">
+</span><span id="__span-2-6"><span class="c1"># Command 2: Check full uname info</span>
+</span><span id="__span-2-7">uname<span class="w"> </span>-a
+</span><span id="__span-2-8">
+</span><span id="__span-2-9"><span class="c1"># Command 3: View CPU info</span>
+</span><span id="__span-2-10">cat<span class="w"> </span>/proc/cpuinfo<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>processor
+</span></code></pre></div>
 <h2 id="real-world-examples">Real-World Examples<a class="headerlink" href="#real-world-examples" title="Permanent link">&para;</a></h2>
 <h3 id="apple-silicon-m1m5">Apple Silicon (M1–M5)<a class="headerlink" href="#apple-silicon-m1m5" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code>docker<span class="w"> </span>run<span class="w"> </span>-it<span class="w"> </span>ghcr.io/ibtisam-iq/debugbox:1.0.0
-<span class="c1"># Automatically pulls linux/arm64</span>
-</code></pre></div>
+<div class="highlight"><pre><span></span><code><span id="__span-3-1">docker<span class="w"> </span>run<span class="w"> </span>-it<span class="w"> </span>ghcr.io/ibtisam-iq/debugbox:1.0.0
+</span><span id="__span-3-2"><span class="c1"># Automatically pulls linux/arm64</span>
+</span></code></pre></div>
 <h3 id="aws-graviton-ec2-instance">AWS Graviton EC2 Instance<a class="headerlink" href="#aws-graviton-ec2-instance" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>debug<span class="w"> </span>my-pod<span class="w"> </span>-it<span class="w"> </span>--image<span class="o">=</span>ghcr.io/ibtisam-iq/debugbox:1.0.0
-<span class="c1"># Automatically pulls linux/arm64</span>
-</code></pre></div>
+<div class="highlight"><pre><span></span><code><span id="__span-4-1">kubectl<span class="w"> </span>debug<span class="w"> </span>my-pod<span class="w"> </span>-it<span class="w"> </span>--image<span class="o">=</span>ghcr.io/ibtisam-iq/debugbox:1.0.0
+</span><span id="__span-4-2"><span class="c1"># Automatically pulls linux/arm64</span>
+</span></code></pre></div>
 <h3 id="traditional-intelamd-server">Traditional Intel/AMD Server<a class="headerlink" href="#traditional-intelamd-server" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code>docker<span class="w"> </span>pull<span class="w"> </span>ghcr.io/ibtisam-iq/debugbox:1.0.0
-<span class="c1"># Automatically pulls linux/amd64</span>
-</code></pre></div>
+<div class="highlight"><pre><span></span><code><span id="__span-5-1">docker<span class="w"> </span>pull<span class="w"> </span>ghcr.io/ibtisam-iq/debugbox:1.0.0
+</span><span id="__span-5-2"><span class="c1"># Automatically pulls linux/amd64</span>
+</span></code></pre></div>
 <h3 id="raspberry-pi-64-bit">Raspberry Pi 64-bit<a class="headerlink" href="#raspberry-pi-64-bit" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code>docker<span class="w"> </span>run<span class="w"> </span>-it<span class="w"> </span>ghcr.io/ibtisam-iq/debugbox:lite:1.0.0
-<span class="c1"># Automatically pulls linux/arm64 (minimal 14 MB pull)</span>
-</code></pre></div>
+<div class="highlight"><pre><span></span><code><span id="__span-6-1">docker<span class="w"> </span>run<span class="w"> </span>-it<span class="w"> </span>ghcr.io/ibtisam-iq/debugbox:lite:1.0.0
+</span><span id="__span-6-2"><span class="c1"># Automatically pulls linux/arm64 (minimal 14 MB pull)</span>
+</span></code></pre></div>
 <h2 id="multi-architecture-build-process">Multi-Architecture Build Process<a class="headerlink" href="#multi-architecture-build-process" title="Permanent link">&para;</a></h2>
 <p>Every DebugBox release builds all three variants for both architectures:</p>
 <table>
