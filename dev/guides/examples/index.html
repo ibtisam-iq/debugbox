@@ -1132,10 +1132,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#advanced-analysis-power-net_raw" class="md-nav__link">
+  <a href="#advanced-analysis-power-net_admin" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Advanced Analysis (Power + NET_RAW)
+        Advanced Analysis (Power + NET_ADMIN)
       
     </span>
   </a>
@@ -1780,10 +1780,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#advanced-analysis-power-net_raw" class="md-nav__link">
+  <a href="#advanced-analysis-power-net_admin" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Advanced Analysis (Power + NET_RAW)
+        Advanced Analysis (Power + NET_ADMIN)
       
     </span>
   </a>
@@ -2206,18 +2206,20 @@
 </span><span id="__span-9-5">tcpdump<span class="w"> </span>-i<span class="w"> </span>eth0<span class="w"> </span>-n<span class="w"> </span><span class="s1">&#39;tcp port 80&#39;</span><span class="w">  </span><span class="c1"># Filter by port</span>
 </span><span id="__span-9-6">tcpdump<span class="w"> </span>-i<span class="w"> </span>eth0<span class="w"> </span><span class="s1">&#39;host 10.0.0.1&#39;</span><span class="w">   </span><span class="c1"># Filter by host</span>
 </span></code></pre></div>
-<h3 id="advanced-analysis-power-net_raw">Advanced Analysis (Power + NET_RAW)<a class="headerlink" href="#advanced-analysis-power-net_raw" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code><span id="__span-10-1">kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span>https://raw.githubusercontent.com/ibtisam-iq/debugbox/main/examples/power-debug-pod.yaml
-</span><span id="__span-10-2">kubectl<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>-it<span class="w"> </span>debug-power<span class="w"> </span>--<span class="w"> </span>bash
+<h3 id="advanced-analysis-power-net_admin">Advanced Analysis (Power + NET_ADMIN)<a class="headerlink" href="#advanced-analysis-power-net_admin" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span id="__span-10-1">kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-10-2"><span class="w">  </span>https://raw.githubusercontent.com/ibtisam-iq/debugbox/main/examples/power-debug-pod.yaml
 </span><span id="__span-10-3">
-</span><span id="__span-10-4"><span class="c1"># Live packet analysis with tshark</span>
-</span><span id="__span-10-5">tshark<span class="w"> </span>-i<span class="w"> </span>eth0<span class="w"> </span>-f<span class="w"> </span><span class="s2">&quot;port 443&quot;</span>
-</span><span id="__span-10-6">tshark<span class="w"> </span>-i<span class="w"> </span>eth0<span class="w"> </span>-Y<span class="w"> </span><span class="s2">&quot;http.request&quot;</span>
-</span><span id="__span-10-7">tshark<span class="w"> </span>-r<span class="w"> </span>/tmp/capture.pcap<span class="w"> </span>-Y<span class="w"> </span><span class="s2">&quot;dns&quot;</span>
-</span><span id="__span-10-8">
-</span><span id="__span-10-9"><span class="c1"># Network grep</span>
-</span><span id="__span-10-10">ngrep<span class="w"> </span>-d<span class="w"> </span>any<span class="w"> </span><span class="s2">&quot;GET&quot;</span><span class="w"> </span>tcp<span class="w"> </span>port<span class="w"> </span><span class="m">80</span>
-</span><span id="__span-10-11">ngrep<span class="w"> </span><span class="s2">&quot;mystring&quot;</span><span class="w"> </span>tcp<span class="w"> </span>port<span class="w"> </span><span class="m">443</span>
+</span><span id="__span-10-4">kubectl<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>-it<span class="w"> </span>debug-power<span class="w"> </span>--<span class="w"> </span>bash
+</span><span id="__span-10-5">
+</span><span id="__span-10-6"><span class="c1"># Live packet analysis with tshark</span>
+</span><span id="__span-10-7">tshark<span class="w"> </span>-i<span class="w"> </span>eth0<span class="w"> </span>-f<span class="w"> </span><span class="s2">&quot;port 443&quot;</span>
+</span><span id="__span-10-8">tshark<span class="w"> </span>-i<span class="w"> </span>eth0<span class="w"> </span>-Y<span class="w"> </span><span class="s2">&quot;http.request&quot;</span>
+</span><span id="__span-10-9">tshark<span class="w"> </span>-r<span class="w"> </span>/tmp/capture.pcap<span class="w"> </span>-Y<span class="w"> </span><span class="s2">&quot;dns&quot;</span>
+</span><span id="__span-10-10">
+</span><span id="__span-10-11"><span class="c1"># Network grep</span>
+</span><span id="__span-10-12">ngrep<span class="w"> </span>-d<span class="w"> </span>any<span class="w"> </span><span class="s2">&quot;GET&quot;</span><span class="w"> </span>tcp<span class="w"> </span>port<span class="w"> </span><span class="m">80</span>
+</span><span id="__span-10-13">ngrep<span class="w"> </span><span class="s2">&quot;mystring&quot;</span><span class="w"> </span>tcp<span class="w"> </span>port<span class="w"> </span><span class="m">443</span>
 </span></code></pre></div>
 <hr />
 <h2 id="advanced-tcpudp-tools">Advanced TCP/UDP Tools<a class="headerlink" href="#advanced-tcpudp-tools" title="Permanent link">&para;</a></h2>
@@ -2319,22 +2321,24 @@
 <h2 id="firewall-routing-net_admin-required">Firewall &amp; Routing (NET_ADMIN Required)<a class="headerlink" href="#firewall-routing-net_admin-required" title="Permanent link">&para;</a></h2>
 <p><strong>Tools:</strong> <code>iptables</code>, <code>nft</code> (nftables), <code>conntrack</code></p>
 <div class="highlight"><pre><span></span><code><span id="__span-16-1"><span class="c1"># Apply manifest with NET_ADMIN capability</span>
-</span><span id="__span-16-2">kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span>https://raw.githubusercontent.com/ibtisam-iq/debugbox/main/examples/power-debug-pod.yaml
-</span><span id="__span-16-3">kubectl<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>-it<span class="w"> </span>debug-power<span class="w"> </span>--<span class="w"> </span>bash
+</span><span id="__span-16-2">kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-16-3"><span class="w">  </span>https://raw.githubusercontent.com/ibtisam-iq/debugbox/main/examples/power-debug-pod.yaml
 </span><span id="__span-16-4">
-</span><span id="__span-16-5"><span class="c1"># iptables inspection</span>
-</span><span id="__span-16-6">iptables<span class="w"> </span>-L<span class="w"> </span>-nv
-</span><span id="__span-16-7">iptables<span class="w"> </span>-L<span class="w"> </span>-nv<span class="w"> </span>-t<span class="w"> </span>nat
-</span><span id="__span-16-8">iptables<span class="w"> </span>-L<span class="w"> </span>-nv<span class="w"> </span>-t<span class="w"> </span>mangle
-</span><span id="__span-16-9">
-</span><span id="__span-16-10"><span class="c1"># nftables (modern alternative)</span>
-</span><span id="__span-16-11">nft<span class="w"> </span>list<span class="w"> </span>ruleset
-</span><span id="__span-16-12">nft<span class="w"> </span>list<span class="w"> </span>table<span class="w"> </span>inet<span class="w"> </span>filter
-</span><span id="__span-16-13">
-</span><span id="__span-16-14"><span class="c1"># Connection tracking</span>
-</span><span id="__span-16-15">conntrack<span class="w"> </span>-L
-</span><span id="__span-16-16">conntrack<span class="w"> </span>-L<span class="w"> </span>-p<span class="w"> </span>tcp<span class="w"> </span>--dport<span class="w"> </span><span class="m">443</span>
-</span><span id="__span-16-17">conntrack<span class="w"> </span>-E<span class="w">  </span><span class="c1"># Event monitoring</span>
+</span><span id="__span-16-5">kubectl<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>-it<span class="w"> </span>debug-power<span class="w"> </span>--<span class="w"> </span>bash
+</span><span id="__span-16-6">
+</span><span id="__span-16-7"><span class="c1"># iptables inspection</span>
+</span><span id="__span-16-8">iptables<span class="w"> </span>-L<span class="w"> </span>-nv
+</span><span id="__span-16-9">iptables<span class="w"> </span>-L<span class="w"> </span>-nv<span class="w"> </span>-t<span class="w"> </span>nat
+</span><span id="__span-16-10">iptables<span class="w"> </span>-L<span class="w"> </span>-nv<span class="w"> </span>-t<span class="w"> </span>mangle
+</span><span id="__span-16-11">
+</span><span id="__span-16-12"><span class="c1"># nftables (modern alternative)</span>
+</span><span id="__span-16-13">nft<span class="w"> </span>list<span class="w"> </span>ruleset
+</span><span id="__span-16-14">nft<span class="w"> </span>list<span class="w"> </span>table<span class="w"> </span>inet<span class="w"> </span>filter
+</span><span id="__span-16-15">
+</span><span id="__span-16-16"><span class="c1"># Connection tracking</span>
+</span><span id="__span-16-17">conntrack<span class="w"> </span>-L
+</span><span id="__span-16-18">conntrack<span class="w"> </span>-L<span class="w"> </span>-p<span class="w"> </span>tcp<span class="w"> </span>--dport<span class="w"> </span><span class="m">443</span>
+</span><span id="__span-16-19">conntrack<span class="w"> </span>-E<span class="w">  </span><span class="c1"># Event monitoring</span>
 </span></code></pre></div>
 <p><strong>Docker:</strong>
 <div class="highlight"><pre><span></span><code><span id="__span-17-1">docker<span class="w"> </span>run<span class="w"> </span>--rm<span class="w"> </span>-it<span class="w"> </span>--cap-add<span class="o">=</span>NET_ADMIN<span class="w"> </span>ghcr.io/ibtisam-iq/debugbox:power
@@ -2347,16 +2351,19 @@
 <hr />
 <h2 id="bridge-networking">Bridge Networking<a class="headerlink" href="#bridge-networking" title="Permanent link">&para;</a></h2>
 <p><strong>Tools:</strong> <code>brctl</code> (bridge-utils) (power + NET_ADMIN)</p>
-<div class="highlight"><pre><span></span><code><span id="__span-18-1">kubectl<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>-it<span class="w"> </span>debug-power<span class="w"> </span>--<span class="w"> </span>bash
-</span><span id="__span-18-2">
-</span><span id="__span-18-3"><span class="c1"># List bridges</span>
-</span><span id="__span-18-4">brctl<span class="w"> </span>show
+<div class="highlight"><pre><span></span><code><span id="__span-18-1">kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-18-2"><span class="w">  </span>https://raw.githubusercontent.com/ibtisam-iq/debugbox/main/examples/power-debug-pod.yaml
+</span><span id="__span-18-3">
+</span><span id="__span-18-4">kubectl<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>-it<span class="w"> </span>debug-power<span class="w"> </span>--<span class="w"> </span>bash
 </span><span id="__span-18-5">
-</span><span id="__span-18-6"><span class="c1"># Show MAC address table</span>
-</span><span id="__span-18-7">brctl<span class="w"> </span>showmacs<span class="w"> </span>br0
+</span><span id="__span-18-6"><span class="c1"># List bridges</span>
+</span><span id="__span-18-7">brctl<span class="w"> </span>show
 </span><span id="__span-18-8">
-</span><span id="__span-18-9"><span class="c1"># Show STP info</span>
-</span><span id="__span-18-10">brctl<span class="w"> </span>showstp<span class="w"> </span>br0
+</span><span id="__span-18-9"><span class="c1"># Show MAC address table</span>
+</span><span id="__span-18-10">brctl<span class="w"> </span>showmacs<span class="w"> </span>br0
+</span><span id="__span-18-11">
+</span><span id="__span-18-12"><span class="c1"># Show STP info</span>
+</span><span id="__span-18-13">brctl<span class="w"> </span>showstp<span class="w"> </span>br0
 </span></code></pre></div>
 <hr />
 <h2 id="routing-protocols">Routing Protocols<a class="headerlink" href="#routing-protocols" title="Permanent link">&para;</a></h2>
@@ -2419,8 +2426,8 @@
 <div class="highlight"><pre><span></span><code><span id="__span-22-1">kubectl<span class="w"> </span>run<span class="w"> </span>git-debug<span class="w"> </span>--rm<span class="w"> </span>-it<span class="w"> </span>--image<span class="o">=</span>ghcr.io/ibtisam-iq/debugbox<span class="w"> </span>--restart<span class="o">=</span>Never
 </span><span id="__span-22-2">
 </span><span id="__span-22-3"><span class="c1"># Clone repository for configs</span>
-</span><span id="__span-22-4">git<span class="w"> </span>clone<span class="w"> </span>https://github.com/example/configs.git
-</span><span id="__span-22-5"><span class="nb">cd</span><span class="w"> </span>configs
+</span><span id="__span-22-4">git<span class="w"> </span>clone<span class="w"> </span>https://github.com/ibtisam-iq/debugbox.git
+</span><span id="__span-22-5"><span class="nb">cd</span><span class="w"> </span>debugbox
 </span><span id="__span-22-6">
 </span><span id="__span-22-7"><span class="c1"># Check configuration</span>
 </span><span id="__span-22-8">git<span class="w"> </span>log<span class="w"> </span>--oneline
@@ -2470,7 +2477,7 @@
 </span><span id="__span-24-18"><span class="c1"># Pretty-print YAML</span>
 </span><span id="__span-24-19">kubectl<span class="w"> </span>get<span class="w"> </span>pod<span class="w"> </span>my-pod<span class="w"> </span>-o<span class="w"> </span>yaml<span class="w"> </span><span class="p">|</span><span class="w"> </span>yaml
 </span></code></pre></div>
-<p><strong>Power-only helpers</strong> (require NET_RAW/NET_ADMIN):
+<p><strong>Power-only helpers</strong> (require NET_ADMIN):
 <div class="highlight"><pre><span></span><code><span id="__span-25-1">kubectl<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>-it<span class="w"> </span>debug-power<span class="w"> </span>--<span class="w"> </span>bash
 </span><span id="__span-25-2">
 </span><span id="__span-25-3"><span class="c1"># Quick packet capture</span>
@@ -2558,14 +2565,14 @@
 </tr>
 <tr>
 <td><strong>tshark</strong></td>
-<td>NET_RAW</td>
-<td><code>--cap-add=NET_RAW</code></td>
+<td>NET_ADMIN</td>
+<td><code>--cap-add=NET_ADMIN</code></td>
 <td><a href="https://raw.githubusercontent.com/ibtisam-iq/debugbox/main/examples/power-debug-pod.yaml">Use manifest</a></td>
 </tr>
 <tr>
 <td><strong>ngrep</strong></td>
-<td>NET_RAW</td>
-<td><code>--cap-add=NET_RAW</code></td>
+<td>NET_ADMIN</td>
+<td><code>--cap-add=NET_ADMIN</code></td>
 <td>Use manifest</td>
 </tr>
 <tr>
@@ -2594,14 +2601,8 @@
 </tr>
 </tbody>
 </table>
-<p><strong>Quick reference:</strong></p>
-<ul>
-<li>🟢 <strong>Standard debugging:</strong> No capabilities needed (95% of use cases)</li>
-<li>🟡 <strong>Packet analysis:</strong> NET_RAW required</li>
-<li>🔴 <strong>Firewall/routing:</strong> NET_ADMIN required</li>
-</ul>
 <hr />
-<p>→ <strong><a href="../../usage/kubernetes/">Kubernetes usage</a></strong> | <strong><a href="../../usage/docker/">Docker usage</a></strong> | <strong><a href="../troubleshooting/">Troubleshooting</a></strong> | <strong><a href="../../variants/overview/">Variants overview</a></strong></p>
+<p>→ <strong><a href="../../usage/kubernetes/">Kubernetes Usage</a></strong> | <strong><a href="../../usage/docker/">Docker Usage</a></strong> | <strong><a href="../troubleshooting/">Troubleshooting</a></strong> | <strong><a href="../../variants/overview/">Variants Overview</a></strong></p>
 
 
 
@@ -2622,7 +2623,7 @@
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-custom" title="February 6, 2026 11:15:25 PKT">February 06, 2026 11:15:25 AM</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-custom" title="February 6, 2026 14:31:53 PKT">February 06, 2026 02:31:53 PM</span>
   </span>
 
     

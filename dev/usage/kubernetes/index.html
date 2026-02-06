@@ -1642,8 +1642,10 @@
 <h2 id="power-variant-with-capabilities">Power Variant with Capabilities<a class="headerlink" href="#power-variant-with-capabilities" title="Permanent link">&para;</a></h2>
 <p><strong>⚠️ For advanced networking tools</strong> (<code>tshark</code>, <code>conntrack</code>, <code>nft</code>, <code>iptables</code>), use a manifest with capabilities:</p>
 <h3 id="apply-pre-made-manifest-recommended">Apply Pre-Made Manifest (Recommended)<a class="headerlink" href="#apply-pre-made-manifest-recommended" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code><span id="__span-2-1">kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span>https://raw.githubusercontent.com/ibtisam-iq/debugbox/main/examples/power-debug-pod.yaml
-</span><span id="__span-2-2">kubectl<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>-it<span class="w"> </span>debug-power<span class="w"> </span>--<span class="w"> </span>bash
+<div class="highlight"><pre><span></span><code><span id="__span-2-1">kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-2-2"><span class="w">  </span>https://raw.githubusercontent.com/ibtisam-iq/debugbox/main/examples/power-debug-pod.yaml
+</span><span id="__span-2-3">
+</span><span id="__span-2-4">kubectl<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>-it<span class="w"> </span>debug-power<span class="w"> </span>--<span class="w"> </span>bash
 </span></code></pre></div>
 <h3 id="create-manually">Create Manually<a class="headerlink" href="#create-manually" title="Permanent link">&para;</a></h3>
 <div class="highlight"><pre><span></span><code><span id="__span-3-1"><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">v1</span>
@@ -1658,17 +1660,12 @@
 </span><span id="__span-3-10"><span class="w">    </span><span class="nt">securityContext</span><span class="p">:</span>
 </span><span id="__span-3-11"><span class="w">      </span><span class="nt">capabilities</span><span class="p">:</span>
 </span><span id="__span-3-12"><span class="w">        </span><span class="nt">add</span><span class="p">:</span>
-</span><span id="__span-3-13"><span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">NET_ADMIN</span><span class="w">  </span><span class="c1"># For conntrack, nft, iptables</span>
-</span><span id="__span-3-14"><span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">NET_RAW</span><span class="w">    </span><span class="c1"># For tshark, tcpdump, packet capture</span>
+</span><span id="__span-3-13"><span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">NET_ADMIN</span>
+</span><span id="__span-3-14"><span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">NET_RAW</span>
 </span><span id="__span-3-15"><span class="w">    </span><span class="nt">tty</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
 </span><span id="__span-3-16"><span class="w">    </span><span class="nt">stdin</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
 </span><span id="__span-3-17"><span class="w">  </span><span class="nt">restartPolicy</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Never</span>
 </span></code></pre></div>
-<p><strong>What each capability enables:</strong></p>
-<ul>
-<li><code>NET_ADMIN</code> — conntrack, nft, iptables, ip route manipulation</li>
-<li><code>NET_RAW</code> — tshark, tcpdump, raw packet capture</li>
-</ul>
 <p><strong>Delete when done:</strong>
 <div class="highlight"><pre><span></span><code><span id="__span-4-1">kubectl<span class="w"> </span>delete<span class="w"> </span>pod<span class="w"> </span>debug-power
 </span></code></pre></div></p>
@@ -1779,7 +1776,7 @@
 <p><strong>Only add capabilities when needed</strong> — standard kubectl debug doesn't need them.</p>
 </li>
 </ol>
-<p>→ <strong><a href="../docker/">Docker usage</a></strong> | <strong><a href="../../guides/examples/">Real-world examples</a></strong> | <strong><a href="../../guides/troubleshooting/">Troubleshooting</a></strong></p>
+<p>→ <strong><a href="../docker/">Docker Usage</a></strong> | <strong><a href="../../guides/examples/">Real-world Examples</a></strong> | <strong><a href="../../guides/troubleshooting/">Troubleshooting</a></strong></p>
 
 
 
@@ -1800,7 +1797,7 @@
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-custom" title="February 6, 2026 11:15:25 PKT">February 06, 2026 11:15:25 AM</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-custom" title="February 6, 2026 14:31:53 PKT">February 06, 2026 02:31:53 PM</span>
   </span>
 
     
