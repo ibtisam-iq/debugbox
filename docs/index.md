@@ -1,7 +1,6 @@
 # DebugBox
 
-**A lightweight, variant-based debugging container suite**
-for Kubernetes and Docker environments.
+**Multi-variant Docker debugging toolkit for Kubernetes and cloud-native environments**
 
 [![Docker Pulls](https://img.shields.io/docker/pulls/mibtisam/debugbox?logo=docker&label=Docker%20Hub&logoColor=white)](https://hub.docker.com/r/mibtisam/debugbox)
 [![GitHub Container Registry](https://img.shields.io/badge/GHCR-Available-brightgreen?logo=github&logoColor=white)](https://github.com/ibtisam-iq/debugbox/pkgs/container/debugbox)
