@@ -122,7 +122,7 @@ docker run -it ghcr.io/ibtisam-iq/debugbox:power
 | DebugBox power | 104.45 MB |
 | netshoot v0.15 | 201.67 MB |
 
-DebugBox power is **97 MB smaller** than netshoot (48% reduction).  
+DebugBox power is **97 MB smaller** than netshoot (48% reduction).
 DebugBox lite is **14× smaller** than netshoot.
 
 On resource-constrained clusters (edge, IoT, Kubernetes on laptops), **every MB counts**. [See detailed bandwidth analysis →](https://debugbox.ibtisam-iq.com/latest/guides/bandwidth-savings/)
@@ -140,7 +140,7 @@ On resource-constrained clusters (edge, IoT, Kubernetes on laptops), **every MB 
 
 ## Features by Variant
 
-**What tools are included in each variant?** → **[Complete tool list](../debugbox/docs/manifest.yaml)**
+**What tools are included in each variant?** → **[Complete tool list](https://github.com/ibtisam-iq/debugbox/blob/main/docs/manifest.yaml)**
 
 | Category | Tools | Lite | Balanced | Power |
 |---|---|:---:|:---:|:---:|
@@ -255,7 +255,7 @@ debugbox:1.0.0             # Alias to balanced-1.0.0 (short form)
 - **[Kubernetes Usage](https://debugbox.ibtisam-iq.com/latest/usage/kubernetes/)** — kubectl debug examples
 - **[Docker Usage](https://debugbox.ibtisam-iq.com/latest/usage/docker/)** — Docker run examples
 - **[Variants Overview](https://debugbox.ibtisam-iq.com/latest/variants/overview/)** — detailed tool breakdown
-- **[Image Tags & Registries](https://debugbox.ibtisam-iq.com/latest/reference/tags-and-registries/)** — tagging strategy
+- **[Image Tags & Registries](https://debugbox.ibtisam-iq.com/latest/reference/tags/)** — tagging strategy
 - **[Common Workflows](https://debugbox.ibtisam-iq.com/latest/guides/examples/)** — real debugging scenarios
 - **[Local Development](https://debugbox.ibtisam-iq.com/latest/development/local-setup/)** — build and test locally
 - **[Contributing](CONTRIBUTING.md)** — how to contribute
@@ -264,19 +264,19 @@ debugbox:1.0.0             # Alias to balanced-1.0.0 (short form)
 
 ## FAQ
 
-**Q: Can I use DebugBox in production?**  
+**Q: Can I use DebugBox in production?**
 A: No. DebugBox runs as root and is designed for ephemeral debugging containers only. Use `kubectl debug` or temporary pods.
 
-**Q: What if I need a tool not in DebugBox?**  
+**Q: What if I need a tool not in DebugBox?**
 A: You can extend DebugBox by creating your own Dockerfile or submitting a feature request. See **[Local Development](https://debugbox.ibtisam-iq.com/latest/development/local-setup/)**.
 
-**Q: How do I pin a specific version in production?**  
-A: Use the full tag: `ghcr.io/ibtisam-iq/debugbox:1.0.0` (balanced) or `ghcr.io/ibtisam-iq/debugbox:lite-1.0.0` (lite). See **[Image Tags](https://debugbox.ibtisam-iq.com/latest/reference/tags-and-registries/)** for full strategy.
+**Q: How do I pin a specific version in production?**
+A: Use the full tag: `ghcr.io/ibtisam-iq/debugbox:1.0.0` (balanced) or `ghcr.io/ibtisam-iq/debugbox:lite-1.0.0` (lite). See **[Image Tags](https://debugbox.ibtisam-iq.com/latest/reference/tags/)** for full strategy.
 
-**Q: Does DebugBox work on Kubernetes 1.18+?**  
+**Q: Does DebugBox work on Kubernetes 1.18+?**
 A: Yes, works on Kubernetes 1.18+. Best experience with 1.20+ (has `kubectl debug` support).
 
-**Q: Can I use DebugBox outside Kubernetes?**  
+**Q: Can I use DebugBox outside Kubernetes?**
 A: Absolutely! `docker run -it ghcr.io/ibtisam-iq/debugbox` works perfectly for local debugging.
 
 **More questions?** → **[Full Troubleshooting Guide](https://debugbox.ibtisam-iq.com/latest/guides/troubleshooting/)**

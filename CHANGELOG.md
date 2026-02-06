@@ -7,7 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-## [1.0.0] - 2026-02-06
+## [1.0.0] - 2026-02-06 
 
 ### Added
 - Initial stable release of DebugBox – a suite of debugging container images for Kubernetes and Docker environments
