@@ -72,6 +72,7 @@ theme:
     - content.tabs.link
     - content.code.annotate
     - content.code.copy
+    - toc.integrate
 
 # ------------------------------------------------------------
 # Markdown Extensions
@@ -86,6 +87,7 @@ markdown_extensions:
   - md_in_html
   - toc:
       permalink: true
+      toc_depth: 0
   - pymdownx.highlight:
       line_spans: __span
   - pymdownx.details
