@@ -130,6 +130,10 @@ plugins:
 extra:
   generator: false
 
+  analytics:
+    provider: google
+    property: G-XJ4731TZ78
+
   # Mike versioning support
   version:
     provider: mike
