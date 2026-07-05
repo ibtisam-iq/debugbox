@@ -20,7 +20,8 @@ RUN CGO_ENABLED=0 go build -trimpath \
       -o kubens ./cmd/kubens
 
 # Runtime image
-FROM ghcr.io/ibtisam-iq/debugbox-base:latest
+ARG BASE_IMAGE=ghcr.io/ibtisam-iq/debugbox-base:latest
+FROM ${BASE_IMAGE}
 
 # Build args for OCI labels (passed from workflow)
 ARG BUILD_DATE
@@ -31,7 +32,7 @@ ARG VERSION
 LABEL org.opencontainers.image.title="DebugBox Power" \
       org.opencontainers.image.description="Advanced SRE-grade network forensics and troubleshooting image" \
       org.opencontainers.image.variant="power" \
-      org.opencontainers.image.base.name="ghcr.io/ibtisam-iq/debugbox-base:latest" \
+      org.opencontainers.image.base.name="${BASE_IMAGE}" \
       org.opencontainers.image.created="${BUILD_DATE}" \
       org.opencontainers.image.revision="${VCS_REF}" \
       org.opencontainers.image.version="${VERSION}" \

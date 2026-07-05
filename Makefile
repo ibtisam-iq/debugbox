@@ -25,6 +25,7 @@ TRIVY           ?= trivy
 
 # Docker
 DOCKER_BUILD := docker buildx build
+BASE_IMAGE   ?= $(IMAGE_NAME):base-$(LOCAL_TAG)
 
 # -------------------------------
 # Help
@@ -66,6 +67,7 @@ define docker_build
 	$(DOCKER_BUILD) \
 		--platform $(PLATFORM) \
 		$(if $(filter true,$(NO_CACHE)),--no-cache,) \
+		--build-arg BASE_IMAGE=$(BASE_IMAGE) \
 		--load \
 		-f $(DOCKERFILES_DIR)/Dockerfile.$1 \
 		-t $(IMAGE_NAME):$1-$(LOCAL_TAG) \
@@ -116,8 +118,12 @@ lint:
 build-%:
 	$(call docker_build,$*)
 
+.PHONY: build-base
+build-base:
+	$(call docker_build,base)
+
 .PHONY: build-all
-build-all: lint
+build-all: lint build-base
 	@for v in $(VARIANTS); do \
 		$(MAKE) build-$$v || exit 1; \
 	done
@@ -176,6 +182,7 @@ check: lint build-all test-all scan
 .PHONY: clean
 clean:
 	@echo "==> Cleaning local images"
+	@docker rmi -f $(IMAGE_NAME):base-$(LOCAL_TAG) >/dev/null 2>&1 || true
 	@for v in $(VARIANTS); do \
 		docker rmi -f $(IMAGE_NAME):$$v-$(LOCAL_TAG) >/dev/null 2>&1 || true; \
 	done
