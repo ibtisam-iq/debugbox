@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+
+{% block footer %}
+  {{ super() }}
+  <script>
+    // Inject current year
+    document.querySelector(".md-footer__copyright").innerHTML = 
+      "Copyright © 2025-" + new Date().getFullYear() + " DebugBox";
+  </script>
+{% endblock %}
+
