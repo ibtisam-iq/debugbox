@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: debug-balanced
+  labels:
+    app: debugbox
+    variant: balanced
+spec:
+  containers:
+  - name: debugbox
+    image: ghcr.io/ibtisam-iq/debugbox:balanced
+    command: ["/bin/bash"]
+    securityContext:
+      capabilities:
+        add:
+        - NET_RAW
+    tty: true
+    stdin: true
+  restartPolicy: Never
