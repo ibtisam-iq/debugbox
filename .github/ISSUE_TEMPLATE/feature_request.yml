@@ -1,0 +1,31 @@
+name: Feature Request
+description: Suggest a tool, alias, or improvement
+labels: [enhancement]
+body:
+  - type: dropdown
+    id: variant
+    attributes:
+      label: Which variant does this apply to?
+      options:
+        - lite
+        - balanced
+        - power
+        - All variants
+        - Not variant-specific
+    validations:
+      required: true
+
+  - type: textarea
+    id: description
+    attributes:
+      label: What would you like added or changed?
+    validations:
+      required: true
+
+  - type: textarea
+    id: use-case
+    attributes:
+      label: Use case
+      description: Describe the debugging scenario where this would help.
+    validations:
+      required: true
