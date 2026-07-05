@@ -46,7 +46,7 @@ jobs:
           fail: false
 
       - name: QA - HTML validation
-        uses: Cyb3r-Jak3/html5validator-action@v7.2.0
+        uses: Cyb3r-Jak3/html5validator-action@v8.0.0
         with:
           root: site/
           extra: '--ignore-re "Attribute \"(autocomplete|autocorrect|autocapitalize)\" not allowed"'
