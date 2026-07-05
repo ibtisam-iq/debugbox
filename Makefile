@@ -14,7 +14,8 @@ TESTS_DIR         := tests
 
 # Local build configuration
 LOCAL_TAG ?= local
-PLATFORM  ?= linux/amd64,linux/arm64
+HOST_ARCH := $(shell uname -m | sed 's/x86_64/amd64/' | sed 's/aarch64/arm64/')
+PLATFORM  ?= linux/$(HOST_ARCH)
 NO_CACHE  ?= false
 
 # Tooling
@@ -24,6 +25,7 @@ TRIVY           ?= trivy
 
 # Docker
 DOCKER_BUILD := docker buildx build
+BASE_IMAGE   ?= $(IMAGE_NAME):base-$(LOCAL_TAG)
 
 # -------------------------------
 # Help
@@ -36,6 +38,9 @@ help:
 	@echo "Build:"
 	@echo "  make build-<variant>     Build image (lite | balanced | power)"
 	@echo "  make build-all           Build all variants"
+	@echo ""
+	@echo "Run:"
+	@echo "  make run-<variant>       Run variant interactively"
 	@echo ""
 	@echo "Test:"
 	@echo "  make test-<variant>      Run smoke tests"
@@ -50,7 +55,7 @@ help:
 	@echo "  make clean               Remove local images"
 	@echo ""
 	@echo "Args:"
-	@echo "  PLATFORM=linux/amd64     Override platforms"
+	@echo "  PLATFORM=linux/amd64     Override platform (default: host arch)"
 	@echo "  NO_CACHE=true            Disable build cache"
 	@echo ""
 
@@ -62,6 +67,7 @@ define docker_build
 	$(DOCKER_BUILD) \
 		--platform $(PLATFORM) \
 		$(if $(filter true,$(NO_CACHE)),--no-cache,) \
+		--build-arg BASE_IMAGE=$(BASE_IMAGE) \
 		--load \
 		-f $(DOCKERFILES_DIR)/Dockerfile.$1 \
 		-t $(IMAGE_NAME):$1-$(LOCAL_TAG) \
@@ -112,8 +118,12 @@ lint:
 build-%:
 	$(call docker_build,$*)
 
+.PHONY: build-base
+build-base:
+	$(call docker_build,base)
+
 .PHONY: build-all
-build-all: lint
+build-all: lint build-base
 	@for v in $(VARIANTS); do \
 		$(MAKE) build-$$v || exit 1; \
 	done
@@ -134,6 +144,14 @@ test-all: build-all
 	done
 	@echo "✅ All tests passed"
 	@echo ""
+
+# -------------------------------
+# Run
+# -------------------------------
+.PHONY: run-%
+run-%:
+	@echo "==> Running $(IMAGE_NAME):$*-$(LOCAL_TAG)"
+	docker run --rm -it $(IMAGE_NAME):$*-$(LOCAL_TAG)
 
 # -------------------------------
 # Security scan
@@ -164,6 +182,7 @@ check: lint build-all test-all scan
 .PHONY: clean
 clean:
 	@echo "==> Cleaning local images"
+	@docker rmi -f $(IMAGE_NAME):base-$(LOCAL_TAG) >/dev/null 2>&1 || true
 	@for v in $(VARIANTS); do \
 		docker rmi -f $(IMAGE_NAME):$$v-$(LOCAL_TAG) >/dev/null 2>&1 || true; \
 	done

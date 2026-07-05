@@ -1,6 +1,8 @@
 # DebugBox — Balanced variant
 # Daily-driver debugging image for Kubernetes troubleshooting (~46 MB).
 
+ARG BASE_IMAGE=ghcr.io/ibtisam-iq/debugbox-base:latest
+
 # Build kubectx/kubens from source
 FROM golang:1.25-alpine AS kubectx-builder
 
@@ -20,7 +22,7 @@ RUN CGO_ENABLED=0 go build -trimpath \
       -o kubens ./cmd/kubens
 
 # Runtime image
-FROM ghcr.io/ibtisam-iq/debugbox-base:latest
+FROM ${BASE_IMAGE}
 
 # Build args for OCI labels (passed from workflow)
 ARG BUILD_DATE
@@ -31,7 +33,7 @@ ARG VERSION
 LABEL org.opencontainers.image.title="DebugBox Balanced" \
       org.opencontainers.image.description="Balanced debugging image for everyday Kubernetes and cloud-native troubleshooting" \
       org.opencontainers.image.variant="balanced" \
-      org.opencontainers.image.base.name="ghcr.io/ibtisam-iq/debugbox-base:latest" \
+      org.opencontainers.image.base.name="${BASE_IMAGE}" \
       org.opencontainers.image.created="${BUILD_DATE}" \
       org.opencontainers.image.revision="${VCS_REF}" \
       org.opencontainers.image.version="${VERSION}" \

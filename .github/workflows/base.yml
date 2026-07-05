@@ -1,0 +1,97 @@
+name: Base Image
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'dockerfiles/Dockerfile.base'
+      - 'dockerfiles/build/debugbox-base-profile'
+      - '.github/workflows/base.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  packages: write
+
+jobs:
+  build-scan-push:
+    name: Build, Scan & Push
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        arch: [amd64, arm64]
+      fail-fast: false
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v3
+        with:
+          platforms: ${{ matrix.arch }}
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Build base image (${{ matrix.arch }})
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          file: dockerfiles/Dockerfile.base
+          platforms: linux/${{ matrix.arch }}
+          load: true
+          push: false
+          tags: debugbox-base:ci
+
+      - name: Install Trivy
+        run: |
+          set -e
+          curl -sfL https://raw.githubusercontent.com/aquasecurity/trivy/main/contrib/install.sh \
+            | sh -s -- -b /usr/local/bin v0.72.0
+          trivy --version
+
+      - name: Trivy security scan
+        run: |
+          trivy image \
+            --severity HIGH,CRITICAL \
+            --exit-code 1 \
+            debugbox-base:ci
+
+      - name: Report size
+        run: |
+          SIZE_BYTES=$(docker save debugbox-base:ci | gzip -c | wc -c)
+          SIZE_MB=$(awk "BEGIN {printf \"%.2f\", $SIZE_BYTES / 1024 / 1024}")
+          echo "📦 [${{ matrix.arch }}] base compressed: ${SIZE_MB} MB"
+
+  push:
+    name: Push Multi-Arch
+    needs: build-scan-push
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v3
+        with:
+          platforms: amd64,arm64
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Login to GHCR
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Push base image
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          file: dockerfiles/Dockerfile.base
+          platforms: linux/amd64,linux/arm64
+          push: true
+          tags: ghcr.io/ibtisam-iq/debugbox-base:latest

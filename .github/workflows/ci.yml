@@ -28,8 +28,8 @@ jobs:
     strategy:
       matrix:
         arch: [amd64, arm64]
-        variant: [base, lite, balanced, power]
-      fail-fast: true
+        variant: [lite, balanced, power]
+      fail-fast: false
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -59,7 +59,7 @@ jobs:
         run: |
           set -e
           curl -sfL https://raw.githubusercontent.com/aquasecurity/trivy/main/contrib/install.sh \
-            | sh -s -- -b /usr/local/bin v0.69.1
+            | sh -s -- -b /usr/local/bin v0.72.0
           trivy --version
 
       - name: Build ${{ matrix.variant }} image for ${{ matrix.arch }}
@@ -87,16 +87,14 @@ jobs:
           SIZE_MB=$(awk "BEGIN {printf \"%.2f\", $SIZE_BYTES / 1024 / 1024}")
           echo "📦 [${{ matrix.arch }}] ${{ matrix.variant }} compressed: ${SIZE_MB} MB"
 
-      - name: CI smoke test - ${{ matrix.variant }}
-        if: matrix.variant != 'base'
+      - name: CI smoke test
         run: |
           docker run --rm \
             -v ${{ github.workspace }}/tests:/tests:ro \
             debugbox-${{ matrix.variant }}:ci \
             sh /tests/ci-smoke.sh
-            
+
       - name: Trivy security scan
-        # if: matrix.variant != 'base'
         run: |
           trivy image \
             --severity HIGH,CRITICAL \

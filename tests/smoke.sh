@@ -5,8 +5,8 @@ set -eu
 # DebugBox Smoke Test
 # ------------------------------------------------------------
 
-LIB_URL="https://raw.githubusercontent.com/ibtisam-iq/infra-bootstrap/main/scripts/lib/common.sh"
-LIB_PATH="/tmp/infra-bootstrap-common.sh"
+LIB_URL="https://raw.githubusercontent.com/ibtisam-iq/silver-stack/main/scripts/lib/common.sh"
+LIB_PATH="/tmp/silver-stack-common.sh"
 LIB_LOADED=false
 
 cleanup() {
@@ -26,10 +26,10 @@ if command -v curl >/dev/null 2>&1; then
         . "$LIB_PATH"
         LIB_LOADED=true
     else
-        echo "[WARNING] Failed to download infra-bootstrap common library"
+        echo "[WARNING] Failed to download silver-stack common library"
     fi
 else
-    echo "[WARNING] curl not available to download infra-bootstrap common library"
+    echo "[WARNING] curl not available to download silver-stack common library"
 fi
 
 # Fallbacks ONLY if library not loaded
@@ -41,7 +41,7 @@ if [ "$LIB_LOADED" != "true" ]; then
 fi
 
 # ------------------------------------------------------------
-banner "infra-bootstrap - DebugBox smoke test started"
+banner "silver-stack - DebugBox smoke test started"
 
 info "User identity"
 USER_NAME="$(whoami)"
@@ -87,4 +87,4 @@ rm /tmp/smoke-test
 ok "Filesystem check passed"
 blank
 
-banner "infra-bootstrap - DebugBox smoke test PASSED"
+banner "silver-stack - DebugBox smoke test PASSED"
