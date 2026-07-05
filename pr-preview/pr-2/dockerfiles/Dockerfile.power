@@ -6,13 +6,15 @@ ARG BASE_IMAGE=ghcr.io/ibtisam-iq/debugbox-base:latest
 # Build kubectx/kubens from source
 FROM golang:1.25-alpine AS kubectx-builder
 
-ARG KUBECTX_VERSION=v0.9.5
+ARG KUBECTX_VERSION=v0.11.0
 WORKDIR /src
 
 RUN apk add --no-cache git
 
 RUN git clone --branch ${KUBECTX_VERSION} --depth 1 \
     https://github.com/ahmetb/kubectx.git .
+
+RUN go get golang.org/x/net@v0.55.0 && go mod tidy
 
 RUN CGO_ENABLED=0 go build -trimpath \
       -ldflags="-s -w -X main.version=${KUBECTX_VERSION}" \
