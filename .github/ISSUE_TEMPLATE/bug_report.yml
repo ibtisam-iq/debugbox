@@ -1,0 +1,56 @@
+name: Bug Report
+description: Report a bug with a DebugBox image or workflow
+labels: [bug]
+body:
+  - type: dropdown
+    id: variant
+    attributes:
+      label: Variant
+      options:
+        - lite
+        - balanced
+        - power
+        - base
+        - Not variant-specific
+    validations:
+      required: true
+
+  - type: input
+    id: version
+    attributes:
+      label: Image tag or version
+      placeholder: "e.g. balanced-1.0.0, lite-latest"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: platform
+    attributes:
+      label: Platform
+      options:
+        - linux/amd64
+        - linux/arm64
+        - Both
+    validations:
+      required: true
+
+  - type: textarea
+    id: description
+    attributes:
+      label: What happened
+      description: Describe the bug. Include the command you ran and the output you got.
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behavior
+    validations:
+      required: true
+
+  - type: textarea
+    id: context
+    attributes:
+      label: Additional context
+      description: Kubernetes version, container runtime, host OS, or anything else relevant.

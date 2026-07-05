@@ -87,7 +87,7 @@ markdown_extensions:
   - md_in_html
   - toc:
       permalink: true
-      toc_depth: 0
+      toc_depth: 3
   - pymdownx.highlight:
       line_spans: __span
   - pymdownx.details
