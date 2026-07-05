@@ -462,6 +462,6 @@ Open an issue: [https://github.com/ibtisam-iq/debugbox/issues](https://github.co
 
 ---
 
-**Last Updated:** February 1, 2026  
-**Maintained By:** DebugBox Core Team  
+**Last Updated:** July 2026  
+**Maintained By:** Muhammad Ibtisam ([@ibtisam-iq](https://github.com/ibtisam-iq))  
 **Release Strategy:** Variant-first tagging with version aliases (20 tags per release)

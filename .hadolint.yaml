@@ -1,5 +1,9 @@
 failure-threshold: error
 ignored:
+  # DL3006: FROM uses a variable (${BASE_IMAGE}) which Hadolint cannot resolve
   - DL3006
+  # DL3018: apk packages are not version-pinned; Alpine rolling releases
+  # make pinning impractical and we rebuild on every release anyway
   - DL3018
+  # DL4006: pipe failure; our RUN commands handle errors via set -eux
   - DL4006

@@ -1,21 +1,18 @@
 apiVersion: v1
 kind: Pod
 metadata:
-  name: debug-power
+  name: debug-balanced
   labels:
     app: debugbox
-    variant: power
+    variant: balanced
 spec:
   containers:
   - name: debugbox
-    image: ghcr.io/ibtisam-iq/debugbox:power
+    image: ghcr.io/ibtisam-iq/debugbox:balanced
     command: ["/bin/bash", "-l"]
     securityContext:
-      # Don't use privileged unless absolutely necessary
-      privileged: false
       capabilities:
         add:
-        - NET_ADMIN
         - NET_RAW
     tty: true
     stdin: true

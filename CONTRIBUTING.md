@@ -21,8 +21,10 @@ Welcome! 👋 Documentation fixes and small improvements are great starting poin
 
 ### 1. Fork and Clone
 ```bash
-git clone https://github.com/ibtisam-iq/debugbox.git
+# Fork via GitHub UI, then clone your fork
+git clone https://github.com/<your-username>/debugbox.git
 cd debugbox
+git remote add upstream https://github.com/ibtisam-iq/debugbox.git
 ```
 
 ### 2. Create a Feature Branch
