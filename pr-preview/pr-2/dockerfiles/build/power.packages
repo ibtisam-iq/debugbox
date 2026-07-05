@@ -1,0 +1,115 @@
+#!/bin/sh
+set -eux
+
+# ====================================================================
+# GROUP 9: ADDITIONAL EDITORS
+# ====================================================================
+# nano — Lightweight text editor (alternative to vim)
+#        Easier for: quick edits, less modal confusion
+#        Use when: vim feels overkill for simple changes
+#
+# nmap-nping — Nping: packet generation and response analysis tool
+#              Used for: custom packet crafting, network testing
+#              Example: nping --tcp -p 80 example.com
+#                       nping --icmp example.com
+#
+# nmap-scripts — Nmap Scripting Engine (NSE) scripts
+#                Used for: advanced network discovery and vulnerability detection
+#                Example: nmap --script vuln example.com
+#                         nmap --script http-enum example.com
+# openssl — SSL/TLS toolkit (command-line utilities)
+#            Used for: testing SSL/TLS connections, certificate inspection
+#            Example: openssl s_client -connect example.com:443
+#                     openssl x509 -in cert.pem -text -noout
+
+# ====================================================================
+# GROUP 10: DEEP PACKET ANALYSIS & FORENSICS
+# ====================================================================
+# tshark — Command-line packet analyzer (Wireshark backend)
+#          Used for: analyzing tcpdump captures, live packet inspection
+#          Example: tshark -i eth0 -f "tcp port 80"
+#                   tshark -r capture.pcap -Y "http.request"
+#
+# ngrep — Network grep: search packets by regex patterns
+#         Used for: finding specific packet content
+#         Example: ngrep -d any "GET" tcp (find HTTP GET requests)
+#                  ngrep "mystring" tcp port 443
+#         Why power only: Specialized forensics tool, not daily-driver
+#
+# fping — ICMP ping with statistics
+#         Used for: parallel pinging, response time analysis
+#         Example: fping -u 10.0.0.0/24 (unreachable hosts only)
+#
+# tcptraceroute — TCP-based traceroute (works through firewalls)
+#                 Used for: routing troubleshooting when ICMP blocked
+#                 Example: tcptraceroute example.com 443
+#                 Why: Better than tracepath for TCP-level issues
+#
+# ltrace — Library call tracer (userspace syscall tracing)
+#          Used for: debugging which libraries a process calls
+#          Example: ltrace -c curl http://example.com
+#          Complements: strace (syscall level vs library level)
+#
+# speedtest-cli — Bandwidth testing tool
+#                 Used for: quick bandwidth checks to internet
+#                 Example: speedtest-cli (run Speedtest.net)
+
+# ====================================================================
+# GROUP 11: FIREWALL & ROUTING INTERNALS
+# ====================================================================
+# iptables — Firewall rules inspection and management
+#            Used for: viewing/modifying netfilter rules
+#            Example: iptables -L -n (list all rules)
+#                     iptables -nL -t mangle (view mangle table)
+#            Warning: Requires CAP_NET_ADMIN in pod
+#
+# nftables — Modern firewall (iptables replacement)
+#            Used for: atomic rule updates, better syntax
+#            Example: nft list ruleset
+#                     nft add rule inet filter input tcp dport 22 accept
+#            Warning: Requires CAP_NET_ADMIN
+#
+# conntrack-tools — Connection tracking inspection
+#                   Used for: viewing active connections, NAT state
+#                   Example: conntrack -L (list all tracked connections)
+#                            conntrack -L -p tcp (TCP only)
+#            Complements: ss (shows sockets), conntrack (shows netfilter state)
+#
+# bird — BGP and routing daemon (debugging tool, not running service)
+#        Used for: testing routing protocols, prefix validation
+#        Example: birdc show status (if bird daemon running)
+#                 birdc show route (view routes bird knows)
+#        Why power: Advanced network engineering tool
+#
+# bridge-utils — Bridge utilities for container networking
+#                Used for: inspecting bridge configurations
+#                Example: brctl show (list bridges)
+#                         brctl showmacs br0 (show MAC table)
+
+# ====================================================================
+# GROUP 12: SCRIPTING & AUTOMATION
+# ====================================================================
+# py3-pip — Python package manager (for custom debugging scripts)
+#           Used for: installing Python debugging tools
+#           Example: pip install scapy (packet manipulation)
+#                    pip install netaddr (IP operations)
+#           Why: Power users may write custom diagnostics
+
+apk add --no-cache \
+      nano \
+      nmap-nping \
+      nmap-scripts \
+      openssl \
+      tshark \
+      ngrep \
+      fping \
+      tcptraceroute \
+      speedtest-cli \
+      ltrace \
+      iptables \
+      nftables \
+      conntrack-tools \
+      bird \
+      bridge-utils \
+      py3-pip
+      

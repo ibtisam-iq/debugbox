@@ -1,0 +1,189 @@
+# DebugBox Product Manifest
+#
+# This file documents the user-visible contract of DebugBox images.
+# It describes what tools, shell behavior, helpers, and environment
+# guarantees are provided by each variant.
+#
+# Build and implementation details live in Dockerfiles.
+
+base:
+  description: "Shared foundation for all DebugBox variants"
+
+  packages:
+    - ca-certificates
+
+  shell:
+    default: ash
+    helpers:
+      - ll()                  # ls -alF wrapper
+
+  environment:
+    editor: vi
+    locale: C.UTF-8
+    prompt: "\\n\\u@\\h:\\w# (root) or $ (user) — with color support when in terminal"
+
+
+variants:
+  lite:
+    description: "Minimal, fast-pull image for ephemeral Kubernetes debugging"
+
+    tools:
+      networking:
+        - curl
+        - netcat-openbsd
+        - iproute2
+        - iputils
+        - bind-tools
+
+      data:
+        - jq
+        - yq                  # YAML (apk version)
+
+    shell:
+      default: ash
+      helpers:
+        - json()              # function: Pretty-print JSON with fallback
+        - yaml()              # function: Pretty-print YAML with fallback
+
+    environment:
+      editor: vi
+      locale: C.UTF-8
+
+
+  balanced:
+    description: "Recommended daily-driver image for cloud-native debugging"
+    includes: lite
+
+    tools:
+      shell-and-ux:
+        - bash
+        - bash-completion
+        - less
+
+      editors:
+        - vim
+
+      http:
+        - curl                
+        - wget                # balanced addition
+
+      version-control:
+        - git
+
+      filesystem:
+        - file
+        - tar
+        - gzip
+
+      networking:
+        - tcpdump
+        - socat
+        - nmap
+        - mtr
+        - iperf3
+        - ethtool
+        - iftop
+
+      system:
+        - htop
+        - strace
+        - lsof
+        - procps
+        - psmisc
+
+      kubernetes:
+        - kubectx
+        - kubens
+
+    shell:
+      default: bash
+      helpers:
+        - json()              
+        - yaml()              
+        - ports               # alias: netstat -tulpn (show listening ports)
+        - connections         # alias: ss -tulpn (show active connections)
+        - routes              # alias: ip route show (show routing table)
+        - k8s-info            # alias: show current K8s context + namespace
+
+    environment:
+      pager: less
+      editor: vim
+      locale: C.UTF-8
+
+
+  power:
+    description: "Full SRE-grade image for deep system and network forensics"
+    includes: balanced
+
+    tools:
+      editors:
+        - vim                 # inherited default editor
+        - nano                # power-only addition
+
+      networking-deep:
+        - tshark
+        - ngrep            
+        - tcptraceroute    
+        - fping
+        - speedtest-cli
+        - nmap-nping
+        - nmap-scripts
+
+      tls-ssl:
+        - openssl            
+
+      system-internals:
+        - ltrace
+
+      routing:
+        - iptables
+        - nftables
+        - conntrack-tools
+        - bird
+        - bridge-utils
+
+      scripting:
+        - py3-pip
+
+      control-plane:
+        - yq                  # pinned upstream binary (not apk)
+
+    shell:
+      default: bash
+      helpers:
+        - json()              
+        - yaml()              
+        - ports               
+        - connections         
+        - routes              
+        - k8s-info            
+        - sniff()             # alias: tcpdump -i any -n -s 0 (quick packet capture)
+        - sniff-http()        # alias: capture HTTP traffic (ports 80/443)
+        - sniff-dns()         # alias: capture DNS queries (port 53)
+        - cert-check()        # function: inspect TLS certificates (openssl s_client wrapper)
+        - conntrack-watch()   # alias: watch active connections in real-time
+
+    environment:
+      pager: less
+      editor: vim             # default editor, nano is also available
+      locale: C.UTF-8
+
+
+notes:
+  - Helpers are loaded via /etc/profile.d
+  - All images run as root by design
+  - Lite prioritizes speed and small size
+  - Balanced prioritizes daily usability
+  - Power prioritizes determinism and SRE workflows
+  - Python tooling (pip3) is available in Power variant
+  - Base prompt: user@hostname:workdir with # (root) or $ (user)
+  - Shell helpers in balanced: 6 total (json, yaml, ports, connections, routes, k8s-info)
+  - Shell helpers in power: 11 total (6 from balanced + sniff, sniff-http, sniff-dns, cert-check, conntrack-watch)
+
+
+contributing:
+  - "Group tools by function, not by package name"
+  - "Document behavioral changes here when Dockerfiles change"
+  - "Avoid copying build or verification logic into this file"
+  - "Shell helpers should describe their purpose (function vs alias)"
+  - "New tools must include brief description for 'why power only' or 'why balanced+'"
