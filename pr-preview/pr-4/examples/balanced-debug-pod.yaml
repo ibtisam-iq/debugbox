@@ -9,7 +9,7 @@ spec:
   containers:
   - name: debugbox
     image: ghcr.io/ibtisam-iq/debugbox:balanced
-    command: ["/bin/bash"]
+    command: ["/bin/bash", "-l"]
     securityContext:
       capabilities:
         add:
