@@ -30,7 +30,7 @@ ENV LANG=C.UTF-8 \
 
 # Shared shell profile (loaded via /etc/profile.d)
 RUN mkdir -p /etc/profile.d
-COPY dockerfiles/build/debugbox-base-profile /etc/profile.d/debugbox-base-profile.sh
+COPY dockerfiles/profiles/debugbox-base-profile /etc/profile.d/debugbox-base-profile.sh
 RUN chmod 0644 /etc/profile.d/debugbox-base-profile.sh && \
     [ -f /etc/profile.d/debugbox-base-profile.sh ] || (echo "ERROR: profile not found" && exit 1) && \
     echo "DebugBox Base: shell profile configured ✓"
