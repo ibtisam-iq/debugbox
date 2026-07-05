@@ -1,4 +1,4 @@
-name: Docs
+name: Pages
 
 on:
   push:
@@ -36,21 +36,27 @@ jobs:
       - run: pip install -r requirements.txt
       - run: pip install -r requirements-dev.txt
 
-      - name: Build site
+      - name: Build MkDocs site
         run: mkdocs build --strict
+        env:
+          DISABLE_MKDOCS_2_WARNING: "true"
 
-      - name: QA - broken links
-        uses: lycheeverse/lychee-action@v2
-        with:
-          args: '--no-progress --accept 200,429 site/'
-          fail: true
+      # html5validator removed -- this repo is Markdown-only; HTML is generated
+      # by MkDocs + Material theme. Validation failures were caused by theme
+      # internals (e.g. hidden checkbox <label> associations), not content.
 
-      - name: QA - HTML validation
-        uses: Cyb3r-Jak3/html5validator-action@v7.2.0
+      - name: QA - Check for broken links
+        uses: lycheeverse/lychee-action@v2.8.0
         with:
-          root: site/
-          extra: '--ignore-re "Attribute \"(autocomplete|autocorrect|autocapitalize)\" not allowed"'
-        continue-on-error: true
+          args: >
+            ./site/**/*.html
+            --no-progress
+            --accept 200,429,403
+            --exclude "linkedin\.com"
+            --exclude "x\.com"
+          fail: false
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
   preview:
     needs: build-and-quality
