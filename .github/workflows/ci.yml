@@ -55,13 +55,6 @@ jobs:
             org.opencontainers.image.vendor=Ibtisam IQ
             org.opencontainers.image.authors=Muhammad Ibtisam <contact@ibtisam-iq.com>
 
-      - name: Install Trivy
-        run: |
-          set -e
-          curl -sfL https://raw.githubusercontent.com/aquasecurity/trivy/main/contrib/install.sh \
-            | sh -s -- -b /usr/local/bin v0.72.0
-          trivy --version
-
       - name: Build ${{ matrix.variant }} image for ${{ matrix.arch }}
         uses: docker/build-push-action@v6
         with:
@@ -95,8 +88,8 @@ jobs:
             sh /tests/ci-smoke.sh
 
       - name: Trivy security scan
-        run: |
-          trivy image \
-            --severity HIGH,CRITICAL \
-            --exit-code 1 \
-            debugbox-${{ matrix.variant }}:ci
+        uses: aquasecurity/trivy-action@0.28.0
+        with:
+          image-ref: debugbox-${{ matrix.variant }}:ci
+          severity: HIGH,CRITICAL
+          exit-code: '1'
