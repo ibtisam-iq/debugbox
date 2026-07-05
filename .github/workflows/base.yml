@@ -44,19 +44,12 @@ jobs:
           push: false
           tags: debugbox-base:ci
 
-      - name: Install Trivy
-        run: |
-          set -e
-          curl -sfL https://raw.githubusercontent.com/aquasecurity/trivy/main/contrib/install.sh \
-            | sh -s -- -b /usr/local/bin v0.72.0
-          trivy --version
-
       - name: Trivy security scan
-        run: |
-          trivy image \
-            --severity HIGH,CRITICAL \
-            --exit-code 1 \
-            debugbox-base:ci
+        uses: aquasecurity/trivy-action@0.28.0
+        with:
+          image-ref: debugbox-base:ci
+          severity: HIGH,CRITICAL
+          exit-code: '1'
 
       - name: Report size
         run: |
