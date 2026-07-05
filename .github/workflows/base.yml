@@ -6,7 +6,7 @@ on:
       - main
     paths:
       - 'dockerfiles/Dockerfile.base'
-      - 'dockerfiles/build/debugbox-base-profile'
+      - 'dockerfiles/profiles/debugbox-base-profile'
       - '.github/workflows/base.yml'
   workflow_dispatch:
 
@@ -24,18 +24,18 @@ jobs:
       fail-fast: false
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
 
       - name: Set up QEMU
-        uses: docker/setup-qemu-action@v3
+        uses: docker/setup-qemu-action@v4
         with:
           platforms: ${{ matrix.arch }}
 
       - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v3
+        uses: docker/setup-buildx-action@v4
 
       - name: Build base image (${{ matrix.arch }})
-        uses: docker/build-push-action@v6
+        uses: docker/build-push-action@v7
         with:
           context: .
           file: dockerfiles/Dockerfile.base
@@ -44,19 +44,12 @@ jobs:
           push: false
           tags: debugbox-base:ci
 
-      - name: Install Trivy
-        run: |
-          set -e
-          curl -sfL https://raw.githubusercontent.com/aquasecurity/trivy/main/contrib/install.sh \
-            | sh -s -- -b /usr/local/bin v0.72.0
-          trivy --version
-
       - name: Trivy security scan
-        run: |
-          trivy image \
-            --severity HIGH,CRITICAL \
-            --exit-code 1 \
-            debugbox-base:ci
+        uses: aquasecurity/trivy-action@v0.36.0
+        with:
+          image-ref: debugbox-base:ci
+          severity: HIGH,CRITICAL
+          exit-code: '1'
 
       - name: Report size
         run: |
@@ -70,25 +63,25 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
 
       - name: Set up QEMU
-        uses: docker/setup-qemu-action@v3
+        uses: docker/setup-qemu-action@v4
         with:
           platforms: amd64,arm64
 
       - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v3
+        uses: docker/setup-buildx-action@v4
 
       - name: Login to GHCR
-        uses: docker/login-action@v3
+        uses: docker/login-action@v4
         with:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Push base image
-        uses: docker/build-push-action@v6
+        uses: docker/build-push-action@v7
         with:
           context: .
           file: dockerfiles/Dockerfile.base

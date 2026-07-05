@@ -5,7 +5,8 @@ set -eu
 # DebugBox Smoke Test
 # ------------------------------------------------------------
 
-LIB_URL="https://raw.githubusercontent.com/ibtisam-iq/silver-stack/main/scripts/lib/common.sh"
+SILVER_STACK_SHA="ba37b8142760fde2bc99b55218c6f445534bc33f"
+LIB_URL="https://raw.githubusercontent.com/ibtisam-iq/silver-stack/${SILVER_STACK_SHA}/scripts/lib/common.sh"
 LIB_PATH="/tmp/silver-stack-common.sh"
 LIB_LOADED=false
 

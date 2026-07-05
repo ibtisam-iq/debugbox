@@ -65,47 +65,8 @@ RUN set -eux && \
 ENV PAGER=less
 
 # Shell helpers for debugging workflows
-RUN set -eux && \
-    mkdir -p /etc/profile.d && \
-    printf '%s\n' \
-      '# DebugBox Balanced — Shell Helpers & Aliases' \
-      '# Loaded automatically via /etc/profile.d (bash)' \
-      '' \
-      '# === File Listing ===' \
-      '# ll() is inherited from debugbox-base-profile.sh' \
-      '' \
-      '# === Data Inspection ===' \
-      '# json() — Pretty-print JSON with fallback' \
-      '#   Usage: echo "{...}" | json' \
-      '#          json file.json' \
-      'json() {' \
-      '  jq . "$@" 2>/dev/null || cat "$@"' \
-      '}' \
-      '' \
-      '# yaml() — Pretty-print YAML with fallback' \
-      '#   Usage: kubectl get pod -o yaml | yaml' \
-      '#          yaml config.yaml' \
-      'yaml() {' \
-      '  yq . "$@" 2>/dev/null || cat "$@"' \
-      '}' \
-      '' \
-      '# === Network Inspection ===' \
-      '# ports() — Show all listening ports (TCP & UDP)' \
-      'alias ports="netstat -tulpn"' \
-      '' \
-      '# connections() — Show all active connections' \
-      'alias connections="ss -tulpn"' \
-      '' \
-      '# routes() — Show IP routing table' \
-      'alias routes="ip route show"' \
-      '' \
-      '# === Kubernetes ===' \
-      '# Show current context and namespace' \
-      'alias k8s-info="echo Context: $(kubectx -c 2>/dev/null || echo unknown); echo Namespace: $(kubens -c 2>/dev/null || echo unknown)"' \
-      > /etc/profile.d/debugbox-balanced-profile.sh && \
-    \
-    chmod 0644 /etc/profile.d/debugbox-balanced-profile.sh && \
-    \
+COPY dockerfiles/profiles/debugbox-balanced-profile /etc/profile.d/debugbox-balanced-profile.sh
+RUN chmod 0644 /etc/profile.d/debugbox-balanced-profile.sh && \
     echo "DebugBox Balanced: shell helpers configured ✓"
 
 CMD ["/bin/bash", "-l"]
