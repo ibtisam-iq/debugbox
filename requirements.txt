@@ -1,6 +1,6 @@
 # Core MkDocs with Material theme
 mkdocs==1.6.1                     # Updated from 1.6.0
-mkdocs-material==9.7.1            # Updated from 9.5.47
+mkdocs-material==9.7.6            # Updated from 9.5.47
 
 # Plugins
 mkdocs-macros-plugin==1.5.0       # Updated from 1.0.5
