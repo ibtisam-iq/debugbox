@@ -59,8 +59,10 @@ jobs:
             --exclude "debugbox\.ibtisam-iq\.com"
             --exclude "example\.com"
             --exclude "dl\.k8s\.io"
+            --exclude "localhost"
+            --exclude-path 'site/404.html'
             'site/**/*.html'
-          fail: false
+          fail: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
