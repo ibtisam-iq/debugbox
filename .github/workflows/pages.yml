@@ -49,7 +49,6 @@ jobs:
         uses: lycheeverse/lychee-action@v2.8.0
         with:
           args: >
-            ./site/**/*.html
             --no-progress
             --accept 200,429,403
             --exclude "linkedin\.com"
@@ -60,6 +59,7 @@ jobs:
             --exclude "debugbox\.ibtisam-iq\.com"
             --exclude "example\.com"
             --exclude "dl\.k8s\.io"
+            'site/**/*.html'
           fail: false
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
