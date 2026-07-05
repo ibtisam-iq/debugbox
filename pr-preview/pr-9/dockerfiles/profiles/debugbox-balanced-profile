@@ -1,0 +1,34 @@
+# DebugBox Balanced — Shell Helpers & Aliases
+# Loaded automatically via /etc/profile.d (bash)
+
+# === File Listing ===
+# ll() is inherited from debugbox-base-profile.sh
+
+# === Data Inspection ===
+# json() — Pretty-print JSON with fallback
+#   Usage: echo "{...}" | json
+#          json file.json
+json() {
+  jq . "$@" 2>/dev/null || cat "$@"
+}
+
+# yaml() — Pretty-print YAML with fallback
+#   Usage: kubectl get pod -o yaml | yaml
+#          yaml config.yaml
+yaml() {
+  yq . "$@" 2>/dev/null || cat "$@"
+}
+
+# === Network Inspection ===
+# ports() — Show all listening ports (TCP & UDP)
+alias ports="netstat -tulpn"
+
+# connections() — Show all active connections
+alias connections="ss -tulpn"
+
+# routes() — Show IP routing table
+alias routes="ip route show"
+
+# === Kubernetes ===
+# Show current context and namespace
+alias k8s-info='echo Context: $(kubectx -c 2>/dev/null || echo unknown); echo Namespace: $(kubens -c 2>/dev/null || echo unknown)'
