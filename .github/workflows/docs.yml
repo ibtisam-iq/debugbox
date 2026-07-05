@@ -43,7 +43,7 @@ jobs:
         uses: lycheeverse/lychee-action@v2
         with:
           args: '--no-progress --accept 200,429 site/'
-          fail: false
+          fail: true
 
       - name: QA - HTML validation
         uses: Cyb3r-Jak3/html5validator-action@v7.2.0

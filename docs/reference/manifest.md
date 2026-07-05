@@ -91,8 +91,10 @@ Tools marked with ✓ are included in that variant and all higher tiers.
 | Tool | Lite | Balanced | Power |
 |------|------|----------|-------|
 | jq | ✓ | ✓ | ✓ |
-| yq | ✓ | ✓ | ✓ |
+| yq | ✓ (apk) | ✓ (apk) | ✓ (pinned binary) |
 | python3 + pip3 | — | — | ✓ |
+
+**Note on yq:** All variants include [mikefarah/yq](https://github.com/mikefarah/yq) (the Go-based YAML processor), not the Python [kislyuk/yq](https://github.com/kislyuk/yq) wrapper. Lite and balanced install yq from Alpine packages; power uses a version-pinned, SHA-verified binary for reproducibility. The syntax is the same across all variants (`yq '.key' file.yaml`).
 
 ### Filesystem & Version Control
 

@@ -1,14 +1,14 @@
 # DebugBox — Base image
 # Shared foundation for all DebugBox variants (lite, balanced, power)
 
-FROM alpine:3.20.10
+FROM alpine:3.21
 
 # OCI image labels
 LABEL org.opencontainers.image.title="DebugBox Base" \
       org.opencontainers.image.description="Minimal Alpine base image for DebugBox Kubernetes debugging containers" \
       org.opencontainers.image.version="base-1.0.0" \
       org.opencontainers.image.variant="base" \
-      org.opencontainers.image.base.name="alpine:3.20.10" \
+      org.opencontainers.image.base.name="alpine:3.21" \
       org.opencontainers.image.licenses="MIT" \
       org.opencontainers.image.url="https://github.com/ibtisam-iq/debugbox" \
       org.opencontainers.image.source="https://github.com/ibtisam-iq/debugbox" \
