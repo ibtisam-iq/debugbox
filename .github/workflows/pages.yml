@@ -54,6 +54,12 @@ jobs:
             --accept 200,429,403
             --exclude "linkedin\.com"
             --exclude "x\.com"
+            --exclude "hub\.docker\.com"
+            --exclude "ghcr\.io"
+            --exclude "img\.shields\.io"
+            --exclude "debugbox\.ibtisam-iq\.com"
+            --exclude "example\.com"
+            --exclude "dl\.k8s\.io"
           fail: false
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
