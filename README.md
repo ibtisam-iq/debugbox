@@ -1,25 +1,14 @@
 # DebugBox
 
-**Status & Quality**
 [![CI](https://github.com/ibtisam-iq/debugbox/actions/workflows/ci.yml/badge.svg)](https://github.com/ibtisam-iq/debugbox/actions/workflows/ci.yml)
-[![Documentation](https://github.com/ibtisam-iq/debugbox/actions/workflows/docs.yml/badge.svg)](https://github.com/ibtisam-iq/debugbox/actions/workflows/docs.yml)
+[![Pages](https://github.com/ibtisam-iq/debugbox/actions/workflows/pages.yml/badge.svg)](https://github.com/ibtisam-iq/debugbox/actions/workflows/pages.yml)
 [![Latest Release](https://img.shields.io/github/v/release/ibtisam-iq/debugbox?label=release)](https://github.com/ibtisam-iq/debugbox/releases)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 
-**Container Registries**
 [![Docker Pulls](https://img.shields.io/docker/pulls/mibtisam/debugbox?logo=docker&label=Docker%20Hub&logoColor=white)](https://hub.docker.com/r/mibtisam/debugbox)
 [![GitHub Container Registry](https://img.shields.io/badge/GHCR-Available-brightgreen?logo=github&logoColor=white)](https://github.com/ibtisam-iq/debugbox/pkgs/container/debugbox)
 [![Multi-Arch](https://img.shields.io/badge/Multi--Arch-amd64%20%7C%20arm64-blue?logo=docker&logoColor=white)](https://github.com/ibtisam-iq/debugbox)
-
-**Security & Platform**
-[![Trivy Scanning](https://img.shields.io/badge/Security-Trivy%20Scanned-blue?logo=aqua&logoColor=white)](https://github.com/aquasecurity/trivy)
-[![Powered by Alpine](https://img.shields.io/badge/Powered%20by-Alpine%20Linux-0D597F?logo=alpine-linux&logoColor=white)](https://alpinelinux.org/)
 [![Kubernetes Ready](https://img.shields.io/badge/Kubernetes-Ready-326ce5?logo=kubernetes&logoColor=white)](https://kubernetes.io/)
-
-**Community**
-[![Contributor Covenant](https://img.shields.io/badge/Contributor%20Covenant-2.1-4baadc.svg)](CODE_OF_CONDUCT.md)
-[![GitHub Stars](https://img.shields.io/github/stars/ibtisam-iq/debugbox?style=flat&logo=github&logoColor=white)](https://github.com/ibtisam-iq/debugbox/stargazers)
-[![GitHub Issues](https://img.shields.io/github/issues/ibtisam-iq/debugbox?logo=github&logoColor=white)](https://github.com/ibtisam-iq/debugbox/issues)
 
 **Docs:** https://debugbox.ibtisam-iq.com
 

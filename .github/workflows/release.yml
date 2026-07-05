@@ -16,12 +16,12 @@ permissions:
   packages: write
 
 jobs:
-  release:
-    name: Build, Scan & Push (Atomic)
+  validate:
+    name: Validate Version
     runs-on: ubuntu-latest
+    outputs:
+      version: ${{ steps.version.outputs.version }}
     steps:
-      - uses: actions/checkout@v7
-
       - name: Extract and validate version
         id: version
         run: |
@@ -35,6 +35,48 @@ jobs:
             exit 1
           fi
           echo "version=${VERSION}" >> $GITHUB_OUTPUT
+
+  build-and-scan:
+    name: Build & Scan (${{ matrix.variant }})
+    needs: validate
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        variant: [lite, balanced, power]
+      fail-fast: true
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v4
+        with:
+          platforms: amd64
+
+      - name: Set up Buildx
+        uses: docker/setup-buildx-action@v4
+
+      - name: Build ${{ matrix.variant }} (amd64 for scan)
+        run: |
+          docker buildx build \
+            --file dockerfiles/Dockerfile.${{ matrix.variant }} \
+            --platform linux/amd64 \
+            --tag scan-${{ matrix.variant }}:${{ needs.validate.outputs.version }} \
+            --load \
+            .
+
+      - name: Trivy security scan
+        uses: aquasecurity/trivy-action@v0.36.0
+        with:
+          image-ref: scan-${{ matrix.variant }}:${{ needs.validate.outputs.version }}
+          severity: HIGH,CRITICAL
+          exit-code: '1'
+
+  push:
+    name: Push Multi-Arch (All Variants)
+    needs: [validate, build-and-scan]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
 
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v4
@@ -57,61 +99,18 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-      # Stage 1: Build amd64 only for scanning
-      - name: Build all variants (amd64 for scan)
-        run: |
-          set -e
-          variants=("lite" "balanced" "power")
-          VERSION="${{ steps.version.outputs.version }}"
-          echo "Building all variants (amd64 for scanning)..."
-          for variant in "${variants[@]}"; do
-            echo "Building $variant (amd64)..."
-            docker buildx build \
-              --file dockerfiles/Dockerfile.$variant \
-              --platform linux/amd64 \
-              --tag scan-$variant:$VERSION \
-              --output type=docker,dest=/tmp/$variant-amd64.tar \
-              .
-            echo "Exported $variant to /tmp/$variant-amd64.tar"
-          done
-
-      - name: Install Trivy
-        run: |
-          curl -sfL https://raw.githubusercontent.com/aquasecurity/trivy/main/contrib/install.sh \
-            | sh -s -- -b /usr/local/bin v0.72.0
-          trivy --version
-
-      # Stage 2: Scan all variants
-      - name: Scan all variants
-        run: |
-          set -e
-          variants=("lite" "balanced" "power")
-          VERSION="${{ steps.version.outputs.version }}"
-          echo "Scanning all variants for HIGH/CRITICAL vulnerabilities..."
-          for variant in "${variants[@]}"; do
-            echo "Scanning $variant..."
-            trivy image \
-              --input /tmp/$variant-amd64.tar \
-              --severity HIGH,CRITICAL \
-              --exit-code 1 \
-              scan-$variant:$VERSION
-            echo "Scan passed for $variant"
-          done
-
-      # Stage 3: Push multi-platform only if all scans passed
-      - name: Push all variants (atomic, 20 tags)
+      - name: Push all variants (20 tags)
         env:
           DOCKER_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
+          VERSION: ${{ needs.validate.outputs.version }}
         run: |
           set -e
-          variants=("lite" "balanced" "power")
-          VERSION="${{ steps.version.outputs.version }}"
           BUILD_DATE=$(date -u +'%Y-%m-%dT%H:%M:%SZ')
           VCS_REF="${{ github.sha }}"
-          echo "All scans passed — starting atomic push (20 tags)..."
+          variants=("lite" "balanced" "power")
+          echo "All scans passed. Pushing all variants (20 tags)..."
           for variant in "${variants[@]}"; do
             echo "Pushing $variant..."
-            # Build tag list for each variant (quoted for safety)
             TAGS=(
               "--tag" "ghcr.io/ibtisam-iq/debugbox:$variant"
               "--tag" "ghcr.io/ibtisam-iq/debugbox:$variant-latest"
@@ -120,7 +119,6 @@ jobs:
               "--tag" "docker.io/$DOCKER_USERNAME/debugbox:$variant-latest"
               "--tag" "docker.io/$DOCKER_USERNAME/debugbox:$variant-$VERSION"
             )
-            # Add balanced aliases (2 extra tags: :latest and :VERSION)
             if [ "$variant" = "balanced" ]; then
               TAGS+=(
                 "--tag" "ghcr.io/ibtisam-iq/debugbox:latest"
@@ -129,7 +127,6 @@ jobs:
                 "--tag" "docker.io/$DOCKER_USERNAME/debugbox:$VERSION"
               )
             fi
-            # Single atomic push per variant
             docker buildx build \
               --file "dockerfiles/Dockerfile.$variant" \
               --platform linux/amd64,linux/arm64 \
@@ -144,32 +141,33 @@ jobs:
           done
 
       - name: Release summary
+        env:
+          VERSION: ${{ needs.validate.outputs.version }}
         run: |
-          VERSION="${{ steps.version.outputs.version }}"
           echo ""
           echo "Release v${VERSION} completed successfully!"
           echo ""
           echo "Published images (20 tags across 2 registries):"
           echo ""
           echo "Lite variant:"
-          echo "  • ghcr.io/ibtisam-iq/debugbox:lite"
-          echo "  • ghcr.io/ibtisam-iq/debugbox:lite-latest"
-          echo "  • ghcr.io/ibtisam-iq/debugbox:lite-${VERSION}"
+          echo "  ghcr.io/ibtisam-iq/debugbox:lite"
+          echo "  ghcr.io/ibtisam-iq/debugbox:lite-latest"
+          echo "  ghcr.io/ibtisam-iq/debugbox:lite-${VERSION}"
           echo ""
           echo "Balanced variant (default):"
-          echo "  • ghcr.io/ibtisam-iq/debugbox:balanced"
-          echo "  • ghcr.io/ibtisam-iq/debugbox:balanced-latest"
-          echo "  • ghcr.io/ibtisam-iq/debugbox:balanced-${VERSION}"
-          echo "  • ghcr.io/ibtisam-iq/debugbox:latest (alias)"
-          echo "  • ghcr.io/ibtisam-iq/debugbox:${VERSION} (alias)"
+          echo "  ghcr.io/ibtisam-iq/debugbox:balanced"
+          echo "  ghcr.io/ibtisam-iq/debugbox:balanced-latest"
+          echo "  ghcr.io/ibtisam-iq/debugbox:balanced-${VERSION}"
+          echo "  ghcr.io/ibtisam-iq/debugbox:latest (alias)"
+          echo "  ghcr.io/ibtisam-iq/debugbox:${VERSION} (alias)"
           echo ""
           echo "Power variant:"
-          echo "  • ghcr.io/ibtisam-iq/debugbox:power"
-          echo "  • ghcr.io/ibtisam-iq/debugbox:power-latest"
-          echo "  • ghcr.io/ibtisam-iq/debugbox:power-${VERSION}"
+          echo "  ghcr.io/ibtisam-iq/debugbox:power"
+          echo "  ghcr.io/ibtisam-iq/debugbox:power-latest"
+          echo "  ghcr.io/ibtisam-iq/debugbox:power-${VERSION}"
           echo ""
           echo "All variants passed security scanning"
           echo "Multi-platform: linux/amd64, linux/arm64"
           echo ""
-          echo "📝 Next: Create GitHub Release manually at:"
-          echo "   https://github.com/ibtisam-iq/debugbox/releases/new?tag=v${VERSION}"
+          echo "Next: Create GitHub Release manually at:"
+          echo "  https://github.com/ibtisam-iq/debugbox/releases/new?tag=v${VERSION}"
