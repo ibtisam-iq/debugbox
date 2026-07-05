@@ -14,7 +14,8 @@ TESTS_DIR         := tests
 
 # Local build configuration
 LOCAL_TAG ?= local
-PLATFORM  ?= linux/amd64,linux/arm64
+HOST_ARCH := $(shell uname -m | sed 's/x86_64/amd64/' | sed 's/aarch64/arm64/')
+PLATFORM  ?= linux/$(HOST_ARCH)
 NO_CACHE  ?= false
 
 # Tooling
@@ -37,6 +38,9 @@ help:
 	@echo "  make build-<variant>     Build image (lite | balanced | power)"
 	@echo "  make build-all           Build all variants"
 	@echo ""
+	@echo "Run:"
+	@echo "  make run-<variant>       Run variant interactively"
+	@echo ""
 	@echo "Test:"
 	@echo "  make test-<variant>      Run smoke tests"
 	@echo "  make test-all            Test all variants"
@@ -50,7 +54,7 @@ help:
 	@echo "  make clean               Remove local images"
 	@echo ""
 	@echo "Args:"
-	@echo "  PLATFORM=linux/amd64     Override platforms"
+	@echo "  PLATFORM=linux/amd64     Override platform (default: host arch)"
 	@echo "  NO_CACHE=true            Disable build cache"
 	@echo ""
 
@@ -134,6 +138,14 @@ test-all: build-all
 	done
 	@echo "✅ All tests passed"
 	@echo ""
+
+# -------------------------------
+# Run
+# -------------------------------
+.PHONY: run-%
+run-%:
+	@echo "==> Running $(IMAGE_NAME):$*-$(LOCAL_TAG)"
+	docker run --rm -it $(IMAGE_NAME):$*-$(LOCAL_TAG)
 
 # -------------------------------
 # Security scan
