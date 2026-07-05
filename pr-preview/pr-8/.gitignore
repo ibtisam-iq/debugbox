@@ -1,0 +1,18 @@
+# Python virtual environment
+.venv/
+
+# Personal engineering scratchpad (not part of the project)
+.scratch/
+
+# macOS
+.DS_Store
+
+# Editors
+.vscode/
+.idea/
+
+# Logs & temp files
+*.log
+*.tmp
+
+.claude/
