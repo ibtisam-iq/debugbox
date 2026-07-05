@@ -1,0 +1,107 @@
+# DebugBox — Balanced variant
+# Daily-driver debugging image for Kubernetes troubleshooting (~46 MB).
+
+# Build kubectx/kubens from source
+FROM golang:1.25-alpine AS kubectx-builder
+
+ARG KUBECTX_VERSION=v0.9.5
+WORKDIR /src
+
+RUN apk add --no-cache git
+
+RUN git clone --branch ${KUBECTX_VERSION} --depth 1 \
+    https://github.com/ahmetb/kubectx.git .
+
+RUN CGO_ENABLED=0 go build -trimpath \
+      -ldflags="-s -w -X main.version=${KUBECTX_VERSION}" \
+      -o kubectx ./cmd/kubectx && \
+    CGO_ENABLED=0 go build -trimpath \
+      -ldflags="-s -w -X main.version=${KUBECTX_VERSION}" \
+      -o kubens ./cmd/kubens
+
+# Runtime image
+FROM ghcr.io/ibtisam-iq/debugbox-base:latest
+
+# Build args for OCI labels (passed from workflow)
+ARG BUILD_DATE
+ARG VCS_REF
+ARG VERSION
+
+# OCI IMAGE LABELS
+LABEL org.opencontainers.image.title="DebugBox Balanced" \
+      org.opencontainers.image.description="Balanced debugging image for everyday Kubernetes and cloud-native troubleshooting" \
+      org.opencontainers.image.variant="balanced" \
+      org.opencontainers.image.base.name="ghcr.io/ibtisam-iq/debugbox-base:latest" \
+      org.opencontainers.image.created="${BUILD_DATE}" \
+      org.opencontainers.image.revision="${VCS_REF}" \
+      org.opencontainers.image.version="${VERSION}" \
+      org.opencontainers.image.licenses="MIT" \
+      org.opencontainers.image.url="https://github.com/ibtisam-iq/debugbox" \
+      org.opencontainers.image.source="https://github.com/ibtisam-iq/debugbox" \
+      org.opencontainers.image.documentation="https://debugbox.ibtisam-iq.com" \
+      org.opencontainers.image.vendor="Ibtisam IQ" \
+      org.opencontainers.image.authors="Muhammad Ibtisam <contact@ibtisam-iq.com>"
+
+# Copy Kubernetes context switchers
+COPY --from=kubectx-builder /src/kubectx /usr/local/bin/kubectx
+COPY --from=kubectx-builder /src/kubens  /usr/local/bin/kubens
+
+# Install balanced package set
+COPY dockerfiles/build/ /tmp/build/
+RUN set -eux && \
+    sh /tmp/build/balanced.packages && \
+    apk add --no-cache yq
+
+# Verify installed tools
+RUN set -eux && \
+    sh /tmp/build/balanced.verify && \
+    rm -rf /tmp/build && \
+    echo "DebugBox Balanced tools verified"
+
+ENV PAGER=less
+
+# Shell helpers for debugging workflows
+RUN set -eux && \
+    mkdir -p /etc/profile.d && \
+    printf '%s\n' \
+      '# DebugBox Balanced — Shell Helpers & Aliases' \
+      '# Loaded automatically via /etc/profile.d (bash)' \
+      '' \
+      '# === File Listing ===' \
+      '# ll() is inherited from debugbox-base-profile.sh' \
+      '' \
+      '# === Data Inspection ===' \
+      '# json() — Pretty-print JSON with fallback' \
+      '#   Usage: echo "{...}" | json' \
+      '#          json file.json' \
+      'json() {' \
+      '  jq . "$@" 2>/dev/null || cat "$@"' \
+      '}' \
+      '' \
+      '# yaml() — Pretty-print YAML with fallback' \
+      '#   Usage: kubectl get pod -o yaml | yaml' \
+      '#          yaml config.yaml' \
+      'yaml() {' \
+      '  yq . "$@" 2>/dev/null || cat "$@"' \
+      '}' \
+      '' \
+      '# === Network Inspection ===' \
+      '# ports() — Show all listening ports (TCP & UDP)' \
+      'alias ports="netstat -tulpn"' \
+      '' \
+      '# connections() — Show all active connections' \
+      'alias connections="ss -tulpn"' \
+      '' \
+      '# routes() — Show IP routing table' \
+      'alias routes="ip route show"' \
+      '' \
+      '# === Kubernetes ===' \
+      '# Show current context and namespace' \
+      'alias k8s-info="echo Context: $(kubectx -c 2>/dev/null || echo unknown); echo Namespace: $(kubens -c 2>/dev/null || echo unknown)"' \
+      > /etc/profile.d/debugbox-balanced-profile.sh && \
+    \
+    chmod 0644 /etc/profile.d/debugbox-balanced-profile.sh && \
+    \
+    echo "DebugBox Balanced: shell helpers configured ✓"
+
+CMD ["/bin/bash", "-l"]

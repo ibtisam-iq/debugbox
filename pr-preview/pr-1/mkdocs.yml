@@ -1,0 +1,179 @@
+# ============================================================
+# DebugBox Documentation Configuration
+# ============================================================
+
+# ------------------------------------------------------------
+# Site Identity
+# ------------------------------------------------------------
+
+site_name: DebugBox
+site_author: Muhammad Ibtisam
+site_url: https://debugbox.ibtisam-iq.com/
+site_description: >
+  Lightweight, variant-based debugging container suite
+  for Kubernetes and Docker environments.
+
+docs_dir: docs
+
+# ------------------------------------------------------------
+# Repository
+# ------------------------------------------------------------
+
+repo_url: https://github.com/ibtisam-iq/debugbox
+repo_name: GitHub
+
+# Use blob (not edit) to encourage PR-based contributions
+edit_uri: blob/main/docs/
+
+# ------------------------------------------------------------
+# Copyright
+# ------------------------------------------------------------
+
+copyright: Copyright &copy; 2026 DebugBox
+
+# ------------------------------------------------------------
+# Theme
+# ------------------------------------------------------------
+
+theme:
+  name: material
+
+  palette:
+    # Light mode
+    - scheme: default
+      primary: blue
+      accent: cyan
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+
+    # Dark mode
+    - scheme: slate
+      primary: blue
+      accent: cyan
+      toggle:
+        icon: material/brightness-4
+        name: Switch to light mode
+
+  language: en
+
+  logo: images/favicon.svg
+  favicon: images/favicon.ico
+
+  font:
+    text: Inter
+
+  features:
+    - navigation.tabs
+    - navigation.tabs.sticky
+    - navigation.sections
+    - navigation.footer
+    - content.action.edit
+    - content.tabs.link
+    - content.code.annotate
+    - content.code.copy
+    - toc.integrate
+
+# ------------------------------------------------------------
+# Markdown Extensions
+# ------------------------------------------------------------
+
+markdown_extensions:
+  - abbr
+  - admonition
+  - attr_list
+  - def_list
+  - footnotes
+  - md_in_html
+  - toc:
+      permalink: true
+      toc_depth: 0
+  - pymdownx.highlight:
+      line_spans: __span
+  - pymdownx.details
+  - pymdownx.magiclink
+
+  # Mermaid diagram support
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
+
+  - pymdownx.tabbed:
+      alternate_style: true
+  - pymdownx.tasklist:
+      clickable_checkbox: true
+  - pymdownx.emoji:
+      emoji_index: !!python/name:material.extensions.emoji.twemoji
+      emoji_generator: !!python/name:material.extensions.emoji.to_svg
+
+# ------------------------------------------------------------
+# Plugins
+# ------------------------------------------------------------
+
+plugins:
+  - search
+  - macros
+  - git-revision-date-localized:
+      type: custom
+      custom_format: "%B %d, %Y %I:%M:%S %p"
+      enable_creation_date: false
+      fallback_to_build_date: false
+      timezone: Asia/Karachi
+      locale: en
+
+# ------------------------------------------------------------
+# Extra Configuration
+# ------------------------------------------------------------
+
+extra:
+  generator: false
+
+  analytics:
+    provider: google
+    property: G-XJ4731TZ78
+
+  # Mike versioning support
+  version:
+    provider: mike
+
+  social:
+    - icon: fontawesome/brands/linkedin
+      link: https://www.linkedin.com/in/ibtisam-iq/
+    - icon: fontawesome/brands/github
+      link: https://github.com/ibtisam-iq/debugbox
+    - icon: fontawesome/solid/globe
+      link: https://ibtisam-iq.com
+
+extra_css:
+  - stylesheets/extra.css
+
+# ------------------------------------------------------------
+# Navigation
+# ------------------------------------------------------------
+
+nav:
+  - Overview: index.md
+  - Getting Started:
+    - Quick Start: getting-started/quick-start.md
+    - Installation: getting-started/installation.md
+    - Motivation: getting-started/motivation.md
+  - Variants:
+    - Overview: variants/overview.md
+    - Lite: variants/lite.md
+    - Balanced: variants/balanced.md
+    - Power: variants/power.md
+  - Usage:
+    - Docker: usage/docker.md
+    - Kubernetes: usage/kubernetes.md
+  - Guides:
+    - Examples: guides/examples.md
+    - Bandwidth Savings: guides/bandwidth-savings.md
+    - Troubleshooting & FAQs: guides/troubleshooting.md
+  - Reference:
+    - Tooling Manifest: reference/manifest.md
+    - Multi-Architecture: reference/multi-arch.md
+    - Image Tags & Registries: reference/tags.md
+  - Development: development/local-setup.md
+  - Security: security/policy.md
