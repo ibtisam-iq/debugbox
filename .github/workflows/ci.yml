@@ -59,7 +59,7 @@ jobs:
         run: |
           set -e
           curl -sfL https://raw.githubusercontent.com/aquasecurity/trivy/main/contrib/install.sh \
-            | sh -s -- -b /usr/local/bin v0.69.1
+            | sh -s -- -b /usr/local/bin v0.72.0
           trivy --version
 
       - name: Build ${{ matrix.variant }} image for ${{ matrix.arch }}
