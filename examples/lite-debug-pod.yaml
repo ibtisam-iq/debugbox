@@ -9,7 +9,7 @@ spec:
   containers:
   - name: debugbox
     image: ghcr.io/ibtisam-iq/debugbox:lite
-    command: ["/bin/bash"]
+    command: ["/bin/ash", "-l"]
     tty: true
     stdin: true
   restartPolicy: Never

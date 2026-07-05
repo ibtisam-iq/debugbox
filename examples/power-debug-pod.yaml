@@ -9,7 +9,7 @@ spec:
   containers:
   - name: debugbox
     image: ghcr.io/ibtisam-iq/debugbox:power
-    command: ["/bin/bash"]
+    command: ["/bin/bash", "-l"]
     securityContext:
       # Don't use privileged unless absolutely necessary
       privileged: false
