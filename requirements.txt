@@ -21,3 +21,7 @@ python-dateutil==2.9.0            # Updated from 2.8.2
 # mkdocs-swagger-ui-tag==0.6.1    # API docs via Swagger UI
 # mkdocs-pdf-export-plugin==0.5.10  # Export to PDF
 mkdocs-git-revision-date-localized-plugin==1.4.7  # Fixed from 1.2.4 (now with correct package name)
+
+# Social card generation (OG images)
+pillow>=10.0.0
+cairosvg>=2.7.0

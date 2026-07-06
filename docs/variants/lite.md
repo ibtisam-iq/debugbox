@@ -1,6 +1,6 @@
 # Lite Variant
 
-**~14 MB** — Minimal and lightning-fast.
+**~15 MB** -- Minimal and fast.
 
 Perfect for quick network diagnostics and bandwidth-constrained environments.
 
@@ -30,10 +30,12 @@ ghcr.io/ibtisam-iq/debugbox:lite-1.0.0
 ### Kubernetes
 ```bash
 # Debug pod with lite variant
-kubectl debug my-pod -it --image=ghcr.io/ibtisam-iq/debugbox:lite
+kubectl debug my-pod -it \
+  --image=ghcr.io/ibtisam-iq/debugbox:lite
 
 # Standalone session
-kubectl run debug --rm -it --image=ghcr.io/ibtisam-iq/debugbox:lite --restart=Never
+kubectl run debug --rm -it \
+  --image=ghcr.io/ibtisam-iq/debugbox:lite --restart=Never
 ```
 
 ### Docker
@@ -45,9 +47,9 @@ docker run ghcr.io/ibtisam-iq/debugbox:lite curl -I https://ibtisam-iq.com
 
 ## What's Included
 
-Lite includes **8 essential networking packages** optimized for fast pulls and basic connectivity testing.
+Lite includes **7 focused packages** optimized for fast pulls and basic connectivity testing.
 
-→ **[Complete lite tool list with examples](../guides/examples.md#variant-lite-14-mb)**
+→ **[Complete lite tool list with examples](../guides/examples.md#variant-lite-15-mb)**
 
 **Key categories:**
 
@@ -59,8 +61,8 @@ Lite includes **8 essential networking packages** optimized for fast pulls and b
 
 ## When to Upgrade
 
-**Need more tools?** → **[Balanced Variant](balanced.md)** adds bash, tcpdump, vim, strace, and Kubernetes helpers (+32 MB)
+**Need more tools?** → **[Balanced Variant](balanced.md)** adds bash, tcpdump, vim, strace, and Kubernetes helpers (+~36 MB)
 
-**Need forensics?** → **[Power Variant](power.md)** adds packet analysis, routing, and Python scripting (+90 MB)
+**Need forensics?** → **[Power Variant](power.md)** adds packet analysis, routing, and Python scripting (+~97 MB)
 
 → **[Variants Overview](overview.md)** | **[Real-world Examples](../guides/examples.md)** | **[Troubleshooting](../guides/troubleshooting.md)**

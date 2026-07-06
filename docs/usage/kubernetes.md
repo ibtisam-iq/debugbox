@@ -32,6 +32,30 @@ kubectl run debug --rm -it \
 
 Exit with `exit` or `Ctrl+C` to delete the pod.
 
+## Ready-Made Pod Manifests
+
+For declarative `kubectl apply -f` workflows, pre-made manifests are available for each variant:
+
+| Variant | Manifest | Capabilities |
+|---------|----------|---------------|
+| lite | [lite-debug-pod.yaml](https://raw.githubusercontent.com/ibtisam-iq/debugbox/main/examples/lite-debug-pod.yaml) | None |
+| balanced | [balanced-debug-pod.yaml](https://raw.githubusercontent.com/ibtisam-iq/debugbox/main/examples/balanced-debug-pod.yaml) | `NET_RAW` (for `tcpdump`) |
+| power | [power-debug-pod.yaml](https://raw.githubusercontent.com/ibtisam-iq/debugbox/main/examples/power-debug-pod.yaml) | `NET_ADMIN`, `NET_RAW` |
+
+```bash
+kubectl apply -f \
+  https://raw.githubusercontent.com/ibtisam-iq/debugbox/main/examples/lite-debug-pod.yaml
+kubectl exec -it debug-lite -- ash
+
+kubectl apply -f \
+  https://raw.githubusercontent.com/ibtisam-iq/debugbox/main/examples/balanced-debug-pod.yaml
+kubectl exec -it debug-balanced -- bash
+
+kubectl apply -f \
+  https://raw.githubusercontent.com/ibtisam-iq/debugbox/main/examples/power-debug-pod.yaml
+kubectl exec -it debug-power -- bash
+```
+
 ## Power Variant with Capabilities
 
 **⚠️ For advanced networking tools** (`tshark`, `conntrack`, `nft`, `iptables`), use a manifest with capabilities:
@@ -147,7 +171,8 @@ kubectl exec -it app-with-debug-power -c debugbox -- bash
 |------|---------|------------|
 | Quick DNS/connectivity | lite | `kubectl debug my-pod -it --image=ghcr.io/ibtisam-iq/debugbox:lite` |
 | Pod debugging (default) | balanced | `kubectl debug my-pod -it --image=ghcr.io/ibtisam-iq/debugbox` |
-| Packet capture | power + manifest | `kubectl apply -f power-debug-pod.yaml` |
+| Packet capture with tcpdump | balanced + manifest | `kubectl apply -f balanced-debug-pod.yaml` (grants `NET_RAW`) |
+| Deep packet analysis | power + manifest | `kubectl apply -f power-debug-pod.yaml` |
 | Routing/firewall | power + manifest | `kubectl apply -f power-debug-pod.yaml` |
 
 ## Production Best Practices
@@ -166,6 +191,6 @@ kubectl exec -it app-with-debug-power -c debugbox -- bash
 
 3. **Prefer ephemeral containers** (kubectl debug) over persistent sidecars for minimal impact.
 
-4. **Only add capabilities when needed** — standard kubectl debug doesn't need them.
+4. **Only add capabilities when needed.** Standard kubectl debug doesn't need them.
 
 → **[Docker Usage](docker.md)** | **[Real-world Examples](../guides/examples.md)** | **[Troubleshooting](../guides/troubleshooting.md)**

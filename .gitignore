@@ -15,4 +15,9 @@
 *.log
 *.tmp
 
+# Agent/assistant
 .claude/
+
+# MkDocs
+site/
+.cache/

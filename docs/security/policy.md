@@ -50,11 +50,11 @@ make scan
 
 ### Image Design Security
 
-- **Runs as root** — required for tools like `tcpdump`, `strace` (ephemeral debugging only)
-- **No baked-in secrets** — credentials not compiled in
-- **Minimal variants** — lite excludes compilers/development tools to reduce attack surface
-- **Pinned dependencies** — critical tools version-locked and SHA-verified where possible
-- **Alpine Linux base** — minimal (~3.9 MB) attack surface vs. Debian/Ubuntu
+- **Runs as root** -- required for tools like `tcpdump`, `strace` (ephemeral debugging only)
+- **No baked-in secrets** -- credentials not compiled in
+- **Minimal variants** -- lite excludes compilers/development tools to reduce attack surface
+- **Pinned dependencies** -- critical tools version-locked and SHA-verified where possible
+- **Alpine Linux base** -- minimal (~3.9 MB) attack surface vs. Debian/Ubuntu
 
 ### Release Security
 
@@ -73,8 +73,8 @@ From **[RELEASE.md](https://github.com/ibtisam-iq/debugbox/blob/main/RELEASE.md)
 
 ### Immutable Released Images
 
-- **Released versions never change** — once published, images are immutable
-- **Older versions remain available forever** — for historical reference or rollback
+- **Released versions never change** -- once published, images are immutable
+- **Older versions remain available forever** -- for historical reference or rollback
 - **If a vulnerability is found:**
     1. Patched version released immediately (e.g., v1.0.0 → v1.0.1)
     2. Old release marked with warning in GitHub Releases
@@ -96,9 +96,9 @@ docker run -it ghcr.io/ibtisam-iq/debugbox:lite-1.0.0
 
 ### Variant Selection
 
-- Use **lite** when possible (14 MB, smallest attack surface)
-- Upgrade to **balanced** for standard debugging (46 MB)
-- Use **power** only when needed for advanced forensics (104 MB)
+- Use **lite** when possible (~15 MB, smallest attack surface)
+- Upgrade to **balanced** for standard debugging (~51 MB)
+- Use **power** only when needed for advanced forensics (~112 MB)
 
 ### Runtime Hygiene
 
@@ -113,21 +113,17 @@ docker run -it ghcr.io/ibtisam-iq/debugbox:lite-1.0.0
 - No architecture-specific vulnerabilities known
 - Both architectures scanned before release
 
-## Known Vulnerabilities & Suppressions
+## Known Vulnerabilities
 
-DebugBox is transparent about any CVEs in optional dependencies:
+All previously suppressed CVEs have been resolved. kubectx/kubens is built from source with patched dependencies, and yq uses a current binary release.
 
-Check **[SECURITY.md](https://github.com/ibtisam-iq/debugbox/blob/main/SECURITY.md)** for:
-
-- List of suppressed vulnerabilities (if any)
-- Rationale for each suppression
-- Risk assessment per variant
+All three variants pass Trivy scanning with zero HIGH/CRITICAL findings. See **[SECURITY.md](https://github.com/ibtisam-iq/debugbox/blob/main/SECURITY.md)** for details.
 
 ## Acknowledgments
 
 Thank you to security researchers who report issues responsibly.
 
-**Hall of Fame:** *No reports yet — help us keep DebugBox secure!*
+**Hall of Fame:** *No reports yet. Help us keep DebugBox secure!*
 
 ---
 

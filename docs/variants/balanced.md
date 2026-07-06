@@ -1,6 +1,6 @@
 # Balanced Variant (Recommended)
 
-**~46 MB** — The sweet spot for daily debugging.
+**~51 MB** -- The default for daily debugging.
 
 The default and recommended choice for nearly all Kubernetes troubleshooting tasks.
 
@@ -30,14 +30,17 @@ ghcr.io/ibtisam-iq/debugbox:balanced-1.0.0  # Explicit form
 
 ### Kubernetes (Most Common)
 ```bash
-# Default — balanced variant
-kubectl debug my-pod -it --image=ghcr.io/ibtisam-iq/debugbox
+# Default -- balanced variant
+kubectl debug my-pod -it \
+  --image=ghcr.io/ibtisam-iq/debugbox
 
 # Explicit tag
-kubectl debug my-pod -it --image=ghcr.io/ibtisam-iq/debugbox:balanced
+kubectl debug my-pod -it \
+  --image=ghcr.io/ibtisam-iq/debugbox:balanced
 
 # Standalone
-kubectl run debug --rm -it --image=ghcr.io/ibtisam-iq/debugbox --restart=Never
+kubectl run debug --rm -it \
+  --image=ghcr.io/ibtisam-iq/debugbox --restart=Never
 ```
 
 ### Docker
@@ -48,37 +51,39 @@ docker run -it ghcr.io/ibtisam-iq/debugbox:1.0.0  # Production
 
 ## What's Included
 
-Balanced includes **all lite tools** plus **21 additional packages** for system debugging, process inspection, and Kubernetes workflows.
+Balanced includes **all lite tools** plus additional packages for system debugging, process inspection, TLS inspection, and Kubernetes workflows.
 
-→ **[Complete balanced tool list with examples](../guides/examples.md#variant-balanced-46-mb-default)**
+→ **[Complete balanced tool list with examples](../guides/examples.md#variant-balanced-51-mb-default)**
 
 **Key additions over lite:**
 
-- **Shell & Editors:** bash, vim, nano
+- **Shell & Editors:** bash, vim, less
+- **TLS/SSL:** openssl (certificate inspection, TLS debugging)
 - **Process Tools:** strace, lsof, htop, ps, top
-- **Network Advanced:** tcpdump, socat, nmap, mtr, iperf3, iftop
+- **Network Advanced:** tcpdump, socat, mtr
 - **Kubernetes Helpers:** kubectx, kubens
 - **Version Control:** git
 - **Compression:** tar, gzip
 
 ## Shell Helpers
 
-Balanced includes **6+ custom shell functions** for rapid debugging:
+Balanced includes **10 custom shell helpers** for rapid debugging:
 
 → **[Complete shell helper reference with examples](../guides/examples.md#helper-functions-shell)**
 
 **Quick reference:**
 
-- `ll()` — `ls -alF` alias
-- `json()` / `yaml()` — Pretty-print data
-- `ports()` — List listening ports
-- `connections()` — Show active connections
-- `routes()` — Display routing table
-- `k8s-info` — Current Kubernetes context
+- `ll()` -- `ls -alF` alias
+- `json()` / `yaml()` -- Pretty-print data
+- `ports` / `connections` -- Socket inspection
+- `routes` -- Display routing table
+- `k8s-info` -- Current Kubernetes context
+- `sniff` / `sniff-http` / `sniff-dns` -- Packet capture shortcuts
+- `cert-check()` -- TLS certificate inspection
 
 ## When to Switch
 
-**Downgrade to [Lite Variant](lite.md)?** Save 32 MB if you only need basic connectivity.
+**Downgrade to [Lite Variant](lite.md)?** Save ~36 MB if you only need basic connectivity.
 
 **Upgrade to [Power Variant](power.md)?** Need packet analysis, routing tools, or scripting.
 

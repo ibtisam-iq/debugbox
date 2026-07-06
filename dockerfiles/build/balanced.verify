@@ -21,11 +21,11 @@ echo "  jq ✓" && \
 yq --version >/dev/null && \
 echo "  yq ✓" && \
 \
-echo "=== DebugBox Balanced: Verifying HTTP/HTTPS ===" && \
+echo "=== DebugBox Balanced: Verifying HTTP/HTTPS & TLS ===" && \
 curl --version >/dev/null && \
 echo "  curl ✓" && \
-wget --version >/dev/null && \
-echo "  wget ✓" && \
+openssl version >/dev/null && \
+echo "  openssl ✓" && \
 \
 echo "=== DebugBox Balanced: Verifying Basic Networking ===" && \
 dig -v >/dev/null 2>&1 && \
@@ -44,14 +44,6 @@ socat -V >/dev/null 2>&1 && \
 echo "  socat ✓" && \
 mtr --version >/dev/null 2>&1 && \
 echo "  mtr ✓" && \
-nmap --version >/dev/null && \
-echo "  nmap ✓" && \
-iperf3 --version >/dev/null && \
-echo "  iperf3 ✓" && \
-ethtool --version >/dev/null 2>&1 && \
-echo "  ethtool ✓" && \
-command -v iftop >/dev/null && \
-echo "  iftop ✓" && \
 tcpdump --version >/dev/null 2>&1 && \
 echo "  tcpdump ✓" && \
 \

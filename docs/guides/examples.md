@@ -9,7 +9,9 @@ Real-world debugging scenarios covering **every tool** in DebugBox.
 **Tools:** `dig`, `nslookup`, `host` (bind-tools)
 
 ```bash
-kubectl run dns-debug --rm -it --image=ghcr.io/ibtisam-iq/debugbox:lite --restart=Never
+kubectl run dns-debug --rm -it \
+  --image=ghcr.io/ibtisam-iq/debugbox:lite \
+  --restart=Never
 
 # Detailed DNS query
 dig my-service.default.svc.cluster.local
@@ -34,15 +36,16 @@ cat /etc/resolv.conf
 
 ## Service Connectivity
 
-**Tools:** `curl`, `wget`, `ping`, `nc` (netcat), `telnet`
+**Tools:** `curl`, `ping`, `nc` (netcat)
 
 ```bash
-kubectl run net-debug --rm -it --image=ghcr.io/ibtisam-iq/debugbox --restart=Never
+kubectl run net-debug --rm -it \
+  --image=ghcr.io/ibtisam-iq/debugbox \
+  --restart=Never
 
 # HTTP endpoint testing
 curl -v http://my-service:8080/health
 curl -I https://example.com        # Headers only
-wget -O- http://my-service/status  # Alternative HTTP client
 
 # Basic connectivity
 ping -c 4 my-service.default.svc.cluster.local
@@ -63,7 +66,8 @@ echo "GET / HTTP/1.0\r\n" | nc example.com 80
 **Tools:** `ip` (iproute2), `ifconfig` (legacy alternative)
 
 ```bash
-kubectl debug my-app -it --image=ghcr.io/ibtisam-iq/debugbox
+kubectl debug my-app -it \
+  --image=ghcr.io/ibtisam-iq/debugbox
 
 # Show all interfaces
 ip addr
@@ -87,7 +91,8 @@ ip -s link show eth0
 **Tools:** `ss`, `netstat`, `lsof`
 
 ```bash
-kubectl debug my-app -it --image=ghcr.io/ibtisam-iq/debugbox
+kubectl debug my-app -it \
+  --image=ghcr.io/ibtisam-iq/debugbox
 
 # Active connections
 ss -tunap                 # All TCP/UDP connections with processes
@@ -110,7 +115,9 @@ lsof -p $(pgrep nginx)    # Files opened by nginx
 **Tools:** `mtr`, `tracepath`, `tcptraceroute` (power)
 
 ```bash
-kubectl run trace-debug --rm -it --image=ghcr.io/ibtisam-iq/debugbox --restart=Never
+kubectl run trace-debug --rm -it \
+  --image=ghcr.io/ibtisam-iq/debugbox \
+  --restart=Never
 
 # Real-time route tracing with statistics
 mtr example.com
@@ -120,7 +127,9 @@ mtr -c 10 -r example.com  # 10 cycles, report mode
 tracepath example.com
 
 # TCP-based traceroute (power variant)
-kubectl run trace-power --rm -it --image=ghcr.io/ibtisam-iq/debugbox:power --restart=Never
+kubectl run trace-power --rm -it \
+  --image=ghcr.io/ibtisam-iq/debugbox:power \
+  --restart=Never
 tcptraceroute example.com 443
 ```
 
@@ -128,10 +137,12 @@ tcptraceroute example.com 443
 
 ## Port Scanning & Discovery
 
-**Tools:** `nmap`, `nping` (power), NSE scripts (power)
+**Tools:** `nmap`, `nping`, NSE scripts (all power)
 
 ```bash
-kubectl run scan-debug --rm -it --image=ghcr.io/ibtisam-iq/debugbox --restart=Never
+kubectl run scan-debug --rm -it \
+  --image=ghcr.io/ibtisam-iq/debugbox:power \
+  --restart=Never
 
 # Basic port scan
 nmap -p 80,443,8080 my-service
@@ -139,9 +150,6 @@ nmap -p- my-service  # All ports (slow)
 
 # Service detection
 nmap -sV my-service
-
-# Power variant: Advanced scanning
-kubectl run scan-power --rm -it --image=ghcr.io/ibtisam-iq/debugbox:power --restart=Never
 
 # Custom packet crafting
 nping --tcp -p 80,443 example.com
@@ -152,33 +160,40 @@ nmap --script vuln example.com
 nmap --script http-enum my-service
 ```
 
+For basic port testing without the power variant, use netcat:
+```bash
+nc -zv my-service 8080  # Check if port is open
+```
+
 ---
 
 ## Bandwidth Testing
 
-**Tools:** `iperf3`, `speedtest-cli` (power)
+**Tools:** `iperf3` (power)
 
 ```bash
 # Network performance between pods
 # Server (terminal 1)
-kubectl run iperf-server --image=ghcr.io/ibtisam-iq/debugbox --command -- iperf3 -s
+kubectl run iperf-server \
+  --image=ghcr.io/ibtisam-iq/debugbox:power \
+  --command -- iperf3 -s
 
 # Client (terminal 2)
-kubectl run iperf-client --rm -it --image=ghcr.io/ibtisam-iq/debugbox --command -- iperf3 -c iperf-server -t 30
-
-# Internet bandwidth test (power variant)
-kubectl run speedtest --rm -it --image=ghcr.io/ibtisam-iq/debugbox:power --restart=Never
-speedtest-cli
+kubectl run iperf-client --rm -it \
+  --image=ghcr.io/ibtisam-iq/debugbox:power \
+  --command -- iperf3 -c iperf-server -t 30
 ```
 
 ---
 
 ## Bandwidth Monitoring
 
-**Tools:** `iftop`
+**Tools:** `iftop` (power)
 
 ```bash
-kubectl run monitor --rm -it --image=ghcr.io/ibtisam-iq/debugbox --restart=Never
+kubectl run monitor --rm -it \
+  --image=ghcr.io/ibtisam-iq/debugbox:power \
+  --restart=Never
 
 # Real-time bandwidth per connection
 iftop -i eth0
@@ -190,10 +205,12 @@ iftop -i eth0 -P  # Show port numbers
 
 ## NIC Diagnostics
 
-**Tools:** `ethtool`
+**Tools:** `ethtool` (power)
 
 ```bash
-kubectl run nic-debug --rm -it --image=ghcr.io/ibtisam-iq/debugbox --restart=Never
+kubectl run nic-debug --rm -it \
+  --image=ghcr.io/ibtisam-iq/debugbox:power \
+  --restart=Never
 
 # Interface statistics
 ethtool -S eth0
@@ -211,14 +228,25 @@ ethtool eth0
 
 **Tools:** `tcpdump`, `tshark` (power), `ngrep` (power)
 
-### Basic Capture (All Variants)
+### Basic Capture (Balanced+)
 ```bash
-kubectl run capture --rm -it --image=ghcr.io/ibtisam-iq/debugbox --restart=Never
+kubectl run capture --rm -it \
+  --image=ghcr.io/ibtisam-iq/debugbox \
+  --restart=Never
 
 # Capture packets
 tcpdump -i eth0 -w /tmp/capture.pcap port 443
 tcpdump -i eth0 -n 'tcp port 80'  # Filter by port
 tcpdump -i eth0 'host 10.0.0.1'   # Filter by host
+```
+
+`tcpdump` needs `NET_RAW` to open a raw socket. Some clusters (Pod Security Admission, restrictive PSPs) drop it by default, causing `tcpdump: socket: Operation not permitted`. If that happens, apply the manifest that grants it explicitly:
+
+```bash
+kubectl apply -f \
+  https://raw.githubusercontent.com/ibtisam-iq/debugbox/main/examples/balanced-debug-pod.yaml
+
+kubectl exec -it debug-balanced -- bash
 ```
 
 ### Advanced Analysis (Power + NET_ADMIN)
@@ -245,7 +273,9 @@ ngrep "mystring" tcp port 443
 **Tools:** `socat`
 
 ```bash
-kubectl run socat-debug --rm -it --image=ghcr.io/ibtisam-iq/debugbox --restart=Never
+kubectl run socat-debug --rm -it \
+  --image=ghcr.io/ibtisam-iq/debugbox \
+  --restart=Never
 
 # Port forwarding
 socat TCP-LISTEN:8080,fork TCP:backend:8080
@@ -268,7 +298,9 @@ echo "HTTP/1.0 200 OK\r\n\r\nHello" | socat TCP-LISTEN:8000,reuseaddr,fork STDIO
 
 ```bash
 # Power variant
-kubectl run ping-power --rm -it --image=ghcr.io/ibtisam-iq/debugbox:power --restart=Never
+kubectl run ping-power --rm -it \
+  --image=ghcr.io/ibtisam-iq/debugbox:power \
+  --restart=Never
 
 # Parallel ping multiple hosts
 fping -a 10.0.0.1 10.0.0.2 10.0.0.3
@@ -286,7 +318,8 @@ arping -I eth0 10.0.0.1
 **Tools:** `ps`, `top`, `htop`, `pstree`, `killall`, `fuser`
 
 ```bash
-kubectl debug my-app -it --image=ghcr.io/ibtisam-iq/debugbox
+kubectl debug my-app -it \
+  --image=ghcr.io/ibtisam-iq/debugbox
 
 # Process listing
 ps aux
@@ -315,7 +348,8 @@ fuser -n tcp 8080
 **Tools:** `strace`, `ltrace` (power), `lsof`
 
 ```bash
-kubectl debug my-app -it --image=ghcr.io/ibtisam-iq/debugbox
+kubectl debug my-app -it \
+  --image=ghcr.io/ibtisam-iq/debugbox
 
 # Trace system calls
 strace -p $(pgrep nginx)
@@ -337,10 +371,12 @@ lsof /var/log/app.log              # What process has this file open?
 
 ## TLS/SSL Inspection
 
-**Tools:** `openssl` (power)
+**Tools:** `openssl` (balanced+)
 
 ```bash
-kubectl run ssl-debug --rm -it --image=ghcr.io/ibtisam-iq/debugbox:power --restart=Never
+kubectl run ssl-debug --rm -it \
+  --image=ghcr.io/ibtisam-iq/debugbox \
+  --restart=Never
 
 # Test SSL/TLS connection
 openssl s_client -connect example.com:443
@@ -399,52 +435,14 @@ conntrack -L
 
 ---
 
-## Bridge Networking
-
-**Tools:** `brctl` (bridge-utils) (power + NET_ADMIN)
-
-```bash
-kubectl apply -f \
-  https://raw.githubusercontent.com/ibtisam-iq/debugbox/main/examples/power-debug-pod.yaml
-
-kubectl exec -it debug-power -- bash
-
-# List bridges
-brctl show
-
-# Show MAC address table
-brctl showmacs br0
-
-# Show STP info
-brctl showstp br0
-```
-
----
-
-## Routing Protocols
-
-**Tools:** `bird` (power)
-
-```bash
-# Note: BIRD is a routing daemon, typically not running in debug container
-# Useful for testing BGP configurations if bird daemon is started separately
-
-kubectl exec -it debug-power -- bash
-
-# If bird daemon running
-birdc show status
-birdc show route
-birdc show protocols
-```
-
----
-
 ## Data Processing
 
 **Tools:** `jq`, `yq`
 
 ```bash
-kubectl run data-debug --rm -it --image=ghcr.io/ibtisam-iq/debugbox:lite --restart=Never
+kubectl run data-debug --rm -it \
+  --image=ghcr.io/ibtisam-iq/debugbox:lite \
+  --restart=Never
 
 # JSON processing
 curl -s https://api.github.com/users/octocat | jq '.name'
@@ -460,10 +458,11 @@ cat config.yaml | yq '.database.host'
 
 ## File Operations
 
-**Tools:** `file`, `tar`, `gzip`, `vim`, `nano`, `less`
+**Tools:** `file`, `tar`, `gzip`, `vim`, `less`
 
 ```bash
-kubectl debug my-app -it --image=ghcr.io/ibtisam-iq/debugbox
+kubectl debug my-app -it \
+  --image=ghcr.io/ibtisam-iq/debugbox
 
 # Identify file type
 file /tmp/unknown-file
@@ -482,7 +481,6 @@ zgrep "error" file.gz
 
 # Edit files
 vim /etc/config.yaml
-nano /etc/config.yaml   # Power variant, easier for beginners
 
 # Page through output
 ps aux | less
@@ -496,7 +494,9 @@ kubectl logs my-pod | less
 **Tools:** `git`
 
 ```bash
-kubectl run git-debug --rm -it --image=ghcr.io/ibtisam-iq/debugbox --restart=Never
+kubectl run git-debug --rm -it \
+  --image=ghcr.io/ibtisam-iq/debugbox \
+  --restart=Never
 
 # Clone repository for configs
 git clone https://github.com/ibtisam-iq/debugbox.git
@@ -512,35 +512,14 @@ git archive --remote=https://github.com/example/repo HEAD:path/to/dir file.yaml 
 
 ---
 
-## Python Scripting
-
-**Tools:** `pip3` / `python3` (power)
-
-```bash
-kubectl run python-debug --rm -it --image=ghcr.io/ibtisam-iq/debugbox:power --restart=Never
-
-# Install packages
-pip3 install requests netaddr scapy
-
-# Quick Python debugging
-python3 -c "import socket; print(socket.gethostbyname('example.com'))"
-python3 -c "import requests; print(requests.get('http://example.com').status_code)"
-
-# Interactive Python
-python3
->>> import netaddr
->>> ip = netaddr.IPNetwork('10.0.0.0/24')
->>> list(ip)[:5]
-```
-
----
-
 ## Helper Functions (Shell)
 
 **Built-in helpers** (balanced & power variants)
 
 ```bash
-kubectl run helper-demo --rm -it --image=ghcr.io/ibtisam-iq/debugbox --restart=Never
+kubectl run helper-demo --rm -it \
+  --image=ghcr.io/ibtisam-iq/debugbox \
+  --restart=Never
 
 # List listening ports
 ports
@@ -561,10 +540,8 @@ echo '{"test":"value"}' | json
 kubectl get pod my-pod -o yaml | yaml
 ```
 
-**Power-only helpers** (require NET_ADMIN):
+**Packet capture and TLS helpers** (balanced+):
 ```bash
-kubectl exec -it debug-power -- bash
-
 # Quick packet capture
 sniff tcp port 443
 
@@ -574,11 +551,16 @@ sniff-http
 # Capture DNS queries
 sniff-dns
 
+# Check TLS certificate
+cert-check example.com:443
+```
+
+**Power-only helpers** (require NET_ADMIN):
+```bash
+kubectl exec -it debug-power -- bash
+
 # Monitor connections
 conntrack-watch
-
-# Check TLS certificate
-cert-check example.com
 ```
 
 ---
@@ -591,50 +573,52 @@ DebugBox doesn't include kubectl, but you can pipe from your local machine:
 
 ```bash
 # Process ConfigMap with jq
-kubectl get cm my-config -o json | kubectl run jq-tool --rm -i --image=ghcr.io/ibtisam-iq/debugbox:lite --restart=Never -- jq '.data'
+kubectl get cm my-config -o json | kubectl run jq-tool --rm -i \
+  --image=ghcr.io/ibtisam-iq/debugbox:lite \
+  --restart=Never -- jq '.data'
 
 # Decode and inspect secret certificate
 kubectl get secret my-tls -o jsonpath='{.data.tls\.crt}' | base64 -d | \
-  kubectl run cert-tool --rm -i --image=ghcr.io/ibtisam-iq/debugbox:power --restart=Never -- openssl x509 -text -noout
+  kubectl run cert-tool --rm -i \
+  --image=ghcr.io/ibtisam-iq/debugbox:power \
+  --restart=Never -- openssl x509 -text -noout
 ```
 
 ---
 
 ## Complete Tool Coverage Summary
 
-### Variant: **Lite** (~14 MB)
+### Variant: **Lite** (~15 MB)
 - DNS: dig, nslookup, host
-- HTTP: curl, wget
+- HTTP: curl
 - Connectivity: ping, nc
 - Data: jq, yq
-- Basic IP: ip, ss (limited)
+- Basic IP: ip, ss
 
-### Variant: **Balanced** (~46 MB) — *Default*
+### Variant: **Balanced** (~51 MB) -- Default
+
 - **All Lite tools, plus:**
-- Advanced networking: socat, mtr, nmap
-- Monitoring: iftop, htop
+
+- TLS/SSL: openssl
+- Advanced networking: socat, mtr
 - Packet capture: tcpdump
-- Process tools: ps, top, pstree, killall, fuser
+- Process tools: htop, ps, top, pstree, killall, fuser
 - Tracing: strace, lsof
-- Bandwidth: iperf3
-- NIC: ethtool
 - Files: file, tar, gzip, vim
 - Version control: git
+- Kubernetes: kubectx, kubens
 
-### Variant: **Power** (~104 MB) — *Full Forensics*
+### Variant: **Power** (~112 MB) -- Full Forensics
+
 - **All Balanced tools, plus:**
+
 - Deep packet analysis: tshark, ngrep
-- Advanced scanning: nping, NSE scripts
-- TLS/SSL: openssl
-- Routing: tcptraceroute, fping
+- Network scanning: nmap, nping, NSE scripts
+- Network performance: iperf3, ethtool, iftop
+- Advanced routing: tcptraceroute, fping
 - Library tracing: ltrace
 - Firewall: iptables, nftables (need NET_ADMIN)
 - Connection tracking: conntrack (need NET_ADMIN)
-- Bridge tools: brctl (need NET_ADMIN)
-- BGP: bird
-- Bandwidth: speedtest-cli
-- Editor: nano
-- Scripting: Python 3 + pip3
 
 ---
 
@@ -643,12 +627,12 @@ kubectl get secret my-tls -o jsonpath='{.data.tls\.crt}' | base64 -d | \
 | Tool | Capability | Docker | Kubernetes |
 |------|-----------|--------|------------|
 | **Most tools** | None | Standard run | kubectl run/debug |
+| **tcpdump** | NET_RAW | `--cap-add=NET_RAW` | [Use manifest](https://raw.githubusercontent.com/ibtisam-iq/debugbox/main/examples/balanced-debug-pod.yaml) |
 | **tshark** | NET_ADMIN | `--cap-add=NET_ADMIN` | [Use manifest](https://raw.githubusercontent.com/ibtisam-iq/debugbox/main/examples/power-debug-pod.yaml) |
 | **ngrep** | NET_ADMIN | `--cap-add=NET_ADMIN` | Use manifest |
 | **iptables** | NET_ADMIN | `--cap-add=NET_ADMIN` | Use manifest |
 | **nftables** | NET_ADMIN | `--cap-add=NET_ADMIN` | Use manifest |
 | **conntrack** | NET_ADMIN | `--cap-add=NET_ADMIN` | Use manifest |
-| **brctl** | NET_ADMIN | `--cap-add=NET_ADMIN` | Use manifest |
 
 ---
 
