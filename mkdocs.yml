@@ -63,7 +63,7 @@ theme:
   font:
     text: Inter
 
-  custom_dir: docs/overrides
+  custom_dir: overrides
 
   features:
     - navigation.tabs
