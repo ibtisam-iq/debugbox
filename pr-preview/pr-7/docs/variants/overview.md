@@ -4,21 +4,21 @@ DebugBox provides **three purpose-built variants** optimized for different use c
 
 | Variant | Size | Use When | Image |
 |---------|------|----------|-------|
-| **lite** | ~14 MB | Quick network/DNS checks | `ghcr.io/ibtisam-iq/debugbox:lite` |
-| **balanced** (default) | ~46 MB | Daily Kubernetes troubleshooting | `ghcr.io/ibtisam-iq/debugbox` |
-| **power** | ~104 MB | Deep forensics, packet capture | `ghcr.io/ibtisam-iq/debugbox:power` |
+| **lite** | ~15 MB | Quick network/DNS checks | `ghcr.io/ibtisam-iq/debugbox:lite` |
+| **balanced** (default) | ~51 MB | Daily Kubernetes troubleshooting | `ghcr.io/ibtisam-iq/debugbox` |
+| **power** | ~112 MB | Deep forensics, packet capture | `ghcr.io/ibtisam-iq/debugbox:power` |
 
 ## Choosing Your Variant
 
 - **Lite:** For bandwidth constraints, init containers, edge devices. Limited to basic connectivity tools.
-- **Balanced:** Daily driver (recommended). TCP dump, system inspection, Kubernetes helpers included.
-- **Power:** When you need advanced forensics — packet analysis, routing, library tracing, Python scripting.
+- **Balanced:** Daily driver (recommended). TCP dump, TLS inspection, system debugging, Kubernetes helpers included.
+- **Power:** When you need advanced forensics: deep packet analysis, port scanning, routing inspection, library tracing.
 
 ## Detailed Pages
 
-- **[Lite](lite.md)** — Minimal (14 MB)
-- **[Balanced](balanced.md)** — Recommended (46 MB)
-- **[Power](power.md)** — Comprehensive (104 MB)
+- **[Lite](lite.md)** -- Minimal (~15 MB)
+- **[Balanced](balanced.md)** -- Recommended (~51 MB)
+- **[Power](power.md)** -- Comprehensive (~112 MB)
 
 ## Pulling Latest vs. Specific Version
 
@@ -42,9 +42,9 @@ docker pull ghcr.io/ibtisam-iq/debugbox:power-1.0.0
 
 All variants build on each other:
 
-- **Lite** — Base networking tools
-- **Balanced** — Lite + system inspection + Kubernetes helpers
-- **Power** — Balanced + packet analysis + advanced routing + scripting
+- **Lite** -- Base networking tools
+- **Balanced** -- Lite + TLS + system inspection + Kubernetes helpers
+- **Power** -- Balanced + deep packet analysis + port scanning + routing
 
 Every tool in lite is also in balanced and power.
 

@@ -1,8 +1,8 @@
 # Installation
 
-DebugBox is a container image — **no installation required**.
+DebugBox is a container image, **no installation required**.
 
-Simply pull from either registry:
+Pull from either registry:
 
 ```bash
 # GHCR (recommended, faster)

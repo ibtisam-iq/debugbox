@@ -1,5 +1,5 @@
 # DebugBox — Lite variant
-# Minimal debugging image for quick Kubernetes network diagnostics (~14 MB).
+# Minimal debugging image for quick Kubernetes network diagnostics.
 
 ARG BASE_IMAGE=ghcr.io/ibtisam-iq/debugbox-base:latest
 FROM ${BASE_IMAGE}

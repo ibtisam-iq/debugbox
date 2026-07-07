@@ -1,25 +1,14 @@
 # DebugBox
 
-**Status & Quality**
 [![CI](https://github.com/ibtisam-iq/debugbox/actions/workflows/ci.yml/badge.svg)](https://github.com/ibtisam-iq/debugbox/actions/workflows/ci.yml)
-[![Documentation](https://github.com/ibtisam-iq/debugbox/actions/workflows/docs.yml/badge.svg)](https://github.com/ibtisam-iq/debugbox/actions/workflows/docs.yml)
+[![Pages](https://github.com/ibtisam-iq/debugbox/actions/workflows/pages.yml/badge.svg)](https://github.com/ibtisam-iq/debugbox/actions/workflows/pages.yml)
 [![Latest Release](https://img.shields.io/github/v/release/ibtisam-iq/debugbox?label=release)](https://github.com/ibtisam-iq/debugbox/releases)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 
-**Container Registries**
 [![Docker Pulls](https://img.shields.io/docker/pulls/mibtisam/debugbox?logo=docker&label=Docker%20Hub&logoColor=white)](https://hub.docker.com/r/mibtisam/debugbox)
 [![GitHub Container Registry](https://img.shields.io/badge/GHCR-Available-brightgreen?logo=github&logoColor=white)](https://github.com/ibtisam-iq/debugbox/pkgs/container/debugbox)
 [![Multi-Arch](https://img.shields.io/badge/Multi--Arch-amd64%20%7C%20arm64-blue?logo=docker&logoColor=white)](https://github.com/ibtisam-iq/debugbox)
-
-**Security & Platform**
-[![Trivy Scanning](https://img.shields.io/badge/Security-Trivy%20Scanned-blue?logo=aqua&logoColor=white)](https://github.com/aquasecurity/trivy)
-[![Powered by Alpine](https://img.shields.io/badge/Powered%20by-Alpine%20Linux-0D597F?logo=alpine-linux&logoColor=white)](https://alpinelinux.org/)
 [![Kubernetes Ready](https://img.shields.io/badge/Kubernetes-Ready-326ce5?logo=kubernetes&logoColor=white)](https://kubernetes.io/)
-
-**Community**
-[![Contributor Covenant](https://img.shields.io/badge/Contributor%20Covenant-2.1-4baadc.svg)](CODE_OF_CONDUCT.md)
-[![GitHub Stars](https://img.shields.io/github/stars/ibtisam-iq/debugbox?style=flat&logo=github&logoColor=white)](https://github.com/ibtisam-iq/debugbox/stargazers)
-[![GitHub Issues](https://img.shields.io/github/issues/ibtisam-iq/debugbox?logo=github&logoColor=white)](https://github.com/ibtisam-iq/debugbox/issues)
 
 **Docs:** https://debugbox.ibtisam-iq.com
 
@@ -37,42 +26,39 @@ Worse still: you just need to check DNS. You don't need tcpdump, tshark, routing
 
 ## The Solution
 
-**DebugBox** is a **Kubernetes-native debugging container that lets you choose exactly what you need—no more, no less.**
+**DebugBox** is a Kubernetes-native debugging container that lets you choose exactly what you need.
 
-**Optimized for Kubernetes:**
-- `kubectl debug` ephemeral containers — launch in seconds
-- `kubectx`/`kubens` context switching — built-in cluster awareness
-- Shell helpers pre-loaded — json() and yaml() functions ready to use
-- Pinned tool versions — deterministic, repeatable builds
+- `kubectl debug` ephemeral containers, launch in seconds
+- `kubectx`/`kubens` context switching built in
+- Shell helpers pre-loaded: `json()` and `yaml()` functions ready to use
+- Pinned tool versions for deterministic, repeatable builds
 
-**Three sizes. Pick one:**
-- **LITE** (14.36 MB): DNS & connectivity
-- **BALANCED** (46.16 MB): Daily Kubernetes debugging ⭐
-- **POWER** (104.45 MB): Packet analysis & forensics
-
-**No bloat. No waiting. Right-sized for your job.**
+Three sizes:
+- **LITE** (~15 MB): DNS and connectivity
+- **BALANCED** (~51 MB): Daily Kubernetes debugging
+- **POWER** (~112 MB): Packet analysis and forensics
 
 ---
 
 ## Choosing Your Variant
 
-**Pick the right size for your task:**
+Pick the right size for your task:
 ```
-                Need to analyze packets?
+                Need packet analysis or nmap?
                          │
                     ┌────┴─────┐
                     │          │
-                   NO         YES ──────► POWER (104.45 MB)
-                    │                    (tshark, iptables, bird)
+                   NO         YES ──────► POWER (~112 MB)
+                    │                    (tshark, nmap, iptables)
                     │
-           Need tcpdump or K8s tools?
+           Need tcpdump, TLS, or K8s tools?
                     │
                 ┌───┴────┐
                 │        │
-               NO       YES ─────────► BALANCED (46.16 MB) ⭐
-                │                     (tcpdump, kubectx/ns)
+               NO       YES ─────────► BALANCED (~51 MB)
+                │                     (tcpdump, openssl, kubectx/ns)
                 │
-               YES ────────────────► LITE (14.36 MB)
+               YES ────────────────► LITE (~15 MB)
                                     (minimal, fast)
 ```
 
@@ -113,21 +99,21 @@ docker run -it ghcr.io/ibtisam-iq/debugbox:power
 
 ## Why DebugBox?
 
-### 🚀 **48% Smaller Than netshoot**
+### Smaller Than netshoot
 
 | Image | Compressed Size |
 |-------|-----------------|
-| DebugBox lite | 14.36 MB |
-| DebugBox balanced | 46.16 MB |
-| DebugBox power | 104.45 MB |
-| netshoot v0.15 | 201.67 MB |
+| DebugBox lite | ~15 MB |
+| DebugBox balanced | ~51 MB |
+| DebugBox power | ~112 MB |
+| netshoot v0.15 | ~202 MB |
 
-DebugBox power is **97 MB smaller** than netshoot (48% reduction).
-DebugBox lite is **14× smaller** than netshoot.
+DebugBox power is ~90 MB smaller than netshoot (44% reduction).
+DebugBox lite is ~13x smaller than netshoot.
 
-On resource-constrained clusters (edge, IoT, Kubernetes on laptops), **every MB counts**. [See detailed bandwidth analysis →](https://debugbox.ibtisam-iq.com/latest/guides/bandwidth-savings/)
+On resource-constrained clusters (edge, IoT, Kubernetes on laptops), every MB counts. [See detailed bandwidth analysis](https://debugbox.ibtisam-iq.com/latest/guides/bandwidth-savings/)
 
-### 🔒 **Secure by Default**
+### Secure by Default
 
 - Trivy scans block HIGH/CRITICAL on every release
 - Alpine Linux base (minimal attack surface)
@@ -146,20 +132,20 @@ On resource-constrained clusters (edge, IoT, Kubernetes on laptops), **every MB 
 |---|---|:---:|:---:|:---:|
 | **Networking Basics** | curl, netcat, iproute2, iputils, bind-tools (dig, nslookup) | ✓ | ✓ | ✓ |
 | **Data Parsing** | jq, yq | ✓ | ✓ | ✓ |
-| **Shell** | bash, bash-completion, less | — | ✓ | ✓ |
-| **Editors** | vi / vim / nano | vi | ✓ | ✓ |
-| **Filesystem** | git, file, tar, gzip | — | ✓ | ✓ |
-| **System** | htop, strace, lsof, procps, psmisc | — | ✓ | ✓ |
-| **System Deep** | ltrace | — | — | ✓ |
-| **Networking** | tcpdump, socat, nmap, mtr, iperf3, ethtool, iftop | — | ✓ | ✓ |
-| **Packet Analysis** | tshark, ngrep, tcptraceroute, fping, speedtest-cli, nmap-nping | — | — | ✓ |
-| **TLS/SSL** | openssl | — | — | ✓ |
-| **Routing** | iptables, nftables, conntrack-tools, bird, bridge-utils | — | — | ✓ |
-| **Kubernetes** | kubectx, kubens | — | ✓ | ✓ |
-| **Scripting** | Python 3 + pip3 | — | — | ✓ |
+| **Shell** | bash, bash-completion, less | -- | ✓ | ✓ |
+| **Editors** | vi / vim | vi | vim | vim |
+| **TLS/SSL** | openssl | -- | ✓ | ✓ |
+| **Filesystem** | git, file, tar, gzip | -- | ✓ | ✓ |
+| **System** | htop, strace, lsof, procps, psmisc | -- | ✓ | ✓ |
+| **System Deep** | ltrace | -- | -- | ✓ |
+| **Networking** | tcpdump, socat, mtr | -- | ✓ | ✓ |
+| **Network Scanning** | nmap, nmap-nping, nmap-scripts, iperf3, ethtool, iftop | -- | -- | ✓ |
+| **Packet Analysis** | tshark, ngrep, tcptraceroute, fping | -- | -- | ✓ |
+| **Routing** | iptables, nftables, conntrack-tools | -- | -- | ✓ |
+| **Kubernetes** | kubectx, kubens | -- | ✓ | ✓ |
 | **Helpers** | json(), yaml(), ll() | ✓ | ✓ | ✓ |
-| **Network Helpers** | ports, connections, routes, k8s-info | — | ✓ | ✓ |
-| **Packet Helpers** | sniff(), sniff-http(), sniff-dns(), cert-check(), conntrack-watch() | — | — | ✓ |
+| **Network Helpers** | ports, connections, routes, k8s-info, sniff, cert-check() | -- | ✓ | ✓ |
+| **Forensics Helpers** | conntrack-watch | -- | -- | ✓ |
 
 **→ [Detailed variant breakdown](https://debugbox.ibtisam-iq.com/latest/variants/overview/)**
 
@@ -169,18 +155,18 @@ On resource-constrained clusters (edge, IoT, Kubernetes on laptops), **every MB 
 
 | Feature | DebugBox | netshoot | busybox | Alpine |
 |---------|----------|----------|---------|--------|
-| **Smallest variant** | 14.36 MB | 201.67 MB | 1.5 MB | 7.6 MB |
+| **Smallest variant** | ~15 MB | ~202 MB | ~1.5 MB | ~7.6 MB |
 | **Variants** | ✓ 3 sizes | ✗ one size | ✗ one size | ✗ one size |
 | **Multi-arch** | ✓ amd64+arm64 | ✓ amd64+arm64 | ✓ amd64+arm64 | ✓ amd64+arm64 |
 | **Pinned tools** | ✓ deterministic | ✗ floating | ✗ minimal | ✗ minimal |
 | **Kubernetes helpers** | ✓ kubectx/ns | ✗ none | ✗ none | ✗ none |
 | **Security scanned** | ✓ Trivy | ✗ manual | ✗ manual | ✗ manual |
 
-**Why DebugBox wins:**
-- ✅ **Smaller when you need it** (14.36 MB vs 201.67 MB)
-- ✅ **Larger when you need it** (104.45 MB for SRE workflows)
-- ✅ **Kubernetes-first design** (kubectx/kubens built-in)
-- ✅ **Predictable** (pinned tools, repeatable builds)
+**Advantages:**
+- Smaller when you need it (~15 MB vs ~202 MB)
+- Larger when you need it (~112 MB for SRE workflows)
+- Kubernetes-first design (kubectx/kubens built in)
+- Predictable (pinned tools, repeatable builds)
 
 ---
 
@@ -195,9 +181,9 @@ On resource-constrained clusters (edge, IoT, Kubernetes on laptops), **every MB 
 - ✅ SRE forensics workflows (power variant)
 
 **Not for:**
-- ❌ Persistent sidecars — use for ephemeral debugging only
-- ❌ Production workloads — runs as root, for debugging only
-- ❌ Kubernetes control plane access — no kubectl, no kube-proxy config
+- Persistent sidecars (use for ephemeral debugging only)
+- Production workloads (runs as root, for debugging only)
+- Kubernetes control plane access (no kubectl, no kube-proxy config)
 
 ---
 
@@ -252,13 +238,13 @@ debugbox:1.0.0             # Alias to balanced-1.0.0 (short form)
 **Full docs:** https://debugbox.ibtisam-iq.com
 
 **Essential guides:**
-- **[Kubernetes Usage](https://debugbox.ibtisam-iq.com/latest/usage/kubernetes/)** — kubectl debug examples
-- **[Docker Usage](https://debugbox.ibtisam-iq.com/latest/usage/docker/)** — Docker run examples
-- **[Variants Overview](https://debugbox.ibtisam-iq.com/latest/variants/overview/)** — detailed tool breakdown
-- **[Image Tags & Registries](https://debugbox.ibtisam-iq.com/latest/reference/tags/)** — tagging strategy
-- **[Common Workflows](https://debugbox.ibtisam-iq.com/latest/guides/examples/)** — real debugging scenarios
-- **[Local Development](https://debugbox.ibtisam-iq.com/latest/development/local-setup/)** — build and test locally
-- **[Contributing](CONTRIBUTING.md)** — how to contribute
+- [Kubernetes Usage](https://debugbox.ibtisam-iq.com/latest/usage/kubernetes/): kubectl debug examples
+- [Docker Usage](https://debugbox.ibtisam-iq.com/latest/usage/docker/): Docker run examples
+- [Variants Overview](https://debugbox.ibtisam-iq.com/latest/variants/overview/): detailed tool breakdown
+- [Image Tags & Registries](https://debugbox.ibtisam-iq.com/latest/reference/tags/): tagging strategy
+- [Common Workflows](https://debugbox.ibtisam-iq.com/latest/guides/examples/): real debugging scenarios
+- [Local Development](https://debugbox.ibtisam-iq.com/latest/development/local-setup/): build and test locally
+- [Contributing](CONTRIBUTING.md): how to contribute
 
 ---
 
@@ -277,7 +263,7 @@ A: Use the full tag: `ghcr.io/ibtisam-iq/debugbox:1.0.0` (balanced) or `ghcr.io/
 A: Yes, works on Kubernetes 1.18+. Best experience with 1.20+ (has `kubectl debug` support).
 
 **Q: Can I use DebugBox outside Kubernetes?**
-A: Absolutely! `docker run -it ghcr.io/ibtisam-iq/debugbox` works perfectly for local debugging.
+A: Yes. `docker run -it ghcr.io/ibtisam-iq/debugbox` works for local debugging.
 
 **More questions?** → **[Full Troubleshooting Guide](https://debugbox.ibtisam-iq.com/latest/guides/troubleshooting/)**
 
@@ -308,7 +294,7 @@ Found a bug? Have an idea? We welcome contributions!
 
 ## License
 
-[MIT License](LICENSE) — Free to use, modify, and distribute.
+[MIT License](LICENSE)
 
 ---
 
@@ -327,13 +313,11 @@ Found a bug? Have an idea? We welcome contributions!
 
 ## Support & Community
 
-- 💬 **GitHub Discussions** — ask questions, share ideas
-- 🐛 **GitHub Issues** — report bugs or request features
-- 📖 **Documentation** — https://debugbox.ibtisam-iq.com
-- 🤝 **Code of Conduct** — **[CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md)**
+- **GitHub Discussions**: ask questions, share ideas
+- **GitHub Issues**: report bugs or request features
+- **Documentation**: https://debugbox.ibtisam-iq.com
+- **Code of Conduct**: [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md)
 
 ---
 
-**Built with ❤️ for Kubernetes debugging by [@ibtisam-iq](https://github.com/ibtisam-iq)**
-
-**Faster pulls. Faster debugging. Right-sized containers.**
+Built for Kubernetes debugging by [@ibtisam-iq](https://github.com/ibtisam-iq)

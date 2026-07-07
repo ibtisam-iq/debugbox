@@ -36,9 +36,9 @@ debugbox:power-local
 ### Build Single Variant
 
 ```bash
-make build-lite      # ~14 MB
-make build-balanced  # ~46 MB
-make build-power     # ~104 MB
+make build-lite      # ~15 MB
+make build-balanced  # ~51 MB
+make build-power     # ~112 MB
 ```
 
 ### Build for Specific Architecture
@@ -97,6 +97,7 @@ make test-power
 ```
 
 **What's tested:** Each variant runs `tests/smoke.sh` to verify:
+
 - Essential tools are present
 - Shells work correctly
 - Network tools function
@@ -112,9 +113,9 @@ docker run -it debugbox:lite-local sh
 docker run -it debugbox:balanced-local bash
 tcpdump --version
 
-# Test power with python
+# Test power with tshark
 docker run -it debugbox:power-local bash
-python3 --version
+tshark -v
 ```
 
 ## Documentation Preview

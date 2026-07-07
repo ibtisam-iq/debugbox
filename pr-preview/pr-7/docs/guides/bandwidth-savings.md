@@ -11,9 +11,9 @@ How DebugBox reduces bandwidth costs and speeds up debugging
 | Container | Per Pull | 50 Pulls/week | Monthly |
 |-----------|----------|---------------|---------|
 | netshoot v0.15 | ~202 MB | ~10.1 GB | ~40 GB |
-| DebugBox balanced | ~46 MB | ~2.3 GB | ~9.2 GB |
-| DebugBox lite | ~14 MB | ~0.7 GB | ~2.8 GB |
-| **Savings (lite vs netshoot)** | **~188 MB** | **~9.4 GB** | **~37 GB** |
+| DebugBox balanced | ~51 MB | ~2.6 GB | ~10.2 GB |
+| DebugBox lite | ~15 MB | ~0.75 GB | ~3 GB |
+| **Savings (lite vs netshoot)** | **~187 MB** | **~9.4 GB** | **~37 GB** |
 
 **Pull speed (100 Mbps, real-world with overhead):**
 
@@ -88,8 +88,8 @@ Real-world speeds vary by network conditions, latency, and registry response tim
 
 **With DebugBox:**
 
-- Baseline (lite): 100 × 14 MB = 1.4 GB/day = **~42 GB/month**
-- Advanced (balanced): 10 × 46 MB = 0.46 GB/day = **~14 GB/month**
+- Baseline (lite): 100 x 15 MB = 1.5 GB/day = **~45 GB/month**
+- Advanced (balanced): 10 x 51 MB = 0.51 GB/day = **~15 GB/month**
 - **Total: ~56 GB/month**
 - **Savings: ~544 GB/month (91% reduction)**
 
@@ -101,9 +101,9 @@ See [Cost Analysis](#cost-analysis) for financial impact.
 
 | Use Case | Best Variant | Size | Reasoning |
 |----------|--------------|------|-----------|
-| DNS/API checks | Lite | ~14 MB | Minimal: curl, dig, netcat |
-| Daily K8s troubleshooting | Balanced | ~46 MB | Full: tcpdump, strace, vim, git |
-| SRE forensics | Power | ~104 MB | Complete: tshark, iptables, bird |
+| DNS/API checks | Lite | ~15 MB | Minimal: curl, dig, netcat |
+| Daily K8s troubleshooting | Balanced | ~51 MB | Full: tcpdump, openssl, strace, vim |
+| SRE forensics | Power | ~112 MB | Complete: tshark, nmap, iptables |
 
 **Key insight:** Pick the smallest variant that solves your problem.
 
@@ -122,6 +122,7 @@ See [Cost Analysis](#cost-analysis) for financial impact.
 **Note:** Real-world times include TLS, registry latency, decompression, and layer verification. Actual performance depends on network conditions and registry responsiveness.
 
 ### **Pod Launch Time** (including pull)
+
 - Traditional pod + netshoot: ~5–10s (pod) + ~20–30s (pull) = **~25–40s**
 - DebugBox lite: ~1–2s (pod) + ~1.5–2.5s (pull) = **~2.5–4.5s**
 - DebugBox balanced: ~3–5s (pod) + ~4–7s (pull) = **~7–12s**
@@ -202,11 +203,9 @@ spec:
 
 **DebugBox's variant approach saves:**
 
-- 📊 **~37 GB/month** on 50 pulls vs netshoot
-- ⏱️ **~15–23 minutes/week** on 100 Mbps
-- 💰 **$200–$3,000/year** in costs (depending on scenario)
-- 📈 **Scales exponentially** with team size and pull frequency
-
-**Choose right size. Save bandwidth. Debug faster. 🚀**
+- ~37 GB/month on 50 pulls vs netshoot
+- ~15-23 minutes/week on 100 Mbps
+- $200-$3,000/year in costs (depending on scenario)
+- Scales with team size and pull frequency
 
 **Next step:** [See Image Tags Guide](../reference/tags.md) for production pinning strategy.

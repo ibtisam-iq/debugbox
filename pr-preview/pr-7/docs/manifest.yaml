@@ -63,9 +63,9 @@ variants:
       editors:
         - vim
 
-      http:
-        - curl                
-        - wget                # balanced addition
+      http-and-tls:
+        - curl
+        - openssl             # TLS certificate inspection, connection testing
 
       version-control:
         - git
@@ -78,11 +78,7 @@ variants:
       networking:
         - tcpdump
         - socat
-        - nmap
         - mtr
-        - iperf3
-        - ethtool
-        - iftop
 
       system:
         - htop
@@ -98,12 +94,16 @@ variants:
     shell:
       default: bash
       helpers:
-        - json()              
-        - yaml()              
-        - ports               # alias: netstat -tulpn (show listening ports)
-        - connections         # alias: ss -tulpn (show active connections)
+        - json()
+        - yaml()
+        - ports               # alias: ss -tulnp (show listening ports)
+        - connections         # alias: ss -tunap (show all connections)
         - routes              # alias: ip route show (show routing table)
         - k8s-info            # alias: show current K8s context + namespace
+        - sniff               # alias: tcpdump -i any -n -s 0 (quick packet capture)
+        - sniff-http          # alias: capture HTTP traffic (ports 80/443)
+        - sniff-dns           # alias: capture DNS queries (port 53)
+        - cert-check()        # function: inspect TLS certificates (openssl s_client wrapper)
 
     environment:
       pager: less
@@ -116,34 +116,29 @@ variants:
     includes: balanced
 
     tools:
-      editors:
-        - vim                 # inherited default editor
-        - nano                # power-only addition
-
-      networking-deep:
-        - tshark
-        - ngrep            
-        - tcptraceroute    
-        - fping
-        - speedtest-cli
+      network-scanning:
+        - nmap
         - nmap-nping
         - nmap-scripts
 
-      tls-ssl:
-        - openssl            
+      network-performance:
+        - iperf3
+        - ethtool
+        - iftop
+
+      deep-packet-analysis:
+        - tshark
+        - ngrep
+        - tcptraceroute
+        - fping
 
       system-internals:
         - ltrace
 
-      routing:
+      firewall-and-routing:
         - iptables
         - nftables
         - conntrack-tools
-        - bird
-        - bridge-utils
-
-      scripting:
-        - py3-pip
 
       control-plane:
         - yq                  # pinned upstream binary (not apk)
@@ -151,21 +146,21 @@ variants:
     shell:
       default: bash
       helpers:
-        - json()              
-        - yaml()              
-        - ports               
-        - connections         
-        - routes              
-        - k8s-info            
-        - sniff()             # alias: tcpdump -i any -n -s 0 (quick packet capture)
-        - sniff-http()        # alias: capture HTTP traffic (ports 80/443)
-        - sniff-dns()         # alias: capture DNS queries (port 53)
-        - cert-check()        # function: inspect TLS certificates (openssl s_client wrapper)
-        - conntrack-watch()   # alias: watch active connections in real-time
+        - json()
+        - yaml()
+        - ports
+        - connections
+        - routes
+        - k8s-info
+        - sniff
+        - sniff-http
+        - sniff-dns
+        - cert-check()
+        - conntrack-watch()   # alias: watch active connections in real-time (power only)
 
     environment:
       pager: less
-      editor: vim             # default editor, nano is also available
+      editor: vim
       locale: C.UTF-8
 
 
@@ -175,10 +170,9 @@ notes:
   - Lite prioritizes speed and small size
   - Balanced prioritizes daily usability
   - Power prioritizes determinism and SRE workflows
-  - Python tooling (pip3) is available in Power variant
   - Base prompt: user@hostname:workdir with # (root) or $ (user)
-  - Shell helpers in balanced: 6 total (json, yaml, ports, connections, routes, k8s-info)
-  - Shell helpers in power: 11 total (6 from balanced + sniff, sniff-http, sniff-dns, cert-check, conntrack-watch)
+  - Shell helpers in balanced: 10 total (json, yaml, ports, connections, routes, k8s-info, sniff, sniff-http, sniff-dns, cert-check)
+  - Shell helpers in power: 11 total (10 from balanced + conntrack-watch)
 
 
 contributing:

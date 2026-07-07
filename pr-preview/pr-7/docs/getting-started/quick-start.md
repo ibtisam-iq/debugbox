@@ -26,7 +26,7 @@ kubectl run debug --rm -it \
 | General troubleshooting (recommended) | balanced | `ghcr.io/ibtisam-iq/debugbox` |
 | Packet capture & forensics | power | `ghcr.io/ibtisam-iq/debugbox:power` |
 
-**When in doubt, use balanced** — it's the default.
+**When in doubt, use balanced.** It's the default.
 
 ## What Can I Do Inside?
 
