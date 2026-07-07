@@ -1,17 +1,18 @@
 # Power Variant
 
-**~104 MB** — Full SRE-grade forensics toolkit.
+**~112 MB** -- Full SRE-grade forensics toolkit.
 
 Everything from balanced, plus advanced tools for deep system and network investigation.
 
 ## When to Use Power
 
 - Detailed packet analysis with tshark
+- Port scanning and service discovery with nmap
+- Network performance testing with iperf3
 - Library-level tracing (ltrace)
 - Advanced routing and firewall debugging
-- Custom Python scripting
 - Deep incident forensics
-- **Not recommended for routine tasks — stick with balanced to save bandwidth**
+- **Not recommended for routine tasks. Stick with balanced to save bandwidth**
 
 ## ⚠️ Linux Capabilities Required
 
@@ -48,9 +49,11 @@ kubectl exec -it debug-power -- bash
 
 **Basic usage (no capabilities):**
 ```bash
-kubectl debug my-pod -it --image=ghcr.io/ibtisam-iq/debugbox:power
+kubectl debug my-pod -it \
+  --image=ghcr.io/ibtisam-iq/debugbox:power
 
-kubectl run debug --rm -it --image=ghcr.io/ibtisam-iq/debugbox:power --restart=Never
+kubectl run debug --rm -it \
+  --image=ghcr.io/ibtisam-iq/debugbox:power --restart=Never
 ```
 
 ### Docker
@@ -71,38 +74,33 @@ docker run -it ghcr.io/ibtisam-iq/debugbox:power-1.0.0  # Production
 
 ## What's Included
 
-Power includes **all balanced tools** plus **14 advanced forensics packages** for packet analysis, TLS inspection, routing, and scripting.
+Power includes **all balanced tools** plus advanced forensics packages for packet analysis, network scanning, and routing inspection.
 
-→ **[Complete power tool list with examples](../guides/examples.md#variant-power-104-mb-full-forensics)**
+→ **[Complete power tool list with examples](../guides/examples.md#variant-power-112-mb-full-forensics)**
 
 **Key additions over balanced:**
 
 - **Packet Analysis:** tshark, ngrep (requires NET_RAW)
-- **TLS/SSL:** openssl
-- **Routing & Firewall:** iptables, nftables, conntrack, bird, brctl (requires NET_ADMIN)
-- **Advanced Network:** tcptraceroute, fping, speedtest-cli, nmap-nping, nmap-scripts
+- **Network Scanning:** nmap, nmap-nping, nmap-scripts
+- **Network Performance:** iperf3, ethtool, iftop
+- **Routing & Firewall:** iptables, nftables, conntrack (requires NET_ADMIN)
+- **Advanced Network:** tcptraceroute, fping
 - **System Internals:** ltrace
-- **Scripting:** Python 3 + pip3
-- **Editors:** nano (in addition to vim)
 
 ## Shell Helpers
 
-Power includes **all balanced helpers** plus **5 advanced network functions**:
+Power includes **all balanced helpers** plus **1 additional function**:
 
 → **[Complete shell helper reference with examples](../guides/examples.md#helper-functions-shell)**
 
-**Power-exclusive helpers:**
+**Power-exclusive helper:**
 
-- `sniff()` — Quick packet capture with smart filters
-- `sniff-http()` — Capture HTTP traffic (ports 80/443)
-- `sniff-dns()` — Capture DNS queries (port 53)
-- `cert-check()` — Inspect TLS certificates from servers
-- `conntrack-watch()` — Monitor active connections in real-time
+- `conntrack-watch` -- Monitor active connections in real-time (requires NET_ADMIN)
 
 ## When to Downgrade
 
-**Most tasks use [Balanced Variant](balanced.md).** Downgrade to save 58 MB.
+**Most tasks use [Balanced Variant](balanced.md).** Downgrade to save ~61 MB.
 
-**For speed, use [Lite Variant](lite.md).** Saves 90 MB.
+**For speed, use [Lite Variant](lite.md).** Saves ~97 MB.
 
 → **[Variants Overview](overview.md)** | **[Real-world Examples](../guides/examples.md)** | **[Troubleshooting](../guides/troubleshooting.md)**

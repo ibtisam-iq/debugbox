@@ -41,16 +41,16 @@ theme:
   palette:
     # Light mode
     - scheme: default
-      primary: blue
-      accent: cyan
+      primary: indigo
+      accent: amber
       toggle:
         icon: material/brightness-7
         name: Switch to dark mode
 
     # Dark mode
     - scheme: slate
-      primary: blue
-      accent: cyan
+      primary: indigo
+      accent: amber
       toggle:
         icon: material/brightness-4
         name: Switch to light mode
@@ -63,16 +63,27 @@ theme:
   font:
     text: Inter
 
+  custom_dir: overrides
+
   features:
     - navigation.tabs
     - navigation.tabs.sticky
     - navigation.sections
     - navigation.footer
+    - navigation.instant
+    - navigation.instant.progress
+    - navigation.top
+    - navigation.tracking
     - content.action.edit
     - content.tabs.link
     - content.code.annotate
     - content.code.copy
-    - toc.integrate
+    - content.code.select
+    - search.suggest
+    - search.highlight
+    - search.share
+    - header.autohide
+    - announce.dismiss
 
 # ------------------------------------------------------------
 # Markdown Extensions
@@ -90,6 +101,7 @@ markdown_extensions:
       toc_depth: 3
   - pymdownx.highlight:
       line_spans: __span
+      anchor_linenums: true
   - pymdownx.details
   - pymdownx.magiclink
 
@@ -115,6 +127,10 @@ markdown_extensions:
 plugins:
   - search
   - macros
+  - social:
+      cards_layout_options:
+        background_color: "#283593"
+        color: "#ffffff"
   - git-revision-date-localized:
       type: custom
       custom_format: "%B %d, %Y %I:%M:%S %p"

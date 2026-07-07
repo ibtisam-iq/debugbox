@@ -26,7 +26,7 @@
       
       
       <link rel="icon" href="../../images/favicon.ico">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.1">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
     
     
       
@@ -74,7 +74,22 @@
 
     
     
-  </head>
+  
+<meta property="og:type" content="website" />
+<meta property="og:title" content="Development - DebugBox" />
+<meta property="og:description" content="Lightweight, variant-based debugging container suite for Kubernetes and Docker environments.
+" />
+<meta property="og:image" content="https://debugbox.ibtisam-iq.com/assets/images/social/development/local-setup.png" />
+<meta property="og:image:type" content="image/png" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:url" content="https://debugbox.ibtisam-iq.com/development/local-setup/" />
+<meta property="twitter:card" content="summary_large_image" />
+<meta property="twitter:title" content="Development - DebugBox" />
+<meta property="twitter:description" content="Lightweight, variant-based debugging container suite for Kubernetes and Docker environments.
+" />
+<meta property="twitter:image" content="https://debugbox.ibtisam-iq.com/assets/images/social/development/local-setup.png" />
+</head>
   
   
     
@@ -84,7 +99,7 @@
     
     
     
-    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="blue" data-md-color-accent="cyan">
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="amber">
   
     
     <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
@@ -99,6 +114,25 @@
       
     </div>
     <div data-md-component="announce">
+      
+        <aside class="md-banner">
+          <div class="md-banner__inner md-grid md-typeset">
+            
+              <button class="md-banner__button md-icon" aria-label="Don't show this again">
+                
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+              </button>
+            
+            
+  <a href="https://github.com/ibtisam-iq/debugbox/releases/tag/v1.0.0">
+    DebugBox v1.0.0 is out -- see the release notes
+  </a>
+
+          </div>
+          
+            <script>var el=document.querySelector("[data-md-component=announce]");if(el){var content=el.querySelector(".md-typeset");__md_hash(content.innerHTML)===__md_get("__announce")&&(el.hidden=!0)}</script>
+          
+        </aside>
       
     </div>
     
@@ -145,7 +179,7 @@
     
     
     
-    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="blue" data-md-color-accent="cyan"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="amber"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
     
       <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
@@ -155,7 +189,7 @@
     
     
     
-    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="blue" data-md-color-accent="cyan"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="amber"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
     
       <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
@@ -189,11 +223,18 @@
       </label>
       <nav class="md-search__options" aria-label="Search">
         
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="Share" aria-label="Share" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91s2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08"/></svg>
+          </a>
+        
         <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
           
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
         </button>
       </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
       
     </form>
     <div class="md-search__output">
@@ -399,6 +440,8 @@
     
     <div class="md-container" data-md-component="container">
       
+  
+
       
         
       
@@ -416,9 +459,7 @@
   
 
 
-  
-
-<nav class="md-nav md-nav--primary md-nav--lifted md-nav--integrated" aria-label="Navigation" data-md-level="0">
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
     <a href="../.." title="DebugBox" class="md-nav__button md-logo" aria-label="DebugBox" data-md-component="logo">
       
@@ -1422,6 +1463,200 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#documentation-preview" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Documentation Preview
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Documentation Preview">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#install-dependencies" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Install Dependencies
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#start-local-server" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Start Local Server
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#build-static-docs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Build Static Docs
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#development-workflow" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Development Workflow
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Development Workflow">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#make-a-change" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Make a Change
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quality-gates" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Quality Gates
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#make-targets-reference" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Make Targets Reference
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#environment-variables" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Environment Variables
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#troubleshooting" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Troubleshooting
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Troubleshooting">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#make-not-found" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Make not found
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#build-fails-with-permission-error" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Build fails with permission error
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#build-fails-with-exec-binsh-exec-format-error" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Build fails with exec /bin/sh: exec format error
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#trivy-scan-errors" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Trivy scan errors
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mkdocs-port-already-in-use" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        MkDocs port already in use
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#next-steps" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Next Steps
+      
+    </span>
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -1464,12 +1699,406 @@
               </div>
             
             
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#prerequisites" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Prerequisites
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#clone-setup" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Clone &amp; Setup
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#build-commands" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Build Commands
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Build Commands">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#build-all-variants-multi-architecture" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Build All Variants (Multi-Architecture)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#build-single-variant" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Build Single Variant
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#build-for-specific-architecture" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Build for Specific Architecture
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#skip-cache-fresh-build" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Skip Cache (Fresh Build)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#quality-checks" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Quality Checks
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Quality Checks">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#lint-dockerfiles" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Lint Dockerfiles
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#security-scanning" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Security Scanning
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#test-commands" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Test Commands
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Test Commands">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#run-all-tests" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Run All Tests
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#test-single-variant" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Test Single Variant
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#manual-testing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Manual Testing
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#documentation-preview" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Documentation Preview
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Documentation Preview">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#install-dependencies" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Install Dependencies
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#start-local-server" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Start Local Server
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#build-static-docs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Build Static Docs
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#development-workflow" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Development Workflow
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Development Workflow">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#make-a-change" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Make a Change
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quality-gates" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Quality Gates
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#make-targets-reference" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Make Targets Reference
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#environment-variables" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Environment Variables
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#troubleshooting" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Troubleshooting
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Troubleshooting">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#make-not-found" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Make not found
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#build-fails-with-permission-error" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Build fails with permission error
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#build-fails-with-exec-binsh-exec-format-error" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Build fails with exec /bin/sh: exec format error
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#trivy-scan-errors" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Trivy scan errors
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mkdocs-port-already-in-use" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        MkDocs port already in use
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#next-steps" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Next Steps
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
           
           
             <div class="md-content" data-md-component="content">
               
               <article class="md-content__inner md-typeset">
                 
+  
+  
                   
 
 
@@ -1492,120 +2121,123 @@
 <li><strong>Python 3.8+</strong> (for MkDocs documentation preview)</li>
 </ul>
 <h2 id="clone-setup">Clone &amp; Setup<a class="headerlink" href="#clone-setup" title="Permanent link">&para;</a></h2>
-<p><code>bash
-git clone https://github.com/ibtisam-iq/debugbox.git
-cd debugbox</code></p>
+<div class="highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/ibtisam-iq/debugbox.git
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="nb">cd</span><span class="w"> </span>debugbox
+</span></code></pre></div>
 <h2 id="build-commands">Build Commands<a class="headerlink" href="#build-commands" title="Permanent link">&para;</a></h2>
 <h3 id="build-all-variants-multi-architecture">Build All Variants (Multi-Architecture)<a class="headerlink" href="#build-all-variants-multi-architecture" title="Permanent link">&para;</a></h3>
 <p>Builds all three variants for both amd64 and arm64:</p>
-<p><code>bash
-make build-all</code></p>
+<div class="highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>make<span class="w"> </span>build-all
+</span></code></pre></div>
 <p><strong>Output:</strong>
-<code>debugbox:lite-local
-debugbox:balanced-local
-debugbox:power-local</code></p>
+<div class="highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>debugbox:lite-local
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>debugbox:balanced-local
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>debugbox:power-local
+</span></code></pre></div></p>
 <h3 id="build-single-variant">Build Single Variant<a class="headerlink" href="#build-single-variant" title="Permanent link">&para;</a></h3>
-<p><code>bash
-make build-lite      # ~14 MB
-make build-balanced  # ~46 MB
-make build-power     # ~104 MB</code></p>
+<div class="highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>make<span class="w"> </span>build-lite<span class="w">      </span><span class="c1"># ~15 MB</span>
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>make<span class="w"> </span>build-balanced<span class="w">  </span><span class="c1"># ~51 MB</span>
+</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>make<span class="w"> </span>build-power<span class="w">     </span><span class="c1"># ~112 MB</span>
+</span></code></pre></div>
 <h3 id="build-for-specific-architecture">Build for Specific Architecture<a class="headerlink" href="#build-for-specific-architecture" title="Permanent link">&para;</a></h3>
-<p><code>bash
-PLATFORM=linux/arm64 make build-balanced
-PLATFORM=linux/amd64 make build-power</code></p>
+<div class="highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="nv">PLATFORM</span><span class="o">=</span>linux/arm64<span class="w"> </span>make<span class="w"> </span>build-balanced
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="nv">PLATFORM</span><span class="o">=</span>linux/amd64<span class="w"> </span>make<span class="w"> </span>build-power
+</span></code></pre></div>
 <h3 id="skip-cache-fresh-build">Skip Cache (Fresh Build)<a class="headerlink" href="#skip-cache-fresh-build" title="Permanent link">&para;</a></h3>
-<p><code>bash
-NO_CACHE=true make build-all</code></p>
+<div class="highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="nv">NO_CACHE</span><span class="o">=</span><span class="nb">true</span><span class="w"> </span>make<span class="w"> </span>build-all
+</span></code></pre></div>
 <h2 id="quality-checks">Quality Checks<a class="headerlink" href="#quality-checks" title="Permanent link">&para;</a></h2>
 <h3 id="lint-dockerfiles">Lint Dockerfiles<a class="headerlink" href="#lint-dockerfiles" title="Permanent link">&para;</a></h3>
 <p>Runs <strong>hadolint</strong> to check Dockerfile syntax and best practices:</p>
-<p><code>bash
-make lint</code></p>
+<div class="highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>make<span class="w"> </span>lint
+</span></code></pre></div>
 <p>Uses local <code>hadolint</code> if available, otherwise runs containerized version.</p>
 <h3 id="security-scanning">Security Scanning<a class="headerlink" href="#security-scanning" title="Permanent link">&para;</a></h3>
 <p>Scans images with <strong>Trivy</strong> for vulnerabilities (HIGH/CRITICAL only):</p>
-<p><code>bash
-make scan</code></p>
+<div class="highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>make<span class="w"> </span>scan
+</span></code></pre></div>
 <p>Requires <code>build-all</code> first (auto-triggered).</p>
 <h2 id="test-commands">Test Commands<a class="headerlink" href="#test-commands" title="Permanent link">&para;</a></h2>
 <h3 id="run-all-tests">Run All Tests<a class="headerlink" href="#run-all-tests" title="Permanent link">&para;</a></h3>
 <p>Executes smoke tests on all three variants:</p>
-<p><code>bash
-make test-all</code></p>
+<div class="highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>make<span class="w"> </span>test-all
+</span></code></pre></div>
 <p>Auto-builds and lints first.</p>
 <h3 id="test-single-variant">Test Single Variant<a class="headerlink" href="#test-single-variant" title="Permanent link">&para;</a></h3>
-<p><code>bash
-make test-lite
-make test-balanced
-make test-power</code></p>
-<p><strong>What's tested:</strong> Each variant runs <code>tests/smoke.sh</code> to verify:
-- Essential tools are present
-- Shells work correctly
-- Network tools function
-- Helpers are available (balanced+)</p>
+<div class="highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>make<span class="w"> </span>test-lite
+</span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>make<span class="w"> </span>test-balanced
+</span><span id="__span-9-3"><a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a>make<span class="w"> </span>test-power
+</span></code></pre></div>
+<p><strong>What's tested:</strong> Each variant runs <code>tests/smoke.sh</code> to verify:</p>
+<ul>
+<li>Essential tools are present</li>
+<li>Shells work correctly</li>
+<li>Network tools function</li>
+<li>Helpers are available (balanced+)</li>
+</ul>
 <h3 id="manual-testing">Manual Testing<a class="headerlink" href="#manual-testing" title="Permanent link">&para;</a></h3>
-<p>```bash</p>
-<h1 id="interactive-shell-in-lite">Interactive shell in lite<a class="headerlink" href="#interactive-shell-in-lite" title="Permanent link">&para;</a></h1>
-<p>docker run -it debugbox:lite-local sh</p>
-<h1 id="test-balanced-with-tcpdump">Test balanced with tcpdump<a class="headerlink" href="#test-balanced-with-tcpdump" title="Permanent link">&para;</a></h1>
-<p>docker run -it debugbox:balanced-local bash
-tcpdump --version</p>
-<h1 id="test-power-with-python">Test power with python<a class="headerlink" href="#test-power-with-python" title="Permanent link">&para;</a></h1>
-<p>docker run -it debugbox:power-local bash
-python3 --version
-```</p>
+<div class="highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="c1"># Interactive shell in lite</span>
+</span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a>docker<span class="w"> </span>run<span class="w"> </span>-it<span class="w"> </span>debugbox:lite-local<span class="w"> </span>sh
+</span><span id="__span-10-3"><a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a>
+</span><span id="__span-10-4"><a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a><span class="c1"># Test balanced with tcpdump</span>
+</span><span id="__span-10-5"><a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a>docker<span class="w"> </span>run<span class="w"> </span>-it<span class="w"> </span>debugbox:balanced-local<span class="w"> </span>bash
+</span><span id="__span-10-6"><a id="__codelineno-10-6" name="__codelineno-10-6" href="#__codelineno-10-6"></a>tcpdump<span class="w"> </span>--version
+</span><span id="__span-10-7"><a id="__codelineno-10-7" name="__codelineno-10-7" href="#__codelineno-10-7"></a>
+</span><span id="__span-10-8"><a id="__codelineno-10-8" name="__codelineno-10-8" href="#__codelineno-10-8"></a><span class="c1"># Test power with tshark</span>
+</span><span id="__span-10-9"><a id="__codelineno-10-9" name="__codelineno-10-9" href="#__codelineno-10-9"></a>docker<span class="w"> </span>run<span class="w"> </span>-it<span class="w"> </span>debugbox:power-local<span class="w"> </span>bash
+</span><span id="__span-10-10"><a id="__codelineno-10-10" name="__codelineno-10-10" href="#__codelineno-10-10"></a>tshark<span class="w"> </span>-v
+</span></code></pre></div>
 <h2 id="documentation-preview">Documentation Preview<a class="headerlink" href="#documentation-preview" title="Permanent link">&para;</a></h2>
 <h3 id="install-dependencies">Install Dependencies<a class="headerlink" href="#install-dependencies" title="Permanent link">&para;</a></h3>
-<p><code>bash
-pip install -r requirements.txt</code></p>
+<div class="highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>pip<span class="w"> </span>install<span class="w"> </span>-r<span class="w"> </span>requirements.txt
+</span></code></pre></div>
 <h3 id="start-local-server">Start Local Server<a class="headerlink" href="#start-local-server" title="Permanent link">&para;</a></h3>
-<p><code>bash
-mkdocs serve</code></p>
+<div class="highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>mkdocs<span class="w"> </span>serve
+</span></code></pre></div>
 <p>Opens at <strong><a href="http://localhost:8000">http://localhost:8000</a></strong> with live reload.</p>
 <h3 id="build-static-docs">Build Static Docs<a class="headerlink" href="#build-static-docs" title="Permanent link">&para;</a></h3>
-<p>```bash
-mkdocs build</p>
-<h1 id="output-in-site">Output in site/<a class="headerlink" href="#output-in-site" title="Permanent link">&para;</a></h1>
-<p>```</p>
+<div class="highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>mkdocs<span class="w"> </span>build
+</span><span id="__span-13-2"><a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a><span class="c1"># Output in site/</span>
+</span></code></pre></div>
 <h2 id="development-workflow">Development Workflow<a class="headerlink" href="#development-workflow" title="Permanent link">&para;</a></h2>
 <h3 id="make-a-change">Make a Change<a class="headerlink" href="#make-a-change" title="Permanent link">&para;</a></h3>
 <ol>
 <li>
 <p><strong>Edit Dockerfile:</strong>
-   <code>bash
-   vim dockerfiles/Dockerfile.balanced</code></p>
+   <div class="highlight"><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>vim<span class="w"> </span>dockerfiles/Dockerfile.balanced
+</span></code></pre></div></p>
 </li>
 <li>
 <p><strong>Edit docs:</strong>
-   <code>bash
-   vim docs/manifest.yaml</code></p>
+   <div class="highlight"><pre><span></span><code><span id="__span-15-1"><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a>vim<span class="w"> </span>docs/manifest.yaml
+</span></code></pre></div></p>
 </li>
 <li>
 <p><strong>Build locally:</strong>
-   <code>bash
-   make build-balanced</code></p>
+   <div class="highlight"><pre><span></span><code><span id="__span-16-1"><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a>make<span class="w"> </span>build-balanced
+</span></code></pre></div></p>
 </li>
 <li>
 <p><strong>Test your changes:</strong>
-   <code>bash
-   make test-balanced</code></p>
+   <div class="highlight"><pre><span></span><code><span id="__span-17-1"><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a>make<span class="w"> </span>test-balanced
+</span></code></pre></div></p>
 </li>
 <li>
 <p><strong>Preview docs:</strong>
-   <code>bash
-   mkdocs serve</code></p>
+   <div class="highlight"><pre><span></span><code><span id="__span-18-1"><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a>mkdocs<span class="w"> </span>serve
+</span></code></pre></div></p>
 </li>
 </ol>
 <h3 id="quality-gates">Quality Gates<a class="headerlink" href="#quality-gates" title="Permanent link">&para;</a></h3>
 <p>Before committing, run the full pipeline:</p>
-<p><code>bash
-make lint        # ✅ Dockerfile syntax
-make build-all   # ✅ All variants build
-make test-all    # ✅ All tests pass
-make scan        # ✅ No vulnerabilities</code></p>
+<div class="highlight"><pre><span></span><code><span id="__span-19-1"><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a>make<span class="w"> </span>lint<span class="w">        </span><span class="c1"># ✅ Dockerfile syntax</span>
+</span><span id="__span-19-2"><a id="__codelineno-19-2" name="__codelineno-19-2" href="#__codelineno-19-2"></a>make<span class="w"> </span>build-all<span class="w">   </span><span class="c1"># ✅ All variants build</span>
+</span><span id="__span-19-3"><a id="__codelineno-19-3" name="__codelineno-19-3" href="#__codelineno-19-3"></a>make<span class="w"> </span>test-all<span class="w">    </span><span class="c1"># ✅ All tests pass</span>
+</span><span id="__span-19-4"><a id="__codelineno-19-4" name="__codelineno-19-4" href="#__codelineno-19-4"></a>make<span class="w"> </span>scan<span class="w">        </span><span class="c1"># ✅ No vulnerabilities</span>
+</span></code></pre></div>
 <p>Or shortcut:</p>
-<p><code>bash
-make check       # Runs lint → build-all → test-all → scan</code></p>
+<div class="highlight"><pre><span></span><code><span id="__span-20-1"><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a>make<span class="w"> </span>check<span class="w">       </span><span class="c1"># Runs lint → build-all → test-all → scan</span>
+</span></code></pre></div>
 <h2 id="make-targets-reference">Make Targets Reference<a class="headerlink" href="#make-targets-reference" title="Permanent link">&para;</a></h2>
 <table>
 <thead>
@@ -1681,53 +2313,52 @@ make check       # Runs lint → build-all → test-all → scan</code></p>
 </tbody>
 </table>
 <p><strong>Example:</strong>
-<code>bash
-PLATFORM=linux/amd64 NO_CACHE=true make build-all</code></p>
+<div class="highlight"><pre><span></span><code><span id="__span-21-1"><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a><span class="nv">PLATFORM</span><span class="o">=</span>linux/amd64<span class="w"> </span><span class="nv">NO_CACHE</span><span class="o">=</span><span class="nb">true</span><span class="w"> </span>make<span class="w"> </span>build-all
+</span></code></pre></div></p>
 <h2 id="troubleshooting">Troubleshooting<a class="headerlink" href="#troubleshooting" title="Permanent link">&para;</a></h2>
 <h3 id="make-not-found">Make not found<a class="headerlink" href="#make-not-found" title="Permanent link">&para;</a></h3>
-<p>```bash</p>
-<h1 id="macos">macOS<a class="headerlink" href="#macos" title="Permanent link">&para;</a></h1>
-<p>brew install make</p>
-<h1 id="ubuntudebian">Ubuntu/Debian<a class="headerlink" href="#ubuntudebian" title="Permanent link">&para;</a></h1>
-<p>sudo apt install make
-```</p>
+<div class="highlight"><pre><span></span><code><span id="__span-22-1"><a id="__codelineno-22-1" name="__codelineno-22-1" href="#__codelineno-22-1"></a><span class="c1"># macOS</span>
+</span><span id="__span-22-2"><a id="__codelineno-22-2" name="__codelineno-22-2" href="#__codelineno-22-2"></a>brew<span class="w"> </span>install<span class="w"> </span>make
+</span><span id="__span-22-3"><a id="__codelineno-22-3" name="__codelineno-22-3" href="#__codelineno-22-3"></a>
+</span><span id="__span-22-4"><a id="__codelineno-22-4" name="__codelineno-22-4" href="#__codelineno-22-4"></a><span class="c1"># Ubuntu/Debian</span>
+</span><span id="__span-22-5"><a id="__codelineno-22-5" name="__codelineno-22-5" href="#__codelineno-22-5"></a>sudo<span class="w"> </span>apt<span class="w"> </span>install<span class="w"> </span>make
+</span></code></pre></div>
 <h3 id="build-fails-with-permission-error">Build fails with permission error<a class="headerlink" href="#build-fails-with-permission-error" title="Permanent link">&para;</a></h3>
-<p>```bash</p>
-<h1 id="ensure-docker-daemon-is-running">Ensure Docker daemon is running<a class="headerlink" href="#ensure-docker-daemon-is-running" title="Permanent link">&para;</a></h1>
-<p>sudo systemctl start docker</p>
-<h1 id="or-use-docker-desktop-macwindows">Or use Docker Desktop (Mac/Windows)<a class="headerlink" href="#or-use-docker-desktop-macwindows" title="Permanent link">&para;</a></h1>
-<p>```</p>
+<div class="highlight"><pre><span></span><code><span id="__span-23-1"><a id="__codelineno-23-1" name="__codelineno-23-1" href="#__codelineno-23-1"></a><span class="c1"># Ensure Docker daemon is running</span>
+</span><span id="__span-23-2"><a id="__codelineno-23-2" name="__codelineno-23-2" href="#__codelineno-23-2"></a>sudo<span class="w"> </span>systemctl<span class="w"> </span>start<span class="w"> </span>docker
+</span><span id="__span-23-3"><a id="__codelineno-23-3" name="__codelineno-23-3" href="#__codelineno-23-3"></a>
+</span><span id="__span-23-4"><a id="__codelineno-23-4" name="__codelineno-23-4" href="#__codelineno-23-4"></a><span class="c1"># Or use Docker Desktop (Mac/Windows)</span>
+</span></code></pre></div>
 <h3 id="build-fails-with-exec-binsh-exec-format-error">Build fails with <code>exec /bin/sh: exec format error</code><a class="headerlink" href="#build-fails-with-exec-binsh-exec-format-error" title="Permanent link">&para;</a></h3>
 <p>This happens when building for multiple architectures on a system <strong>without binfmt/QEMU support</strong>.</p>
 <p>Choose <strong>one</strong> of the following:</p>
 <p><strong>Option 1: Enable multi-architecture builds (recommended)</strong></p>
 <p>Use this if you want to build for <code>linux/amd64</code> and <code>linux/arm64</code>:</p>
-<p><code>bash
-docker run --privileged --rm tonistiigi/binfmt --install all</code></p>
+<div class="highlight"><pre><span></span><code><span id="__span-24-1"><a id="__codelineno-24-1" name="__codelineno-24-1" href="#__codelineno-24-1"></a>docker<span class="w"> </span>run<span class="w"> </span>--privileged<span class="w"> </span>--rm<span class="w"> </span>tonistiigi/binfmt<span class="w"> </span>--install<span class="w"> </span>all
+</span></code></pre></div>
 <p><strong>Option 2: Build for a single architecture</strong></p>
 <p>Use this if you don’t want multi-arch builds.</p>
 <p>First, check your system architecture:</p>
-<p><code>bash
-uname -m</code></p>
+<div class="highlight"><pre><span></span><code><span id="__span-25-1"><a id="__codelineno-25-1" name="__codelineno-25-1" href="#__codelineno-25-1"></a>uname<span class="w"> </span>-m
+</span></code></pre></div>
 <p>Then build accordingly:</p>
-<p>```bash</p>
-<h1 id="amd64-systems">amd64 systems<a class="headerlink" href="#amd64-systems" title="Permanent link">&para;</a></h1>
-<p>PLATFORM=linux/amd64 make build-lite</p>
-<h1 id="arm64-systems">arm64 systems<a class="headerlink" href="#arm64-systems" title="Permanent link">&para;</a></h1>
-<p>PLATFORM=linux/arm64 make build-lite
-```</p>
+<div class="highlight"><pre><span></span><code><span id="__span-26-1"><a id="__codelineno-26-1" name="__codelineno-26-1" href="#__codelineno-26-1"></a><span class="c1"># amd64 systems</span>
+</span><span id="__span-26-2"><a id="__codelineno-26-2" name="__codelineno-26-2" href="#__codelineno-26-2"></a><span class="nv">PLATFORM</span><span class="o">=</span>linux/amd64<span class="w"> </span>make<span class="w"> </span>build-lite
+</span><span id="__span-26-3"><a id="__codelineno-26-3" name="__codelineno-26-3" href="#__codelineno-26-3"></a>
+</span><span id="__span-26-4"><a id="__codelineno-26-4" name="__codelineno-26-4" href="#__codelineno-26-4"></a><span class="c1"># arm64 systems</span>
+</span><span id="__span-26-5"><a id="__codelineno-26-5" name="__codelineno-26-5" href="#__codelineno-26-5"></a><span class="nv">PLATFORM</span><span class="o">=</span>linux/arm64<span class="w"> </span>make<span class="w"> </span>build-lite
+</span></code></pre></div>
 <h3 id="trivy-scan-errors">Trivy scan errors<a class="headerlink" href="#trivy-scan-errors" title="Permanent link">&para;</a></h3>
-<p>```bash</p>
-<h1 id="install-trivy">Install Trivy<a class="headerlink" href="#install-trivy" title="Permanent link">&para;</a></h1>
-<p>curl -sfL <a href="https://raw.githubusercontent.com/aquasecurity/trivy/main/contrib/install.sh">https://raw.githubusercontent.com/aquasecurity/trivy/main/contrib/install.sh</a> | sudo sh -s -- -b /usr/local/bin v0.69.1</p>
-<h1 id="or-skip-scan">Or skip scan<a class="headerlink" href="#or-skip-scan" title="Permanent link">&para;</a></h1>
-<p>make build-all test-all
-```</p>
+<div class="highlight"><pre><span></span><code><span id="__span-27-1"><a id="__codelineno-27-1" name="__codelineno-27-1" href="#__codelineno-27-1"></a><span class="c1"># Install Trivy</span>
+</span><span id="__span-27-2"><a id="__codelineno-27-2" name="__codelineno-27-2" href="#__codelineno-27-2"></a>curl<span class="w"> </span>-sfL<span class="w"> </span>https://raw.githubusercontent.com/aquasecurity/trivy/main/contrib/install.sh<span class="w"> </span><span class="p">|</span><span class="w"> </span>sudo<span class="w"> </span>sh<span class="w"> </span>-s<span class="w"> </span>--<span class="w"> </span>-b<span class="w"> </span>/usr/local/bin<span class="w"> </span>v0.69.1
+</span><span id="__span-27-3"><a id="__codelineno-27-3" name="__codelineno-27-3" href="#__codelineno-27-3"></a>
+</span><span id="__span-27-4"><a id="__codelineno-27-4" name="__codelineno-27-4" href="#__codelineno-27-4"></a><span class="c1"># Or skip scan</span>
+</span><span id="__span-27-5"><a id="__codelineno-27-5" name="__codelineno-27-5" href="#__codelineno-27-5"></a>make<span class="w"> </span>build-all<span class="w"> </span>test-all
+</span></code></pre></div>
 <h3 id="mkdocs-port-already-in-use">MkDocs port already in use<a class="headerlink" href="#mkdocs-port-already-in-use" title="Permanent link">&para;</a></h3>
-<p>```bash</p>
-<h1 id="use-different-port">Use different port<a class="headerlink" href="#use-different-port" title="Permanent link">&para;</a></h1>
-<p>mkdocs serve --dev-addr=127.0.0.1:8001
-```</p>
+<div class="highlight"><pre><span></span><code><span id="__span-28-1"><a id="__codelineno-28-1" name="__codelineno-28-1" href="#__codelineno-28-1"></a><span class="c1"># Use different port</span>
+</span><span id="__span-28-2"><a id="__codelineno-28-2" name="__codelineno-28-2" href="#__codelineno-28-2"></a>mkdocs<span class="w"> </span>serve<span class="w"> </span>--dev-addr<span class="o">=</span><span class="m">127</span>.0.0.1:8001
+</span></code></pre></div>
 <h2 id="next-steps">Next Steps<a class="headerlink" href="#next-steps" title="Permanent link">&para;</a></h2>
 <p>→ <strong><a href="https://github.com/ibtisam-iq/debugbox/blob/main/CONTRIBUTING.md">Contributing Guidelines</a></strong> | <strong><a href="https://github.com/ibtisam-iq/debugbox/blob/main/RELEASE.md">Release Process</a></strong> | <strong><a href="../../reference/manifest/">Architecture</a></strong></p>
 
@@ -1750,7 +2381,7 @@ uname -m</code></p>
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-custom" title="July 6, 2026 02:39:57 PKT">July 06, 2026 02:39:57 AM</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-custom" title="July 7, 2026 19:32:11 PKT">July 07, 2026 07:32:11 PM</span>
   </span>
 
     
@@ -1766,6 +2397,7 @@ uname -m</code></p>
 
 
                 
+
               </article>
             </div>
           
@@ -1775,8 +2407,15 @@ uname -m</code></p>
 <script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
         </div>
         
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
       </main>
       
+  
         <footer class="md-footer">
   
     
@@ -1872,16 +2511,30 @@ uname -m</code></p>
   </div>
 </footer>
       
+  <script>
+    (function() {
+      var el = document.querySelector(".md-copyright");
+      if (el) {
+        var startYear = 2026;
+        var y = new Date().getFullYear();
+        var range = y > startYear ? startYear + "–" + y : String(startYear);
+        el.innerHTML = "Copyright © " + range + " DebugBox";
+      }
+    })();
+  </script>
+
     </div>
     <div class="md-dialog" data-md-component="dialog">
       <div class="md-dialog__inner md-typeset"></div>
     </div>
     
+      <div class="md-progress" data-md-component="progress" role="progressbar"></div>
+    
     
     
       
       
-      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.tabs", "navigation.tabs.sticky", "navigation.sections", "navigation.footer", "content.action.edit", "content.tabs.link", "content.code.annotate", "content.code.copy", "toc.integrate"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"provider": "mike"}}</script>
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.tabs", "navigation.tabs.sticky", "navigation.sections", "navigation.footer", "navigation.instant", "navigation.instant.progress", "navigation.top", "navigation.tracking", "content.action.edit", "content.tabs.link", "content.code.annotate", "content.code.copy", "content.code.select", "search.suggest", "search.highlight", "search.share", "header.autohide", "announce.dismiss"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"provider": "mike"}}</script>
     
     
       <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>

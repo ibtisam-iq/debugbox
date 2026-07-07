@@ -26,7 +26,7 @@
       
       
       <link rel="icon" href="../../images/favicon.ico">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.1">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
     
     
       
@@ -74,7 +74,22 @@
 
     
     
-  </head>
+  
+<meta property="og:type" content="website" />
+<meta property="og:title" content="Bandwidth Savings - DebugBox" />
+<meta property="og:description" content="Lightweight, variant-based debugging container suite for Kubernetes and Docker environments.
+" />
+<meta property="og:image" content="https://debugbox.ibtisam-iq.com/assets/images/social/guides/bandwidth-savings.png" />
+<meta property="og:image:type" content="image/png" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:url" content="https://debugbox.ibtisam-iq.com/guides/bandwidth-savings/" />
+<meta property="twitter:card" content="summary_large_image" />
+<meta property="twitter:title" content="Bandwidth Savings - DebugBox" />
+<meta property="twitter:description" content="Lightweight, variant-based debugging container suite for Kubernetes and Docker environments.
+" />
+<meta property="twitter:image" content="https://debugbox.ibtisam-iq.com/assets/images/social/guides/bandwidth-savings.png" />
+</head>
   
   
     
@@ -84,7 +99,7 @@
     
     
     
-    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="blue" data-md-color-accent="cyan">
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="amber">
   
     
     <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
@@ -99,6 +114,25 @@
       
     </div>
     <div data-md-component="announce">
+      
+        <aside class="md-banner">
+          <div class="md-banner__inner md-grid md-typeset">
+            
+              <button class="md-banner__button md-icon" aria-label="Don't show this again">
+                
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+              </button>
+            
+            
+  <a href="https://github.com/ibtisam-iq/debugbox/releases/tag/v1.0.0">
+    DebugBox v1.0.0 is out -- see the release notes
+  </a>
+
+          </div>
+          
+            <script>var el=document.querySelector("[data-md-component=announce]");if(el){var content=el.querySelector(".md-typeset");__md_hash(content.innerHTML)===__md_get("__announce")&&(el.hidden=!0)}</script>
+          
+        </aside>
       
     </div>
     
@@ -145,7 +179,7 @@
     
     
     
-    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="blue" data-md-color-accent="cyan"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="amber"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
     
       <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
@@ -155,7 +189,7 @@
     
     
     
-    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="blue" data-md-color-accent="cyan"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="amber"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
     
       <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
@@ -189,11 +223,18 @@
       </label>
       <nav class="md-search__options" aria-label="Search">
         
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="Share" aria-label="Share" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91s2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08"/></svg>
+          </a>
+        
         <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
           
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
         </button>
       </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
       
     </form>
     <div class="md-search__output">
@@ -399,6 +440,8 @@
     
     <div class="md-container" data-md-component="container">
       
+  
+
       
         
       
@@ -416,9 +459,7 @@
   
 
 
-  
-
-<nav class="md-nav md-nav--primary md-nav--lifted md-nav--integrated" aria-label="Navigation" data-md-level="0">
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
     <a href="../.." title="DebugBox" class="md-nav__button md-logo" aria-label="DebugBox" data-md-component="logo">
       
@@ -1541,12 +1582,284 @@
               </div>
             
             
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#quick-impact" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Quick Impact
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#real-world-scenarios" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Real-World Scenarios
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Real-World Scenarios">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#scenario-1-edge-cluster-limited-bandwidth" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Scenario 1: Edge Cluster (Limited Bandwidth)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#scenario-2-iotraspberry-pi-cluster" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Scenario 2: IoT/Raspberry Pi Cluster
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#scenario-3-mobile-networks-lte5g" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Scenario 3: Mobile Networks (LTE/5G)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#scenario-4-cicd-pipeline-100-pullsday" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Scenario 4: CI/CD Pipeline (100+ pulls/day)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#bandwidth-by-use-case" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Bandwidth by Use Case
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#performance-impact" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Performance Impact
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Performance Impact">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#pull-speed-by-bandwidth-real-world-with-overhead" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Pull Speed by Bandwidth (Real-World with Overhead)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pod-launch-time-including-pull" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Pod Launch Time (including pull)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cost-analysis" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Cost Analysis
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Cost Analysis">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#aws-nat-gateway-egress" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        AWS NAT Gateway Egress
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#metered-mobile-data-high-cost-scenario" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Metered Mobile Data (High-Cost Scenario)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#bandwidth-optimization-tips" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Bandwidth Optimization Tips
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Bandwidth Optimization Tips">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-use-lite-by-default" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Use Lite by Default
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-pre-pull-during-off-peak" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Pre-Pull During Off-Peak
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-set-up-registry-mirror-for-teams-with-high-volume" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Set Up Registry Mirror (For Teams with High Volume)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-use-imagepullpolicy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Use ImagePullPolicy
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#recommendations-by-network" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Recommendations by Network
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Summary
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
           
           
             <div class="md-content" data-md-component="content">
               
               <article class="md-content__inner md-typeset">
                 
+  
+  
                   
 
 
@@ -1582,19 +1895,19 @@
 </tr>
 <tr>
 <td>DebugBox balanced</td>
-<td>~46 MB</td>
-<td>~2.3 GB</td>
-<td>~9.2 GB</td>
+<td>~51 MB</td>
+<td>~2.6 GB</td>
+<td>~10.2 GB</td>
 </tr>
 <tr>
 <td>DebugBox lite</td>
-<td>~14 MB</td>
-<td>~0.7 GB</td>
-<td>~2.8 GB</td>
+<td>~15 MB</td>
+<td>~0.75 GB</td>
+<td>~3 GB</td>
 </tr>
 <tr>
 <td><strong>Savings (lite vs netshoot)</strong></td>
-<td><strong>~188 MB</strong></td>
+<td><strong>~187 MB</strong></td>
 <td><strong>~9.4 GB</strong></td>
 <td><strong>~37 GB</strong></td>
 </tr>
@@ -1656,8 +1969,8 @@
 </ul>
 <p><strong>With DebugBox:</strong></p>
 <ul>
-<li>Baseline (lite): 100 × 14 MB = 1.4 GB/day = <strong>~42 GB/month</strong></li>
-<li>Advanced (balanced): 10 × 46 MB = 0.46 GB/day = <strong>~14 GB/month</strong></li>
+<li>Baseline (lite): 100 x 15 MB = 1.5 GB/day = <strong>~45 GB/month</strong></li>
+<li>Advanced (balanced): 10 x 51 MB = 0.51 GB/day = <strong>~15 GB/month</strong></li>
 <li><strong>Total: ~56 GB/month</strong></li>
 <li><strong>Savings: ~544 GB/month (91% reduction)</strong></li>
 </ul>
@@ -1677,20 +1990,20 @@
 <tr>
 <td>DNS/API checks</td>
 <td>Lite</td>
-<td>~14 MB</td>
+<td>~15 MB</td>
 <td>Minimal: curl, dig, netcat</td>
 </tr>
 <tr>
 <td>Daily K8s troubleshooting</td>
 <td>Balanced</td>
-<td>~46 MB</td>
-<td>Full: tcpdump, strace, vim, git</td>
+<td>~51 MB</td>
+<td>Full: tcpdump, openssl, strace, vim</td>
 </tr>
 <tr>
 <td>SRE forensics</td>
 <td>Power</td>
-<td>~104 MB</td>
-<td>Complete: tshark, iptables, bird</td>
+<td>~112 MB</td>
+<td>Complete: tshark, nmap, iptables</td>
 </tr>
 </tbody>
 </table>
@@ -1812,21 +2125,21 @@
 <hr />
 <h2 id="bandwidth-optimization-tips">Bandwidth Optimization Tips<a class="headerlink" href="#bandwidth-optimization-tips" title="Permanent link">&para;</a></h2>
 <h3 id="1-use-lite-by-default"><strong>1. Use Lite by Default</strong><a class="headerlink" href="#1-use-lite-by-default" title="Permanent link">&para;</a></h3>
-<p><code>bash
-kubectl debug my-pod -it --image=ghcr.io/ibtisam-iq/debugbox:lite</code></p>
+<div class="highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>kubectl<span class="w"> </span>debug<span class="w"> </span>my-pod<span class="w"> </span>-it<span class="w"> </span>--image<span class="o">=</span>ghcr.io/ibtisam-iq/debugbox:lite
+</span></code></pre></div>
 <h3 id="2-pre-pull-during-off-peak"><strong>2. Pre-Pull During Off-Peak</strong><a class="headerlink" href="#2-pre-pull-during-off-peak" title="Permanent link">&para;</a></h3>
 <p>Pull during low-traffic windows; let container runtime cache.</p>
 <h3 id="3-set-up-registry-mirror-for-teams-with-high-volume"><strong>3. Set Up Registry Mirror</strong> (For Teams with High Volume)<a class="headerlink" href="#3-set-up-registry-mirror-for-teams-with-high-volume" title="Permanent link">&para;</a></h3>
-<p><code>bash
-docker pull ghcr.io/ibtisam-iq/debugbox:lite
-docker tag ghcr.io/ibtisam-iq/debugbox:lite private-registry/debugbox:lite
-docker push private-registry/debugbox:lite</code></p>
+<div class="highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>docker<span class="w"> </span>pull<span class="w"> </span>ghcr.io/ibtisam-iq/debugbox:lite
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>docker<span class="w"> </span>tag<span class="w"> </span>ghcr.io/ibtisam-iq/debugbox:lite<span class="w"> </span>private-registry/debugbox:lite
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>docker<span class="w"> </span>push<span class="w"> </span>private-registry/debugbox:lite
+</span></code></pre></div>
 <h3 id="4-use-imagepullpolicy"><strong>4. Use ImagePullPolicy</strong><a class="headerlink" href="#4-use-imagepullpolicy" title="Permanent link">&para;</a></h3>
-<p><code>yaml
-spec:
-  ephemeralContainers:
-  - image: ghcr.io/ibtisam-iq/debugbox:lite
-    imagePullPolicy: IfNotPresent  # Don't re-pull if cached</code></p>
+<div class="highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="nt">spec</span><span class="p">:</span>
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="w">  </span><span class="nt">ephemeralContainers</span><span class="p">:</span>
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ghcr.io/ibtisam-iq/debugbox:lite</span>
+</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="w">    </span><span class="nt">imagePullPolicy</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">IfNotPresent</span><span class="w">  </span><span class="c1"># Don&#39;t re-pull if cached</span>
+</span></code></pre></div>
 <hr />
 <h2 id="recommendations-by-network">Recommendations by Network<a class="headerlink" href="#recommendations-by-network" title="Permanent link">&para;</a></h2>
 <table>
@@ -1874,12 +2187,11 @@ spec:
 <h2 id="summary">Summary<a class="headerlink" href="#summary" title="Permanent link">&para;</a></h2>
 <p><strong>DebugBox's variant approach saves:</strong></p>
 <ul>
-<li>📊 <strong>~37 GB/month</strong> on 50 pulls vs netshoot</li>
-<li>⏱️ <strong>~15–23 minutes/week</strong> on 100 Mbps</li>
-<li>💰 <strong>$200–$3,000/year</strong> in costs (depending on scenario)</li>
-<li>📈 <strong>Scales exponentially</strong> with team size and pull frequency</li>
+<li>~37 GB/month on 50 pulls vs netshoot</li>
+<li>~15-23 minutes/week on 100 Mbps</li>
+<li>$200-$3,000/year in costs (depending on scenario)</li>
+<li>Scales with team size and pull frequency</li>
 </ul>
-<p><strong>Choose right size. Save bandwidth. Debug faster. 🚀</strong></p>
 <p><strong>Next step:</strong> <a href="../../reference/tags/">See Image Tags Guide</a> for production pinning strategy.</p>
 
 
@@ -1901,7 +2213,7 @@ spec:
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-custom" title="July 6, 2026 02:39:57 PKT">July 06, 2026 02:39:57 AM</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-custom" title="July 7, 2026 19:32:11 PKT">July 07, 2026 07:32:11 PM</span>
   </span>
 
     
@@ -1917,6 +2229,7 @@ spec:
 
 
                 
+
               </article>
             </div>
           
@@ -1926,8 +2239,15 @@ spec:
 <script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
         </div>
         
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
       </main>
       
+  
         <footer class="md-footer">
   
     
@@ -2023,16 +2343,30 @@ spec:
   </div>
 </footer>
       
+  <script>
+    (function() {
+      var el = document.querySelector(".md-copyright");
+      if (el) {
+        var startYear = 2026;
+        var y = new Date().getFullYear();
+        var range = y > startYear ? startYear + "–" + y : String(startYear);
+        el.innerHTML = "Copyright © " + range + " DebugBox";
+      }
+    })();
+  </script>
+
     </div>
     <div class="md-dialog" data-md-component="dialog">
       <div class="md-dialog__inner md-typeset"></div>
     </div>
     
+      <div class="md-progress" data-md-component="progress" role="progressbar"></div>
+    
     
     
       
       
-      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.tabs", "navigation.tabs.sticky", "navigation.sections", "navigation.footer", "content.action.edit", "content.tabs.link", "content.code.annotate", "content.code.copy", "toc.integrate"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"provider": "mike"}}</script>
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.tabs", "navigation.tabs.sticky", "navigation.sections", "navigation.footer", "navigation.instant", "navigation.instant.progress", "navigation.top", "navigation.tracking", "content.action.edit", "content.tabs.link", "content.code.annotate", "content.code.copy", "content.code.select", "search.suggest", "search.highlight", "search.share", "header.autohide", "announce.dismiss"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"provider": "mike"}}</script>
     
     
       <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>

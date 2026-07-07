@@ -66,19 +66,18 @@ kubectl describe pod debug-pod
 | Tool Missing | Variant | Image | Why |
 |--------------|---------|-------|-----|
 | bash, sh, ash | lite+ | Need balanced+ | Lite has only ash (minimal shell) |
-| vim, git, curl | lite | Need balanced+ | Lite is ~14MB minimal |
+| vim, git, openssl | lite | Need balanced+ | Lite is minimal |
 | tcpdump, strace, lsof | lite | Need balanced+ | Lite doesn't have advanced tools |
-| tshark, nftables, ltrace | balanced | Need power | Power adds forensics tools |
-| bird, brctl, speedtest | balanced | Need power | Power adds advanced networking |
-| iptables, conntrack | balanced* | Need power | *Available in balanced but needs NET_ADMIN capability |
+| tshark, nmap, nftables | balanced | Need power | Power adds forensics and scanning tools |
+| iptables, conntrack | balanced | Need power | Power adds firewall inspection (needs NET_ADMIN) |
 
 **Tool availability by variant:**
 
 | Variant | Size | Includes |
 |---------|------|----------|
-| **lite** | ~14 MB | curl, wget, dig, nslookup, jq, yq, ash, vi |
-| **balanced** | ~46 MB | lite + bash, git, vim, tcpdump, strace, lsof, ps, top, htop, nc, socat, mtr, nmap, iperf3, and 10+ more |
-| **power** | ~104 MB | balanced + tshark, ngrep, ltrace, nping, nmap-scripts, openssl, iptables, nftables, conntrack, bird, brctl, python3, nano, speedtest-cli, and more |
+| **lite** | ~15 MB | curl, dig, nslookup, jq, yq, nc, ping, ash, vi |
+| **balanced** | ~51 MB | lite + bash, git, vim, openssl, tcpdump, strace, lsof, htop, socat, mtr, kubectx/ns |
+| **power** | ~112 MB | balanced + tshark, ngrep, ltrace, nmap, nping, iperf3, iptables, nftables, conntrack |
 
 **Quick fix:**
 ```bash
@@ -106,7 +105,7 @@ tshark: Couldn't run dumpcap in child process: Operation not permitted
 **Quick diagnosis:**
 ```bash
 # Which capability do you need?
-tshark, ngrep, iptables, nftables, conntrack, brctl → NET_ADMIN
+tshark, ngrep, iptables, nftables, conntrack → NET_ADMIN
 
 # Check current capabilities
 grep Cap /proc/self/status
@@ -188,10 +187,12 @@ kubectl version --short
 **If K8s < 1.23:** Use kubectl run instead
 ```bash
 # Instead of:
-kubectl debug my-pod -it --image=ghcr.io/ibtisam-iq/debugbox
+kubectl debug my-pod -it \
+  --image=ghcr.io/ibtisam-iq/debugbox
 
 # Use:
-kubectl run debug --rm -it --image=ghcr.io/ibtisam-iq/debugbox --restart=Never
+kubectl run debug --rm -it \
+  --image=ghcr.io/ibtisam-iq/debugbox --restart=Never
 ```
 
 **If kubectl is old:** Update kubectl locally
@@ -257,7 +258,7 @@ curl http://10.1.2.3:8080/health  # Instead of hostname
 
 **Option 1: Use lite (fastest)**
 ```bash
---image=ghcr.io/ibtisam-iq/debugbox:lite  # 14 MB (~1-2 seconds)
+--image=ghcr.io/ibtisam-iq/debugbox:lite  # ~15 MB (~1-2 seconds)
 ```
 
 **Option 2: Pre-pull image to nodes** (for frequent use)
@@ -336,22 +337,19 @@ docker pull ghcr.io/ibtisam-iq/debugbox:lite
 
 ---
 
-### "No such file or directory" on vim/nano commands
+### "No such file or directory" on vim command
 
-**Symptoms:** `vim: command not found` (when you use lite) but you swear you saw it before
+**Symptoms:** `vim: command not found` when using lite variant
 
-**Cause:** Using lite variant. Lite only has `vi`, not full `vim`
+**Cause:** Lite only has `vi` (busybox), not full `vim`
 
 **Solution:**
 ```bash
 # Lite has minimal vi
 --image=ghcr.io/ibtisam-iq/debugbox:lite → vi only
 
-# Use balanced for full vim
+# Use balanced or power for full vim
 --image=ghcr.io/ibtisam-iq/debugbox → vim available
-
-# Use power for nano too
---image=ghcr.io/ibtisam-iq/debugbox:power → vim + nano
 ```
 
 ---
@@ -359,18 +357,23 @@ docker pull ghcr.io/ibtisam-iq/debugbox:lite
 ## Frequently Asked Questions
 
 **Q: Does DebugBox include kubectl?**
-A: No — intentionally. DebugBox is for low-level debugging inside containers. Use `kubectl` locally and pipe output to DebugBox if needed.
+
+A: No, intentionally. DebugBox is for low-level debugging inside containers. Use `kubectl` locally and pipe output to DebugBox if needed.
 
 **Q: Can I run as non-root?**
+
 A: Yes. Most tools work fine as non-root. Only tools needing raw sockets (tshark) or system access (strace, iptables) require root/capabilities.
 
 **Q: Why no helm, k9s, or kustomize?**
+
 A: DebugBox focuses on debugging inside containers (network, processes, files). Deployment/management tools are out of scope.
 
 **Q: Does DebugBox work with Kubernetes 1.18?**
+
 A: Yes for most things. `kubectl debug` requires 1.23+. Use `kubectl run` for older clusters.
 
 **Q: Can I use DebugBox outside Kubernetes?**
+
 A: Absolutely. It's just a Docker container:
 ```bash
 docker run -it ghcr.io/ibtisam-iq/debugbox
@@ -385,9 +388,11 @@ docker run -it ghcr.io/ibtisam-iq/debugbox:power
 - **Power:** You need packet analysis, firewall debugging, or Python scripting
 
 **Q: What's included in lite?**
-A: curl, wget, dig, nslookup, host, jq, yq, ash, vi, less
+
+A: curl, dig, nslookup, host, jq, yq, nc, ping, ip, ash, vi
 
 **Q: How do I pin versions in production?**
+
 A: Always use specific version tags:
 ```bash
 ghcr.io/ibtisam-iq/debugbox:1.0.0
@@ -397,6 +402,7 @@ ghcr.io/ibtisam-iq/debugbox:power-1.0.0
 Never use `:latest` in production manifests.
 
 **Q: Can I extend DebugBox with my own tools?**
+
 A: Yes, create a custom image:
 ```dockerfile
 FROM ghcr.io/ibtisam-iq/debugbox:1.0.0
@@ -404,6 +410,7 @@ RUN apk add --no-cache my-package-name
 ```
 
 **Q: How often are new versions released?**
+
 A: As needed. Track releases:
 ```bash
 # Check latest version
@@ -414,9 +421,11 @@ https://github.com/ibtisam-iq/debugbox/releases
 ```
 
 **Q: Does DebugBox work on Docker Desktop?**
+
 A: Yes. `docker run -it ghcr.io/ibtisam-iq/debugbox` works on Mac/Windows/Linux.
 
 **Q: What if I need to debug a pod that's not running?**
+
 A: You can't attach to a crashed pod. Options:
 ```bash
 # 1. Check logs
@@ -429,6 +438,7 @@ kubectl run debug-pod --image=my-image --restart=Never -it
 ```
 
 **Q: How do I share debug sessions with colleagues?**
+
 A: Use `socat` for port forwarding:
 ```bash
 # In debugbox pod

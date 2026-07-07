@@ -5,60 +5,31 @@
 # ll() is inherited from debugbox-base-profile.sh
 
 # === Data Inspection ===
-# json() — Pretty-print JSON with fallback
-#   Usage: echo "{...}" | json
-#          json file.json
 json() {
   jq . "$@" 2>/dev/null || cat "$@"
 }
 
-# yaml() — Pretty-print YAML with fallback
-#   Usage: kubectl get pod -o yaml | yaml
-#          yaml config.yaml
 yaml() {
   yq . "$@" 2>/dev/null || cat "$@"
 }
 
 # === Network Inspection ===
-# ports() — Show all listening ports (TCP & UDP)
-alias ports="netstat -tulpn"
-
-# connections() — Show all active connections
-alias connections="ss -tulpn"
-
-# routes() — Show IP routing table
+alias ports="ss -tulnp"
+alias connections="ss -tunap"
 alias routes="ip route show"
 
-# === Kubernetes ===
-# Show current context and namespace
-alias k8s-info='echo Context: $(kubectx -c 2>/dev/null || echo unknown); echo Namespace: $(kubens -c 2>/dev/null || echo unknown)'
-
-# === Packet Capture Helpers ===
-# sniff() — Quick packet capture on any interface
-#   Usage: sniff (capture all packets)
-#          sniff -c 100 (capture 100 packets)
-#          sniff -w capture.pcap (save to file)
+# === Packet Capture ===
 alias sniff="tcpdump -i any -n -s 0"
-
-# sniff-http() — Capture HTTP traffic (ports 80 and 443)
-#   Usage: sniff-http
-#          sniff-http -c 50 (50 packets)
 alias sniff-http="tcpdump -i any -n -s 0 'tcp port 80 or tcp port 443'"
-
-# sniff-dns() — Capture DNS queries and responses (port 53)
-#   Usage: sniff-dns
-#          sniff-dns | grep myservice
 alias sniff-dns="tcpdump -i any -n -s 0 'port 53'"
 
 # === TLS/Certificate Inspection ===
-# cert-check() — Inspect TLS certificate of a server
-#   Usage: cert-check example.com:443
-#          cert-check kubernetes.default.svc.cluster.local:443
 cert-check() {
   echo | openssl s_client -connect "$1" -showcerts 2>/dev/null | openssl x509 -text -noout
 }
 
-# === Connection Tracking ===
-# conntrack-watch() — Watch active connections in real-time
-#   Usage: conntrack-watch (updates every 2 seconds)
+# === Kubernetes ===
+alias k8s-info='echo Context: $(kubectx -c 2>/dev/null || echo unknown); echo Namespace: $(kubens -c 2>/dev/null || echo unknown)'
+
+# === Connection Tracking (Power only, requires NET_ADMIN) ===
 alias conntrack-watch="watch -n 2 'conntrack -L | wc -l && echo active connections && conntrack -L | head -20'"

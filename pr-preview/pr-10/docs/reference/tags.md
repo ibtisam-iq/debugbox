@@ -72,10 +72,10 @@ ghcr.io/ibtisam-iq/debugbox:1.0.0      # Alias to balanced-1.0.0
 
 DebugBox follows **Semantic Versioning** (MAJOR.MINOR.PATCH):
 
-- `v1.0.0` — First stable release
-- `v1.0.1` — Patch (bug fix)
-- `v1.1.0` — Minor (features, backward compatible)
-- `v2.0.0` — Major (breaking changes)
+- `v1.0.0` -- First stable release
+- `v1.0.1` -- Patch (bug fix)
+- `v1.1.0` -- Minor (features, backward compatible)
+- `v2.0.0` -- Major (breaking changes)
 
 **Key Rules:**
 

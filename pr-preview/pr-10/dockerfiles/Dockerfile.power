@@ -1,5 +1,5 @@
 # DebugBox — Power variant
-# Advanced SRE-grade debugging and network forensics image (~104 MB).
+# Advanced SRE-grade debugging and network forensics image.
 
 ARG BASE_IMAGE=ghcr.io/ibtisam-iq/debugbox-base:latest
 

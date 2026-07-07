@@ -26,7 +26,7 @@
       
       
       <link rel="icon" href="../../images/favicon.ico">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.1">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
     
     
       
@@ -74,7 +74,22 @@
 
     
     
-  </head>
+  
+<meta property="og:type" content="website" />
+<meta property="og:title" content="Examples - DebugBox" />
+<meta property="og:description" content="Lightweight, variant-based debugging container suite for Kubernetes and Docker environments.
+" />
+<meta property="og:image" content="https://debugbox.ibtisam-iq.com/assets/images/social/guides/examples.png" />
+<meta property="og:image:type" content="image/png" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:url" content="https://debugbox.ibtisam-iq.com/guides/examples/" />
+<meta property="twitter:card" content="summary_large_image" />
+<meta property="twitter:title" content="Examples - DebugBox" />
+<meta property="twitter:description" content="Lightweight, variant-based debugging container suite for Kubernetes and Docker environments.
+" />
+<meta property="twitter:image" content="https://debugbox.ibtisam-iq.com/assets/images/social/guides/examples.png" />
+</head>
   
   
     
@@ -84,7 +99,7 @@
     
     
     
-    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="blue" data-md-color-accent="cyan">
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="amber">
   
     
     <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
@@ -99,6 +114,25 @@
       
     </div>
     <div data-md-component="announce">
+      
+        <aside class="md-banner">
+          <div class="md-banner__inner md-grid md-typeset">
+            
+              <button class="md-banner__button md-icon" aria-label="Don't show this again">
+                
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+              </button>
+            
+            
+  <a href="https://github.com/ibtisam-iq/debugbox/releases/tag/v1.0.0">
+    DebugBox v1.0.0 is out -- see the release notes
+  </a>
+
+          </div>
+          
+            <script>var el=document.querySelector("[data-md-component=announce]");if(el){var content=el.querySelector(".md-typeset");__md_hash(content.innerHTML)===__md_get("__announce")&&(el.hidden=!0)}</script>
+          
+        </aside>
       
     </div>
     
@@ -145,7 +179,7 @@
     
     
     
-    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="blue" data-md-color-accent="cyan"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="amber"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
     
       <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
@@ -155,7 +189,7 @@
     
     
     
-    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="blue" data-md-color-accent="cyan"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="amber"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
     
       <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
@@ -189,11 +223,18 @@
       </label>
       <nav class="md-search__options" aria-label="Search">
         
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="Share" aria-label="Share" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91s2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08"/></svg>
+          </a>
+        
         <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
           
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
         </button>
       </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
       
     </form>
     <div class="md-search__output">
@@ -399,6 +440,8 @@
     
     <div class="md-container" data-md-component="container">
       
+  
+
       
         
       
@@ -416,9 +459,7 @@
   
 
 
-  
-
-<nav class="md-nav md-nav--primary md-nav--lifted md-nav--integrated" aria-label="Navigation" data-md-level="0">
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
     <a href="../.." title="DebugBox" class="md-nav__button md-logo" aria-label="DebugBox" data-md-component="logo">
       
@@ -1032,6 +1073,315 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#service-connectivity" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Service Connectivity
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#network-interface-ip-configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Network Interface &amp; IP Configuration
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#socket-connection-analysis" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Socket &amp; Connection Analysis
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#route-tracing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Route Tracing
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#port-scanning-discovery" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Port Scanning &amp; Discovery
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#bandwidth-testing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Bandwidth Testing
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#bandwidth-monitoring" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Bandwidth Monitoring
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#nic-diagnostics" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        NIC Diagnostics
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#packet-capture-analysis" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Packet Capture &amp; Analysis
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Packet Capture &amp; Analysis">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#basic-capture-balanced" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Basic Capture (Balanced+)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#advanced-analysis-power-net_admin" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Advanced Analysis (Power + NET_ADMIN)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#advanced-tcpudp-tools" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Advanced TCP/UDP Tools
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#connectivity-testing-parallel" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Connectivity Testing (Parallel)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#process-inspection" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Process Inspection
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#system-call-tracing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        System Call Tracing
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tlsssl-inspection" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        TLS/SSL Inspection
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#firewall-routing-net_admin-required" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Firewall &amp; Routing (NET_ADMIN Required)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#data-processing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Data Processing
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#file-operations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        File Operations
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#version-control" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Version Control
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#helper-functions-shell" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Helper Functions (Shell)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#configmapsecret-inspection" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ConfigMap/Secret Inspection
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#complete-tool-coverage-summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Complete Tool Coverage Summary
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Complete Tool Coverage Summary">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#variant-lite-15-mb" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Variant: Lite (~15 MB)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#variant-balanced-51-mb-default" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Variant: Balanced (~51 MB) -- Default
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#variant-power-112-mb-full-forensics" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Variant: Power (~112 MB) -- Full Forensics
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#capability-requirements-reference" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Capability Requirements Reference
+      
+    </span>
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -1308,12 +1658,360 @@
               </div>
             
             
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#dns-troubleshooting" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        DNS Troubleshooting
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#service-connectivity" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Service Connectivity
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#network-interface-ip-configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Network Interface &amp; IP Configuration
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#socket-connection-analysis" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Socket &amp; Connection Analysis
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#route-tracing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Route Tracing
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#port-scanning-discovery" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Port Scanning &amp; Discovery
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#bandwidth-testing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Bandwidth Testing
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#bandwidth-monitoring" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Bandwidth Monitoring
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#nic-diagnostics" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        NIC Diagnostics
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#packet-capture-analysis" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Packet Capture &amp; Analysis
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Packet Capture &amp; Analysis">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#basic-capture-balanced" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Basic Capture (Balanced+)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#advanced-analysis-power-net_admin" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Advanced Analysis (Power + NET_ADMIN)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#advanced-tcpudp-tools" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Advanced TCP/UDP Tools
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#connectivity-testing-parallel" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Connectivity Testing (Parallel)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#process-inspection" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Process Inspection
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#system-call-tracing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        System Call Tracing
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tlsssl-inspection" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        TLS/SSL Inspection
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#firewall-routing-net_admin-required" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Firewall &amp; Routing (NET_ADMIN Required)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#data-processing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Data Processing
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#file-operations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        File Operations
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#version-control" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Version Control
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#helper-functions-shell" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Helper Functions (Shell)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#configmapsecret-inspection" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ConfigMap/Secret Inspection
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#complete-tool-coverage-summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Complete Tool Coverage Summary
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Complete Tool Coverage Summary">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#variant-lite-15-mb" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Variant: Lite (~15 MB)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#variant-balanced-51-mb-default" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Variant: Balanced (~51 MB) -- Default
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#variant-power-112-mb-full-forensics" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Variant: Power (~112 MB) -- Full Forensics
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#capability-requirements-reference" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Capability Requirements Reference
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
           
           
             <div class="md-content" data-md-component="content">
               
               <article class="md-content__inner md-typeset">
                 
+  
+  
                   
 
 
@@ -1331,453 +2029,506 @@
 <hr />
 <h2 id="dns-troubleshooting">DNS Troubleshooting<a class="headerlink" href="#dns-troubleshooting" title="Permanent link">&para;</a></h2>
 <p><strong>Tools:</strong> <code>dig</code>, <code>nslookup</code>, <code>host</code> (bind-tools)</p>
-<p>```bash
-kubectl run dns-debug --rm -it --image=ghcr.io/ibtisam-iq/debugbox:lite --restart=Never</p>
-<h1 id="detailed-dns-query">Detailed DNS query<a class="headerlink" href="#detailed-dns-query" title="Permanent link">&para;</a></h1>
-<p>dig my-service.default.svc.cluster.local</p>
-<h1 id="quick-lookup">Quick lookup<a class="headerlink" href="#quick-lookup" title="Permanent link">&para;</a></h1>
-<p>nslookup my-service.default.svc.cluster.local</p>
-<h1 id="simple-hostname-resolution">Simple hostname resolution<a class="headerlink" href="#simple-hostname-resolution" title="Permanent link">&para;</a></h1>
-<p>host kubernetes.default</p>
-<h1 id="check-specific-dns-server">Check specific DNS server<a class="headerlink" href="#check-specific-dns-server" title="Permanent link">&para;</a></h1>
-<p>dig @8.8.8.8 example.com</p>
-<h1 id="trace-dns-resolution-path">Trace DNS resolution path<a class="headerlink" href="#trace-dns-resolution-path" title="Permanent link">&para;</a></h1>
-<p>dig +trace example.com</p>
-<h1 id="check-dns-search-domains">Check DNS search domains<a class="headerlink" href="#check-dns-search-domains" title="Permanent link">&para;</a></h1>
-<p>cat /etc/resolv.conf
-```</p>
+<div class="highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>kubectl<span class="w"> </span>run<span class="w"> </span>dns-debug<span class="w"> </span>--rm<span class="w"> </span>-it<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="w">  </span>--image<span class="o">=</span>ghcr.io/ibtisam-iq/debugbox:lite<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="w">  </span>--restart<span class="o">=</span>Never
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="c1"># Detailed DNS query</span>
+</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>dig<span class="w"> </span>my-service.default.svc.cluster.local
+</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>
+</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a><span class="c1"># Quick lookup</span>
+</span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>nslookup<span class="w"> </span>my-service.default.svc.cluster.local
+</span><span id="__span-0-10"><a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a>
+</span><span id="__span-0-11"><a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a><span class="c1"># Simple hostname resolution</span>
+</span><span id="__span-0-12"><a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a>host<span class="w"> </span>kubernetes.default
+</span><span id="__span-0-13"><a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a>
+</span><span id="__span-0-14"><a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a><span class="c1"># Check specific DNS server</span>
+</span><span id="__span-0-15"><a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a>dig<span class="w"> </span>@8.8.8.8<span class="w"> </span>example.com
+</span><span id="__span-0-16"><a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a>
+</span><span id="__span-0-17"><a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a><span class="c1"># Trace DNS resolution path</span>
+</span><span id="__span-0-18"><a id="__codelineno-0-18" name="__codelineno-0-18" href="#__codelineno-0-18"></a>dig<span class="w"> </span>+trace<span class="w"> </span>example.com
+</span><span id="__span-0-19"><a id="__codelineno-0-19" name="__codelineno-0-19" href="#__codelineno-0-19"></a>
+</span><span id="__span-0-20"><a id="__codelineno-0-20" name="__codelineno-0-20" href="#__codelineno-0-20"></a><span class="c1"># Check DNS search domains</span>
+</span><span id="__span-0-21"><a id="__codelineno-0-21" name="__codelineno-0-21" href="#__codelineno-0-21"></a>cat<span class="w"> </span>/etc/resolv.conf
+</span></code></pre></div>
 <hr />
 <h2 id="service-connectivity">Service Connectivity<a class="headerlink" href="#service-connectivity" title="Permanent link">&para;</a></h2>
-<p><strong>Tools:</strong> <code>curl</code>, <code>wget</code>, <code>ping</code>, <code>nc</code> (netcat), <code>telnet</code></p>
-<p>```bash
-kubectl run net-debug --rm -it --image=ghcr.io/ibtisam-iq/debugbox --restart=Never</p>
-<h1 id="http-endpoint-testing">HTTP endpoint testing<a class="headerlink" href="#http-endpoint-testing" title="Permanent link">&para;</a></h1>
-<p>curl -v <a href="http://my-service:8080/health">http://my-service:8080/health</a>
-curl -I <a href="https://example.com">https://example.com</a>        # Headers only
-wget -O- <a href="http://my-service/status">http://my-service/status</a>  # Alternative HTTP client</p>
-<h1 id="basic-connectivity">Basic connectivity<a class="headerlink" href="#basic-connectivity" title="Permanent link">&para;</a></h1>
-<p>ping -c 4 my-service.default.svc.cluster.local</p>
-<h1 id="port-testing">Port testing<a class="headerlink" href="#port-testing" title="Permanent link">&para;</a></h1>
-<p>nc -zv my-service 8080  # Check if port is open
-nc -l 9000              # Listen on port (in one terminal)
-nc my-service 9000      # Connect (in another terminal)</p>
-<h1 id="test-specific-ports">Test specific ports<a class="headerlink" href="#test-specific-ports" title="Permanent link">&para;</a></h1>
-<p>echo "GET / HTTP/1.0\r\n" | nc example.com 80
-```</p>
+<p><strong>Tools:</strong> <code>curl</code>, <code>ping</code>, <code>nc</code> (netcat)</p>
+<div class="highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>kubectl<span class="w"> </span>run<span class="w"> </span>net-debug<span class="w"> </span>--rm<span class="w"> </span>-it<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="w">  </span>--image<span class="o">=</span>ghcr.io/ibtisam-iq/debugbox<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="w">  </span>--restart<span class="o">=</span>Never
+</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>
+</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="c1"># HTTP endpoint testing</span>
+</span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>curl<span class="w"> </span>-v<span class="w"> </span>http://my-service:8080/health
+</span><span id="__span-1-7"><a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a>curl<span class="w"> </span>-I<span class="w"> </span>https://example.com<span class="w">        </span><span class="c1"># Headers only</span>
+</span><span id="__span-1-8"><a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a>
+</span><span id="__span-1-9"><a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a><span class="c1"># Basic connectivity</span>
+</span><span id="__span-1-10"><a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a>ping<span class="w"> </span>-c<span class="w"> </span><span class="m">4</span><span class="w"> </span>my-service.default.svc.cluster.local
+</span><span id="__span-1-11"><a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a>
+</span><span id="__span-1-12"><a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a><span class="c1"># Port testing</span>
+</span><span id="__span-1-13"><a id="__codelineno-1-13" name="__codelineno-1-13" href="#__codelineno-1-13"></a>nc<span class="w"> </span>-zv<span class="w"> </span>my-service<span class="w"> </span><span class="m">8080</span><span class="w">  </span><span class="c1"># Check if port is open</span>
+</span><span id="__span-1-14"><a id="__codelineno-1-14" name="__codelineno-1-14" href="#__codelineno-1-14"></a>nc<span class="w"> </span>-l<span class="w"> </span><span class="m">9000</span><span class="w">              </span><span class="c1"># Listen on port (in one terminal)</span>
+</span><span id="__span-1-15"><a id="__codelineno-1-15" name="__codelineno-1-15" href="#__codelineno-1-15"></a>nc<span class="w"> </span>my-service<span class="w"> </span><span class="m">9000</span><span class="w">      </span><span class="c1"># Connect (in another terminal)</span>
+</span><span id="__span-1-16"><a id="__codelineno-1-16" name="__codelineno-1-16" href="#__codelineno-1-16"></a>
+</span><span id="__span-1-17"><a id="__codelineno-1-17" name="__codelineno-1-17" href="#__codelineno-1-17"></a><span class="c1"># Test specific ports</span>
+</span><span id="__span-1-18"><a id="__codelineno-1-18" name="__codelineno-1-18" href="#__codelineno-1-18"></a><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;GET / HTTP/1.0\r\n&quot;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>nc<span class="w"> </span>example.com<span class="w"> </span><span class="m">80</span>
+</span></code></pre></div>
 <hr />
 <h2 id="network-interface-ip-configuration">Network Interface &amp; IP Configuration<a class="headerlink" href="#network-interface-ip-configuration" title="Permanent link">&para;</a></h2>
 <p><strong>Tools:</strong> <code>ip</code> (iproute2), <code>ifconfig</code> (legacy alternative)</p>
-<p>```bash
-kubectl debug my-app -it --image=ghcr.io/ibtisam-iq/debugbox</p>
-<h1 id="show-all-interfaces">Show all interfaces<a class="headerlink" href="#show-all-interfaces" title="Permanent link">&para;</a></h1>
-<p>ip addr
-ip link show</p>
-<h1 id="routing-table">Routing table<a class="headerlink" href="#routing-table" title="Permanent link">&para;</a></h1>
-<p>ip route
-ip route get 8.8.8.8  # Show route to specific IP</p>
-<h1 id="arpneighbor-table">ARP/Neighbor table<a class="headerlink" href="#arpneighbor-table" title="Permanent link">&para;</a></h1>
-<p>ip neigh</p>
-<h1 id="interface-statistics">Interface statistics<a class="headerlink" href="#interface-statistics" title="Permanent link">&para;</a></h1>
-<p>ip -s link show eth0
-```</p>
+<div class="highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>kubectl<span class="w"> </span>debug<span class="w"> </span>my-app<span class="w"> </span>-it<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="w">  </span>--image<span class="o">=</span>ghcr.io/ibtisam-iq/debugbox
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>
+</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="c1"># Show all interfaces</span>
+</span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>ip<span class="w"> </span>addr
+</span><span id="__span-2-6"><a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a>ip<span class="w"> </span>link<span class="w"> </span>show
+</span><span id="__span-2-7"><a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a>
+</span><span id="__span-2-8"><a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a><span class="c1"># Routing table</span>
+</span><span id="__span-2-9"><a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a>ip<span class="w"> </span>route
+</span><span id="__span-2-10"><a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a>ip<span class="w"> </span>route<span class="w"> </span>get<span class="w"> </span><span class="m">8</span>.8.8.8<span class="w">  </span><span class="c1"># Show route to specific IP</span>
+</span><span id="__span-2-11"><a id="__codelineno-2-11" name="__codelineno-2-11" href="#__codelineno-2-11"></a>
+</span><span id="__span-2-12"><a id="__codelineno-2-12" name="__codelineno-2-12" href="#__codelineno-2-12"></a><span class="c1"># ARP/Neighbor table</span>
+</span><span id="__span-2-13"><a id="__codelineno-2-13" name="__codelineno-2-13" href="#__codelineno-2-13"></a>ip<span class="w"> </span>neigh
+</span><span id="__span-2-14"><a id="__codelineno-2-14" name="__codelineno-2-14" href="#__codelineno-2-14"></a>
+</span><span id="__span-2-15"><a id="__codelineno-2-15" name="__codelineno-2-15" href="#__codelineno-2-15"></a><span class="c1"># Interface statistics</span>
+</span><span id="__span-2-16"><a id="__codelineno-2-16" name="__codelineno-2-16" href="#__codelineno-2-16"></a>ip<span class="w"> </span>-s<span class="w"> </span>link<span class="w"> </span>show<span class="w"> </span>eth0
+</span></code></pre></div>
 <hr />
 <h2 id="socket-connection-analysis">Socket &amp; Connection Analysis<a class="headerlink" href="#socket-connection-analysis" title="Permanent link">&para;</a></h2>
 <p><strong>Tools:</strong> <code>ss</code>, <code>netstat</code>, <code>lsof</code></p>
-<p>```bash
-kubectl debug my-app -it --image=ghcr.io/ibtisam-iq/debugbox</p>
-<h1 id="active-connections">Active connections<a class="headerlink" href="#active-connections" title="Permanent link">&para;</a></h1>
-<p>ss -tunap                 # All TCP/UDP connections with processes
-ss -tulnp                 # Listening sockets only
-ss -t state established   # Established TCP connections</p>
-<h1 id="legacy-netstat-from-procps">Legacy netstat (from procps)<a class="headerlink" href="#legacy-netstat-from-procps" title="Permanent link">&para;</a></h1>
-<p>netstat -tulnp            # Listening ports</p>
-<h1 id="whats-using-a-specific-port">What's using a specific port?<a class="headerlink" href="#whats-using-a-specific-port" title="Permanent link">&para;</a></h1>
-<p>lsof -i :8080
-lsof -i TCP:80
-lsof -p $(pgrep nginx)    # Files opened by nginx
-```</p>
+<div class="highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>kubectl<span class="w"> </span>debug<span class="w"> </span>my-app<span class="w"> </span>-it<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="w">  </span>--image<span class="o">=</span>ghcr.io/ibtisam-iq/debugbox
+</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>
+</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="c1"># Active connections</span>
+</span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a>ss<span class="w"> </span>-tunap<span class="w">                 </span><span class="c1"># All TCP/UDP connections with processes</span>
+</span><span id="__span-3-6"><a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a>ss<span class="w"> </span>-tulnp<span class="w">                 </span><span class="c1"># Listening sockets only</span>
+</span><span id="__span-3-7"><a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a>ss<span class="w"> </span>-t<span class="w"> </span>state<span class="w"> </span>established<span class="w">   </span><span class="c1"># Established TCP connections</span>
+</span><span id="__span-3-8"><a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a>
+</span><span id="__span-3-9"><a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a><span class="c1"># Legacy netstat (from procps)</span>
+</span><span id="__span-3-10"><a id="__codelineno-3-10" name="__codelineno-3-10" href="#__codelineno-3-10"></a>netstat<span class="w"> </span>-tulnp<span class="w">            </span><span class="c1"># Listening ports</span>
+</span><span id="__span-3-11"><a id="__codelineno-3-11" name="__codelineno-3-11" href="#__codelineno-3-11"></a>
+</span><span id="__span-3-12"><a id="__codelineno-3-12" name="__codelineno-3-12" href="#__codelineno-3-12"></a><span class="c1"># What&#39;s using a specific port?</span>
+</span><span id="__span-3-13"><a id="__codelineno-3-13" name="__codelineno-3-13" href="#__codelineno-3-13"></a>lsof<span class="w"> </span>-i<span class="w"> </span>:8080
+</span><span id="__span-3-14"><a id="__codelineno-3-14" name="__codelineno-3-14" href="#__codelineno-3-14"></a>lsof<span class="w"> </span>-i<span class="w"> </span>TCP:80
+</span><span id="__span-3-15"><a id="__codelineno-3-15" name="__codelineno-3-15" href="#__codelineno-3-15"></a>lsof<span class="w"> </span>-p<span class="w"> </span><span class="k">$(</span>pgrep<span class="w"> </span>nginx<span class="k">)</span><span class="w">    </span><span class="c1"># Files opened by nginx</span>
+</span></code></pre></div>
 <hr />
 <h2 id="route-tracing">Route Tracing<a class="headerlink" href="#route-tracing" title="Permanent link">&para;</a></h2>
 <p><strong>Tools:</strong> <code>mtr</code>, <code>tracepath</code>, <code>tcptraceroute</code> (power)</p>
-<p>```bash
-kubectl run trace-debug --rm -it --image=ghcr.io/ibtisam-iq/debugbox --restart=Never</p>
-<h1 id="real-time-route-tracing-with-statistics">Real-time route tracing with statistics<a class="headerlink" href="#real-time-route-tracing-with-statistics" title="Permanent link">&para;</a></h1>
-<p>mtr example.com
-mtr -c 10 -r example.com  # 10 cycles, report mode</p>
-<h1 id="path-mtu-discovery">Path MTU discovery<a class="headerlink" href="#path-mtu-discovery" title="Permanent link">&para;</a></h1>
-<p>tracepath example.com</p>
-<h1 id="tcp-based-traceroute-power-variant">TCP-based traceroute (power variant)<a class="headerlink" href="#tcp-based-traceroute-power-variant" title="Permanent link">&para;</a></h1>
-<p>kubectl run trace-power --rm -it --image=ghcr.io/ibtisam-iq/debugbox:power --restart=Never
-tcptraceroute example.com 443
-```</p>
+<div class="highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>kubectl<span class="w"> </span>run<span class="w"> </span>trace-debug<span class="w"> </span>--rm<span class="w"> </span>-it<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="w">  </span>--image<span class="o">=</span>ghcr.io/ibtisam-iq/debugbox<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="w">  </span>--restart<span class="o">=</span>Never
+</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a>
+</span><span id="__span-4-5"><a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a><span class="c1"># Real-time route tracing with statistics</span>
+</span><span id="__span-4-6"><a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a>mtr<span class="w"> </span>example.com
+</span><span id="__span-4-7"><a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a>mtr<span class="w"> </span>-c<span class="w"> </span><span class="m">10</span><span class="w"> </span>-r<span class="w"> </span>example.com<span class="w">  </span><span class="c1"># 10 cycles, report mode</span>
+</span><span id="__span-4-8"><a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a>
+</span><span id="__span-4-9"><a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a><span class="c1"># Path MTU discovery</span>
+</span><span id="__span-4-10"><a id="__codelineno-4-10" name="__codelineno-4-10" href="#__codelineno-4-10"></a>tracepath<span class="w"> </span>example.com
+</span><span id="__span-4-11"><a id="__codelineno-4-11" name="__codelineno-4-11" href="#__codelineno-4-11"></a>
+</span><span id="__span-4-12"><a id="__codelineno-4-12" name="__codelineno-4-12" href="#__codelineno-4-12"></a><span class="c1"># TCP-based traceroute (power variant)</span>
+</span><span id="__span-4-13"><a id="__codelineno-4-13" name="__codelineno-4-13" href="#__codelineno-4-13"></a>kubectl<span class="w"> </span>run<span class="w"> </span>trace-power<span class="w"> </span>--rm<span class="w"> </span>-it<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-4-14"><a id="__codelineno-4-14" name="__codelineno-4-14" href="#__codelineno-4-14"></a><span class="w">  </span>--image<span class="o">=</span>ghcr.io/ibtisam-iq/debugbox:power<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-4-15"><a id="__codelineno-4-15" name="__codelineno-4-15" href="#__codelineno-4-15"></a><span class="w">  </span>--restart<span class="o">=</span>Never
+</span><span id="__span-4-16"><a id="__codelineno-4-16" name="__codelineno-4-16" href="#__codelineno-4-16"></a>tcptraceroute<span class="w"> </span>example.com<span class="w"> </span><span class="m">443</span>
+</span></code></pre></div>
 <hr />
 <h2 id="port-scanning-discovery">Port Scanning &amp; Discovery<a class="headerlink" href="#port-scanning-discovery" title="Permanent link">&para;</a></h2>
-<p><strong>Tools:</strong> <code>nmap</code>, <code>nping</code> (power), NSE scripts (power)</p>
-<p>```bash
-kubectl run scan-debug --rm -it --image=ghcr.io/ibtisam-iq/debugbox --restart=Never</p>
-<h1 id="basic-port-scan">Basic port scan<a class="headerlink" href="#basic-port-scan" title="Permanent link">&para;</a></h1>
-<p>nmap -p 80,443,8080 my-service
-nmap -p- my-service  # All ports (slow)</p>
-<h1 id="service-detection">Service detection<a class="headerlink" href="#service-detection" title="Permanent link">&para;</a></h1>
-<p>nmap -sV my-service</p>
-<h1 id="power-variant-advanced-scanning">Power variant: Advanced scanning<a class="headerlink" href="#power-variant-advanced-scanning" title="Permanent link">&para;</a></h1>
-<p>kubectl run scan-power --rm -it --image=ghcr.io/ibtisam-iq/debugbox:power --restart=Never</p>
-<h1 id="custom-packet-crafting">Custom packet crafting<a class="headerlink" href="#custom-packet-crafting" title="Permanent link">&para;</a></h1>
-<p>nping --tcp -p 80,443 example.com
-nping --icmp example.com</p>
-<h1 id="nse-scripts-for-vulnerability-detection">NSE scripts for vulnerability detection<a class="headerlink" href="#nse-scripts-for-vulnerability-detection" title="Permanent link">&para;</a></h1>
-<p>nmap --script vuln example.com
-nmap --script http-enum my-service
-```</p>
+<p><strong>Tools:</strong> <code>nmap</code>, <code>nping</code>, NSE scripts (all power)</p>
+<div class="highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>kubectl<span class="w"> </span>run<span class="w"> </span>scan-debug<span class="w"> </span>--rm<span class="w"> </span>-it<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="w">  </span>--image<span class="o">=</span>ghcr.io/ibtisam-iq/debugbox:power<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="w">  </span>--restart<span class="o">=</span>Never
+</span><span id="__span-5-4"><a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a>
+</span><span id="__span-5-5"><a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a><span class="c1"># Basic port scan</span>
+</span><span id="__span-5-6"><a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a>nmap<span class="w"> </span>-p<span class="w"> </span><span class="m">80</span>,443,8080<span class="w"> </span>my-service
+</span><span id="__span-5-7"><a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a>nmap<span class="w"> </span>-p-<span class="w"> </span>my-service<span class="w">  </span><span class="c1"># All ports (slow)</span>
+</span><span id="__span-5-8"><a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a>
+</span><span id="__span-5-9"><a id="__codelineno-5-9" name="__codelineno-5-9" href="#__codelineno-5-9"></a><span class="c1"># Service detection</span>
+</span><span id="__span-5-10"><a id="__codelineno-5-10" name="__codelineno-5-10" href="#__codelineno-5-10"></a>nmap<span class="w"> </span>-sV<span class="w"> </span>my-service
+</span><span id="__span-5-11"><a id="__codelineno-5-11" name="__codelineno-5-11" href="#__codelineno-5-11"></a>
+</span><span id="__span-5-12"><a id="__codelineno-5-12" name="__codelineno-5-12" href="#__codelineno-5-12"></a><span class="c1"># Custom packet crafting</span>
+</span><span id="__span-5-13"><a id="__codelineno-5-13" name="__codelineno-5-13" href="#__codelineno-5-13"></a>nping<span class="w"> </span>--tcp<span class="w"> </span>-p<span class="w"> </span><span class="m">80</span>,443<span class="w"> </span>example.com
+</span><span id="__span-5-14"><a id="__codelineno-5-14" name="__codelineno-5-14" href="#__codelineno-5-14"></a>nping<span class="w"> </span>--icmp<span class="w"> </span>example.com
+</span><span id="__span-5-15"><a id="__codelineno-5-15" name="__codelineno-5-15" href="#__codelineno-5-15"></a>
+</span><span id="__span-5-16"><a id="__codelineno-5-16" name="__codelineno-5-16" href="#__codelineno-5-16"></a><span class="c1"># NSE scripts for vulnerability detection</span>
+</span><span id="__span-5-17"><a id="__codelineno-5-17" name="__codelineno-5-17" href="#__codelineno-5-17"></a>nmap<span class="w"> </span>--script<span class="w"> </span>vuln<span class="w"> </span>example.com
+</span><span id="__span-5-18"><a id="__codelineno-5-18" name="__codelineno-5-18" href="#__codelineno-5-18"></a>nmap<span class="w"> </span>--script<span class="w"> </span>http-enum<span class="w"> </span>my-service
+</span></code></pre></div>
+<p>For basic port testing without the power variant, use netcat:
+<div class="highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>nc<span class="w"> </span>-zv<span class="w"> </span>my-service<span class="w"> </span><span class="m">8080</span><span class="w">  </span><span class="c1"># Check if port is open</span>
+</span></code></pre></div></p>
 <hr />
 <h2 id="bandwidth-testing">Bandwidth Testing<a class="headerlink" href="#bandwidth-testing" title="Permanent link">&para;</a></h2>
-<p><strong>Tools:</strong> <code>iperf3</code>, <code>speedtest-cli</code> (power)</p>
-<p>```bash</p>
-<h1 id="network-performance-between-pods">Network performance between pods<a class="headerlink" href="#network-performance-between-pods" title="Permanent link">&para;</a></h1>
-<h1 id="server-terminal-1">Server (terminal 1)<a class="headerlink" href="#server-terminal-1" title="Permanent link">&para;</a></h1>
-<p>kubectl run iperf-server --image=ghcr.io/ibtisam-iq/debugbox --command -- iperf3 -s</p>
-<h1 id="client-terminal-2">Client (terminal 2)<a class="headerlink" href="#client-terminal-2" title="Permanent link">&para;</a></h1>
-<p>kubectl run iperf-client --rm -it --image=ghcr.io/ibtisam-iq/debugbox --command -- iperf3 -c iperf-server -t 30</p>
-<h1 id="internet-bandwidth-test-power-variant">Internet bandwidth test (power variant)<a class="headerlink" href="#internet-bandwidth-test-power-variant" title="Permanent link">&para;</a></h1>
-<p>kubectl run speedtest --rm -it --image=ghcr.io/ibtisam-iq/debugbox:power --restart=Never
-speedtest-cli
-```</p>
+<p><strong>Tools:</strong> <code>iperf3</code> (power)</p>
+<div class="highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="c1"># Network performance between pods</span>
+</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="c1"># Server (terminal 1)</span>
+</span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a>kubectl<span class="w"> </span>run<span class="w"> </span>iperf-server<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-7-4"><a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a><span class="w">  </span>--image<span class="o">=</span>ghcr.io/ibtisam-iq/debugbox:power<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-7-5"><a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a><span class="w">  </span>--command<span class="w"> </span>--<span class="w"> </span>iperf3<span class="w"> </span>-s
+</span><span id="__span-7-6"><a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a>
+</span><span id="__span-7-7"><a id="__codelineno-7-7" name="__codelineno-7-7" href="#__codelineno-7-7"></a><span class="c1"># Client (terminal 2)</span>
+</span><span id="__span-7-8"><a id="__codelineno-7-8" name="__codelineno-7-8" href="#__codelineno-7-8"></a>kubectl<span class="w"> </span>run<span class="w"> </span>iperf-client<span class="w"> </span>--rm<span class="w"> </span>-it<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-7-9"><a id="__codelineno-7-9" name="__codelineno-7-9" href="#__codelineno-7-9"></a><span class="w">  </span>--image<span class="o">=</span>ghcr.io/ibtisam-iq/debugbox:power<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-7-10"><a id="__codelineno-7-10" name="__codelineno-7-10" href="#__codelineno-7-10"></a><span class="w">  </span>--command<span class="w"> </span>--<span class="w"> </span>iperf3<span class="w"> </span>-c<span class="w"> </span>iperf-server<span class="w"> </span>-t<span class="w"> </span><span class="m">30</span>
+</span></code></pre></div>
 <hr />
 <h2 id="bandwidth-monitoring">Bandwidth Monitoring<a class="headerlink" href="#bandwidth-monitoring" title="Permanent link">&para;</a></h2>
-<p><strong>Tools:</strong> <code>iftop</code></p>
-<p>```bash
-kubectl run monitor --rm -it --image=ghcr.io/ibtisam-iq/debugbox --restart=Never</p>
-<h1 id="real-time-bandwidth-per-connection">Real-time bandwidth per connection<a class="headerlink" href="#real-time-bandwidth-per-connection" title="Permanent link">&para;</a></h1>
-<p>iftop -i eth0
-iftop -i eth0 -n  # Don't resolve hostnames
-iftop -i eth0 -P  # Show port numbers
-```</p>
+<p><strong>Tools:</strong> <code>iftop</code> (power)</p>
+<div class="highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>kubectl<span class="w"> </span>run<span class="w"> </span>monitor<span class="w"> </span>--rm<span class="w"> </span>-it<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a><span class="w">  </span>--image<span class="o">=</span>ghcr.io/ibtisam-iq/debugbox:power<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-8-3"><a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a><span class="w">  </span>--restart<span class="o">=</span>Never
+</span><span id="__span-8-4"><a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a>
+</span><span id="__span-8-5"><a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a><span class="c1"># Real-time bandwidth per connection</span>
+</span><span id="__span-8-6"><a id="__codelineno-8-6" name="__codelineno-8-6" href="#__codelineno-8-6"></a>iftop<span class="w"> </span>-i<span class="w"> </span>eth0
+</span><span id="__span-8-7"><a id="__codelineno-8-7" name="__codelineno-8-7" href="#__codelineno-8-7"></a>iftop<span class="w"> </span>-i<span class="w"> </span>eth0<span class="w"> </span>-n<span class="w">  </span><span class="c1"># Don&#39;t resolve hostnames</span>
+</span><span id="__span-8-8"><a id="__codelineno-8-8" name="__codelineno-8-8" href="#__codelineno-8-8"></a>iftop<span class="w"> </span>-i<span class="w"> </span>eth0<span class="w"> </span>-P<span class="w">  </span><span class="c1"># Show port numbers</span>
+</span></code></pre></div>
 <hr />
 <h2 id="nic-diagnostics">NIC Diagnostics<a class="headerlink" href="#nic-diagnostics" title="Permanent link">&para;</a></h2>
-<p><strong>Tools:</strong> <code>ethtool</code></p>
-<p>```bash
-kubectl run nic-debug --rm -it --image=ghcr.io/ibtisam-iq/debugbox --restart=Never</p>
-<h1 id="interface-statistics_1">Interface statistics<a class="headerlink" href="#interface-statistics_1" title="Permanent link">&para;</a></h1>
-<p>ethtool -S eth0</p>
-<h1 id="driver-information">Driver information<a class="headerlink" href="#driver-information" title="Permanent link">&para;</a></h1>
-<p>ethtool -i eth0</p>
-<h1 id="link-status">Link status<a class="headerlink" href="#link-status" title="Permanent link">&para;</a></h1>
-<p>ethtool eth0
-```</p>
+<p><strong>Tools:</strong> <code>ethtool</code> (power)</p>
+<div class="highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>kubectl<span class="w"> </span>run<span class="w"> </span>nic-debug<span class="w"> </span>--rm<span class="w"> </span>-it<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a><span class="w">  </span>--image<span class="o">=</span>ghcr.io/ibtisam-iq/debugbox:power<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-9-3"><a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a><span class="w">  </span>--restart<span class="o">=</span>Never
+</span><span id="__span-9-4"><a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a>
+</span><span id="__span-9-5"><a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a><span class="c1"># Interface statistics</span>
+</span><span id="__span-9-6"><a id="__codelineno-9-6" name="__codelineno-9-6" href="#__codelineno-9-6"></a>ethtool<span class="w"> </span>-S<span class="w"> </span>eth0
+</span><span id="__span-9-7"><a id="__codelineno-9-7" name="__codelineno-9-7" href="#__codelineno-9-7"></a>
+</span><span id="__span-9-8"><a id="__codelineno-9-8" name="__codelineno-9-8" href="#__codelineno-9-8"></a><span class="c1"># Driver information</span>
+</span><span id="__span-9-9"><a id="__codelineno-9-9" name="__codelineno-9-9" href="#__codelineno-9-9"></a>ethtool<span class="w"> </span>-i<span class="w"> </span>eth0
+</span><span id="__span-9-10"><a id="__codelineno-9-10" name="__codelineno-9-10" href="#__codelineno-9-10"></a>
+</span><span id="__span-9-11"><a id="__codelineno-9-11" name="__codelineno-9-11" href="#__codelineno-9-11"></a><span class="c1"># Link status</span>
+</span><span id="__span-9-12"><a id="__codelineno-9-12" name="__codelineno-9-12" href="#__codelineno-9-12"></a>ethtool<span class="w"> </span>eth0
+</span></code></pre></div>
 <hr />
 <h2 id="packet-capture-analysis">Packet Capture &amp; Analysis<a class="headerlink" href="#packet-capture-analysis" title="Permanent link">&para;</a></h2>
 <p><strong>Tools:</strong> <code>tcpdump</code>, <code>tshark</code> (power), <code>ngrep</code> (power)</p>
-<h3 id="basic-capture-all-variants">Basic Capture (All Variants)<a class="headerlink" href="#basic-capture-all-variants" title="Permanent link">&para;</a></h3>
-<p>```bash
-kubectl run capture --rm -it --image=ghcr.io/ibtisam-iq/debugbox --restart=Never</p>
-<h1 id="capture-packets">Capture packets<a class="headerlink" href="#capture-packets" title="Permanent link">&para;</a></h1>
-<p>tcpdump -i eth0 -w /tmp/capture.pcap port 443
-tcpdump -i eth0 -n 'tcp port 80'  # Filter by port
-tcpdump -i eth0 'host 10.0.0.1'   # Filter by host
-```</p>
+<h3 id="basic-capture-balanced">Basic Capture (Balanced+)<a class="headerlink" href="#basic-capture-balanced" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>kubectl<span class="w"> </span>run<span class="w"> </span>capture<span class="w"> </span>--rm<span class="w"> </span>-it<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a><span class="w">  </span>--image<span class="o">=</span>ghcr.io/ibtisam-iq/debugbox<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-10-3"><a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a><span class="w">  </span>--restart<span class="o">=</span>Never
+</span><span id="__span-10-4"><a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a>
+</span><span id="__span-10-5"><a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a><span class="c1"># Capture packets</span>
+</span><span id="__span-10-6"><a id="__codelineno-10-6" name="__codelineno-10-6" href="#__codelineno-10-6"></a>tcpdump<span class="w"> </span>-i<span class="w"> </span>eth0<span class="w"> </span>-w<span class="w"> </span>/tmp/capture.pcap<span class="w"> </span>port<span class="w"> </span><span class="m">443</span>
+</span><span id="__span-10-7"><a id="__codelineno-10-7" name="__codelineno-10-7" href="#__codelineno-10-7"></a>tcpdump<span class="w"> </span>-i<span class="w"> </span>eth0<span class="w"> </span>-n<span class="w"> </span><span class="s1">&#39;tcp port 80&#39;</span><span class="w">  </span><span class="c1"># Filter by port</span>
+</span><span id="__span-10-8"><a id="__codelineno-10-8" name="__codelineno-10-8" href="#__codelineno-10-8"></a>tcpdump<span class="w"> </span>-i<span class="w"> </span>eth0<span class="w"> </span><span class="s1">&#39;host 10.0.0.1&#39;</span><span class="w">   </span><span class="c1"># Filter by host</span>
+</span></code></pre></div>
+<p><code>tcpdump</code> needs <code>NET_RAW</code> to open a raw socket. Some clusters (Pod Security Admission, restrictive PSPs) drop it by default, causing <code>tcpdump: socket: Operation not permitted</code>. If that happens, apply the manifest that grants it explicitly:</p>
+<div class="highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-11-2"><a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a><span class="w">  </span>https://raw.githubusercontent.com/ibtisam-iq/debugbox/main/examples/balanced-debug-pod.yaml
+</span><span id="__span-11-3"><a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a>
+</span><span id="__span-11-4"><a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a>kubectl<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>-it<span class="w"> </span>debug-balanced<span class="w"> </span>--<span class="w"> </span>bash
+</span></code></pre></div>
 <h3 id="advanced-analysis-power-net_admin">Advanced Analysis (Power + NET_ADMIN)<a class="headerlink" href="#advanced-analysis-power-net_admin" title="Permanent link">&para;</a></h3>
-<p>```bash
-kubectl apply -f \
-  <a href="https://raw.githubusercontent.com/ibtisam-iq/debugbox/main/examples/power-debug-pod.yaml">https://raw.githubusercontent.com/ibtisam-iq/debugbox/main/examples/power-debug-pod.yaml</a></p>
-<p>kubectl exec -it debug-power -- bash</p>
-<h1 id="live-packet-analysis-with-tshark">Live packet analysis with tshark<a class="headerlink" href="#live-packet-analysis-with-tshark" title="Permanent link">&para;</a></h1>
-<p>tshark -i eth0 -f "port 443"
-tshark -i eth0 -Y "http.request"
-tshark -r /tmp/capture.pcap -Y "dns"</p>
-<h1 id="network-grep">Network grep<a class="headerlink" href="#network-grep" title="Permanent link">&para;</a></h1>
-<p>ngrep -d any "GET" tcp port 80
-ngrep "mystring" tcp port 443
-```</p>
+<div class="highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-12-2"><a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a><span class="w">  </span>https://raw.githubusercontent.com/ibtisam-iq/debugbox/main/examples/power-debug-pod.yaml
+</span><span id="__span-12-3"><a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a>
+</span><span id="__span-12-4"><a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a>kubectl<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>-it<span class="w"> </span>debug-power<span class="w"> </span>--<span class="w"> </span>bash
+</span><span id="__span-12-5"><a id="__codelineno-12-5" name="__codelineno-12-5" href="#__codelineno-12-5"></a>
+</span><span id="__span-12-6"><a id="__codelineno-12-6" name="__codelineno-12-6" href="#__codelineno-12-6"></a><span class="c1"># Live packet analysis with tshark</span>
+</span><span id="__span-12-7"><a id="__codelineno-12-7" name="__codelineno-12-7" href="#__codelineno-12-7"></a>tshark<span class="w"> </span>-i<span class="w"> </span>eth0<span class="w"> </span>-f<span class="w"> </span><span class="s2">&quot;port 443&quot;</span>
+</span><span id="__span-12-8"><a id="__codelineno-12-8" name="__codelineno-12-8" href="#__codelineno-12-8"></a>tshark<span class="w"> </span>-i<span class="w"> </span>eth0<span class="w"> </span>-Y<span class="w"> </span><span class="s2">&quot;http.request&quot;</span>
+</span><span id="__span-12-9"><a id="__codelineno-12-9" name="__codelineno-12-9" href="#__codelineno-12-9"></a>tshark<span class="w"> </span>-r<span class="w"> </span>/tmp/capture.pcap<span class="w"> </span>-Y<span class="w"> </span><span class="s2">&quot;dns&quot;</span>
+</span><span id="__span-12-10"><a id="__codelineno-12-10" name="__codelineno-12-10" href="#__codelineno-12-10"></a>
+</span><span id="__span-12-11"><a id="__codelineno-12-11" name="__codelineno-12-11" href="#__codelineno-12-11"></a><span class="c1"># Network grep</span>
+</span><span id="__span-12-12"><a id="__codelineno-12-12" name="__codelineno-12-12" href="#__codelineno-12-12"></a>ngrep<span class="w"> </span>-d<span class="w"> </span>any<span class="w"> </span><span class="s2">&quot;GET&quot;</span><span class="w"> </span>tcp<span class="w"> </span>port<span class="w"> </span><span class="m">80</span>
+</span><span id="__span-12-13"><a id="__codelineno-12-13" name="__codelineno-12-13" href="#__codelineno-12-13"></a>ngrep<span class="w"> </span><span class="s2">&quot;mystring&quot;</span><span class="w"> </span>tcp<span class="w"> </span>port<span class="w"> </span><span class="m">443</span>
+</span></code></pre></div>
 <hr />
 <h2 id="advanced-tcpudp-tools">Advanced TCP/UDP Tools<a class="headerlink" href="#advanced-tcpudp-tools" title="Permanent link">&para;</a></h2>
 <p><strong>Tools:</strong> <code>socat</code></p>
-<p>```bash
-kubectl run socat-debug --rm -it --image=ghcr.io/ibtisam-iq/debugbox --restart=Never</p>
-<h1 id="port-forwarding">Port forwarding<a class="headerlink" href="#port-forwarding" title="Permanent link">&para;</a></h1>
-<p>socat TCP-LISTEN:8080,fork TCP:backend:8080</p>
-<h1 id="udp-to-tcp-relay">UDP to TCP relay<a class="headerlink" href="#udp-to-tcp-relay" title="Permanent link">&para;</a></h1>
-<p>socat UDP-LISTEN:53,fork TCP:dns-server:53</p>
-<h1 id="test-ssltls-connection">Test SSL/TLS connection<a class="headerlink" href="#test-ssltls-connection" title="Permanent link">&para;</a></h1>
-<p>socat - OPENSSL:example.com:443,verify=0</p>
-<h1 id="create-simple-http-server">Create simple HTTP server<a class="headerlink" href="#create-simple-http-server" title="Permanent link">&para;</a></h1>
-<p>echo "HTTP/1.0 200 OK\r\n\r\nHello" | socat TCP-LISTEN:8000,reuseaddr,fork STDIO
-```</p>
+<div class="highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>kubectl<span class="w"> </span>run<span class="w"> </span>socat-debug<span class="w"> </span>--rm<span class="w"> </span>-it<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-13-2"><a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a><span class="w">  </span>--image<span class="o">=</span>ghcr.io/ibtisam-iq/debugbox<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-13-3"><a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a><span class="w">  </span>--restart<span class="o">=</span>Never
+</span><span id="__span-13-4"><a id="__codelineno-13-4" name="__codelineno-13-4" href="#__codelineno-13-4"></a>
+</span><span id="__span-13-5"><a id="__codelineno-13-5" name="__codelineno-13-5" href="#__codelineno-13-5"></a><span class="c1"># Port forwarding</span>
+</span><span id="__span-13-6"><a id="__codelineno-13-6" name="__codelineno-13-6" href="#__codelineno-13-6"></a>socat<span class="w"> </span>TCP-LISTEN:8080,fork<span class="w"> </span>TCP:backend:8080
+</span><span id="__span-13-7"><a id="__codelineno-13-7" name="__codelineno-13-7" href="#__codelineno-13-7"></a>
+</span><span id="__span-13-8"><a id="__codelineno-13-8" name="__codelineno-13-8" href="#__codelineno-13-8"></a><span class="c1"># UDP to TCP relay</span>
+</span><span id="__span-13-9"><a id="__codelineno-13-9" name="__codelineno-13-9" href="#__codelineno-13-9"></a>socat<span class="w"> </span>UDP-LISTEN:53,fork<span class="w"> </span>TCP:dns-server:53
+</span><span id="__span-13-10"><a id="__codelineno-13-10" name="__codelineno-13-10" href="#__codelineno-13-10"></a>
+</span><span id="__span-13-11"><a id="__codelineno-13-11" name="__codelineno-13-11" href="#__codelineno-13-11"></a><span class="c1"># Test SSL/TLS connection</span>
+</span><span id="__span-13-12"><a id="__codelineno-13-12" name="__codelineno-13-12" href="#__codelineno-13-12"></a>socat<span class="w"> </span>-<span class="w"> </span>OPENSSL:example.com:443,verify<span class="o">=</span><span class="m">0</span>
+</span><span id="__span-13-13"><a id="__codelineno-13-13" name="__codelineno-13-13" href="#__codelineno-13-13"></a>
+</span><span id="__span-13-14"><a id="__codelineno-13-14" name="__codelineno-13-14" href="#__codelineno-13-14"></a><span class="c1"># Create simple HTTP server</span>
+</span><span id="__span-13-15"><a id="__codelineno-13-15" name="__codelineno-13-15" href="#__codelineno-13-15"></a><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;HTTP/1.0 200 OK\r\n\r\nHello&quot;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>socat<span class="w"> </span>TCP-LISTEN:8000,reuseaddr,fork<span class="w"> </span>STDIO
+</span></code></pre></div>
 <hr />
 <h2 id="connectivity-testing-parallel">Connectivity Testing (Parallel)<a class="headerlink" href="#connectivity-testing-parallel" title="Permanent link">&para;</a></h2>
 <p><strong>Tools:</strong> <code>fping</code> (power), <code>arping</code></p>
-<p>```bash</p>
-<h1 id="power-variant">Power variant<a class="headerlink" href="#power-variant" title="Permanent link">&para;</a></h1>
-<p>kubectl run ping-power --rm -it --image=ghcr.io/ibtisam-iq/debugbox:power --restart=Never</p>
-<h1 id="parallel-ping-multiple-hosts">Parallel ping multiple hosts<a class="headerlink" href="#parallel-ping-multiple-hosts" title="Permanent link">&para;</a></h1>
-<p>fping -a 10.0.0.1 10.0.0.2 10.0.0.3
-fping -g 10.0.0.0/24  # Entire subnet
-fping -u 10.0.0.0/24  # Unreachable hosts only</p>
-<h1 id="arp-level-ping-layer-2">ARP-level ping (layer 2)<a class="headerlink" href="#arp-level-ping-layer-2" title="Permanent link">&para;</a></h1>
-<p>arping -I eth0 10.0.0.1
-```</p>
+<div class="highlight"><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a><span class="c1"># Power variant</span>
+</span><span id="__span-14-2"><a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a>kubectl<span class="w"> </span>run<span class="w"> </span>ping-power<span class="w"> </span>--rm<span class="w"> </span>-it<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-14-3"><a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a><span class="w">  </span>--image<span class="o">=</span>ghcr.io/ibtisam-iq/debugbox:power<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-14-4"><a id="__codelineno-14-4" name="__codelineno-14-4" href="#__codelineno-14-4"></a><span class="w">  </span>--restart<span class="o">=</span>Never
+</span><span id="__span-14-5"><a id="__codelineno-14-5" name="__codelineno-14-5" href="#__codelineno-14-5"></a>
+</span><span id="__span-14-6"><a id="__codelineno-14-6" name="__codelineno-14-6" href="#__codelineno-14-6"></a><span class="c1"># Parallel ping multiple hosts</span>
+</span><span id="__span-14-7"><a id="__codelineno-14-7" name="__codelineno-14-7" href="#__codelineno-14-7"></a>fping<span class="w"> </span>-a<span class="w"> </span><span class="m">10</span>.0.0.1<span class="w"> </span><span class="m">10</span>.0.0.2<span class="w"> </span><span class="m">10</span>.0.0.3
+</span><span id="__span-14-8"><a id="__codelineno-14-8" name="__codelineno-14-8" href="#__codelineno-14-8"></a>fping<span class="w"> </span>-g<span class="w"> </span><span class="m">10</span>.0.0.0/24<span class="w">  </span><span class="c1"># Entire subnet</span>
+</span><span id="__span-14-9"><a id="__codelineno-14-9" name="__codelineno-14-9" href="#__codelineno-14-9"></a>fping<span class="w"> </span>-u<span class="w"> </span><span class="m">10</span>.0.0.0/24<span class="w">  </span><span class="c1"># Unreachable hosts only</span>
+</span><span id="__span-14-10"><a id="__codelineno-14-10" name="__codelineno-14-10" href="#__codelineno-14-10"></a>
+</span><span id="__span-14-11"><a id="__codelineno-14-11" name="__codelineno-14-11" href="#__codelineno-14-11"></a><span class="c1"># ARP-level ping (layer 2)</span>
+</span><span id="__span-14-12"><a id="__codelineno-14-12" name="__codelineno-14-12" href="#__codelineno-14-12"></a>arping<span class="w"> </span>-I<span class="w"> </span>eth0<span class="w"> </span><span class="m">10</span>.0.0.1
+</span></code></pre></div>
 <hr />
 <h2 id="process-inspection">Process Inspection<a class="headerlink" href="#process-inspection" title="Permanent link">&para;</a></h2>
 <p><strong>Tools:</strong> <code>ps</code>, <code>top</code>, <code>htop</code>, <code>pstree</code>, <code>killall</code>, <code>fuser</code></p>
-<p>```bash
-kubectl debug my-app -it --image=ghcr.io/ibtisam-iq/debugbox</p>
-<h1 id="process-listing">Process listing<a class="headerlink" href="#process-listing" title="Permanent link">&para;</a></h1>
-<p>ps aux
-ps aux | grep nginx</p>
-<h1 id="interactive-monitoring">Interactive monitoring<a class="headerlink" href="#interactive-monitoring" title="Permanent link">&para;</a></h1>
-<p>top
-htop  # Better UI</p>
-<h1 id="process-tree">Process tree<a class="headerlink" href="#process-tree" title="Permanent link">&para;</a></h1>
-<p>pstree -p
-pstree -p 1  # From specific PID</p>
-<h1 id="kill-by-name">Kill by name<a class="headerlink" href="#kill-by-name" title="Permanent link">&para;</a></h1>
-<p>killall -9 nginx</p>
-<h1 id="find-process-using-fileport">Find process using file/port<a class="headerlink" href="#find-process-using-fileport" title="Permanent link">&para;</a></h1>
-<p>fuser -v /var/log/app.log
-fuser -n tcp 8080
-```</p>
+<div class="highlight"><pre><span></span><code><span id="__span-15-1"><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a>kubectl<span class="w"> </span>debug<span class="w"> </span>my-app<span class="w"> </span>-it<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-15-2"><a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a><span class="w">  </span>--image<span class="o">=</span>ghcr.io/ibtisam-iq/debugbox
+</span><span id="__span-15-3"><a id="__codelineno-15-3" name="__codelineno-15-3" href="#__codelineno-15-3"></a>
+</span><span id="__span-15-4"><a id="__codelineno-15-4" name="__codelineno-15-4" href="#__codelineno-15-4"></a><span class="c1"># Process listing</span>
+</span><span id="__span-15-5"><a id="__codelineno-15-5" name="__codelineno-15-5" href="#__codelineno-15-5"></a>ps<span class="w"> </span>aux
+</span><span id="__span-15-6"><a id="__codelineno-15-6" name="__codelineno-15-6" href="#__codelineno-15-6"></a>ps<span class="w"> </span>aux<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>nginx
+</span><span id="__span-15-7"><a id="__codelineno-15-7" name="__codelineno-15-7" href="#__codelineno-15-7"></a>
+</span><span id="__span-15-8"><a id="__codelineno-15-8" name="__codelineno-15-8" href="#__codelineno-15-8"></a><span class="c1"># Interactive monitoring</span>
+</span><span id="__span-15-9"><a id="__codelineno-15-9" name="__codelineno-15-9" href="#__codelineno-15-9"></a>top
+</span><span id="__span-15-10"><a id="__codelineno-15-10" name="__codelineno-15-10" href="#__codelineno-15-10"></a>htop<span class="w">  </span><span class="c1"># Better UI</span>
+</span><span id="__span-15-11"><a id="__codelineno-15-11" name="__codelineno-15-11" href="#__codelineno-15-11"></a>
+</span><span id="__span-15-12"><a id="__codelineno-15-12" name="__codelineno-15-12" href="#__codelineno-15-12"></a><span class="c1"># Process tree</span>
+</span><span id="__span-15-13"><a id="__codelineno-15-13" name="__codelineno-15-13" href="#__codelineno-15-13"></a>pstree<span class="w"> </span>-p
+</span><span id="__span-15-14"><a id="__codelineno-15-14" name="__codelineno-15-14" href="#__codelineno-15-14"></a>pstree<span class="w"> </span>-p<span class="w"> </span><span class="m">1</span><span class="w">  </span><span class="c1"># From specific PID</span>
+</span><span id="__span-15-15"><a id="__codelineno-15-15" name="__codelineno-15-15" href="#__codelineno-15-15"></a>
+</span><span id="__span-15-16"><a id="__codelineno-15-16" name="__codelineno-15-16" href="#__codelineno-15-16"></a><span class="c1"># Kill by name</span>
+</span><span id="__span-15-17"><a id="__codelineno-15-17" name="__codelineno-15-17" href="#__codelineno-15-17"></a>killall<span class="w"> </span>-9<span class="w"> </span>nginx
+</span><span id="__span-15-18"><a id="__codelineno-15-18" name="__codelineno-15-18" href="#__codelineno-15-18"></a>
+</span><span id="__span-15-19"><a id="__codelineno-15-19" name="__codelineno-15-19" href="#__codelineno-15-19"></a><span class="c1"># Find process using file/port</span>
+</span><span id="__span-15-20"><a id="__codelineno-15-20" name="__codelineno-15-20" href="#__codelineno-15-20"></a>fuser<span class="w"> </span>-v<span class="w"> </span>/var/log/app.log
+</span><span id="__span-15-21"><a id="__codelineno-15-21" name="__codelineno-15-21" href="#__codelineno-15-21"></a>fuser<span class="w"> </span>-n<span class="w"> </span>tcp<span class="w"> </span><span class="m">8080</span>
+</span></code></pre></div>
 <hr />
 <h2 id="system-call-tracing">System Call Tracing<a class="headerlink" href="#system-call-tracing" title="Permanent link">&para;</a></h2>
 <p><strong>Tools:</strong> <code>strace</code>, <code>ltrace</code> (power), <code>lsof</code></p>
-<p>```bash
-kubectl debug my-app -it --image=ghcr.io/ibtisam-iq/debugbox</p>
-<h1 id="trace-system-calls">Trace system calls<a class="headerlink" href="#trace-system-calls" title="Permanent link">&para;</a></h1>
-<p>strace -p $(pgrep nginx)
-strace -e trace=network -p 1234    # Network calls only
-strace -e trace=file -p 1234       # File operations only
-strace -c curl <a href="http://example.com">http://example.com</a>  # Call summary</p>
-<h1 id="power-variant-library-call-tracing">Power variant: Library call tracing<a class="headerlink" href="#power-variant-library-call-tracing" title="Permanent link">&para;</a></h1>
-<p>kubectl exec -it debug-power -- bash
-ltrace -p $(pgrep nginx)
-ltrace -c curl <a href="http://example.com">http://example.com</a>  # Library call summary</p>
-<h1 id="open-files">Open files<a class="headerlink" href="#open-files" title="Permanent link">&para;</a></h1>
-<p>lsof -p 1234
-lsof /var/log/app.log              # What process has this file open?
-```</p>
+<div class="highlight"><pre><span></span><code><span id="__span-16-1"><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a>kubectl<span class="w"> </span>debug<span class="w"> </span>my-app<span class="w"> </span>-it<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-16-2"><a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a><span class="w">  </span>--image<span class="o">=</span>ghcr.io/ibtisam-iq/debugbox
+</span><span id="__span-16-3"><a id="__codelineno-16-3" name="__codelineno-16-3" href="#__codelineno-16-3"></a>
+</span><span id="__span-16-4"><a id="__codelineno-16-4" name="__codelineno-16-4" href="#__codelineno-16-4"></a><span class="c1"># Trace system calls</span>
+</span><span id="__span-16-5"><a id="__codelineno-16-5" name="__codelineno-16-5" href="#__codelineno-16-5"></a>strace<span class="w"> </span>-p<span class="w"> </span><span class="k">$(</span>pgrep<span class="w"> </span>nginx<span class="k">)</span>
+</span><span id="__span-16-6"><a id="__codelineno-16-6" name="__codelineno-16-6" href="#__codelineno-16-6"></a>strace<span class="w"> </span>-e<span class="w"> </span><span class="nv">trace</span><span class="o">=</span>network<span class="w"> </span>-p<span class="w"> </span><span class="m">1234</span><span class="w">    </span><span class="c1"># Network calls only</span>
+</span><span id="__span-16-7"><a id="__codelineno-16-7" name="__codelineno-16-7" href="#__codelineno-16-7"></a>strace<span class="w"> </span>-e<span class="w"> </span><span class="nv">trace</span><span class="o">=</span>file<span class="w"> </span>-p<span class="w"> </span><span class="m">1234</span><span class="w">       </span><span class="c1"># File operations only</span>
+</span><span id="__span-16-8"><a id="__codelineno-16-8" name="__codelineno-16-8" href="#__codelineno-16-8"></a>strace<span class="w"> </span>-c<span class="w"> </span>curl<span class="w"> </span>http://example.com<span class="w">  </span><span class="c1"># Call summary</span>
+</span><span id="__span-16-9"><a id="__codelineno-16-9" name="__codelineno-16-9" href="#__codelineno-16-9"></a>
+</span><span id="__span-16-10"><a id="__codelineno-16-10" name="__codelineno-16-10" href="#__codelineno-16-10"></a><span class="c1"># Power variant: Library call tracing</span>
+</span><span id="__span-16-11"><a id="__codelineno-16-11" name="__codelineno-16-11" href="#__codelineno-16-11"></a>kubectl<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>-it<span class="w"> </span>debug-power<span class="w"> </span>--<span class="w"> </span>bash
+</span><span id="__span-16-12"><a id="__codelineno-16-12" name="__codelineno-16-12" href="#__codelineno-16-12"></a>ltrace<span class="w"> </span>-p<span class="w"> </span><span class="k">$(</span>pgrep<span class="w"> </span>nginx<span class="k">)</span>
+</span><span id="__span-16-13"><a id="__codelineno-16-13" name="__codelineno-16-13" href="#__codelineno-16-13"></a>ltrace<span class="w"> </span>-c<span class="w"> </span>curl<span class="w"> </span>http://example.com<span class="w">  </span><span class="c1"># Library call summary</span>
+</span><span id="__span-16-14"><a id="__codelineno-16-14" name="__codelineno-16-14" href="#__codelineno-16-14"></a>
+</span><span id="__span-16-15"><a id="__codelineno-16-15" name="__codelineno-16-15" href="#__codelineno-16-15"></a><span class="c1"># Open files</span>
+</span><span id="__span-16-16"><a id="__codelineno-16-16" name="__codelineno-16-16" href="#__codelineno-16-16"></a>lsof<span class="w"> </span>-p<span class="w"> </span><span class="m">1234</span>
+</span><span id="__span-16-17"><a id="__codelineno-16-17" name="__codelineno-16-17" href="#__codelineno-16-17"></a>lsof<span class="w"> </span>/var/log/app.log<span class="w">              </span><span class="c1"># What process has this file open?</span>
+</span></code></pre></div>
 <hr />
 <h2 id="tlsssl-inspection">TLS/SSL Inspection<a class="headerlink" href="#tlsssl-inspection" title="Permanent link">&para;</a></h2>
-<p><strong>Tools:</strong> <code>openssl</code> (power)</p>
-<p>```bash
-kubectl run ssl-debug --rm -it --image=ghcr.io/ibtisam-iq/debugbox:power --restart=Never</p>
-<h1 id="test-ssltls-connection_1">Test SSL/TLS connection<a class="headerlink" href="#test-ssltls-connection_1" title="Permanent link">&para;</a></h1>
-<p>openssl s_client -connect example.com:443
-openssl s_client -connect example.com:443 -showcerts</p>
-<h1 id="check-certificate-expiry">Check certificate expiry<a class="headerlink" href="#check-certificate-expiry" title="Permanent link">&para;</a></h1>
-<p>echo | openssl s_client -connect example.com:443 2&gt;/dev/null | openssl x509 -noout -dates</p>
-<h1 id="verify-certificate">Verify certificate<a class="headerlink" href="#verify-certificate" title="Permanent link">&para;</a></h1>
-<p>openssl verify cert.pem</p>
-<h1 id="certificate-details">Certificate details<a class="headerlink" href="#certificate-details" title="Permanent link">&para;</a></h1>
-<p>openssl x509 -in cert.pem -text -noout</p>
-<h1 id="generate-test-certificates">Generate test certificates<a class="headerlink" href="#generate-test-certificates" title="Permanent link">&para;</a></h1>
-<p>openssl req -x509 -newkey rsa:2048 -keyout key.pem -out cert.pem -days 365 -nodes
-```</p>
+<p><strong>Tools:</strong> <code>openssl</code> (balanced+)</p>
+<div class="highlight"><pre><span></span><code><span id="__span-17-1"><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a>kubectl<span class="w"> </span>run<span class="w"> </span>ssl-debug<span class="w"> </span>--rm<span class="w"> </span>-it<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-17-2"><a id="__codelineno-17-2" name="__codelineno-17-2" href="#__codelineno-17-2"></a><span class="w">  </span>--image<span class="o">=</span>ghcr.io/ibtisam-iq/debugbox<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-17-3"><a id="__codelineno-17-3" name="__codelineno-17-3" href="#__codelineno-17-3"></a><span class="w">  </span>--restart<span class="o">=</span>Never
+</span><span id="__span-17-4"><a id="__codelineno-17-4" name="__codelineno-17-4" href="#__codelineno-17-4"></a>
+</span><span id="__span-17-5"><a id="__codelineno-17-5" name="__codelineno-17-5" href="#__codelineno-17-5"></a><span class="c1"># Test SSL/TLS connection</span>
+</span><span id="__span-17-6"><a id="__codelineno-17-6" name="__codelineno-17-6" href="#__codelineno-17-6"></a>openssl<span class="w"> </span>s_client<span class="w"> </span>-connect<span class="w"> </span>example.com:443
+</span><span id="__span-17-7"><a id="__codelineno-17-7" name="__codelineno-17-7" href="#__codelineno-17-7"></a>openssl<span class="w"> </span>s_client<span class="w"> </span>-connect<span class="w"> </span>example.com:443<span class="w"> </span>-showcerts
+</span><span id="__span-17-8"><a id="__codelineno-17-8" name="__codelineno-17-8" href="#__codelineno-17-8"></a>
+</span><span id="__span-17-9"><a id="__codelineno-17-9" name="__codelineno-17-9" href="#__codelineno-17-9"></a><span class="c1"># Check certificate expiry</span>
+</span><span id="__span-17-10"><a id="__codelineno-17-10" name="__codelineno-17-10" href="#__codelineno-17-10"></a><span class="nb">echo</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>openssl<span class="w"> </span>s_client<span class="w"> </span>-connect<span class="w"> </span>example.com:443<span class="w"> </span><span class="m">2</span>&gt;/dev/null<span class="w"> </span><span class="p">|</span><span class="w"> </span>openssl<span class="w"> </span>x509<span class="w"> </span>-noout<span class="w"> </span>-dates
+</span><span id="__span-17-11"><a id="__codelineno-17-11" name="__codelineno-17-11" href="#__codelineno-17-11"></a>
+</span><span id="__span-17-12"><a id="__codelineno-17-12" name="__codelineno-17-12" href="#__codelineno-17-12"></a><span class="c1"># Verify certificate</span>
+</span><span id="__span-17-13"><a id="__codelineno-17-13" name="__codelineno-17-13" href="#__codelineno-17-13"></a>openssl<span class="w"> </span>verify<span class="w"> </span>cert.pem
+</span><span id="__span-17-14"><a id="__codelineno-17-14" name="__codelineno-17-14" href="#__codelineno-17-14"></a>
+</span><span id="__span-17-15"><a id="__codelineno-17-15" name="__codelineno-17-15" href="#__codelineno-17-15"></a><span class="c1"># Certificate details</span>
+</span><span id="__span-17-16"><a id="__codelineno-17-16" name="__codelineno-17-16" href="#__codelineno-17-16"></a>openssl<span class="w"> </span>x509<span class="w"> </span>-in<span class="w"> </span>cert.pem<span class="w"> </span>-text<span class="w"> </span>-noout
+</span><span id="__span-17-17"><a id="__codelineno-17-17" name="__codelineno-17-17" href="#__codelineno-17-17"></a>
+</span><span id="__span-17-18"><a id="__codelineno-17-18" name="__codelineno-17-18" href="#__codelineno-17-18"></a><span class="c1"># Generate test certificates</span>
+</span><span id="__span-17-19"><a id="__codelineno-17-19" name="__codelineno-17-19" href="#__codelineno-17-19"></a>openssl<span class="w"> </span>req<span class="w"> </span>-x509<span class="w"> </span>-newkey<span class="w"> </span>rsa:2048<span class="w"> </span>-keyout<span class="w"> </span>key.pem<span class="w"> </span>-out<span class="w"> </span>cert.pem<span class="w"> </span>-days<span class="w"> </span><span class="m">365</span><span class="w"> </span>-nodes
+</span></code></pre></div>
 <hr />
 <h2 id="firewall-routing-net_admin-required">Firewall &amp; Routing (NET_ADMIN Required)<a class="headerlink" href="#firewall-routing-net_admin-required" title="Permanent link">&para;</a></h2>
 <p><strong>Tools:</strong> <code>iptables</code>, <code>nft</code> (nftables), <code>conntrack</code></p>
-<p>```bash</p>
-<h1 id="apply-manifest-with-net_admin-capability">Apply manifest with NET_ADMIN capability<a class="headerlink" href="#apply-manifest-with-net_admin-capability" title="Permanent link">&para;</a></h1>
-<p>kubectl apply -f \
-  <a href="https://raw.githubusercontent.com/ibtisam-iq/debugbox/main/examples/power-debug-pod.yaml">https://raw.githubusercontent.com/ibtisam-iq/debugbox/main/examples/power-debug-pod.yaml</a></p>
-<p>kubectl exec -it debug-power -- bash</p>
-<h1 id="iptables-inspection">iptables inspection<a class="headerlink" href="#iptables-inspection" title="Permanent link">&para;</a></h1>
-<p>iptables -L -nv
-iptables -L -nv -t nat
-iptables -L -nv -t mangle</p>
-<h1 id="nftables-modern-alternative">nftables (modern alternative)<a class="headerlink" href="#nftables-modern-alternative" title="Permanent link">&para;</a></h1>
-<p>nft list ruleset
-nft list table inet filter</p>
-<h1 id="connection-tracking">Connection tracking<a class="headerlink" href="#connection-tracking" title="Permanent link">&para;</a></h1>
-<p>conntrack -L
-conntrack -L -p tcp --dport 443
-conntrack -E  # Event monitoring
-```</p>
+<div class="highlight"><pre><span></span><code><span id="__span-18-1"><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a><span class="c1"># Apply manifest with NET_ADMIN capability</span>
+</span><span id="__span-18-2"><a id="__codelineno-18-2" name="__codelineno-18-2" href="#__codelineno-18-2"></a>kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-18-3"><a id="__codelineno-18-3" name="__codelineno-18-3" href="#__codelineno-18-3"></a><span class="w">  </span>https://raw.githubusercontent.com/ibtisam-iq/debugbox/main/examples/power-debug-pod.yaml
+</span><span id="__span-18-4"><a id="__codelineno-18-4" name="__codelineno-18-4" href="#__codelineno-18-4"></a>
+</span><span id="__span-18-5"><a id="__codelineno-18-5" name="__codelineno-18-5" href="#__codelineno-18-5"></a>kubectl<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>-it<span class="w"> </span>debug-power<span class="w"> </span>--<span class="w"> </span>bash
+</span><span id="__span-18-6"><a id="__codelineno-18-6" name="__codelineno-18-6" href="#__codelineno-18-6"></a>
+</span><span id="__span-18-7"><a id="__codelineno-18-7" name="__codelineno-18-7" href="#__codelineno-18-7"></a><span class="c1"># iptables inspection</span>
+</span><span id="__span-18-8"><a id="__codelineno-18-8" name="__codelineno-18-8" href="#__codelineno-18-8"></a>iptables<span class="w"> </span>-L<span class="w"> </span>-nv
+</span><span id="__span-18-9"><a id="__codelineno-18-9" name="__codelineno-18-9" href="#__codelineno-18-9"></a>iptables<span class="w"> </span>-L<span class="w"> </span>-nv<span class="w"> </span>-t<span class="w"> </span>nat
+</span><span id="__span-18-10"><a id="__codelineno-18-10" name="__codelineno-18-10" href="#__codelineno-18-10"></a>iptables<span class="w"> </span>-L<span class="w"> </span>-nv<span class="w"> </span>-t<span class="w"> </span>mangle
+</span><span id="__span-18-11"><a id="__codelineno-18-11" name="__codelineno-18-11" href="#__codelineno-18-11"></a>
+</span><span id="__span-18-12"><a id="__codelineno-18-12" name="__codelineno-18-12" href="#__codelineno-18-12"></a><span class="c1"># nftables (modern alternative)</span>
+</span><span id="__span-18-13"><a id="__codelineno-18-13" name="__codelineno-18-13" href="#__codelineno-18-13"></a>nft<span class="w"> </span>list<span class="w"> </span>ruleset
+</span><span id="__span-18-14"><a id="__codelineno-18-14" name="__codelineno-18-14" href="#__codelineno-18-14"></a>nft<span class="w"> </span>list<span class="w"> </span>table<span class="w"> </span>inet<span class="w"> </span>filter
+</span><span id="__span-18-15"><a id="__codelineno-18-15" name="__codelineno-18-15" href="#__codelineno-18-15"></a>
+</span><span id="__span-18-16"><a id="__codelineno-18-16" name="__codelineno-18-16" href="#__codelineno-18-16"></a><span class="c1"># Connection tracking</span>
+</span><span id="__span-18-17"><a id="__codelineno-18-17" name="__codelineno-18-17" href="#__codelineno-18-17"></a>conntrack<span class="w"> </span>-L
+</span><span id="__span-18-18"><a id="__codelineno-18-18" name="__codelineno-18-18" href="#__codelineno-18-18"></a>conntrack<span class="w"> </span>-L<span class="w"> </span>-p<span class="w"> </span>tcp<span class="w"> </span>--dport<span class="w"> </span><span class="m">443</span>
+</span><span id="__span-18-19"><a id="__codelineno-18-19" name="__codelineno-18-19" href="#__codelineno-18-19"></a>conntrack<span class="w"> </span>-E<span class="w">  </span><span class="c1"># Event monitoring</span>
+</span></code></pre></div>
 <p><strong>Docker:</strong>
-```bash
-docker run --rm -it --cap-add=NET_ADMIN ghcr.io/ibtisam-iq/debugbox:power</p>
-<h1 id="same-commands-work">Same commands work<a class="headerlink" href="#same-commands-work" title="Permanent link">&para;</a></h1>
-<p>iptables -L -nv
-nft list ruleset
-conntrack -L
-```</p>
-<hr />
-<h2 id="bridge-networking">Bridge Networking<a class="headerlink" href="#bridge-networking" title="Permanent link">&para;</a></h2>
-<p><strong>Tools:</strong> <code>brctl</code> (bridge-utils) (power + NET_ADMIN)</p>
-<p>```bash
-kubectl apply -f \
-  <a href="https://raw.githubusercontent.com/ibtisam-iq/debugbox/main/examples/power-debug-pod.yaml">https://raw.githubusercontent.com/ibtisam-iq/debugbox/main/examples/power-debug-pod.yaml</a></p>
-<p>kubectl exec -it debug-power -- bash</p>
-<h1 id="list-bridges">List bridges<a class="headerlink" href="#list-bridges" title="Permanent link">&para;</a></h1>
-<p>brctl show</p>
-<h1 id="show-mac-address-table">Show MAC address table<a class="headerlink" href="#show-mac-address-table" title="Permanent link">&para;</a></h1>
-<p>brctl showmacs br0</p>
-<h1 id="show-stp-info">Show STP info<a class="headerlink" href="#show-stp-info" title="Permanent link">&para;</a></h1>
-<p>brctl showstp br0
-```</p>
-<hr />
-<h2 id="routing-protocols">Routing Protocols<a class="headerlink" href="#routing-protocols" title="Permanent link">&para;</a></h2>
-<p><strong>Tools:</strong> <code>bird</code> (power)</p>
-<p>```bash</p>
-<h1 id="note-bird-is-a-routing-daemon-typically-not-running-in-debug-container">Note: BIRD is a routing daemon, typically not running in debug container<a class="headerlink" href="#note-bird-is-a-routing-daemon-typically-not-running-in-debug-container" title="Permanent link">&para;</a></h1>
-<h1 id="useful-for-testing-bgp-configurations-if-bird-daemon-is-started-separately">Useful for testing BGP configurations if bird daemon is started separately<a class="headerlink" href="#useful-for-testing-bgp-configurations-if-bird-daemon-is-started-separately" title="Permanent link">&para;</a></h1>
-<p>kubectl exec -it debug-power -- bash</p>
-<h1 id="if-bird-daemon-running">If bird daemon running<a class="headerlink" href="#if-bird-daemon-running" title="Permanent link">&para;</a></h1>
-<p>birdc show status
-birdc show route
-birdc show protocols
-```</p>
+<div class="highlight"><pre><span></span><code><span id="__span-19-1"><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a>docker<span class="w"> </span>run<span class="w"> </span>--rm<span class="w"> </span>-it<span class="w"> </span>--cap-add<span class="o">=</span>NET_ADMIN<span class="w"> </span>ghcr.io/ibtisam-iq/debugbox:power
+</span><span id="__span-19-2"><a id="__codelineno-19-2" name="__codelineno-19-2" href="#__codelineno-19-2"></a>
+</span><span id="__span-19-3"><a id="__codelineno-19-3" name="__codelineno-19-3" href="#__codelineno-19-3"></a><span class="c1"># Same commands work</span>
+</span><span id="__span-19-4"><a id="__codelineno-19-4" name="__codelineno-19-4" href="#__codelineno-19-4"></a>iptables<span class="w"> </span>-L<span class="w"> </span>-nv
+</span><span id="__span-19-5"><a id="__codelineno-19-5" name="__codelineno-19-5" href="#__codelineno-19-5"></a>nft<span class="w"> </span>list<span class="w"> </span>ruleset
+</span><span id="__span-19-6"><a id="__codelineno-19-6" name="__codelineno-19-6" href="#__codelineno-19-6"></a>conntrack<span class="w"> </span>-L
+</span></code></pre></div></p>
 <hr />
 <h2 id="data-processing">Data Processing<a class="headerlink" href="#data-processing" title="Permanent link">&para;</a></h2>
 <p><strong>Tools:</strong> <code>jq</code>, <code>yq</code></p>
-<p>```bash
-kubectl run data-debug --rm -it --image=ghcr.io/ibtisam-iq/debugbox:lite --restart=Never</p>
-<h1 id="json-processing">JSON processing<a class="headerlink" href="#json-processing" title="Permanent link">&para;</a></h1>
-<p>curl -s <a href="https://api.github.com/users/octocat">https://api.github.com/users/octocat</a> | jq '.name'
-kubectl get pods -o json | jq '.items[].metadata.name'
-echo '{"name":"test"}' | jq '.name'</p>
-<h1 id="yaml-processing">YAML processing<a class="headerlink" href="#yaml-processing" title="Permanent link">&para;</a></h1>
-<p>kubectl get pod my-pod -o yaml | yq '.spec.containers[].image'
-cat config.yaml | yq '.database.host'
-```</p>
+<div class="highlight"><pre><span></span><code><span id="__span-20-1"><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a>kubectl<span class="w"> </span>run<span class="w"> </span>data-debug<span class="w"> </span>--rm<span class="w"> </span>-it<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-20-2"><a id="__codelineno-20-2" name="__codelineno-20-2" href="#__codelineno-20-2"></a><span class="w">  </span>--image<span class="o">=</span>ghcr.io/ibtisam-iq/debugbox:lite<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-20-3"><a id="__codelineno-20-3" name="__codelineno-20-3" href="#__codelineno-20-3"></a><span class="w">  </span>--restart<span class="o">=</span>Never
+</span><span id="__span-20-4"><a id="__codelineno-20-4" name="__codelineno-20-4" href="#__codelineno-20-4"></a>
+</span><span id="__span-20-5"><a id="__codelineno-20-5" name="__codelineno-20-5" href="#__codelineno-20-5"></a><span class="c1"># JSON processing</span>
+</span><span id="__span-20-6"><a id="__codelineno-20-6" name="__codelineno-20-6" href="#__codelineno-20-6"></a>curl<span class="w"> </span>-s<span class="w"> </span>https://api.github.com/users/octocat<span class="w"> </span><span class="p">|</span><span class="w"> </span>jq<span class="w"> </span><span class="s1">&#39;.name&#39;</span>
+</span><span id="__span-20-7"><a id="__codelineno-20-7" name="__codelineno-20-7" href="#__codelineno-20-7"></a>kubectl<span class="w"> </span>get<span class="w"> </span>pods<span class="w"> </span>-o<span class="w"> </span>json<span class="w"> </span><span class="p">|</span><span class="w"> </span>jq<span class="w"> </span><span class="s1">&#39;.items[].metadata.name&#39;</span>
+</span><span id="__span-20-8"><a id="__codelineno-20-8" name="__codelineno-20-8" href="#__codelineno-20-8"></a><span class="nb">echo</span><span class="w"> </span><span class="s1">&#39;{&quot;name&quot;:&quot;test&quot;}&#39;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>jq<span class="w"> </span><span class="s1">&#39;.name&#39;</span>
+</span><span id="__span-20-9"><a id="__codelineno-20-9" name="__codelineno-20-9" href="#__codelineno-20-9"></a>
+</span><span id="__span-20-10"><a id="__codelineno-20-10" name="__codelineno-20-10" href="#__codelineno-20-10"></a><span class="c1"># YAML processing</span>
+</span><span id="__span-20-11"><a id="__codelineno-20-11" name="__codelineno-20-11" href="#__codelineno-20-11"></a>kubectl<span class="w"> </span>get<span class="w"> </span>pod<span class="w"> </span>my-pod<span class="w"> </span>-o<span class="w"> </span>yaml<span class="w"> </span><span class="p">|</span><span class="w"> </span>yq<span class="w"> </span><span class="s1">&#39;.spec.containers[].image&#39;</span>
+</span><span id="__span-20-12"><a id="__codelineno-20-12" name="__codelineno-20-12" href="#__codelineno-20-12"></a>cat<span class="w"> </span>config.yaml<span class="w"> </span><span class="p">|</span><span class="w"> </span>yq<span class="w"> </span><span class="s1">&#39;.database.host&#39;</span>
+</span></code></pre></div>
 <hr />
 <h2 id="file-operations">File Operations<a class="headerlink" href="#file-operations" title="Permanent link">&para;</a></h2>
-<p><strong>Tools:</strong> <code>file</code>, <code>tar</code>, <code>gzip</code>, <code>vim</code>, <code>nano</code>, <code>less</code></p>
-<p>```bash
-kubectl debug my-app -it --image=ghcr.io/ibtisam-iq/debugbox</p>
-<h1 id="identify-file-type">Identify file type<a class="headerlink" href="#identify-file-type" title="Permanent link">&para;</a></h1>
-<p>file /tmp/unknown-file
-file -i /tmp/binary     # MIME type</p>
-<h1 id="archive-operations">Archive operations<a class="headerlink" href="#archive-operations" title="Permanent link">&para;</a></h1>
-<p>tar -czf backup.tar.gz /app/logs/
-tar -xzf backup.tar.gz
-tar -tzf backup.tar.gz  # List contents
-gzip large-file.log
-gunzip large-file.log.gz</p>
-<h1 id="view-compressed-files">View compressed files<a class="headerlink" href="#view-compressed-files" title="Permanent link">&para;</a></h1>
-<p>zcat file.gz | less
-zgrep "error" file.gz</p>
-<h1 id="edit-files">Edit files<a class="headerlink" href="#edit-files" title="Permanent link">&para;</a></h1>
-<p>vim /etc/config.yaml
-nano /etc/config.yaml   # Power variant, easier for beginners</p>
-<h1 id="page-through-output">Page through output<a class="headerlink" href="#page-through-output" title="Permanent link">&para;</a></h1>
-<p>ps aux | less
-kubectl logs my-pod | less
-```</p>
+<p><strong>Tools:</strong> <code>file</code>, <code>tar</code>, <code>gzip</code>, <code>vim</code>, <code>less</code></p>
+<div class="highlight"><pre><span></span><code><span id="__span-21-1"><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a>kubectl<span class="w"> </span>debug<span class="w"> </span>my-app<span class="w"> </span>-it<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-21-2"><a id="__codelineno-21-2" name="__codelineno-21-2" href="#__codelineno-21-2"></a><span class="w">  </span>--image<span class="o">=</span>ghcr.io/ibtisam-iq/debugbox
+</span><span id="__span-21-3"><a id="__codelineno-21-3" name="__codelineno-21-3" href="#__codelineno-21-3"></a>
+</span><span id="__span-21-4"><a id="__codelineno-21-4" name="__codelineno-21-4" href="#__codelineno-21-4"></a><span class="c1"># Identify file type</span>
+</span><span id="__span-21-5"><a id="__codelineno-21-5" name="__codelineno-21-5" href="#__codelineno-21-5"></a>file<span class="w"> </span>/tmp/unknown-file
+</span><span id="__span-21-6"><a id="__codelineno-21-6" name="__codelineno-21-6" href="#__codelineno-21-6"></a>file<span class="w"> </span>-i<span class="w"> </span>/tmp/binary<span class="w">     </span><span class="c1"># MIME type</span>
+</span><span id="__span-21-7"><a id="__codelineno-21-7" name="__codelineno-21-7" href="#__codelineno-21-7"></a>
+</span><span id="__span-21-8"><a id="__codelineno-21-8" name="__codelineno-21-8" href="#__codelineno-21-8"></a><span class="c1"># Archive operations</span>
+</span><span id="__span-21-9"><a id="__codelineno-21-9" name="__codelineno-21-9" href="#__codelineno-21-9"></a>tar<span class="w"> </span>-czf<span class="w"> </span>backup.tar.gz<span class="w"> </span>/app/logs/
+</span><span id="__span-21-10"><a id="__codelineno-21-10" name="__codelineno-21-10" href="#__codelineno-21-10"></a>tar<span class="w"> </span>-xzf<span class="w"> </span>backup.tar.gz
+</span><span id="__span-21-11"><a id="__codelineno-21-11" name="__codelineno-21-11" href="#__codelineno-21-11"></a>tar<span class="w"> </span>-tzf<span class="w"> </span>backup.tar.gz<span class="w">  </span><span class="c1"># List contents</span>
+</span><span id="__span-21-12"><a id="__codelineno-21-12" name="__codelineno-21-12" href="#__codelineno-21-12"></a>gzip<span class="w"> </span>large-file.log
+</span><span id="__span-21-13"><a id="__codelineno-21-13" name="__codelineno-21-13" href="#__codelineno-21-13"></a>gunzip<span class="w"> </span>large-file.log.gz
+</span><span id="__span-21-14"><a id="__codelineno-21-14" name="__codelineno-21-14" href="#__codelineno-21-14"></a>
+</span><span id="__span-21-15"><a id="__codelineno-21-15" name="__codelineno-21-15" href="#__codelineno-21-15"></a><span class="c1"># View compressed files</span>
+</span><span id="__span-21-16"><a id="__codelineno-21-16" name="__codelineno-21-16" href="#__codelineno-21-16"></a>zcat<span class="w"> </span>file.gz<span class="w"> </span><span class="p">|</span><span class="w"> </span>less
+</span><span id="__span-21-17"><a id="__codelineno-21-17" name="__codelineno-21-17" href="#__codelineno-21-17"></a>zgrep<span class="w"> </span><span class="s2">&quot;error&quot;</span><span class="w"> </span>file.gz
+</span><span id="__span-21-18"><a id="__codelineno-21-18" name="__codelineno-21-18" href="#__codelineno-21-18"></a>
+</span><span id="__span-21-19"><a id="__codelineno-21-19" name="__codelineno-21-19" href="#__codelineno-21-19"></a><span class="c1"># Edit files</span>
+</span><span id="__span-21-20"><a id="__codelineno-21-20" name="__codelineno-21-20" href="#__codelineno-21-20"></a>vim<span class="w"> </span>/etc/config.yaml
+</span><span id="__span-21-21"><a id="__codelineno-21-21" name="__codelineno-21-21" href="#__codelineno-21-21"></a>
+</span><span id="__span-21-22"><a id="__codelineno-21-22" name="__codelineno-21-22" href="#__codelineno-21-22"></a><span class="c1"># Page through output</span>
+</span><span id="__span-21-23"><a id="__codelineno-21-23" name="__codelineno-21-23" href="#__codelineno-21-23"></a>ps<span class="w"> </span>aux<span class="w"> </span><span class="p">|</span><span class="w"> </span>less
+</span><span id="__span-21-24"><a id="__codelineno-21-24" name="__codelineno-21-24" href="#__codelineno-21-24"></a>kubectl<span class="w"> </span>logs<span class="w"> </span>my-pod<span class="w"> </span><span class="p">|</span><span class="w"> </span>less
+</span></code></pre></div>
 <hr />
 <h2 id="version-control">Version Control<a class="headerlink" href="#version-control" title="Permanent link">&para;</a></h2>
 <p><strong>Tools:</strong> <code>git</code></p>
-<p>```bash
-kubectl run git-debug --rm -it --image=ghcr.io/ibtisam-iq/debugbox --restart=Never</p>
-<h1 id="clone-repository-for-configs">Clone repository for configs<a class="headerlink" href="#clone-repository-for-configs" title="Permanent link">&para;</a></h1>
-<p>git clone <a href="https://github.com/ibtisam-iq/debugbox.git">https://github.com/ibtisam-iq/debugbox.git</a>
-cd debugbox</p>
-<h1 id="check-configuration">Check configuration<a class="headerlink" href="#check-configuration" title="Permanent link">&para;</a></h1>
-<p>git log --oneline
-git show HEAD</p>
-<h1 id="fetch-specific-file-from-repo">Fetch specific file from repo<a class="headerlink" href="#fetch-specific-file-from-repo" title="Permanent link">&para;</a></h1>
-<p>git archive --remote=<a href="https://github.com/example/repo">https://github.com/example/repo</a> HEAD:path/to/dir file.yaml | tar -x
-```</p>
-<hr />
-<h2 id="python-scripting">Python Scripting<a class="headerlink" href="#python-scripting" title="Permanent link">&para;</a></h2>
-<p><strong>Tools:</strong> <code>pip3</code> / <code>python3</code> (power)</p>
-<p>```bash
-kubectl run python-debug --rm -it --image=ghcr.io/ibtisam-iq/debugbox:power --restart=Never</p>
-<h1 id="install-packages">Install packages<a class="headerlink" href="#install-packages" title="Permanent link">&para;</a></h1>
-<p>pip3 install requests netaddr scapy</p>
-<h1 id="quick-python-debugging">Quick Python debugging<a class="headerlink" href="#quick-python-debugging" title="Permanent link">&para;</a></h1>
-<p>python3 -c "import socket; print(socket.gethostbyname('example.com'))"
-python3 -c "import requests; print(requests.get('<a href="http://example.com').status_code">http://example.com').status_code</a>)"</p>
-<h1 id="interactive-python">Interactive Python<a class="headerlink" href="#interactive-python" title="Permanent link">&para;</a></h1>
-<p>python3</p>
-<blockquote>
-<blockquote>
-<blockquote>
-<p>import netaddr
-ip = netaddr.IPNetwork('10.0.0.0/24')
-list(ip)[:5]
-```</p>
-</blockquote>
-</blockquote>
-</blockquote>
+<div class="highlight"><pre><span></span><code><span id="__span-22-1"><a id="__codelineno-22-1" name="__codelineno-22-1" href="#__codelineno-22-1"></a>kubectl<span class="w"> </span>run<span class="w"> </span>git-debug<span class="w"> </span>--rm<span class="w"> </span>-it<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-22-2"><a id="__codelineno-22-2" name="__codelineno-22-2" href="#__codelineno-22-2"></a><span class="w">  </span>--image<span class="o">=</span>ghcr.io/ibtisam-iq/debugbox<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-22-3"><a id="__codelineno-22-3" name="__codelineno-22-3" href="#__codelineno-22-3"></a><span class="w">  </span>--restart<span class="o">=</span>Never
+</span><span id="__span-22-4"><a id="__codelineno-22-4" name="__codelineno-22-4" href="#__codelineno-22-4"></a>
+</span><span id="__span-22-5"><a id="__codelineno-22-5" name="__codelineno-22-5" href="#__codelineno-22-5"></a><span class="c1"># Clone repository for configs</span>
+</span><span id="__span-22-6"><a id="__codelineno-22-6" name="__codelineno-22-6" href="#__codelineno-22-6"></a>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/ibtisam-iq/debugbox.git
+</span><span id="__span-22-7"><a id="__codelineno-22-7" name="__codelineno-22-7" href="#__codelineno-22-7"></a><span class="nb">cd</span><span class="w"> </span>debugbox
+</span><span id="__span-22-8"><a id="__codelineno-22-8" name="__codelineno-22-8" href="#__codelineno-22-8"></a>
+</span><span id="__span-22-9"><a id="__codelineno-22-9" name="__codelineno-22-9" href="#__codelineno-22-9"></a><span class="c1"># Check configuration</span>
+</span><span id="__span-22-10"><a id="__codelineno-22-10" name="__codelineno-22-10" href="#__codelineno-22-10"></a>git<span class="w"> </span>log<span class="w"> </span>--oneline
+</span><span id="__span-22-11"><a id="__codelineno-22-11" name="__codelineno-22-11" href="#__codelineno-22-11"></a>git<span class="w"> </span>show<span class="w"> </span>HEAD
+</span><span id="__span-22-12"><a id="__codelineno-22-12" name="__codelineno-22-12" href="#__codelineno-22-12"></a>
+</span><span id="__span-22-13"><a id="__codelineno-22-13" name="__codelineno-22-13" href="#__codelineno-22-13"></a><span class="c1"># Fetch specific file from repo</span>
+</span><span id="__span-22-14"><a id="__codelineno-22-14" name="__codelineno-22-14" href="#__codelineno-22-14"></a>git<span class="w"> </span>archive<span class="w"> </span>--remote<span class="o">=</span>https://github.com/example/repo<span class="w"> </span>HEAD:path/to/dir<span class="w"> </span>file.yaml<span class="w"> </span><span class="p">|</span><span class="w"> </span>tar<span class="w"> </span>-x
+</span></code></pre></div>
 <hr />
 <h2 id="helper-functions-shell">Helper Functions (Shell)<a class="headerlink" href="#helper-functions-shell" title="Permanent link">&para;</a></h2>
 <p><strong>Built-in helpers</strong> (balanced &amp; power variants)</p>
-<p>```bash
-kubectl run helper-demo --rm -it --image=ghcr.io/ibtisam-iq/debugbox --restart=Never</p>
-<h1 id="list-listening-ports">List listening ports<a class="headerlink" href="#list-listening-ports" title="Permanent link">&para;</a></h1>
-<p>ports</p>
-<h1 id="show-active-connections">Show active connections<a class="headerlink" href="#show-active-connections" title="Permanent link">&para;</a></h1>
-<p>connections</p>
-<h1 id="display-routing-table">Display routing table<a class="headerlink" href="#display-routing-table" title="Permanent link">&para;</a></h1>
-<p>routes</p>
-<h1 id="kubernetes-context-info-if-kubeconfig-available">Kubernetes context info (if kubeconfig available)<a class="headerlink" href="#kubernetes-context-info-if-kubeconfig-available" title="Permanent link">&para;</a></h1>
-<p>k8s-info</p>
-<h1 id="pretty-print-json">Pretty-print JSON<a class="headerlink" href="#pretty-print-json" title="Permanent link">&para;</a></h1>
-<p>echo '{"test":"value"}' | json</p>
-<h1 id="pretty-print-yaml">Pretty-print YAML<a class="headerlink" href="#pretty-print-yaml" title="Permanent link">&para;</a></h1>
-<p>kubectl get pod my-pod -o yaml | yaml
-```</p>
+<div class="highlight"><pre><span></span><code><span id="__span-23-1"><a id="__codelineno-23-1" name="__codelineno-23-1" href="#__codelineno-23-1"></a>kubectl<span class="w"> </span>run<span class="w"> </span>helper-demo<span class="w"> </span>--rm<span class="w"> </span>-it<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-23-2"><a id="__codelineno-23-2" name="__codelineno-23-2" href="#__codelineno-23-2"></a><span class="w">  </span>--image<span class="o">=</span>ghcr.io/ibtisam-iq/debugbox<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-23-3"><a id="__codelineno-23-3" name="__codelineno-23-3" href="#__codelineno-23-3"></a><span class="w">  </span>--restart<span class="o">=</span>Never
+</span><span id="__span-23-4"><a id="__codelineno-23-4" name="__codelineno-23-4" href="#__codelineno-23-4"></a>
+</span><span id="__span-23-5"><a id="__codelineno-23-5" name="__codelineno-23-5" href="#__codelineno-23-5"></a><span class="c1"># List listening ports</span>
+</span><span id="__span-23-6"><a id="__codelineno-23-6" name="__codelineno-23-6" href="#__codelineno-23-6"></a>ports
+</span><span id="__span-23-7"><a id="__codelineno-23-7" name="__codelineno-23-7" href="#__codelineno-23-7"></a>
+</span><span id="__span-23-8"><a id="__codelineno-23-8" name="__codelineno-23-8" href="#__codelineno-23-8"></a><span class="c1"># Show active connections</span>
+</span><span id="__span-23-9"><a id="__codelineno-23-9" name="__codelineno-23-9" href="#__codelineno-23-9"></a>connections
+</span><span id="__span-23-10"><a id="__codelineno-23-10" name="__codelineno-23-10" href="#__codelineno-23-10"></a>
+</span><span id="__span-23-11"><a id="__codelineno-23-11" name="__codelineno-23-11" href="#__codelineno-23-11"></a><span class="c1"># Display routing table</span>
+</span><span id="__span-23-12"><a id="__codelineno-23-12" name="__codelineno-23-12" href="#__codelineno-23-12"></a>routes
+</span><span id="__span-23-13"><a id="__codelineno-23-13" name="__codelineno-23-13" href="#__codelineno-23-13"></a>
+</span><span id="__span-23-14"><a id="__codelineno-23-14" name="__codelineno-23-14" href="#__codelineno-23-14"></a><span class="c1"># Kubernetes context info (if kubeconfig available)</span>
+</span><span id="__span-23-15"><a id="__codelineno-23-15" name="__codelineno-23-15" href="#__codelineno-23-15"></a>k8s-info
+</span><span id="__span-23-16"><a id="__codelineno-23-16" name="__codelineno-23-16" href="#__codelineno-23-16"></a>
+</span><span id="__span-23-17"><a id="__codelineno-23-17" name="__codelineno-23-17" href="#__codelineno-23-17"></a><span class="c1"># Pretty-print JSON</span>
+</span><span id="__span-23-18"><a id="__codelineno-23-18" name="__codelineno-23-18" href="#__codelineno-23-18"></a><span class="nb">echo</span><span class="w"> </span><span class="s1">&#39;{&quot;test&quot;:&quot;value&quot;}&#39;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>json
+</span><span id="__span-23-19"><a id="__codelineno-23-19" name="__codelineno-23-19" href="#__codelineno-23-19"></a>
+</span><span id="__span-23-20"><a id="__codelineno-23-20" name="__codelineno-23-20" href="#__codelineno-23-20"></a><span class="c1"># Pretty-print YAML</span>
+</span><span id="__span-23-21"><a id="__codelineno-23-21" name="__codelineno-23-21" href="#__codelineno-23-21"></a>kubectl<span class="w"> </span>get<span class="w"> </span>pod<span class="w"> </span>my-pod<span class="w"> </span>-o<span class="w"> </span>yaml<span class="w"> </span><span class="p">|</span><span class="w"> </span>yaml
+</span></code></pre></div>
+<p><strong>Packet capture and TLS helpers</strong> (balanced+):
+<div class="highlight"><pre><span></span><code><span id="__span-24-1"><a id="__codelineno-24-1" name="__codelineno-24-1" href="#__codelineno-24-1"></a><span class="c1"># Quick packet capture</span>
+</span><span id="__span-24-2"><a id="__codelineno-24-2" name="__codelineno-24-2" href="#__codelineno-24-2"></a>sniff<span class="w"> </span>tcp<span class="w"> </span>port<span class="w"> </span><span class="m">443</span>
+</span><span id="__span-24-3"><a id="__codelineno-24-3" name="__codelineno-24-3" href="#__codelineno-24-3"></a>
+</span><span id="__span-24-4"><a id="__codelineno-24-4" name="__codelineno-24-4" href="#__codelineno-24-4"></a><span class="c1"># Capture HTTP traffic</span>
+</span><span id="__span-24-5"><a id="__codelineno-24-5" name="__codelineno-24-5" href="#__codelineno-24-5"></a>sniff-http
+</span><span id="__span-24-6"><a id="__codelineno-24-6" name="__codelineno-24-6" href="#__codelineno-24-6"></a>
+</span><span id="__span-24-7"><a id="__codelineno-24-7" name="__codelineno-24-7" href="#__codelineno-24-7"></a><span class="c1"># Capture DNS queries</span>
+</span><span id="__span-24-8"><a id="__codelineno-24-8" name="__codelineno-24-8" href="#__codelineno-24-8"></a>sniff-dns
+</span><span id="__span-24-9"><a id="__codelineno-24-9" name="__codelineno-24-9" href="#__codelineno-24-9"></a>
+</span><span id="__span-24-10"><a id="__codelineno-24-10" name="__codelineno-24-10" href="#__codelineno-24-10"></a><span class="c1"># Check TLS certificate</span>
+</span><span id="__span-24-11"><a id="__codelineno-24-11" name="__codelineno-24-11" href="#__codelineno-24-11"></a>cert-check<span class="w"> </span>example.com:443
+</span></code></pre></div></p>
 <p><strong>Power-only helpers</strong> (require NET_ADMIN):
-```bash
-kubectl exec -it debug-power -- bash</p>
-<h1 id="quick-packet-capture">Quick packet capture<a class="headerlink" href="#quick-packet-capture" title="Permanent link">&para;</a></h1>
-<p>sniff tcp port 443</p>
-<h1 id="capture-http-traffic">Capture HTTP traffic<a class="headerlink" href="#capture-http-traffic" title="Permanent link">&para;</a></h1>
-<p>sniff-http</p>
-<h1 id="capture-dns-queries">Capture DNS queries<a class="headerlink" href="#capture-dns-queries" title="Permanent link">&para;</a></h1>
-<p>sniff-dns</p>
-<h1 id="monitor-connections">Monitor connections<a class="headerlink" href="#monitor-connections" title="Permanent link">&para;</a></h1>
-<p>conntrack-watch</p>
-<h1 id="check-tls-certificate">Check TLS certificate<a class="headerlink" href="#check-tls-certificate" title="Permanent link">&para;</a></h1>
-<p>cert-check example.com
-```</p>
+<div class="highlight"><pre><span></span><code><span id="__span-25-1"><a id="__codelineno-25-1" name="__codelineno-25-1" href="#__codelineno-25-1"></a>kubectl<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>-it<span class="w"> </span>debug-power<span class="w"> </span>--<span class="w"> </span>bash
+</span><span id="__span-25-2"><a id="__codelineno-25-2" name="__codelineno-25-2" href="#__codelineno-25-2"></a>
+</span><span id="__span-25-3"><a id="__codelineno-25-3" name="__codelineno-25-3" href="#__codelineno-25-3"></a><span class="c1"># Monitor connections</span>
+</span><span id="__span-25-4"><a id="__codelineno-25-4" name="__codelineno-25-4" href="#__codelineno-25-4"></a>conntrack-watch
+</span></code></pre></div></p>
 <hr />
 <h2 id="configmapsecret-inspection">ConfigMap/Secret Inspection<a class="headerlink" href="#configmapsecret-inspection" title="Permanent link">&para;</a></h2>
 <p><strong>Combining local kubectl with DebugBox tools:</strong></p>
 <p>DebugBox doesn't include kubectl, but you can pipe from your local machine:</p>
-<p>```bash</p>
-<h1 id="process-configmap-with-jq">Process ConfigMap with jq<a class="headerlink" href="#process-configmap-with-jq" title="Permanent link">&para;</a></h1>
-<p>kubectl get cm my-config -o json | kubectl run jq-tool --rm -i --image=ghcr.io/ibtisam-iq/debugbox:lite --restart=Never -- jq '.data'</p>
-<h1 id="decode-and-inspect-secret-certificate">Decode and inspect secret certificate<a class="headerlink" href="#decode-and-inspect-secret-certificate" title="Permanent link">&para;</a></h1>
-<p>kubectl get secret my-tls -o jsonpath='{.data.tls.crt}' | base64 -d | \
-  kubectl run cert-tool --rm -i --image=ghcr.io/ibtisam-iq/debugbox:power --restart=Never -- openssl x509 -text -noout
-```</p>
+<div class="highlight"><pre><span></span><code><span id="__span-26-1"><a id="__codelineno-26-1" name="__codelineno-26-1" href="#__codelineno-26-1"></a><span class="c1"># Process ConfigMap with jq</span>
+</span><span id="__span-26-2"><a id="__codelineno-26-2" name="__codelineno-26-2" href="#__codelineno-26-2"></a>kubectl<span class="w"> </span>get<span class="w"> </span>cm<span class="w"> </span>my-config<span class="w"> </span>-o<span class="w"> </span>json<span class="w"> </span><span class="p">|</span><span class="w"> </span>kubectl<span class="w"> </span>run<span class="w"> </span>jq-tool<span class="w"> </span>--rm<span class="w"> </span>-i<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-26-3"><a id="__codelineno-26-3" name="__codelineno-26-3" href="#__codelineno-26-3"></a><span class="w">  </span>--image<span class="o">=</span>ghcr.io/ibtisam-iq/debugbox:lite<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-26-4"><a id="__codelineno-26-4" name="__codelineno-26-4" href="#__codelineno-26-4"></a><span class="w">  </span>--restart<span class="o">=</span>Never<span class="w"> </span>--<span class="w"> </span>jq<span class="w"> </span><span class="s1">&#39;.data&#39;</span>
+</span><span id="__span-26-5"><a id="__codelineno-26-5" name="__codelineno-26-5" href="#__codelineno-26-5"></a>
+</span><span id="__span-26-6"><a id="__codelineno-26-6" name="__codelineno-26-6" href="#__codelineno-26-6"></a><span class="c1"># Decode and inspect secret certificate</span>
+</span><span id="__span-26-7"><a id="__codelineno-26-7" name="__codelineno-26-7" href="#__codelineno-26-7"></a>kubectl<span class="w"> </span>get<span class="w"> </span>secret<span class="w"> </span>my-tls<span class="w"> </span>-o<span class="w"> </span><span class="nv">jsonpath</span><span class="o">=</span><span class="s1">&#39;{.data.tls\.crt}&#39;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>base64<span class="w"> </span>-d<span class="w"> </span><span class="p">|</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-26-8"><a id="__codelineno-26-8" name="__codelineno-26-8" href="#__codelineno-26-8"></a><span class="w">  </span>kubectl<span class="w"> </span>run<span class="w"> </span>cert-tool<span class="w"> </span>--rm<span class="w"> </span>-i<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-26-9"><a id="__codelineno-26-9" name="__codelineno-26-9" href="#__codelineno-26-9"></a><span class="w">  </span>--image<span class="o">=</span>ghcr.io/ibtisam-iq/debugbox:power<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-26-10"><a id="__codelineno-26-10" name="__codelineno-26-10" href="#__codelineno-26-10"></a><span class="w">  </span>--restart<span class="o">=</span>Never<span class="w"> </span>--<span class="w"> </span>openssl<span class="w"> </span>x509<span class="w"> </span>-text<span class="w"> </span>-noout
+</span></code></pre></div>
 <hr />
 <h2 id="complete-tool-coverage-summary">Complete Tool Coverage Summary<a class="headerlink" href="#complete-tool-coverage-summary" title="Permanent link">&para;</a></h2>
-<h3 id="variant-lite-14-mb">Variant: <strong>Lite</strong> (~14 MB)<a class="headerlink" href="#variant-lite-14-mb" title="Permanent link">&para;</a></h3>
+<h3 id="variant-lite-15-mb">Variant: <strong>Lite</strong> (~15 MB)<a class="headerlink" href="#variant-lite-15-mb" title="Permanent link">&para;</a></h3>
 <ul>
 <li>DNS: dig, nslookup, host</li>
-<li>HTTP: curl, wget</li>
+<li>HTTP: curl</li>
 <li>Connectivity: ping, nc</li>
 <li>Data: jq, yq</li>
-<li>Basic IP: ip, ss (limited)</li>
+<li>Basic IP: ip, ss</li>
 </ul>
-<h3 id="variant-balanced-46-mb-default">Variant: <strong>Balanced</strong> (~46 MB) — <em>Default</em><a class="headerlink" href="#variant-balanced-46-mb-default" title="Permanent link">&para;</a></h3>
+<h3 id="variant-balanced-51-mb-default">Variant: <strong>Balanced</strong> (~51 MB) -- Default<a class="headerlink" href="#variant-balanced-51-mb-default" title="Permanent link">&para;</a></h3>
 <ul>
-<li><strong>All Lite tools, plus:</strong></li>
-<li>Advanced networking: socat, mtr, nmap</li>
-<li>Monitoring: iftop, htop</li>
+<li>
+<p><strong>All Lite tools, plus:</strong></p>
+</li>
+<li>
+<p>TLS/SSL: openssl</p>
+</li>
+<li>Advanced networking: socat, mtr</li>
 <li>Packet capture: tcpdump</li>
-<li>Process tools: ps, top, pstree, killall, fuser</li>
+<li>Process tools: htop, ps, top, pstree, killall, fuser</li>
 <li>Tracing: strace, lsof</li>
-<li>Bandwidth: iperf3</li>
-<li>NIC: ethtool</li>
 <li>Files: file, tar, gzip, vim</li>
 <li>Version control: git</li>
+<li>Kubernetes: kubectx, kubens</li>
 </ul>
-<h3 id="variant-power-104-mb-full-forensics">Variant: <strong>Power</strong> (~104 MB) — <em>Full Forensics</em><a class="headerlink" href="#variant-power-104-mb-full-forensics" title="Permanent link">&para;</a></h3>
+<h3 id="variant-power-112-mb-full-forensics">Variant: <strong>Power</strong> (~112 MB) -- Full Forensics<a class="headerlink" href="#variant-power-112-mb-full-forensics" title="Permanent link">&para;</a></h3>
 <ul>
-<li><strong>All Balanced tools, plus:</strong></li>
-<li>Deep packet analysis: tshark, ngrep</li>
-<li>Advanced scanning: nping, NSE scripts</li>
-<li>TLS/SSL: openssl</li>
-<li>Routing: tcptraceroute, fping</li>
+<li>
+<p><strong>All Balanced tools, plus:</strong></p>
+</li>
+<li>
+<p>Deep packet analysis: tshark, ngrep</p>
+</li>
+<li>Network scanning: nmap, nping, NSE scripts</li>
+<li>Network performance: iperf3, ethtool, iftop</li>
+<li>Advanced routing: tcptraceroute, fping</li>
 <li>Library tracing: ltrace</li>
 <li>Firewall: iptables, nftables (need NET_ADMIN)</li>
 <li>Connection tracking: conntrack (need NET_ADMIN)</li>
-<li>Bridge tools: brctl (need NET_ADMIN)</li>
-<li>BGP: bird</li>
-<li>Bandwidth: speedtest-cli</li>
-<li>Editor: nano</li>
-<li>Scripting: Python 3 + pip3</li>
 </ul>
 <hr />
 <h2 id="capability-requirements-reference">Capability Requirements Reference<a class="headerlink" href="#capability-requirements-reference" title="Permanent link">&para;</a></h2>
@@ -1796,6 +2547,12 @@ kubectl exec -it debug-power -- bash</p>
 <td>None</td>
 <td>Standard run</td>
 <td>kubectl run/debug</td>
+</tr>
+<tr>
+<td><strong>tcpdump</strong></td>
+<td>NET_RAW</td>
+<td><code>--cap-add=NET_RAW</code></td>
+<td><a href="https://raw.githubusercontent.com/ibtisam-iq/debugbox/main/examples/balanced-debug-pod.yaml">Use manifest</a></td>
 </tr>
 <tr>
 <td><strong>tshark</strong></td>
@@ -1827,12 +2584,6 @@ kubectl exec -it debug-power -- bash</p>
 <td><code>--cap-add=NET_ADMIN</code></td>
 <td>Use manifest</td>
 </tr>
-<tr>
-<td><strong>brctl</strong></td>
-<td>NET_ADMIN</td>
-<td><code>--cap-add=NET_ADMIN</code></td>
-<td>Use manifest</td>
-</tr>
 </tbody>
 </table>
 <hr />
@@ -1857,7 +2608,7 @@ kubectl exec -it debug-power -- bash</p>
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-custom" title="July 6, 2026 02:39:57 PKT">July 06, 2026 02:39:57 AM</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-custom" title="July 7, 2026 19:32:11 PKT">July 07, 2026 07:32:11 PM</span>
   </span>
 
     
@@ -1873,6 +2624,7 @@ kubectl exec -it debug-power -- bash</p>
 
 
                 
+
               </article>
             </div>
           
@@ -1882,8 +2634,15 @@ kubectl exec -it debug-power -- bash</p>
 <script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
         </div>
         
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
       </main>
       
+  
         <footer class="md-footer">
   
     
@@ -1979,16 +2738,30 @@ kubectl exec -it debug-power -- bash</p>
   </div>
 </footer>
       
+  <script>
+    (function() {
+      var el = document.querySelector(".md-copyright");
+      if (el) {
+        var startYear = 2026;
+        var y = new Date().getFullYear();
+        var range = y > startYear ? startYear + "–" + y : String(startYear);
+        el.innerHTML = "Copyright © " + range + " DebugBox";
+      }
+    })();
+  </script>
+
     </div>
     <div class="md-dialog" data-md-component="dialog">
       <div class="md-dialog__inner md-typeset"></div>
     </div>
     
+      <div class="md-progress" data-md-component="progress" role="progressbar"></div>
+    
     
     
       
       
-      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.tabs", "navigation.tabs.sticky", "navigation.sections", "navigation.footer", "content.action.edit", "content.tabs.link", "content.code.annotate", "content.code.copy", "toc.integrate"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"provider": "mike"}}</script>
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.tabs", "navigation.tabs.sticky", "navigation.sections", "navigation.footer", "navigation.instant", "navigation.instant.progress", "navigation.top", "navigation.tracking", "content.action.edit", "content.tabs.link", "content.code.annotate", "content.code.copy", "content.code.select", "search.suggest", "search.highlight", "search.share", "header.autohide", "announce.dismiss"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"provider": "mike"}}</script>
     
     
       <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>

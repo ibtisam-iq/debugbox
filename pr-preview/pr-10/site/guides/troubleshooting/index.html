@@ -26,7 +26,7 @@
       
       
       <link rel="icon" href="../../images/favicon.ico">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.1">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
     
     
       
@@ -74,7 +74,22 @@
 
     
     
-  </head>
+  
+<meta property="og:type" content="website" />
+<meta property="og:title" content="Troubleshooting & FAQs - DebugBox" />
+<meta property="og:description" content="Lightweight, variant-based debugging container suite for Kubernetes and Docker environments.
+" />
+<meta property="og:image" content="https://debugbox.ibtisam-iq.com/assets/images/social/guides/troubleshooting.png" />
+<meta property="og:image:type" content="image/png" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:url" content="https://debugbox.ibtisam-iq.com/guides/troubleshooting/" />
+<meta property="twitter:card" content="summary_large_image" />
+<meta property="twitter:title" content="Troubleshooting & FAQs - DebugBox" />
+<meta property="twitter:description" content="Lightweight, variant-based debugging container suite for Kubernetes and Docker environments.
+" />
+<meta property="twitter:image" content="https://debugbox.ibtisam-iq.com/assets/images/social/guides/troubleshooting.png" />
+</head>
   
   
     
@@ -84,7 +99,7 @@
     
     
     
-    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="blue" data-md-color-accent="cyan">
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="amber">
   
     
     <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
@@ -99,6 +114,25 @@
       
     </div>
     <div data-md-component="announce">
+      
+        <aside class="md-banner">
+          <div class="md-banner__inner md-grid md-typeset">
+            
+              <button class="md-banner__button md-icon" aria-label="Don't show this again">
+                
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+              </button>
+            
+            
+  <a href="https://github.com/ibtisam-iq/debugbox/releases/tag/v1.0.0">
+    DebugBox v1.0.0 is out -- see the release notes
+  </a>
+
+          </div>
+          
+            <script>var el=document.querySelector("[data-md-component=announce]");if(el){var content=el.querySelector(".md-typeset");__md_hash(content.innerHTML)===__md_get("__announce")&&(el.hidden=!0)}</script>
+          
+        </aside>
       
     </div>
     
@@ -145,7 +179,7 @@
     
     
     
-    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="blue" data-md-color-accent="cyan"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="amber"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
     
       <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
@@ -155,7 +189,7 @@
     
     
     
-    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="blue" data-md-color-accent="cyan"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="amber"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
     
       <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
@@ -189,11 +223,18 @@
       </label>
       <nav class="md-search__options" aria-label="Search">
         
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="Share" aria-label="Share" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91s2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08"/></svg>
+          </a>
+        
         <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
           
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
         </button>
       </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
       
     </form>
     <div class="md-search__output">
@@ -399,6 +440,8 @@
     
     <div class="md-container" data-md-component="container">
       
+  
+
       
         
       
@@ -416,9 +459,7 @@
   
 
 
-  
-
-<nav class="md-nav md-nav--primary md-nav--lifted md-nav--integrated" aria-label="Navigation" data-md-level="0">
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
     <a href="../.." title="DebugBox" class="md-nav__button md-logo" aria-label="DebugBox" data-md-component="logo">
       
@@ -1100,8 +1141,118 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#tool-not-found-command-not-found" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tool Not Found / Command Not Found
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#permission-denied-tcpdump-iptables-conntrack-tshark" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Permission Denied (tcpdump, iptables, conntrack, tshark)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#container-exits-immediately" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Container Exits Immediately
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#kubectl-debug-not-working" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        kubectl debug Not Working
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dns-not-working-inside-container" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        DNS Not Working Inside Container
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#slow-image-pull" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Slow Image Pull
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#architecture-mismatch-arm64-nodes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Architecture Mismatch (ARM64 nodes)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#no-such-file-or-directory-on-vim-command" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        "No such file or directory" on vim command
+      
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#frequently-asked-questions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Frequently Asked Questions
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#still-stuck" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Still Stuck?
+      
+    </span>
+  </a>
   
 </li>
       
@@ -1325,12 +1476,178 @@
               </div>
             
             
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#common-issues" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Common Issues
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Common Issues">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#image-pull-failures" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Image Pull Failures
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tool-not-found-command-not-found" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tool Not Found / Command Not Found
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#permission-denied-tcpdump-iptables-conntrack-tshark" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Permission Denied (tcpdump, iptables, conntrack, tshark)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#container-exits-immediately" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Container Exits Immediately
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#kubectl-debug-not-working" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        kubectl debug Not Working
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dns-not-working-inside-container" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        DNS Not Working Inside Container
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#slow-image-pull" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Slow Image Pull
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#architecture-mismatch-arm64-nodes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Architecture Mismatch (ARM64 nodes)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#no-such-file-or-directory-on-vim-command" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        "No such file or directory" on vim command
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#frequently-asked-questions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Frequently Asked Questions
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#still-stuck" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Still Stuck?
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
           
           
             <div class="md-content" data-md-component="content">
               
               <article class="md-content__inner md-typeset">
                 
+  
+  
                   
 
 
@@ -1348,49 +1665,47 @@
 <h3 id="image-pull-failures">Image Pull Failures<a class="headerlink" href="#image-pull-failures" title="Permanent link">&para;</a></h3>
 <p><strong>Symptoms:</strong> <code>ImagePullBackOff</code>, <code>ErrImagePull</code>, <code>FailedToResolveImage</code></p>
 <p><strong>Step 1: Verify image name syntax</strong>
-```bash</p>
-<h1 id="correct-formats">Correct formats<a class="headerlink" href="#correct-formats" title="Permanent link">&para;</a></h1>
-<p>ghcr.io/ibtisam-iq/debugbox              # balanced (default)
-ghcr.io/ibtisam-iq/debugbox:lite         # lightweight
-ghcr.io/ibtisam-iq/debugbox:power        # full forensics
-ghcr.io/ibtisam-iq/debugbox:1.0.0        # production (pinned)
-ghcr.io/ibtisam-iq/debugbox:lite-1.0.0   # lite pinned version
-```</p>
+<div class="highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="c1"># Correct formats</span>
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>ghcr.io/ibtisam-iq/debugbox<span class="w">              </span><span class="c1"># balanced (default)</span>
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>ghcr.io/ibtisam-iq/debugbox:lite<span class="w">         </span><span class="c1"># lightweight</span>
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>ghcr.io/ibtisam-iq/debugbox:power<span class="w">        </span><span class="c1"># full forensics</span>
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>ghcr.io/ibtisam-iq/debugbox:1.0.0<span class="w">        </span><span class="c1"># production (pinned)</span>
+</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>ghcr.io/ibtisam-iq/debugbox:lite-1.0.0<span class="w">   </span><span class="c1"># lite pinned version</span>
+</span></code></pre></div></p>
 <p><strong>Step 2: Check network connectivity</strong>
-```bash</p>
-<h1 id="from-your-node-can-you-reach-ghcr">From your node, can you reach GHCR?<a class="headerlink" href="#from-your-node-can-you-reach-ghcr" title="Permanent link">&para;</a></h1>
-<p>kubectl run net-test --rm -it --image=busybox --restart=Never -- wget -O- <a href="https://ghcr.io">https://ghcr.io</a></p>
-<h1 id="if-timeoutblocked-ghcr-is-unreachable-firewall-proxy-dns">If timeout/blocked, GHCR is unreachable (firewall, proxy, DNS)<a class="headerlink" href="#if-timeoutblocked-ghcr-is-unreachable-firewall-proxy-dns" title="Permanent link">&para;</a></h1>
-<p>```</p>
+<div class="highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="c1"># From your node, can you reach GHCR?</span>
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>kubectl<span class="w"> </span>run<span class="w"> </span>net-test<span class="w"> </span>--rm<span class="w"> </span>-it<span class="w"> </span>--image<span class="o">=</span>busybox<span class="w"> </span>--restart<span class="o">=</span>Never<span class="w"> </span>--<span class="w"> </span>wget<span class="w"> </span>-O-<span class="w"> </span>https://ghcr.io
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>
+</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="c1"># If timeout/blocked, GHCR is unreachable (firewall, proxy, DNS)</span>
+</span></code></pre></div></p>
 <p><strong>Step 3: If GHCR unreachable or auth required</strong></p>
 <ul>
-<li><strong>Option A:</strong> Configure image pull secret for <code>ghcr.io</code>
-  ```bash
-  kubectl create secret docker-registry ghcr-secret \
-    --docker-server=ghcr.io \
-    --docker-username=<token> \
-    --docker-password=<token></li>
-</ul>
-<p>kubectl patch serviceaccount default -p '{"imagePullSecrets":[{"name":"ghcr-secret"}]}'
-  ```</p>
-<ul>
+<li>
+<p><strong>Option A:</strong> Configure image pull secret for <code>ghcr.io</code>
+  <div class="highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>kubectl<span class="w"> </span>create<span class="w"> </span>secret<span class="w"> </span>docker-registry<span class="w"> </span>ghcr-secret<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="w">  </span>--docker-server<span class="o">=</span>ghcr.io<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="w">  </span>--docker-username<span class="o">=</span>&lt;token&gt;<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="w">  </span>--docker-password<span class="o">=</span>&lt;token&gt;
+</span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>
+</span><span id="__span-2-6"><a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a>kubectl<span class="w"> </span>patch<span class="w"> </span>serviceaccount<span class="w"> </span>default<span class="w"> </span>-p<span class="w"> </span><span class="s1">&#39;{&quot;imagePullSecrets&quot;:[{&quot;name&quot;:&quot;ghcr-secret&quot;}]}&#39;</span>
+</span></code></pre></div></p>
+</li>
 <li>
 <p><strong>Option B:</strong> Use Docker Hub mirror (if available)
-  <code>bash
-  --image=docker.io/mibtisam/debugbox</code></p>
+  <div class="highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>--image<span class="o">=</span>docker.io/mibtisam/debugbox
+</span></code></pre></div></p>
 </li>
 <li>
 <p><strong>Option C:</strong> Pre-pull to nodes (if you have node access)
-  <code>bash
-  # On each node
-  docker pull ghcr.io/ibtisam-iq/debugbox:lite</code></p>
+  <div class="highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="c1"># On each node</span>
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>docker<span class="w"> </span>pull<span class="w"> </span>ghcr.io/ibtisam-iq/debugbox:lite
+</span></code></pre></div></p>
 </li>
 </ul>
 <p><strong>Step 4: Check pod events for details</strong>
-```bash
-kubectl describe pod debug-pod</p>
-<h1 id="look-for-events-section-with-specific-error">Look for "Events" section with specific error<a class="headerlink" href="#look-for-events-section-with-specific-error" title="Permanent link">&para;</a></h1>
-<p>```</p>
+<div class="highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>kubectl<span class="w"> </span>describe<span class="w"> </span>pod<span class="w"> </span>debug-pod
+</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="c1"># Look for &quot;Events&quot; section with specific error</span>
+</span></code></pre></div></p>
 <hr />
 <h3 id="tool-not-found-command-not-found">Tool Not Found / Command Not Found<a class="headerlink" href="#tool-not-found-command-not-found" title="Permanent link">&para;</a></h3>
 <p><strong>Symptoms:</strong> <code>bash: command not found</code>, <code>vim: not found</code>, <code>tcpdump: not found</code></p>
@@ -1413,10 +1728,10 @@ kubectl describe pod debug-pod</p>
 <td>Lite has only ash (minimal shell)</td>
 </tr>
 <tr>
-<td>vim, git, curl</td>
+<td>vim, git, openssl</td>
 <td>lite</td>
 <td>Need balanced+</td>
-<td>Lite is ~14MB minimal</td>
+<td>Lite is minimal</td>
 </tr>
 <tr>
 <td>tcpdump, strace, lsof</td>
@@ -1425,22 +1740,16 @@ kubectl describe pod debug-pod</p>
 <td>Lite doesn't have advanced tools</td>
 </tr>
 <tr>
-<td>tshark, nftables, ltrace</td>
+<td>tshark, nmap, nftables</td>
 <td>balanced</td>
 <td>Need power</td>
-<td>Power adds forensics tools</td>
-</tr>
-<tr>
-<td>bird, brctl, speedtest</td>
-<td>balanced</td>
-<td>Need power</td>
-<td>Power adds advanced networking</td>
+<td>Power adds forensics and scanning tools</td>
 </tr>
 <tr>
 <td>iptables, conntrack</td>
-<td>balanced*</td>
+<td>balanced</td>
 <td>Need power</td>
-<td>*Available in balanced but needs NET_ADMIN capability</td>
+<td>Power adds firewall inspection (needs NET_ADMIN)</td>
 </tr>
 </tbody>
 </table>
@@ -1456,296 +1765,299 @@ kubectl describe pod debug-pod</p>
 <tbody>
 <tr>
 <td><strong>lite</strong></td>
-<td>~14 MB</td>
-<td>curl, wget, dig, nslookup, jq, yq, ash, vi</td>
+<td>~15 MB</td>
+<td>curl, dig, nslookup, jq, yq, nc, ping, ash, vi</td>
 </tr>
 <tr>
 <td><strong>balanced</strong></td>
-<td>~46 MB</td>
-<td>lite + bash, git, vim, tcpdump, strace, lsof, ps, top, htop, nc, socat, mtr, nmap, iperf3, and 10+ more</td>
+<td>~51 MB</td>
+<td>lite + bash, git, vim, openssl, tcpdump, strace, lsof, htop, socat, mtr, kubectx/ns</td>
 </tr>
 <tr>
 <td><strong>power</strong></td>
-<td>~104 MB</td>
-<td>balanced + tshark, ngrep, ltrace, nping, nmap-scripts, openssl, iptables, nftables, conntrack, bird, brctl, python3, nano, speedtest-cli, and more</td>
+<td>~112 MB</td>
+<td>balanced + tshark, ngrep, ltrace, nmap, nping, iperf3, iptables, nftables, conntrack</td>
 </tr>
 </tbody>
 </table>
 <p><strong>Quick fix:</strong>
-```bash</p>
-<h1 id="if-tool-not-found-try-balanced">If tool not found, try balanced<a class="headerlink" href="#if-tool-not-found-try-balanced" title="Permanent link">&para;</a></h1>
-<p>kubectl debug my-pod -it --image=ghcr.io/ibtisam-iq/debugbox</p>
-<h1 id="if-still-not-found-try-power">If still not found, try power<a class="headerlink" href="#if-still-not-found-try-power" title="Permanent link">&para;</a></h1>
-<p>kubectl debug my-pod -it --image=ghcr.io/ibtisam-iq/debugbox:power
-```</p>
+<div class="highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="c1"># If tool not found, try balanced</span>
+</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>kubectl<span class="w"> </span>debug<span class="w"> </span>my-pod<span class="w"> </span>-it<span class="w"> </span>--image<span class="o">=</span>ghcr.io/ibtisam-iq/debugbox
+</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>
+</span><span id="__span-6-4"><a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a><span class="c1"># If still not found, try power</span>
+</span><span id="__span-6-5"><a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a>kubectl<span class="w"> </span>debug<span class="w"> </span>my-pod<span class="w"> </span>-it<span class="w"> </span>--image<span class="o">=</span>ghcr.io/ibtisam-iq/debugbox:power
+</span></code></pre></div></p>
 <hr />
 <h3 id="permission-denied-tcpdump-iptables-conntrack-tshark">Permission Denied (tcpdump, iptables, conntrack, tshark)<a class="headerlink" href="#permission-denied-tcpdump-iptables-conntrack-tshark" title="Permanent link">&para;</a></h3>
 <p><strong>Symptoms:</strong>
-<code>tcpdump: permission denied
-iptables: permission denied
-conntrack v1.4.8: Operation failed: sorry, you must be root or get CAP_NET_ADMIN capability
-tshark: Couldn't run dumpcap in child process: Operation not permitted</code></p>
+<div class="highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>tcpdump: permission denied
+</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>iptables: permission denied
+</span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a>conntrack v1.4.8: Operation failed: sorry, you must be root or get CAP_NET_ADMIN capability
+</span><span id="__span-7-4"><a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a>tshark: Couldn&#39;t run dumpcap in child process: Operation not permitted
+</span></code></pre></div></p>
 <p><strong>Root cause:</strong> Missing Linux capabilities (NET_ADMIN, NET_RAW)</p>
 <p><strong>Quick diagnosis:</strong>
-```bash</p>
-<h1 id="which-capability-do-you-need">Which capability do you need?<a class="headerlink" href="#which-capability-do-you-need" title="Permanent link">&para;</a></h1>
-<p>tshark, ngrep, iptables, nftables, conntrack, brctl → NET_ADMIN</p>
-<h1 id="check-current-capabilities">Check current capabilities<a class="headerlink" href="#check-current-capabilities" title="Permanent link">&para;</a></h1>
-<p>grep Cap /proc/self/status
-```</p>
+<div class="highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="c1"># Which capability do you need?</span>
+</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>tshark,<span class="w"> </span>ngrep,<span class="w"> </span>iptables,<span class="w"> </span>nftables,<span class="w"> </span>conntrack<span class="w"> </span>→<span class="w"> </span>NET_ADMIN
+</span><span id="__span-8-3"><a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a>
+</span><span id="__span-8-4"><a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a><span class="c1"># Check current capabilities</span>
+</span><span id="__span-8-5"><a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a>grep<span class="w"> </span>Cap<span class="w"> </span>/proc/self/status
+</span></code></pre></div></p>
 <p><strong>Solutions (in priority order):</strong></p>
 <p><strong>Option 1: Use manifest with capabilities (Recommended)</strong>
-```bash
-kubectl apply -f <a href="https://raw.githubusercontent.com/ibtisam-iq/debugbox/main/examples/power-debug-pod.yaml">https://raw.githubusercontent.com/ibtisam-iq/debugbox/main/examples/power-debug-pod.yaml</a>
-kubectl exec -it debug-power -- bash</p>
-<h1 id="now-these-work">Now these work:<a class="headerlink" href="#now-these-work" title="Permanent link">&para;</a></h1>
-<p>tshark -i eth0
-iptables -L -nv
-conntrack -L
-```</p>
+<div class="highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span>https://raw.githubusercontent.com/ibtisam-iq/debugbox/main/examples/power-debug-pod.yaml
+</span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>kubectl<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>-it<span class="w"> </span>debug-power<span class="w"> </span>--<span class="w"> </span>bash
+</span><span id="__span-9-3"><a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a>
+</span><span id="__span-9-4"><a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a><span class="c1"># Now these work:</span>
+</span><span id="__span-9-5"><a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a>tshark<span class="w"> </span>-i<span class="w"> </span>eth0
+</span><span id="__span-9-6"><a id="__codelineno-9-6" name="__codelineno-9-6" href="#__codelineno-9-6"></a>iptables<span class="w"> </span>-L<span class="w"> </span>-nv
+</span><span id="__span-9-7"><a id="__codelineno-9-7" name="__codelineno-9-7" href="#__codelineno-9-7"></a>conntrack<span class="w"> </span>-L
+</span></code></pre></div></p>
 <p><strong>Option 2: Add capabilities to kubectl run</strong>
-```bash</p>
-<h1 id="for-packet-capture">For packet capture<a class="headerlink" href="#for-packet-capture" title="Permanent link">&para;</a></h1>
-<p>kubectl run debug --rm -it \
-  --image=ghcr.io/ibtisam-iq/debugbox:power \
-  --overrides='{"spec":{"containers":[{"name":"debug","securityContext":{"capabilities":{"add":["NET_RAW"]}}}]}}' \
-  --restart=Never</p>
-<h1 id="for-firewall-tools">For firewall tools<a class="headerlink" href="#for-firewall-tools" title="Permanent link">&para;</a></h1>
-<p>kubectl run debug --rm -it \
-  --image=ghcr.io/ibtisam-iq/debugbox:power \
-  --overrides='{"spec":{"containers":[{"name":"debug","securityContext":{"capabilities":{"add":["NET_ADMIN"]}}}]}}' \
-  --restart=Never
-```</p>
+<div class="highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="c1"># For packet capture</span>
+</span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a>kubectl<span class="w"> </span>run<span class="w"> </span>debug<span class="w"> </span>--rm<span class="w"> </span>-it<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-10-3"><a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a><span class="w">  </span>--image<span class="o">=</span>ghcr.io/ibtisam-iq/debugbox:power<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-10-4"><a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a><span class="w">  </span>--overrides<span class="o">=</span><span class="s1">&#39;{&quot;spec&quot;:{&quot;containers&quot;:[{&quot;name&quot;:&quot;debug&quot;,&quot;securityContext&quot;:{&quot;capabilities&quot;:{&quot;add&quot;:[&quot;NET_RAW&quot;]}}}]}}&#39;</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-10-5"><a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a><span class="w">  </span>--restart<span class="o">=</span>Never
+</span><span id="__span-10-6"><a id="__codelineno-10-6" name="__codelineno-10-6" href="#__codelineno-10-6"></a>
+</span><span id="__span-10-7"><a id="__codelineno-10-7" name="__codelineno-10-7" href="#__codelineno-10-7"></a><span class="c1"># For firewall tools</span>
+</span><span id="__span-10-8"><a id="__codelineno-10-8" name="__codelineno-10-8" href="#__codelineno-10-8"></a>kubectl<span class="w"> </span>run<span class="w"> </span>debug<span class="w"> </span>--rm<span class="w"> </span>-it<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-10-9"><a id="__codelineno-10-9" name="__codelineno-10-9" href="#__codelineno-10-9"></a><span class="w">  </span>--image<span class="o">=</span>ghcr.io/ibtisam-iq/debugbox:power<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-10-10"><a id="__codelineno-10-10" name="__codelineno-10-10" href="#__codelineno-10-10"></a><span class="w">  </span>--overrides<span class="o">=</span><span class="s1">&#39;{&quot;spec&quot;:{&quot;containers&quot;:[{&quot;name&quot;:&quot;debug&quot;,&quot;securityContext&quot;:{&quot;capabilities&quot;:{&quot;add&quot;:[&quot;NET_ADMIN&quot;]}}}]}}&#39;</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-10-11"><a id="__codelineno-10-11" name="__codelineno-10-11" href="#__codelineno-10-11"></a><span class="w">  </span>--restart<span class="o">=</span>Never
+</span></code></pre></div></p>
 <p><strong>Option 3: Docker equivalent</strong>
-<code>bash
-docker run --rm -it --cap-add=NET_RAW --cap-add=NET_ADMIN ghcr.io/ibtisam-iq/debugbox:power</code></p>
+<div class="highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>docker<span class="w"> </span>run<span class="w"> </span>--rm<span class="w"> </span>-it<span class="w"> </span>--cap-add<span class="o">=</span>NET_RAW<span class="w"> </span>--cap-add<span class="o">=</span>NET_ADMIN<span class="w"> </span>ghcr.io/ibtisam-iq/debugbox:power
+</span></code></pre></div></p>
 <hr />
 <h3 id="container-exits-immediately">Container Exits Immediately<a class="headerlink" href="#container-exits-immediately" title="Permanent link">&para;</a></h3>
 <p><strong>Symptoms:</strong> Pod runs for 1 second and exits. <code>Status: Completed</code> but you wanted interactive shell.</p>
 <p><strong>Cause 1: Missing <code>-it</code> flags</strong>
-```bash</p>
-<h1 id="wrong-pod-exits-immediately">❌ Wrong - pod exits immediately<a class="headerlink" href="#wrong-pod-exits-immediately" title="Permanent link">&para;</a></h1>
-<p>kubectl run debug --image=ghcr.io/ibtisam-iq/debugbox --restart=Never</p>
-<h1 id="correct-keeps-container-running">✅ Correct - keeps container running<a class="headerlink" href="#correct-keeps-container-running" title="Permanent link">&para;</a></h1>
-<p>kubectl run debug -it --image=ghcr.io/ibtisam-iq/debugbox --restart=Never
-```</p>
+<div class="highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="c1"># ❌ Wrong - pod exits immediately</span>
+</span><span id="__span-12-2"><a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a>kubectl<span class="w"> </span>run<span class="w"> </span>debug<span class="w"> </span>--image<span class="o">=</span>ghcr.io/ibtisam-iq/debugbox<span class="w"> </span>--restart<span class="o">=</span>Never
+</span><span id="__span-12-3"><a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a>
+</span><span id="__span-12-4"><a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a><span class="c1"># ✅ Correct - keeps container running</span>
+</span><span id="__span-12-5"><a id="__codelineno-12-5" name="__codelineno-12-5" href="#__codelineno-12-5"></a>kubectl<span class="w"> </span>run<span class="w"> </span>debug<span class="w"> </span>-it<span class="w"> </span>--image<span class="o">=</span>ghcr.io/ibtisam-iq/debugbox<span class="w"> </span>--restart<span class="o">=</span>Never
+</span></code></pre></div></p>
 <p><strong>Cause 2: Wrong command</strong>
-```bash</p>
-<h1 id="pod-exits-when-sleep-5-finishes">❌ Pod exits when <code>sleep 5</code> finishes<a class="headerlink" href="#pod-exits-when-sleep-5-finishes" title="Permanent link">&para;</a></h1>
-<p>kubectl run debug -it --image=ghcr.io/ibtisam-iq/debugbox --command -- sleep 5</p>
-<h1 id="keep-running">✅ Keep running<a class="headerlink" href="#keep-running" title="Permanent link">&para;</a></h1>
-<p>kubectl run debug -it --image=ghcr.io/ibtisam-iq/debugbox --restart=Never
-```</p>
+<div class="highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a><span class="c1"># ❌ Pod exits when `sleep 5` finishes</span>
+</span><span id="__span-13-2"><a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a>kubectl<span class="w"> </span>run<span class="w"> </span>debug<span class="w"> </span>-it<span class="w"> </span>--image<span class="o">=</span>ghcr.io/ibtisam-iq/debugbox<span class="w"> </span>--command<span class="w"> </span>--<span class="w"> </span>sleep<span class="w"> </span><span class="m">5</span>
+</span><span id="__span-13-3"><a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a>
+</span><span id="__span-13-4"><a id="__codelineno-13-4" name="__codelineno-13-4" href="#__codelineno-13-4"></a><span class="c1"># ✅ Keep running</span>
+</span><span id="__span-13-5"><a id="__codelineno-13-5" name="__codelineno-13-5" href="#__codelineno-13-5"></a>kubectl<span class="w"> </span>run<span class="w"> </span>debug<span class="w"> </span>-it<span class="w"> </span>--image<span class="o">=</span>ghcr.io/ibtisam-iq/debugbox<span class="w"> </span>--restart<span class="o">=</span>Never
+</span></code></pre></div></p>
 <hr />
 <h3 id="kubectl-debug-not-working">kubectl debug Not Working<a class="headerlink" href="#kubectl-debug-not-working" title="Permanent link">&para;</a></h3>
 <p><strong>Symptoms:</strong> <code>kubectl debug: command not found</code> or <code>error: debug is not a kubectl command</code></p>
 <p><strong>Cause:</strong> kubectl debug is only available in Kubernetes 1.23+</p>
 <p><strong>Check version:</strong>
-```bash
-kubectl version --short</p>
-<h1 id="output-v1230-or-higher-needed">Output: v1.23.0 or higher needed<a class="headerlink" href="#output-v1230-or-higher-needed" title="Permanent link">&para;</a></h1>
-<p>```</p>
+<div class="highlight"><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>kubectl<span class="w"> </span>version<span class="w"> </span>--short
+</span><span id="__span-14-2"><a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a><span class="c1"># Output: v1.23.0 or higher needed</span>
+</span></code></pre></div></p>
 <p><strong>Solutions:</strong></p>
 <p><strong>If K8s &lt; 1.23:</strong> Use kubectl run instead
-```bash</p>
-<h1 id="instead-of">Instead of:<a class="headerlink" href="#instead-of" title="Permanent link">&para;</a></h1>
-<p>kubectl debug my-pod -it --image=ghcr.io/ibtisam-iq/debugbox</p>
-<h1 id="use">Use:<a class="headerlink" href="#use" title="Permanent link">&para;</a></h1>
-<p>kubectl run debug --rm -it --image=ghcr.io/ibtisam-iq/debugbox --restart=Never
-```</p>
+<div class="highlight"><pre><span></span><code><span id="__span-15-1"><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a><span class="c1"># Instead of:</span>
+</span><span id="__span-15-2"><a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a>kubectl<span class="w"> </span>debug<span class="w"> </span>my-pod<span class="w"> </span>-it<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-15-3"><a id="__codelineno-15-3" name="__codelineno-15-3" href="#__codelineno-15-3"></a><span class="w">  </span>--image<span class="o">=</span>ghcr.io/ibtisam-iq/debugbox
+</span><span id="__span-15-4"><a id="__codelineno-15-4" name="__codelineno-15-4" href="#__codelineno-15-4"></a>
+</span><span id="__span-15-5"><a id="__codelineno-15-5" name="__codelineno-15-5" href="#__codelineno-15-5"></a><span class="c1"># Use:</span>
+</span><span id="__span-15-6"><a id="__codelineno-15-6" name="__codelineno-15-6" href="#__codelineno-15-6"></a>kubectl<span class="w"> </span>run<span class="w"> </span>debug<span class="w"> </span>--rm<span class="w"> </span>-it<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-15-7"><a id="__codelineno-15-7" name="__codelineno-15-7" href="#__codelineno-15-7"></a><span class="w">  </span>--image<span class="o">=</span>ghcr.io/ibtisam-iq/debugbox<span class="w"> </span>--restart<span class="o">=</span>Never
+</span></code></pre></div></p>
 <p><strong>If kubectl is old:</strong> Update kubectl locally
-```bash</p>
-<h1 id="macos">macOS<a class="headerlink" href="#macos" title="Permanent link">&para;</a></h1>
-<p>brew upgrade kubernetes-cli</p>
-<h1 id="linux">Linux<a class="headerlink" href="#linux" title="Permanent link">&para;</a></h1>
-<p>curl -LO "<a href="https://dl.k8s.io/release/$(curl">https://dl.k8s.io/release/$(curl</a> -L -s <a href="https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl">https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl</a>"</p>
-<h1 id="windows">Windows<a class="headerlink" href="#windows" title="Permanent link">&para;</a></h1>
-<p>choco upgrade kubernetes-cli
-```</p>
+<div class="highlight"><pre><span></span><code><span id="__span-16-1"><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a><span class="c1"># macOS</span>
+</span><span id="__span-16-2"><a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a>brew<span class="w"> </span>upgrade<span class="w"> </span>kubernetes-cli
+</span><span id="__span-16-3"><a id="__codelineno-16-3" name="__codelineno-16-3" href="#__codelineno-16-3"></a>
+</span><span id="__span-16-4"><a id="__codelineno-16-4" name="__codelineno-16-4" href="#__codelineno-16-4"></a><span class="c1"># Linux</span>
+</span><span id="__span-16-5"><a id="__codelineno-16-5" name="__codelineno-16-5" href="#__codelineno-16-5"></a>curl<span class="w"> </span>-LO<span class="w"> </span><span class="s2">&quot;https://dl.k8s.io/release/</span><span class="k">$(</span>curl<span class="w"> </span>-L<span class="w"> </span>-s<span class="w"> </span>https://dl.k8s.io/release/stable.txt<span class="k">)</span><span class="s2">/bin/linux/amd64/kubectl&quot;</span>
+</span><span id="__span-16-6"><a id="__codelineno-16-6" name="__codelineno-16-6" href="#__codelineno-16-6"></a>
+</span><span id="__span-16-7"><a id="__codelineno-16-7" name="__codelineno-16-7" href="#__codelineno-16-7"></a><span class="c1"># Windows</span>
+</span><span id="__span-16-8"><a id="__codelineno-16-8" name="__codelineno-16-8" href="#__codelineno-16-8"></a>choco<span class="w"> </span>upgrade<span class="w"> </span>kubernetes-cli
+</span></code></pre></div></p>
 <hr />
 <h3 id="dns-not-working-inside-container">DNS Not Working Inside Container<a class="headerlink" href="#dns-not-working-inside-container" title="Permanent link">&para;</a></h3>
 <p><strong>Symptoms:</strong>
-<code>bash
-dig example.com → timeout/SERVFAIL
-nslookup kubernetes.default → no answer
-curl http://my-service.default.svc.cluster.local → Connection refused</code></p>
+<div class="highlight"><pre><span></span><code><span id="__span-17-1"><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a>dig<span class="w"> </span>example.com<span class="w"> </span>→<span class="w"> </span>timeout/SERVFAIL
+</span><span id="__span-17-2"><a id="__codelineno-17-2" name="__codelineno-17-2" href="#__codelineno-17-2"></a>nslookup<span class="w"> </span>kubernetes.default<span class="w"> </span>→<span class="w"> </span>no<span class="w"> </span>answer
+</span><span id="__span-17-3"><a id="__codelineno-17-3" name="__codelineno-17-3" href="#__codelineno-17-3"></a>curl<span class="w"> </span>http://my-service.default.svc.cluster.local<span class="w"> </span>→<span class="w"> </span>Connection<span class="w"> </span>refused
+</span></code></pre></div></p>
 <p><strong>Step 1: Check resolv.conf</strong>
-```bash
-cat /etc/resolv.conf</p>
-<h1 id="should-show-cluster-dns-server-usually-1096010-for-minikube">Should show cluster DNS server (usually 10.96.0.10 for minikube)<a class="headerlink" href="#should-show-cluster-dns-server-usually-1096010-for-minikube" title="Permanent link">&para;</a></h1>
-<p>```</p>
+<div class="highlight"><pre><span></span><code><span id="__span-18-1"><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a>cat<span class="w"> </span>/etc/resolv.conf
+</span><span id="__span-18-2"><a id="__codelineno-18-2" name="__codelineno-18-2" href="#__codelineno-18-2"></a><span class="c1"># Should show cluster DNS server (usually 10.96.0.10 for minikube)</span>
+</span></code></pre></div></p>
 <p><strong>Step 2: Test specific DNS server</strong>
-<code>bash
-dig @10.96.0.10 kubernetes.default
-dig @8.8.8.8 google.com  # If you can reach internet</code></p>
+<div class="highlight"><pre><span></span><code><span id="__span-19-1"><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a>dig<span class="w"> </span>@10.96.0.10<span class="w"> </span>kubernetes.default
+</span><span id="__span-19-2"><a id="__codelineno-19-2" name="__codelineno-19-2" href="#__codelineno-19-2"></a>dig<span class="w"> </span>@8.8.8.8<span class="w"> </span>google.com<span class="w">  </span><span class="c1"># If you can reach internet</span>
+</span></code></pre></div></p>
 <p><strong>Step 3: If DNS broken, check cluster</strong>
-```bash</p>
-<h1 id="from-your-local-machine">From your local machine:<a class="headerlink" href="#from-your-local-machine" title="Permanent link">&para;</a></h1>
-<p>kubectl get pods -n kube-system | grep coredns
-kubectl logs -n kube-system <coredns-pod-name></p>
-<h1 id="check-if-coredns-service-exists">Check if CoreDNS service exists<a class="headerlink" href="#check-if-coredns-service-exists" title="Permanent link">&para;</a></h1>
-<p>kubectl get svc -n kube-system kube-dns
-```</p>
+<div class="highlight"><pre><span></span><code><span id="__span-20-1"><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a><span class="c1"># From your local machine:</span>
+</span><span id="__span-20-2"><a id="__codelineno-20-2" name="__codelineno-20-2" href="#__codelineno-20-2"></a>kubectl<span class="w"> </span>get<span class="w"> </span>pods<span class="w"> </span>-n<span class="w"> </span>kube-system<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>coredns
+</span><span id="__span-20-3"><a id="__codelineno-20-3" name="__codelineno-20-3" href="#__codelineno-20-3"></a>kubectl<span class="w"> </span>logs<span class="w"> </span>-n<span class="w"> </span>kube-system<span class="w"> </span>&lt;coredns-pod-name&gt;
+</span><span id="__span-20-4"><a id="__codelineno-20-4" name="__codelineno-20-4" href="#__codelineno-20-4"></a>
+</span><span id="__span-20-5"><a id="__codelineno-20-5" name="__codelineno-20-5" href="#__codelineno-20-5"></a><span class="c1"># Check if CoreDNS service exists</span>
+</span><span id="__span-20-6"><a id="__codelineno-20-6" name="__codelineno-20-6" href="#__codelineno-20-6"></a>kubectl<span class="w"> </span>get<span class="w"> </span>svc<span class="w"> </span>-n<span class="w"> </span>kube-system<span class="w"> </span>kube-dns
+</span></code></pre></div></p>
 <p><strong>Step 4: Quick workaround</strong>
-```bash</p>
-<h1 id="add-manual-dns-entry-inside-container">Add manual DNS entry inside container<a class="headerlink" href="#add-manual-dns-entry-inside-container" title="Permanent link">&para;</a></h1>
-<p>echo "nameserver 8.8.8.8" &gt;&gt; /etc/resolv.conf
-dig google.com  # Should work now</p>
-<h1 id="or-use-ip-directly-if-you-have-it">Or use IP directly if you have it<a class="headerlink" href="#or-use-ip-directly-if-you-have-it" title="Permanent link">&para;</a></h1>
-<p>curl <a href="http://10.1.2.3:8080/health">http://10.1.2.3:8080/health</a>  # Instead of hostname
-```</p>
+<div class="highlight"><pre><span></span><code><span id="__span-21-1"><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a><span class="c1"># Add manual DNS entry inside container</span>
+</span><span id="__span-21-2"><a id="__codelineno-21-2" name="__codelineno-21-2" href="#__codelineno-21-2"></a><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;nameserver 8.8.8.8&quot;</span><span class="w"> </span>&gt;&gt;<span class="w"> </span>/etc/resolv.conf
+</span><span id="__span-21-3"><a id="__codelineno-21-3" name="__codelineno-21-3" href="#__codelineno-21-3"></a>dig<span class="w"> </span>google.com<span class="w">  </span><span class="c1"># Should work now</span>
+</span><span id="__span-21-4"><a id="__codelineno-21-4" name="__codelineno-21-4" href="#__codelineno-21-4"></a>
+</span><span id="__span-21-5"><a id="__codelineno-21-5" name="__codelineno-21-5" href="#__codelineno-21-5"></a><span class="c1"># Or use IP directly if you have it</span>
+</span><span id="__span-21-6"><a id="__codelineno-21-6" name="__codelineno-21-6" href="#__codelineno-21-6"></a>curl<span class="w"> </span>http://10.1.2.3:8080/health<span class="w">  </span><span class="c1"># Instead of hostname</span>
+</span></code></pre></div></p>
 <hr />
 <h3 id="slow-image-pull">Slow Image Pull<a class="headerlink" href="#slow-image-pull" title="Permanent link">&para;</a></h3>
 <p><strong>Symptoms:</strong> Pod takes 30+ seconds to start, image pull takes most of time</p>
 <p><strong>Option 1: Use lite (fastest)</strong>
-<code>bash
---image=ghcr.io/ibtisam-iq/debugbox:lite  # 14 MB (~1-2 seconds)</code></p>
+<div class="highlight"><pre><span></span><code><span id="__span-22-1"><a id="__codelineno-22-1" name="__codelineno-22-1" href="#__codelineno-22-1"></a>--image<span class="o">=</span>ghcr.io/ibtisam-iq/debugbox:lite<span class="w">  </span><span class="c1"># ~15 MB (~1-2 seconds)</span>
+</span></code></pre></div></p>
 <p><strong>Option 2: Pre-pull image to nodes</strong> (for frequent use)
-```bash</p>
-<h1 id="manually-on-each-node">Manually on each node<a class="headerlink" href="#manually-on-each-node" title="Permanent link">&para;</a></h1>
-<p>docker pull ghcr.io/ibtisam-iq/debugbox:lite</p>
-<h1 id="or-via-daemonset-automatic-on-all-nodes">Or via DaemonSet (automatic on all nodes)<a class="headerlink" href="#or-via-daemonset-automatic-on-all-nodes" title="Permanent link">&para;</a></h1>
-<p>kubectl apply -f - &lt;&lt;EOF
-apiVersion: apps/v1
-kind: DaemonSet
-metadata:
-  name: debugbox-prepull
-  namespace: kube-system
-spec:
-  selector:
-    matchLabels:
-      app: debugbox-prepull
-  template:
-    metadata:
-      labels:
-        app: debugbox-prepull
-    spec:
-      containers:
-      - name: prepull
-        image: ghcr.io/ibtisam-iq/debugbox:lite
-        command: ["sleep", "999999"]
-      terminationGracePeriodSeconds: 0
-EOF</p>
-<h1 id="clean-up-when-done">Clean up when done<a class="headerlink" href="#clean-up-when-done" title="Permanent link">&para;</a></h1>
-<p>kubectl delete daemonset debugbox-prepull -n kube-system
-```</p>
+<div class="highlight"><pre><span></span><code><span id="__span-23-1"><a id="__codelineno-23-1" name="__codelineno-23-1" href="#__codelineno-23-1"></a><span class="c1"># Manually on each node</span>
+</span><span id="__span-23-2"><a id="__codelineno-23-2" name="__codelineno-23-2" href="#__codelineno-23-2"></a>docker<span class="w"> </span>pull<span class="w"> </span>ghcr.io/ibtisam-iq/debugbox:lite
+</span><span id="__span-23-3"><a id="__codelineno-23-3" name="__codelineno-23-3" href="#__codelineno-23-3"></a>
+</span><span id="__span-23-4"><a id="__codelineno-23-4" name="__codelineno-23-4" href="#__codelineno-23-4"></a><span class="c1"># Or via DaemonSet (automatic on all nodes)</span>
+</span><span id="__span-23-5"><a id="__codelineno-23-5" name="__codelineno-23-5" href="#__codelineno-23-5"></a>kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span>-<span class="w"> </span><span class="s">&lt;&lt;EOF</span>
+</span><span id="__span-23-6"><a id="__codelineno-23-6" name="__codelineno-23-6" href="#__codelineno-23-6"></a><span class="s">apiVersion: apps/v1</span>
+</span><span id="__span-23-7"><a id="__codelineno-23-7" name="__codelineno-23-7" href="#__codelineno-23-7"></a><span class="s">kind: DaemonSet</span>
+</span><span id="__span-23-8"><a id="__codelineno-23-8" name="__codelineno-23-8" href="#__codelineno-23-8"></a><span class="s">metadata:</span>
+</span><span id="__span-23-9"><a id="__codelineno-23-9" name="__codelineno-23-9" href="#__codelineno-23-9"></a><span class="s">  name: debugbox-prepull</span>
+</span><span id="__span-23-10"><a id="__codelineno-23-10" name="__codelineno-23-10" href="#__codelineno-23-10"></a><span class="s">  namespace: kube-system</span>
+</span><span id="__span-23-11"><a id="__codelineno-23-11" name="__codelineno-23-11" href="#__codelineno-23-11"></a><span class="s">spec:</span>
+</span><span id="__span-23-12"><a id="__codelineno-23-12" name="__codelineno-23-12" href="#__codelineno-23-12"></a><span class="s">  selector:</span>
+</span><span id="__span-23-13"><a id="__codelineno-23-13" name="__codelineno-23-13" href="#__codelineno-23-13"></a><span class="s">    matchLabels:</span>
+</span><span id="__span-23-14"><a id="__codelineno-23-14" name="__codelineno-23-14" href="#__codelineno-23-14"></a><span class="s">      app: debugbox-prepull</span>
+</span><span id="__span-23-15"><a id="__codelineno-23-15" name="__codelineno-23-15" href="#__codelineno-23-15"></a><span class="s">  template:</span>
+</span><span id="__span-23-16"><a id="__codelineno-23-16" name="__codelineno-23-16" href="#__codelineno-23-16"></a><span class="s">    metadata:</span>
+</span><span id="__span-23-17"><a id="__codelineno-23-17" name="__codelineno-23-17" href="#__codelineno-23-17"></a><span class="s">      labels:</span>
+</span><span id="__span-23-18"><a id="__codelineno-23-18" name="__codelineno-23-18" href="#__codelineno-23-18"></a><span class="s">        app: debugbox-prepull</span>
+</span><span id="__span-23-19"><a id="__codelineno-23-19" name="__codelineno-23-19" href="#__codelineno-23-19"></a><span class="s">    spec:</span>
+</span><span id="__span-23-20"><a id="__codelineno-23-20" name="__codelineno-23-20" href="#__codelineno-23-20"></a><span class="s">      containers:</span>
+</span><span id="__span-23-21"><a id="__codelineno-23-21" name="__codelineno-23-21" href="#__codelineno-23-21"></a><span class="s">      - name: prepull</span>
+</span><span id="__span-23-22"><a id="__codelineno-23-22" name="__codelineno-23-22" href="#__codelineno-23-22"></a><span class="s">        image: ghcr.io/ibtisam-iq/debugbox:lite</span>
+</span><span id="__span-23-23"><a id="__codelineno-23-23" name="__codelineno-23-23" href="#__codelineno-23-23"></a><span class="s">        command: [&quot;sleep&quot;, &quot;999999&quot;]</span>
+</span><span id="__span-23-24"><a id="__codelineno-23-24" name="__codelineno-23-24" href="#__codelineno-23-24"></a><span class="s">      terminationGracePeriodSeconds: 0</span>
+</span><span id="__span-23-25"><a id="__codelineno-23-25" name="__codelineno-23-25" href="#__codelineno-23-25"></a><span class="s">EOF</span>
+</span><span id="__span-23-26"><a id="__codelineno-23-26" name="__codelineno-23-26" href="#__codelineno-23-26"></a>
+</span><span id="__span-23-27"><a id="__codelineno-23-27" name="__codelineno-23-27" href="#__codelineno-23-27"></a><span class="c1"># Clean up when done</span>
+</span><span id="__span-23-28"><a id="__codelineno-23-28" name="__codelineno-23-28" href="#__codelineno-23-28"></a>kubectl<span class="w"> </span>delete<span class="w"> </span>daemonset<span class="w"> </span>debugbox-prepull<span class="w"> </span>-n<span class="w"> </span>kube-system
+</span></code></pre></div></p>
 <p><strong>Option 3: Check network</strong>
-```bash</p>
-<h1 id="from-your-node-test-ghcr-connection">From your node, test GHCR connection<a class="headerlink" href="#from-your-node-test-ghcr-connection" title="Permanent link">&para;</a></h1>
-<p>docker pull ghcr.io/ibtisam-iq/debugbox:lite</p>
-<h1 id="if-slow-could-be">If slow, could be:<a class="headerlink" href="#if-slow-could-be" title="Permanent link">&para;</a></h1>
-<h1 id="-firewallproxy-slowing-downloads">- Firewall/proxy slowing downloads<a class="headerlink" href="#-firewallproxy-slowing-downloads" title="Permanent link">&para;</a></h1>
-<h1 id="-regional-ghcr-mirror-slow">- Regional GHCR mirror slow<a class="headerlink" href="#-regional-ghcr-mirror-slow" title="Permanent link">&para;</a></h1>
-<h1 id="-network-congestion">- Network congestion<a class="headerlink" href="#-network-congestion" title="Permanent link">&para;</a></h1>
-<p>```</p>
+<div class="highlight"><pre><span></span><code><span id="__span-24-1"><a id="__codelineno-24-1" name="__codelineno-24-1" href="#__codelineno-24-1"></a><span class="c1"># From your node, test GHCR connection</span>
+</span><span id="__span-24-2"><a id="__codelineno-24-2" name="__codelineno-24-2" href="#__codelineno-24-2"></a>docker<span class="w"> </span>pull<span class="w"> </span>ghcr.io/ibtisam-iq/debugbox:lite
+</span><span id="__span-24-3"><a id="__codelineno-24-3" name="__codelineno-24-3" href="#__codelineno-24-3"></a>
+</span><span id="__span-24-4"><a id="__codelineno-24-4" name="__codelineno-24-4" href="#__codelineno-24-4"></a><span class="c1"># If slow, could be:</span>
+</span><span id="__span-24-5"><a id="__codelineno-24-5" name="__codelineno-24-5" href="#__codelineno-24-5"></a><span class="c1"># - Firewall/proxy slowing downloads</span>
+</span><span id="__span-24-6"><a id="__codelineno-24-6" name="__codelineno-24-6" href="#__codelineno-24-6"></a><span class="c1"># - Regional GHCR mirror slow</span>
+</span><span id="__span-24-7"><a id="__codelineno-24-7" name="__codelineno-24-7" href="#__codelineno-24-7"></a><span class="c1"># - Network congestion</span>
+</span></code></pre></div></p>
 <hr />
 <h3 id="architecture-mismatch-arm64-nodes">Architecture Mismatch (ARM64 nodes)<a class="headerlink" href="#architecture-mismatch-arm64-nodes" title="Permanent link">&para;</a></h3>
 <p><strong>Symptoms:</strong> <code>exec format error</code>, pod fails to run on ARM nodes</p>
 <p><strong>Status:</strong> NOT AN ISSUE - DebugBox images are multi-arch</p>
 <p><strong>Verification:</strong>
-```bash</p>
-<h1 id="check-your-node-architecture">Check your node architecture<a class="headerlink" href="#check-your-node-architecture" title="Permanent link">&para;</a></h1>
-<p>kubectl get nodes -o jsonpath='{range .items[*]}{.metadata.name}{"\t"}{.status.nodeInfo.architecture}{"\n"}{end}}'</p>
-<h1 id="all-debugbox-variants-support">All DebugBox variants support:<a class="headerlink" href="#all-debugbox-variants-support" title="Permanent link">&para;</a></h1>
-<h1 id="-amd64-intelamd">- amd64 (Intel/AMD)<a class="headerlink" href="#-amd64-intelamd" title="Permanent link">&para;</a></h1>
-<h1 id="-arm64-apple-silicon-aws-graviton-raspberry-pi">- arm64 (Apple Silicon, AWS Graviton, Raspberry Pi)<a class="headerlink" href="#-arm64-apple-silicon-aws-graviton-raspberry-pi" title="Permanent link">&para;</a></h1>
-<h1 id="images-include-both-architectures">Images include both architectures<a class="headerlink" href="#images-include-both-architectures" title="Permanent link">&para;</a></h1>
-<p>docker buildx build --platform linux/amd64,linux/arm64 -t debugbox .
-```</p>
+<div class="highlight"><pre><span></span><code><span id="__span-25-1"><a id="__codelineno-25-1" name="__codelineno-25-1" href="#__codelineno-25-1"></a><span class="c1"># Check your node architecture</span>
+</span><span id="__span-25-2"><a id="__codelineno-25-2" name="__codelineno-25-2" href="#__codelineno-25-2"></a>kubectl<span class="w"> </span>get<span class="w"> </span>nodes<span class="w"> </span>-o<span class="w"> </span><span class="nv">jsonpath</span><span class="o">=</span><span class="s1">&#39;{range .items[*]}{.metadata.name}{&quot;\t&quot;}{.status.nodeInfo.architecture}{&quot;\n&quot;}{end}}&#39;</span>
+</span><span id="__span-25-3"><a id="__codelineno-25-3" name="__codelineno-25-3" href="#__codelineno-25-3"></a>
+</span><span id="__span-25-4"><a id="__codelineno-25-4" name="__codelineno-25-4" href="#__codelineno-25-4"></a><span class="c1"># All DebugBox variants support:</span>
+</span><span id="__span-25-5"><a id="__codelineno-25-5" name="__codelineno-25-5" href="#__codelineno-25-5"></a><span class="c1"># - amd64 (Intel/AMD)</span>
+</span><span id="__span-25-6"><a id="__codelineno-25-6" name="__codelineno-25-6" href="#__codelineno-25-6"></a><span class="c1"># - arm64 (Apple Silicon, AWS Graviton, Raspberry Pi)</span>
+</span><span id="__span-25-7"><a id="__codelineno-25-7" name="__codelineno-25-7" href="#__codelineno-25-7"></a>
+</span><span id="__span-25-8"><a id="__codelineno-25-8" name="__codelineno-25-8" href="#__codelineno-25-8"></a><span class="c1"># Images include both architectures</span>
+</span><span id="__span-25-9"><a id="__codelineno-25-9" name="__codelineno-25-9" href="#__codelineno-25-9"></a>docker<span class="w"> </span>buildx<span class="w"> </span>build<span class="w"> </span>--platform<span class="w"> </span>linux/amd64,linux/arm64<span class="w"> </span>-t<span class="w"> </span>debugbox<span class="w"> </span>.
+</span></code></pre></div></p>
 <p><strong>If you still get exec format error:</strong>
-```bash</p>
-<h1 id="check-if-youre-actually-on-the-right-architecture">Check if you're actually on the right architecture<a class="headerlink" href="#check-if-youre-actually-on-the-right-architecture" title="Permanent link">&para;</a></h1>
-<p>uname -m</p>
-<h1 id="if-mismatch-the-image-might-be-corrupted-try-re-pulling">If mismatch, the image might be corrupted - try re-pulling<a class="headerlink" href="#if-mismatch-the-image-might-be-corrupted-try-re-pulling" title="Permanent link">&para;</a></h1>
-<p>docker rmi ghcr.io/ibtisam-iq/debugbox:lite
-docker pull ghcr.io/ibtisam-iq/debugbox:lite
-```</p>
+<div class="highlight"><pre><span></span><code><span id="__span-26-1"><a id="__codelineno-26-1" name="__codelineno-26-1" href="#__codelineno-26-1"></a><span class="c1"># Check if you&#39;re actually on the right architecture</span>
+</span><span id="__span-26-2"><a id="__codelineno-26-2" name="__codelineno-26-2" href="#__codelineno-26-2"></a>uname<span class="w"> </span>-m
+</span><span id="__span-26-3"><a id="__codelineno-26-3" name="__codelineno-26-3" href="#__codelineno-26-3"></a>
+</span><span id="__span-26-4"><a id="__codelineno-26-4" name="__codelineno-26-4" href="#__codelineno-26-4"></a><span class="c1"># If mismatch, the image might be corrupted - try re-pulling</span>
+</span><span id="__span-26-5"><a id="__codelineno-26-5" name="__codelineno-26-5" href="#__codelineno-26-5"></a>docker<span class="w"> </span>rmi<span class="w"> </span>ghcr.io/ibtisam-iq/debugbox:lite
+</span><span id="__span-26-6"><a id="__codelineno-26-6" name="__codelineno-26-6" href="#__codelineno-26-6"></a>docker<span class="w"> </span>pull<span class="w"> </span>ghcr.io/ibtisam-iq/debugbox:lite
+</span></code></pre></div></p>
 <hr />
-<h3 id="no-such-file-or-directory-on-vimnano-commands">"No such file or directory" on vim/nano commands<a class="headerlink" href="#no-such-file-or-directory-on-vimnano-commands" title="Permanent link">&para;</a></h3>
-<p><strong>Symptoms:</strong> <code>vim: command not found</code> (when you use lite) but you swear you saw it before</p>
-<p><strong>Cause:</strong> Using lite variant. Lite only has <code>vi</code>, not full <code>vim</code></p>
+<h3 id="no-such-file-or-directory-on-vim-command">"No such file or directory" on vim command<a class="headerlink" href="#no-such-file-or-directory-on-vim-command" title="Permanent link">&para;</a></h3>
+<p><strong>Symptoms:</strong> <code>vim: command not found</code> when using lite variant</p>
+<p><strong>Cause:</strong> Lite only has <code>vi</code> (busybox), not full <code>vim</code></p>
 <p><strong>Solution:</strong>
-```bash</p>
-<h1 id="lite-has-minimal-vi">Lite has minimal vi<a class="headerlink" href="#lite-has-minimal-vi" title="Permanent link">&para;</a></h1>
-<p>--image=ghcr.io/ibtisam-iq/debugbox:lite → vi only</p>
-<h1 id="use-balanced-for-full-vim">Use balanced for full vim<a class="headerlink" href="#use-balanced-for-full-vim" title="Permanent link">&para;</a></h1>
-<p>--image=ghcr.io/ibtisam-iq/debugbox → vim available</p>
-<h1 id="use-power-for-nano-too">Use power for nano too<a class="headerlink" href="#use-power-for-nano-too" title="Permanent link">&para;</a></h1>
-<p>--image=ghcr.io/ibtisam-iq/debugbox:power → vim + nano
-```</p>
+<div class="highlight"><pre><span></span><code><span id="__span-27-1"><a id="__codelineno-27-1" name="__codelineno-27-1" href="#__codelineno-27-1"></a><span class="c1"># Lite has minimal vi</span>
+</span><span id="__span-27-2"><a id="__codelineno-27-2" name="__codelineno-27-2" href="#__codelineno-27-2"></a>--image<span class="o">=</span>ghcr.io/ibtisam-iq/debugbox:lite<span class="w"> </span>→<span class="w"> </span>vi<span class="w"> </span>only
+</span><span id="__span-27-3"><a id="__codelineno-27-3" name="__codelineno-27-3" href="#__codelineno-27-3"></a>
+</span><span id="__span-27-4"><a id="__codelineno-27-4" name="__codelineno-27-4" href="#__codelineno-27-4"></a><span class="c1"># Use balanced or power for full vim</span>
+</span><span id="__span-27-5"><a id="__codelineno-27-5" name="__codelineno-27-5" href="#__codelineno-27-5"></a>--image<span class="o">=</span>ghcr.io/ibtisam-iq/debugbox<span class="w"> </span>→<span class="w"> </span>vim<span class="w"> </span>available
+</span></code></pre></div></p>
 <hr />
 <h2 id="frequently-asked-questions">Frequently Asked Questions<a class="headerlink" href="#frequently-asked-questions" title="Permanent link">&para;</a></h2>
-<p><strong>Q: Does DebugBox include kubectl?</strong>
-A: No — intentionally. DebugBox is for low-level debugging inside containers. Use <code>kubectl</code> locally and pipe output to DebugBox if needed.</p>
-<p><strong>Q: Can I run as non-root?</strong>
-A: Yes. Most tools work fine as non-root. Only tools needing raw sockets (tshark) or system access (strace, iptables) require root/capabilities.</p>
-<p><strong>Q: Why no helm, k9s, or kustomize?</strong>
-A: DebugBox focuses on debugging inside containers (network, processes, files). Deployment/management tools are out of scope.</p>
-<p><strong>Q: Does DebugBox work with Kubernetes 1.18?</strong>
-A: Yes for most things. <code>kubectl debug</code> requires 1.23+. Use <code>kubectl run</code> for older clusters.</p>
-<p><strong>Q: Can I use DebugBox outside Kubernetes?</strong>
-A: Absolutely. It's just a Docker container:
-<code>bash
-docker run -it ghcr.io/ibtisam-iq/debugbox
-docker run -it ghcr.io/ibtisam-iq/debugbox:lite
-docker run -it ghcr.io/ibtisam-iq/debugbox:power</code></p>
+<p><strong>Q: Does DebugBox include kubectl?</strong></p>
+<p>A: No, intentionally. DebugBox is for low-level debugging inside containers. Use <code>kubectl</code> locally and pipe output to DebugBox if needed.</p>
+<p><strong>Q: Can I run as non-root?</strong></p>
+<p>A: Yes. Most tools work fine as non-root. Only tools needing raw sockets (tshark) or system access (strace, iptables) require root/capabilities.</p>
+<p><strong>Q: Why no helm, k9s, or kustomize?</strong></p>
+<p>A: DebugBox focuses on debugging inside containers (network, processes, files). Deployment/management tools are out of scope.</p>
+<p><strong>Q: Does DebugBox work with Kubernetes 1.18?</strong></p>
+<p>A: Yes for most things. <code>kubectl debug</code> requires 1.23+. Use <code>kubectl run</code> for older clusters.</p>
+<p><strong>Q: Can I use DebugBox outside Kubernetes?</strong></p>
+<p>A: Absolutely. It's just a Docker container:
+<div class="highlight"><pre><span></span><code><span id="__span-28-1"><a id="__codelineno-28-1" name="__codelineno-28-1" href="#__codelineno-28-1"></a>docker<span class="w"> </span>run<span class="w"> </span>-it<span class="w"> </span>ghcr.io/ibtisam-iq/debugbox
+</span><span id="__span-28-2"><a id="__codelineno-28-2" name="__codelineno-28-2" href="#__codelineno-28-2"></a>docker<span class="w"> </span>run<span class="w"> </span>-it<span class="w"> </span>ghcr.io/ibtisam-iq/debugbox:lite
+</span><span id="__span-28-3"><a id="__codelineno-28-3" name="__codelineno-28-3" href="#__codelineno-28-3"></a>docker<span class="w"> </span>run<span class="w"> </span>-it<span class="w"> </span>ghcr.io/ibtisam-iq/debugbox:power
+</span></code></pre></div></p>
 <p><strong>Q: When should I use each variant?</strong></p>
 <ul>
 <li><strong>Lite:</strong> You only need DNS/HTTP checks (saves bandwidth)</li>
 <li><strong>Balanced:</strong> Default for most debugging (best balance)</li>
 <li><strong>Power:</strong> You need packet analysis, firewall debugging, or Python scripting</li>
 </ul>
-<p><strong>Q: What's included in lite?</strong>
-A: curl, wget, dig, nslookup, host, jq, yq, ash, vi, less</p>
-<p><strong>Q: How do I pin versions in production?</strong>
-A: Always use specific version tags:
-<code>bash
-ghcr.io/ibtisam-iq/debugbox:1.0.0
-ghcr.io/ibtisam-iq/debugbox:lite-1.0.0
-ghcr.io/ibtisam-iq/debugbox:power-1.0.0</code>
+<p><strong>Q: What's included in lite?</strong></p>
+<p>A: curl, dig, nslookup, host, jq, yq, nc, ping, ip, ash, vi</p>
+<p><strong>Q: How do I pin versions in production?</strong></p>
+<p>A: Always use specific version tags:
+<div class="highlight"><pre><span></span><code><span id="__span-29-1"><a id="__codelineno-29-1" name="__codelineno-29-1" href="#__codelineno-29-1"></a>ghcr.io/ibtisam-iq/debugbox:1.0.0
+</span><span id="__span-29-2"><a id="__codelineno-29-2" name="__codelineno-29-2" href="#__codelineno-29-2"></a>ghcr.io/ibtisam-iq/debugbox:lite-1.0.0
+</span><span id="__span-29-3"><a id="__codelineno-29-3" name="__codelineno-29-3" href="#__codelineno-29-3"></a>ghcr.io/ibtisam-iq/debugbox:power-1.0.0
+</span></code></pre></div>
 Never use <code>:latest</code> in production manifests.</p>
-<p><strong>Q: Can I extend DebugBox with my own tools?</strong>
-A: Yes, create a custom image:
-<code>dockerfile
-FROM ghcr.io/ibtisam-iq/debugbox:1.0.0
-RUN apk add --no-cache my-package-name</code></p>
-<p><strong>Q: How often are new versions released?</strong>
-A: As needed. Track releases:
-```bash</p>
-<h1 id="check-latest-version">Check latest version<a class="headerlink" href="#check-latest-version" title="Permanent link">&para;</a></h1>
-<p>curl -s <a href="https://api.github.com/repos/ibtisam-iq/debugbox/releases/latest">https://api.github.com/repos/ibtisam-iq/debugbox/releases/latest</a> | jq '.tag_name'</p>
-<h1 id="or-visit">Or visit<a class="headerlink" href="#or-visit" title="Permanent link">&para;</a></h1>
-<p><a href="https://github.com/ibtisam-iq/debugbox/releases">https://github.com/ibtisam-iq/debugbox/releases</a>
-```</p>
-<p><strong>Q: Does DebugBox work on Docker Desktop?</strong>
-A: Yes. <code>docker run -it ghcr.io/ibtisam-iq/debugbox</code> works on Mac/Windows/Linux.</p>
-<p><strong>Q: What if I need to debug a pod that's not running?</strong>
-A: You can't attach to a crashed pod. Options:
-```bash</p>
-<h1 id="1-check-logs">1. Check logs<a class="headerlink" href="#1-check-logs" title="Permanent link">&para;</a></h1>
-<p>kubectl logs my-pod</p>
-<h1 id="2-create-a-new-pod-with-same-image">2. Create a new pod with same image<a class="headerlink" href="#2-create-a-new-pod-with-same-image" title="Permanent link">&para;</a></h1>
-<p>kubectl run debug-pod --image=my-image --restart=Never -it</p>
-<h1 id="3-use-a-sidecar-pattern-for-permanent-debugging">3. Use a sidecar pattern for permanent debugging<a class="headerlink" href="#3-use-a-sidecar-pattern-for-permanent-debugging" title="Permanent link">&para;</a></h1>
-<p>```</p>
-<p><strong>Q: How do I share debug sessions with colleagues?</strong>
-A: Use <code>socat</code> for port forwarding:
-```bash</p>
-<h1 id="in-debugbox-pod">In debugbox pod<a class="headerlink" href="#in-debugbox-pod" title="Permanent link">&para;</a></h1>
-<p>socat TCP-LISTEN:9000,fork TCP:target-service:8080</p>
-<h1 id="your-colleague">Your colleague<a class="headerlink" href="#your-colleague" title="Permanent link">&para;</a></h1>
-<p>curl localhost:9000
-```</p>
+<p><strong>Q: Can I extend DebugBox with my own tools?</strong></p>
+<p>A: Yes, create a custom image:
+<div class="highlight"><pre><span></span><code><span id="__span-30-1"><a id="__codelineno-30-1" name="__codelineno-30-1" href="#__codelineno-30-1"></a><span class="k">FROM</span><span class="w"> </span><span class="s">ghcr.io/ibtisam-iq/debugbox:1.0.0</span>
+</span><span id="__span-30-2"><a id="__codelineno-30-2" name="__codelineno-30-2" href="#__codelineno-30-2"></a><span class="k">RUN</span><span class="w"> </span>apk<span class="w"> </span>add<span class="w"> </span>--no-cache<span class="w"> </span>my-package-name
+</span></code></pre></div></p>
+<p><strong>Q: How often are new versions released?</strong></p>
+<p>A: As needed. Track releases:
+<div class="highlight"><pre><span></span><code><span id="__span-31-1"><a id="__codelineno-31-1" name="__codelineno-31-1" href="#__codelineno-31-1"></a><span class="c1"># Check latest version</span>
+</span><span id="__span-31-2"><a id="__codelineno-31-2" name="__codelineno-31-2" href="#__codelineno-31-2"></a>curl<span class="w"> </span>-s<span class="w"> </span>https://api.github.com/repos/ibtisam-iq/debugbox/releases/latest<span class="w"> </span><span class="p">|</span><span class="w"> </span>jq<span class="w"> </span><span class="s1">&#39;.tag_name&#39;</span>
+</span><span id="__span-31-3"><a id="__codelineno-31-3" name="__codelineno-31-3" href="#__codelineno-31-3"></a>
+</span><span id="__span-31-4"><a id="__codelineno-31-4" name="__codelineno-31-4" href="#__codelineno-31-4"></a><span class="c1"># Or visit</span>
+</span><span id="__span-31-5"><a id="__codelineno-31-5" name="__codelineno-31-5" href="#__codelineno-31-5"></a>https://github.com/ibtisam-iq/debugbox/releases
+</span></code></pre></div></p>
+<p><strong>Q: Does DebugBox work on Docker Desktop?</strong></p>
+<p>A: Yes. <code>docker run -it ghcr.io/ibtisam-iq/debugbox</code> works on Mac/Windows/Linux.</p>
+<p><strong>Q: What if I need to debug a pod that's not running?</strong></p>
+<p>A: You can't attach to a crashed pod. Options:
+<div class="highlight"><pre><span></span><code><span id="__span-32-1"><a id="__codelineno-32-1" name="__codelineno-32-1" href="#__codelineno-32-1"></a><span class="c1"># 1. Check logs</span>
+</span><span id="__span-32-2"><a id="__codelineno-32-2" name="__codelineno-32-2" href="#__codelineno-32-2"></a>kubectl<span class="w"> </span>logs<span class="w"> </span>my-pod
+</span><span id="__span-32-3"><a id="__codelineno-32-3" name="__codelineno-32-3" href="#__codelineno-32-3"></a>
+</span><span id="__span-32-4"><a id="__codelineno-32-4" name="__codelineno-32-4" href="#__codelineno-32-4"></a><span class="c1"># 2. Create a new pod with same image</span>
+</span><span id="__span-32-5"><a id="__codelineno-32-5" name="__codelineno-32-5" href="#__codelineno-32-5"></a>kubectl<span class="w"> </span>run<span class="w"> </span>debug-pod<span class="w"> </span>--image<span class="o">=</span>my-image<span class="w"> </span>--restart<span class="o">=</span>Never<span class="w"> </span>-it
+</span><span id="__span-32-6"><a id="__codelineno-32-6" name="__codelineno-32-6" href="#__codelineno-32-6"></a>
+</span><span id="__span-32-7"><a id="__codelineno-32-7" name="__codelineno-32-7" href="#__codelineno-32-7"></a><span class="c1"># 3. Use a sidecar pattern for permanent debugging</span>
+</span></code></pre></div></p>
+<p><strong>Q: How do I share debug sessions with colleagues?</strong></p>
+<p>A: Use <code>socat</code> for port forwarding:
+<div class="highlight"><pre><span></span><code><span id="__span-33-1"><a id="__codelineno-33-1" name="__codelineno-33-1" href="#__codelineno-33-1"></a><span class="c1"># In debugbox pod</span>
+</span><span id="__span-33-2"><a id="__codelineno-33-2" name="__codelineno-33-2" href="#__codelineno-33-2"></a>socat<span class="w"> </span>TCP-LISTEN:9000,fork<span class="w"> </span>TCP:target-service:8080
+</span><span id="__span-33-3"><a id="__codelineno-33-3" name="__codelineno-33-3" href="#__codelineno-33-3"></a>
+</span><span id="__span-33-4"><a id="__codelineno-33-4" name="__codelineno-33-4" href="#__codelineno-33-4"></a><span class="c1"># Your colleague</span>
+</span><span id="__span-33-5"><a id="__codelineno-33-5" name="__codelineno-33-5" href="#__codelineno-33-5"></a>curl<span class="w"> </span>localhost:9000
+</span></code></pre></div></p>
 <hr />
 <h2 id="still-stuck">Still Stuck?<a class="headerlink" href="#still-stuck" title="Permanent link">&para;</a></h2>
 <p><strong>1. Check the Examples</strong> → <a href="../examples/">Examples</a> has 40+ real scenarios</p>
 <p><strong>2. Check your cluster</strong> → Is CoreDNS running? Node ready?
-<code>bash
-kubectl get nodes
-kubectl get pods -n kube-system | grep coredns</code></p>
+<div class="highlight"><pre><span></span><code><span id="__span-34-1"><a id="__codelineno-34-1" name="__codelineno-34-1" href="#__codelineno-34-1"></a>kubectl<span class="w"> </span>get<span class="w"> </span>nodes
+</span><span id="__span-34-2"><a id="__codelineno-34-2" name="__codelineno-34-2" href="#__codelineno-34-2"></a>kubectl<span class="w"> </span>get<span class="w"> </span>pods<span class="w"> </span>-n<span class="w"> </span>kube-system<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>coredns
+</span></code></pre></div></p>
 <p><strong>3. Verify image access</strong> → Can you pull locally?
-<code>bash
-docker pull ghcr.io/ibtisam-iq/debugbox:lite</code></p>
+<div class="highlight"><pre><span></span><code><span id="__span-35-1"><a id="__codelineno-35-1" name="__codelineno-35-1" href="#__codelineno-35-1"></a>docker<span class="w"> </span>pull<span class="w"> </span>ghcr.io/ibtisam-iq/debugbox:lite
+</span></code></pre></div></p>
 <p><strong>4. Open GitHub issue</strong> with:</p>
 <ul>
 <li>DebugBox variant/version used: <code>ghcr.io/ibtisam-iq/debugbox:power-1.0.0</code></li>
@@ -1775,7 +2087,7 @@ docker pull ghcr.io/ibtisam-iq/debugbox:lite</code></p>
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-custom" title="July 6, 2026 02:39:57 PKT">July 06, 2026 02:39:57 AM</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-custom" title="July 7, 2026 19:32:11 PKT">July 07, 2026 07:32:11 PM</span>
   </span>
 
     
@@ -1791,6 +2103,7 @@ docker pull ghcr.io/ibtisam-iq/debugbox:lite</code></p>
 
 
                 
+
               </article>
             </div>
           
@@ -1800,8 +2113,15 @@ docker pull ghcr.io/ibtisam-iq/debugbox:lite</code></p>
 <script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
         </div>
         
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
       </main>
       
+  
         <footer class="md-footer">
   
     
@@ -1897,16 +2217,30 @@ docker pull ghcr.io/ibtisam-iq/debugbox:lite</code></p>
   </div>
 </footer>
       
+  <script>
+    (function() {
+      var el = document.querySelector(".md-copyright");
+      if (el) {
+        var startYear = 2026;
+        var y = new Date().getFullYear();
+        var range = y > startYear ? startYear + "–" + y : String(startYear);
+        el.innerHTML = "Copyright © " + range + " DebugBox";
+      }
+    })();
+  </script>
+
     </div>
     <div class="md-dialog" data-md-component="dialog">
       <div class="md-dialog__inner md-typeset"></div>
     </div>
     
+      <div class="md-progress" data-md-component="progress" role="progressbar"></div>
+    
     
     
       
       
-      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.tabs", "navigation.tabs.sticky", "navigation.sections", "navigation.footer", "content.action.edit", "content.tabs.link", "content.code.annotate", "content.code.copy", "toc.integrate"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"provider": "mike"}}</script>
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.tabs", "navigation.tabs.sticky", "navigation.sections", "navigation.footer", "navigation.instant", "navigation.instant.progress", "navigation.top", "navigation.tracking", "content.action.edit", "content.tabs.link", "content.code.annotate", "content.code.copy", "content.code.select", "search.suggest", "search.highlight", "search.share", "header.autohide", "announce.dismiss"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"provider": "mike"}}</script>
     
     
       <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
