@@ -1,9 +1,20 @@
 {% extends "base.html" %}
 
 {% block announce %}
-  <a href="https://github.com/ibtisam-iq/debugbox/releases/tag/v1.0.0">
-    DebugBox v1.0.0 is out -- see the release notes
+  <a id="announce-link" href="https://github.com/ibtisam-iq/debugbox/releases/latest">
+    DebugBox -- see the latest release notes
   </a>
+  <script>
+    fetch("https://api.github.com/repos/ibtisam-iq/debugbox/releases/latest")
+      .then(function(r) { return r.json(); })
+      .then(function(d) {
+        if (d.tag_name) {
+          var el = document.getElementById("announce-link");
+          el.href = d.html_url;
+          el.textContent = "DebugBox " + d.tag_name + " is out -- see the release notes";
+        }
+      });
+  </script>
 {% endblock %}
 
 {% block hero %}
