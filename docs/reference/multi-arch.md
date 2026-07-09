@@ -33,57 +33,10 @@ docker run --platform linux/arm64 ghcr.io/ibtisam-iq/debugbox:1.0.0
 
 ## Verify Inside Container
 
-Check which architecture you're running:
-
 ```bash
-# Command 1: Check CPU arch
 uname -m
-# Output: x86_64 → amd64
-# Output: aarch64 → arm64
-
-# Command 2: Check full uname info
-uname -a
-
-# Command 3: View CPU info
-cat /proc/cpuinfo | grep processor
+# x86_64 → amd64
+# aarch64 → arm64
 ```
 
-## Real-World Examples
-
-### Apple Silicon (M1–M5)
-```bash
-docker run -it ghcr.io/ibtisam-iq/debugbox:1.0.0
-# Automatically pulls linux/arm64
-```
-
-### AWS Graviton EC2 Instance
-```bash
-kubectl debug my-pod -it --image=ghcr.io/ibtisam-iq/debugbox:1.0.0
-# Automatically pulls linux/arm64
-```
-
-### Traditional Intel/AMD Server
-```bash
-docker pull ghcr.io/ibtisam-iq/debugbox:1.0.0
-# Automatically pulls linux/amd64
-```
-
-### Raspberry Pi 64-bit
-```bash
-docker run -it ghcr.io/ibtisam-iq/debugbox:lite-1.0.0
-# Automatically pulls linux/arm64 (minimal ~15 MB pull)
-```
-
-## Multi-Architecture Build Process
-
-Every DebugBox release builds all three variants for both architectures:
-
-| Variant | amd64 | arm64 |
-|---------|-------|-------|
-| lite | ✓ | ✓ |
-| balanced | ✓ | ✓ |
-| power | ✓ | ✓ |
-
-This ensures feature parity and performance across all platforms.
-
-→ **[Variants Overview](../variants/overview.md)** | **[Tooling Manifest](manifest.md)** →
+→ **[Variants Overview](../variants/overview.md)** | **[Tooling Manifest](manifest.md)**

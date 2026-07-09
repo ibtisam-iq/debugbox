@@ -173,7 +173,6 @@ nav:
   - Overview: index.md
   - Getting Started:
     - Quick Start: getting-started/quick-start.md
-    - Installation: getting-started/installation.md
     - Motivation: getting-started/motivation.md
   - Variants:
     - Overview: variants/overview.md

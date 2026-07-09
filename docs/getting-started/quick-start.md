@@ -51,6 +51,15 @@ tcpdump -i eth0 port 443 -c 5
 vim /tmp/debug.log
 ```
 
-## Next Steps
+## Registries
 
-→ **[Installation](installation.md)** | **[Variants Overview](../variants/overview.md)** | **[Real-world Examples](../guides/examples.md)**
+DebugBox is published to two registries. No authentication required.
+
+| Registry | Pull prefix |
+|----------|-------------|
+| **GHCR (recommended)** | `ghcr.io/ibtisam-iq/debugbox` |
+| **Docker Hub** | `docker.io/mibtisam/debugbox` |
+
+For production, pin versions: `ghcr.io/ibtisam-iq/debugbox:1.0.0`
+
+→ **[Complete tag reference](../reference/tags.md)** | **[Variants Overview](../variants/overview.md)** | **[Real-world Examples](../guides/examples.md)**

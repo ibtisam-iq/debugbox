@@ -5,8 +5,8 @@ DebugBox provides **three purpose-built variants** optimized for different use c
 | Variant | Size | Use When | Image |
 |---------|------|----------|-------|
 | **lite** | ~15 MB | Quick network/DNS checks | `ghcr.io/ibtisam-iq/debugbox:lite` |
-| **balanced** (default) | ~51 MB | Daily Kubernetes troubleshooting | `ghcr.io/ibtisam-iq/debugbox` |
-| **power** | ~112 MB | Deep forensics, packet capture | `ghcr.io/ibtisam-iq/debugbox:power` |
+| **balanced** (default) | ~47 MB | Daily Kubernetes troubleshooting | `ghcr.io/ibtisam-iq/debugbox` |
+| **power** | ~91 MB | Deep forensics, packet capture | `ghcr.io/ibtisam-iq/debugbox:power` |
 
 ## Choosing Your Variant
 
@@ -17,34 +17,16 @@ DebugBox provides **three purpose-built variants** optimized for different use c
 ## Detailed Pages
 
 - **[Lite](lite.md)** -- Minimal (~15 MB)
-- **[Balanced](balanced.md)** -- Recommended (~51 MB)
-- **[Power](power.md)** -- Comprehensive (~112 MB)
-
-## Pulling Latest vs. Specific Version
-
-**Latest (for development):**
-```bash
-docker pull ghcr.io/ibtisam-iq/debugbox:lite        # Latest lite
-docker pull ghcr.io/ibtisam-iq/debugbox             # Latest balanced
-docker pull ghcr.io/ibtisam-iq/debugbox:power       # Latest power
-```
-
-**Specific version (for production):**
-```bash
-docker pull ghcr.io/ibtisam-iq/debugbox:lite-1.0.0
-docker pull ghcr.io/ibtisam-iq/debugbox:1.0.0
-docker pull ghcr.io/ibtisam-iq/debugbox:power-1.0.0
-```
-
-→ **[Complete tag reference](../reference/tags.md)**
+- **[Balanced](balanced.md)** -- Recommended (~47 MB)
+- **[Power](power.md)** -- Comprehensive (~91 MB)
 
 ## Inheritance Model
 
-All variants build on each other:
+Each higher variant includes all tools from the lower variants:
 
 - **Lite** -- Base networking tools
-- **Balanced** -- Lite + TLS + system inspection + Kubernetes helpers
-- **Power** -- Balanced + deep packet analysis + port scanning + routing
+- **Balanced** -- Everything in lite + TLS + system inspection + Kubernetes helpers
+- **Power** -- Everything in balanced + deep packet analysis + port scanning + routing
 
 Every tool in lite is also in balanced and power.
 

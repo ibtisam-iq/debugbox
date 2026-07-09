@@ -39,6 +39,7 @@ if [ "$LIB_LOADED" != "true" ]; then
     info()   { echo "[INFO] $*"; }
     ok()     { echo "[ OK ] $*"; }
     error()  { echo "[ERROR] $*"; exit 1; }
+    blank()  { echo ""; }
 fi
 
 # ------------------------------------------------------------

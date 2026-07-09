@@ -11,7 +11,7 @@ How DebugBox reduces bandwidth costs and speeds up debugging
 | Container | Per Pull | 50 Pulls/week | Monthly |
 |-----------|----------|---------------|---------|
 | netshoot v0.15 | ~202 MB | ~10.1 GB | ~40 GB |
-| DebugBox balanced | ~51 MB | ~2.6 GB | ~10.2 GB |
+| DebugBox balanced | ~47 MB | ~2.4 GB | ~9.4 GB |
 | DebugBox lite | ~15 MB | ~0.75 GB | ~3 GB |
 | **Savings (lite vs netshoot)** | **~187 MB** | **~9.4 GB** | **~37 GB** |
 
@@ -83,29 +83,21 @@ Real-world speeds vary by network conditions, latency, and registry response tim
 
 **Current (netshoot):**
 
-- 100 tests × 201 MB = ~20 GB/day
+- 100 tests × 202 MB = ~20 GB/day
 - 20 GB × 30 days = **~600 GB/month**
 
 **With DebugBox:**
 
 - Baseline (lite): 100 x 15 MB = 1.5 GB/day = **~45 GB/month**
-- Advanced (balanced): 10 x 51 MB = 0.51 GB/day = **~15 GB/month**
-- **Total: ~56 GB/month**
-- **Savings: ~544 GB/month (91% reduction)**
+- Advanced (balanced): 10 x 47 MB = 0.47 GB/day = **~14 GB/month**
+- **Total: ~59 GB/month**
+- **Savings: ~541 GB/month (90% reduction)**
 
 See [Cost Analysis](#cost-analysis) for financial impact.
 
 ---
 
-## Bandwidth by Use Case
-
-| Use Case | Best Variant | Size | Reasoning |
-|----------|--------------|------|-----------|
-| DNS/API checks | Lite | ~15 MB | Minimal: curl, dig, netcat |
-| Daily K8s troubleshooting | Balanced | ~51 MB | Full: tcpdump, openssl, strace, vim |
-| SRE forensics | Power | ~112 MB | Complete: tshark, nmap, iptables |
-
-**Key insight:** Pick the smallest variant that solves your problem.
+→ **[Which variant to use?](../variants/overview.md)**
 
 ---
 
@@ -115,9 +107,9 @@ See [Cost Analysis](#cost-analysis) for financial impact.
 
 | Speed | Netshoot | Lite | Balanced | Power |
 |-------|----------|------|----------|-------|
-| 100 Mbps | ~20–30s | ~1.5–2.5s | ~4–7s | ~8–15s |
-| 50 Mbps | ~40–60s | ~3–6s | ~8–14s | ~16–30s |
-| 10 Mbps | ~200–300s | ~15–30s | ~40–80s | ~100–180s |
+| 100 Mbps | ~20–30s | ~1.5–2.5s | ~4–6s | ~7–12s |
+| 50 Mbps | ~40–60s | ~3–6s | ~7–13s | ~13–24s |
+| 10 Mbps | ~200–300s | ~15–30s | ~37–74s | ~81–146s |
 
 **Note:** Real-world times include TLS, registry latency, decompression, and layer verification. Actual performance depends on network conditions and registry responsiveness.
 
@@ -125,7 +117,7 @@ See [Cost Analysis](#cost-analysis) for financial impact.
 
 - Traditional pod + netshoot: ~5–10s (pod) + ~20–30s (pull) = **~25–40s**
 - DebugBox lite: ~1–2s (pod) + ~1.5–2.5s (pull) = **~2.5–4.5s**
-- DebugBox balanced: ~3–5s (pod) + ~4–7s (pull) = **~7–12s**
+- DebugBox balanced: ~3–5s (pod) + ~4–6s (pull) = **~7–11s**
 
 ---
 
@@ -143,21 +135,7 @@ Rate: $0.045/GB ($32/TB)
 | DebugBox | ~2.3 GB | $0.10 | $1.20 |
 | **Savings** | **$0.35** | **$18.20** | **$218** |
 
-### **Metered Mobile Data** (High-Cost Scenario)
-
-Rate: $7.50/GB (typical high-cost carrier)
-
-**Scenario: 50 pulls/week**
-
-| Container | Per week | Monthly | Annual |
-|-----------|----------|---------|--------|
-| netshoot | ~$75 | ~$323 | ~$3,876 |
-| DebugBox | ~$17 | ~$74 | ~$889 |
-| **Savings** | **$58** | **$249** | **$2,987** |
-
-**Scale to 10 engineers:** ~$29,870/year saved (high-cost metered scenarios only)
-
-**Note:** Costs vary significantly by carrier, region, and data plan. Average commercial rates are typically $1–3/GB.
+On metered networks, savings scale with team size and pull frequency. Actual costs depend on carrier, region, and data plan.
 
 ---
 
@@ -192,10 +170,10 @@ spec:
 
 | Bandwidth | Lite | Balanced | Power | Strategy |
 |-----------|------|----------|-------|----------|
-| **> 100 Mbps** | ✅ | ✅ | ✅ | Any variant works; balanced is daily driver |
-| **10–100 Mbps** | ✅✅ | ✅ | — | Default to lite; use balanced on-demand |
-| **< 10 Mbps** | ✅✅✅ | — | — | Always lite; pre-pull during off-peak |
-| **Metered** | ✅✅✅ | — | — | Lite only; cache locally when possible |
+| **> 100 Mbps** | Yes | Yes | Yes | Any variant works; balanced is daily driver |
+| **10–100 Mbps** | Best | Yes | — | Default to lite; use balanced on-demand |
+| **< 10 Mbps** | Best | — | — | Always lite; pre-pull during off-peak |
+| **Metered** | Best | — | — | Lite only; cache locally when possible |
 
 ---
 

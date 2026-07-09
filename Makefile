@@ -95,12 +95,12 @@ lint:
 	@echo "==> Linting Dockerfiles"
 	@if command -v $(HADOLINT) >/dev/null 2>&1; then \
 		echo "Using local hadolint"; \
-		for f in $(VARIANTS); do \
+		for f in base $(VARIANTS); do \
 			$(HADOLINT) $(DOCKERFILES_DIR)/Dockerfile.$$f || exit 1; \
 		done; \
 	else \
 		echo "Using containerized hadolint"; \
-		for f in $(VARIANTS); do \
+		for f in base $(VARIANTS); do \
 			docker run --rm -i \
 				-v $(PWD):/work \
 				-w /work \

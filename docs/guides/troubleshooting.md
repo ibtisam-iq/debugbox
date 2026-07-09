@@ -76,8 +76,8 @@ kubectl describe pod debug-pod
 | Variant | Size | Includes |
 |---------|------|----------|
 | **lite** | ~15 MB | curl, dig, nslookup, jq, yq, nc, ping, ash, vi |
-| **balanced** | ~51 MB | lite + bash, git, vim, openssl, tcpdump, strace, lsof, htop, socat, mtr, kubectx/ns |
-| **power** | ~112 MB | balanced + tshark, ngrep, ltrace, nmap, nping, iperf3, iptables, nftables, conntrack |
+| **balanced** | ~47 MB | lite + bash, git, vim, openssl, tcpdump, strace, lsof, htop, socat, mtr, kubectx/ns |
+| **power** | ~91 MB | balanced + tshark, ngrep, ltrace, nmap, nping, iperf3, iptables, nftables, conntrack |
 
 **Quick fix:**
 ```bash
@@ -152,19 +152,19 @@ docker run --rm -it --cap-add=NET_RAW --cap-add=NET_ADMIN ghcr.io/ibtisam-iq/deb
 
 **Cause 1: Missing `-it` flags**
 ```bash
-# ❌ Wrong - pod exits immediately
+# Wrong - pod exits immediately
 kubectl run debug --image=ghcr.io/ibtisam-iq/debugbox --restart=Never
 
-# ✅ Correct - keeps container running
+# Correct - keeps container running
 kubectl run debug -it --image=ghcr.io/ibtisam-iq/debugbox --restart=Never
 ```
 
 **Cause 2: Wrong command**
 ```bash
-# ❌ Pod exits when `sleep 5` finishes
+# Wrong - pod exits when `sleep 5` finishes
 kubectl run debug -it --image=ghcr.io/ibtisam-iq/debugbox --command -- sleep 5
 
-# ✅ Keep running
+# Correct - keep running
 kubectl run debug -it --image=ghcr.io/ibtisam-iq/debugbox --restart=Never
 ```
 
@@ -372,35 +372,6 @@ A: DebugBox focuses on debugging inside containers (network, processes, files). 
 
 A: Yes for most things. `kubectl debug` requires 1.23+. Use `kubectl run` for older clusters.
 
-**Q: Can I use DebugBox outside Kubernetes?**
-
-A: Absolutely. It's just a Docker container:
-```bash
-docker run -it ghcr.io/ibtisam-iq/debugbox
-docker run -it ghcr.io/ibtisam-iq/debugbox:lite
-docker run -it ghcr.io/ibtisam-iq/debugbox:power
-```
-
-**Q: When should I use each variant?**
-
-- **Lite:** You only need DNS/HTTP checks (saves bandwidth)
-- **Balanced:** Default for most debugging (best balance)
-- **Power:** You need packet analysis, firewall debugging, or Python scripting
-
-**Q: What's included in lite?**
-
-A: curl, dig, nslookup, host, jq, yq, nc, ping, ip, ash, vi
-
-**Q: How do I pin versions in production?**
-
-A: Always use specific version tags:
-```bash
-ghcr.io/ibtisam-iq/debugbox:1.0.0
-ghcr.io/ibtisam-iq/debugbox:lite-1.0.0
-ghcr.io/ibtisam-iq/debugbox:power-1.0.0
-```
-Never use `:latest` in production manifests.
-
 **Q: Can I extend DebugBox with my own tools?**
 
 A: Yes, create a custom image:
@@ -420,10 +391,6 @@ curl -s https://api.github.com/repos/ibtisam-iq/debugbox/releases/latest | jq '.
 https://github.com/ibtisam-iq/debugbox/releases
 ```
 
-**Q: Does DebugBox work on Docker Desktop?**
-
-A: Yes. `docker run -it ghcr.io/ibtisam-iq/debugbox` works on Mac/Windows/Linux.
-
 **Q: What if I need to debug a pod that's not running?**
 
 A: You can't attach to a crashed pod. Options:
@@ -437,16 +404,7 @@ kubectl run debug-pod --image=my-image --restart=Never -it
 # 3. Use a sidecar pattern for permanent debugging
 ```
 
-**Q: How do I share debug sessions with colleagues?**
-
-A: Use `socat` for port forwarding:
-```bash
-# In debugbox pod
-socat TCP-LISTEN:9000,fork TCP:target-service:8080
-
-# Your colleague
-curl localhost:9000
-```
+For variant selection, tool lists, and tag formats, see **[Variants Overview](../variants/overview.md)**, **[Tooling Manifest](../reference/manifest.md)**, and **[Image Tags](../reference/tags.md)**.
 
 ---
 

@@ -19,7 +19,7 @@ docker run -it --rm ghcr.io/ibtisam-iq/debugbox:lite-1.0.0
 
 ## Power Variant with Capabilities
 
-**⚠️ For advanced networking tools** (`tshark`, `conntrack`, `nft`, `iptables`), add Linux capabilities:
+**Note:** For advanced networking tools (`tshark`, `conntrack`, `nft`, `iptables`), add Linux capabilities:
 
 ```bash
 docker run --rm -it \
@@ -104,13 +104,4 @@ docker compose exec debugbox bash
 docker compose exec debugbox-power bash
 ```
 
-## Variant Selection Guide
-
-| Task | Variant | Command |
-|------|---------|------------|
-| Quick connectivity test | lite | `docker run -it --rm ghcr.io/ibtisam-iq/debugbox:lite` |
-| General debugging | balanced | `docker run -it --rm ghcr.io/ibtisam-iq/debugbox` |
-| Packet capture | power + caps | `docker run -it --rm --cap-add=NET_ADMIN ghcr.io/ibtisam-iq/debugbox:power` |
-| Firewall/routing | power + caps | `docker run -it --rm --cap-add=NET_ADMIN ghcr.io/ibtisam-iq/debugbox:power` |
-
-→ **[Kubernetes Usage](kubernetes.md)** | **[Real-world Examples](../guides/examples.md)** | **[Troubleshooting](../guides/troubleshooting.md)**
+→ **[Which variant to use?](../variants/overview.md)** | **[Kubernetes Usage](kubernetes.md)** | **[Real-world Examples](../guides/examples.md)** | **[Troubleshooting](../guides/troubleshooting.md)**

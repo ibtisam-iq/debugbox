@@ -8,9 +8,9 @@ All variants run as **root** by design (required for debugging privileges).
 
 ## Variant Inheritance
 
-- **lite** -- builds on base
-- **balanced** -- builds on lite
-- **power** -- builds on balanced
+- **lite** -- includes base
+- **balanced** -- includes everything in lite
+- **power** -- includes everything in balanced
 
 Tools marked with a check are included in that variant and all higher tiers.
 

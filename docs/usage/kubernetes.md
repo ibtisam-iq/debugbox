@@ -58,7 +58,7 @@ kubectl exec -it debug-power -- bash
 
 ## Power Variant with Capabilities
 
-**⚠️ For advanced networking tools** (`tshark`, `conntrack`, `nft`, `iptables`), use a manifest with capabilities:
+**Note:** For advanced networking tools (`tshark`, `conntrack`, `nft`, `iptables`), use a manifest with capabilities:
 
 ### Apply Pre-Made Manifest (Recommended)
 ```bash
@@ -78,7 +78,7 @@ spec:
   containers:
   - name: debugbox
     image: ghcr.io/ibtisam-iq/debugbox:power
-    command: ["/bin/bash"]
+    command: ["/bin/bash", "-l"]
     securityContext:
       capabilities:
         add:
@@ -165,15 +165,7 @@ kubectl exec -it app-with-debug -c debugbox -- bash
 kubectl exec -it app-with-debug-power -c debugbox -- bash
 ```
 
-## Variant Recommendations
-
-| Task | Variant | Command |
-|------|---------|------------|
-| Quick DNS/connectivity | lite | `kubectl debug my-pod -it --image=ghcr.io/ibtisam-iq/debugbox:lite` |
-| Pod debugging (default) | balanced | `kubectl debug my-pod -it --image=ghcr.io/ibtisam-iq/debugbox` |
-| Packet capture with tcpdump | balanced + manifest | `kubectl apply -f balanced-debug-pod.yaml` (grants `NET_RAW`) |
-| Deep packet analysis | power + manifest | `kubectl apply -f power-debug-pod.yaml` |
-| Routing/firewall | power + manifest | `kubectl apply -f power-debug-pod.yaml` |
+→ **[Which variant to use?](../variants/overview.md)**
 
 ## Production Best Practices
 

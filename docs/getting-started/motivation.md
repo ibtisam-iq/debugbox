@@ -24,8 +24,8 @@ Distroless, scratch, and minimal Alpine images are good for production, but they
 | Variant | Size | When to Use |
 |---------|------|-------------|
 | **lite** | ~15 MB | Quick network/DNS checks |
-| **balanced** | ~51 MB | Daily Kubernetes troubleshooting (default) |
-| **power** | ~112 MB | Deep forensics, packet capture |
+| **balanced** | ~47 MB | Daily Kubernetes troubleshooting (default) |
+| **power** | ~91 MB | Deep forensics, packet capture |
 
 Up to ~13x smaller than netshoot for basic tasks.
 
@@ -47,22 +47,6 @@ Up to ~13x smaller than netshoot for basic tasks.
 - **Transparency**: every tool documented in the [manifest](../reference/manifest.md)
 - **Debug-first**: runs as root for full debugging access (ephemeral use only)
 
-## Real-World Impact
-
-### Bandwidth Savings
-
-**Scenario: 50 pulls per week across your cluster**
-
-| Container | Per Pull | 50 Pulls | Monthly |
-|-----------|----------|----------|---------|
-| netshoot | ~202 MB | ~10.1 GB | ~40 GB |
-| DebugBox lite | ~15 MB | ~750 MB | ~3 GB |
-| **Savings** | **~187 MB** | **~9.4 GB** | **~37 GB** |
-
-### Speed Example
-```
-netshoot @ 100 Mbps:      ~20-30s (~202 MB)
-DebugBox lite @ 100 Mbps: ~1.5-2.5s (~15 MB)
-```
+For detailed bandwidth analysis with real-world scenarios and cost projections, see **[Bandwidth Savings](../guides/bandwidth-savings.md)**.
 
 → Start with [Quick Start](quick-start.md) or [explore variants](../variants/overview.md)

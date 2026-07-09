@@ -13,7 +13,7 @@ If you spot a bug:
 We triage issues regularly.
 
 ### First-Time Contributor?
-Welcome! 👋 Documentation fixes and small improvements are great starting points. We're happy to help you through your first PR.
+Welcome! Documentation fixes and small improvements are great starting points. We're happy to help you through your first PR.
 
 ---
 
@@ -64,6 +64,7 @@ Be responsive to feedback. We aim for constructive, respectful reviews.
 
 ## Adding New Tools
 Please justify in your PR or issue:
+
 1. What debugging gap does it fill?
 2. Which variant(s)?
 3. Approximate size impact?
@@ -85,13 +86,14 @@ RUN apk add --no-cache curl netcat-openbsd bind-tools \
 
 ### Shell Scripts
 - Shebang: `/bin/sh` (unless bash needed)
-- `set -euo pipefail`
+- `set -eux`
 - Comment non-obvious logic
 
 ---
 
 ## Scope and Focus
 DebugBox prioritizes **small, secure, ephemeral debugging images**. We generally avoid:
+
 - Deployment/GitOps tools
 - Heavy editors or full language runtimes
 - Build/compilation tools

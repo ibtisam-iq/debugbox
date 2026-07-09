@@ -63,7 +63,7 @@ echo "GET / HTTP/1.0\r\n" | nc example.com 80
 
 ## Network Interface & IP Configuration
 
-**Tools:** `ip` (iproute2), `ifconfig` (legacy alternative)
+**Tools:** `ip` (iproute2)
 
 ```bash
 kubectl debug my-app -it \
@@ -88,7 +88,7 @@ ip -s link show eth0
 
 ## Socket & Connection Analysis
 
-**Tools:** `ss`, `netstat`, `lsof`
+**Tools:** `ss`, `lsof`
 
 ```bash
 kubectl debug my-app -it \
@@ -98,9 +98,6 @@ kubectl debug my-app -it \
 ss -tunap                 # All TCP/UDP connections with processes
 ss -tulnp                 # Listening sockets only
 ss -t state established   # Established TCP connections
-
-# Legacy netstat (from procps)
-netstat -tulnp            # Listening ports
 
 # What's using a specific port?
 lsof -i :8080
@@ -580,60 +577,10 @@ kubectl get cm my-config -o json | kubectl run jq-tool --rm -i \
 # Decode and inspect secret certificate
 kubectl get secret my-tls -o jsonpath='{.data.tls\.crt}' | base64 -d | \
   kubectl run cert-tool --rm -i \
-  --image=ghcr.io/ibtisam-iq/debugbox:power \
+  --image=ghcr.io/ibtisam-iq/debugbox:balanced \
   --restart=Never -- openssl x509 -text -noout
 ```
 
 ---
 
-## Complete Tool Coverage Summary
-
-### Variant: **Lite** (~15 MB)
-- DNS: dig, nslookup, host
-- HTTP: curl
-- Connectivity: ping, nc
-- Data: jq, yq
-- Basic IP: ip, ss
-
-### Variant: **Balanced** (~51 MB) -- Default
-
-- **All Lite tools, plus:**
-
-- TLS/SSL: openssl
-- Advanced networking: socat, mtr
-- Packet capture: tcpdump
-- Process tools: htop, ps, top, pstree, killall, fuser
-- Tracing: strace, lsof
-- Files: file, tar, gzip, vim
-- Version control: git
-- Kubernetes: kubectx, kubens
-
-### Variant: **Power** (~112 MB) -- Full Forensics
-
-- **All Balanced tools, plus:**
-
-- Deep packet analysis: tshark, ngrep
-- Network scanning: nmap, nping, NSE scripts
-- Network performance: iperf3, ethtool, iftop
-- Advanced routing: tcptraceroute, fping
-- Library tracing: ltrace
-- Firewall: iptables, nftables (need NET_ADMIN)
-- Connection tracking: conntrack (need NET_ADMIN)
-
----
-
-## Capability Requirements Reference
-
-| Tool | Capability | Docker | Kubernetes |
-|------|-----------|--------|------------|
-| **Most tools** | None | Standard run | kubectl run/debug |
-| **tcpdump** | NET_RAW | `--cap-add=NET_RAW` | [Use manifest](https://raw.githubusercontent.com/ibtisam-iq/debugbox/main/examples/balanced-debug-pod.yaml) |
-| **tshark** | NET_ADMIN | `--cap-add=NET_ADMIN` | [Use manifest](https://raw.githubusercontent.com/ibtisam-iq/debugbox/main/examples/power-debug-pod.yaml) |
-| **ngrep** | NET_ADMIN | `--cap-add=NET_ADMIN` | Use manifest |
-| **iptables** | NET_ADMIN | `--cap-add=NET_ADMIN` | Use manifest |
-| **nftables** | NET_ADMIN | `--cap-add=NET_ADMIN` | Use manifest |
-| **conntrack** | NET_ADMIN | `--cap-add=NET_ADMIN` | Use manifest |
-
----
-
-→ **[Kubernetes Usage](../usage/kubernetes.md)** | **[Docker Usage](../usage/docker.md)** | **[Troubleshooting](troubleshooting.md)** | **[Variants Overview](../variants/overview.md)**
+→ **[Complete tool list per variant](../reference/manifest.md)** | **[Capability requirements](troubleshooting.md#permission-denied-tcpdump-iptables-conntrack-tshark)** | **[Kubernetes Usage](../usage/kubernetes.md)** | **[Docker Usage](../usage/docker.md)**

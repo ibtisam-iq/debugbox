@@ -16,7 +16,7 @@
 
 ## The Problem
 
-You need to debug a pod. You run `kubectl debug my-pod --image=netshoot` and wait for **201 MB** to download.
+You need to debug a pod. You run `kubectl debug my-pod --image=netshoot` and wait for **~202 MB** to download.
 
 On an edge cluster? Mobile network? Restricted bandwidth? **Every MB costs time.**
 
@@ -35,8 +35,8 @@ Worse still: you just need to check DNS. You don't need tcpdump, tshark, routing
 
 Three sizes:
 - **LITE** (~15 MB): DNS and connectivity
-- **BALANCED** (~51 MB): Daily Kubernetes debugging
-- **POWER** (~112 MB): Packet analysis and forensics
+- **BALANCED** (~47 MB): Daily Kubernetes debugging
+- **POWER** (~91 MB): Packet analysis and forensics
 
 ---
 
@@ -48,14 +48,14 @@ Pick the right size for your task:
                          │
                     ┌────┴─────┐
                     │          │
-                   NO         YES ──────► POWER (~112 MB)
+                   NO         YES ──────► POWER (~91 MB)
                     │                    (tshark, nmap, iptables)
                     │
            Need tcpdump, TLS, or K8s tools?
                     │
                 ┌───┴────┐
                 │        │
-               NO       YES ─────────► BALANCED (~51 MB)
+               NO       YES ─────────► BALANCED (~47 MB)
                 │                     (tcpdump, openssl, kubectx/ns)
                 │
                YES ────────────────► LITE (~15 MB)
@@ -104,11 +104,11 @@ docker run -it ghcr.io/ibtisam-iq/debugbox:power
 | Image | Compressed Size |
 |-------|-----------------|
 | DebugBox lite | ~15 MB |
-| DebugBox balanced | ~51 MB |
-| DebugBox power | ~112 MB |
+| DebugBox balanced | ~47 MB |
+| DebugBox power | ~91 MB |
 | netshoot v0.15 | ~202 MB |
 
-DebugBox power is ~90 MB smaller than netshoot (44% reduction).
+DebugBox power is ~111 MB smaller than netshoot (55% reduction).
 DebugBox lite is ~13x smaller than netshoot.
 
 On resource-constrained clusters (edge, IoT, Kubernetes on laptops), every MB counts. [See detailed bandwidth analysis](https://debugbox.ibtisam-iq.com/latest/guides/bandwidth-savings/)
@@ -144,7 +144,7 @@ On resource-constrained clusters (edge, IoT, Kubernetes on laptops), every MB co
 | **Routing** | iptables, nftables, conntrack-tools | -- | -- | ✓ |
 | **Kubernetes** | kubectx, kubens | -- | ✓ | ✓ |
 | **Helpers** | json(), yaml(), ll() | ✓ | ✓ | ✓ |
-| **Network Helpers** | ports, connections, routes, k8s-info, sniff, cert-check() | -- | ✓ | ✓ |
+| **Network Helpers** | ports, connections, routes, k8s-info, sniff, sniff-http, sniff-dns, cert-check() | -- | ✓ | ✓ |
 | **Forensics Helpers** | conntrack-watch | -- | -- | ✓ |
 
 **→ [Detailed variant breakdown](https://debugbox.ibtisam-iq.com/latest/variants/overview/)**
@@ -164,7 +164,7 @@ On resource-constrained clusters (edge, IoT, Kubernetes on laptops), every MB co
 
 **Advantages:**
 - Smaller when you need it (~15 MB vs ~202 MB)
-- Larger when you need it (~112 MB for SRE workflows)
+- Larger when you need it (~91 MB for SRE workflows)
 - Kubernetes-first design (kubectx/kubens built in)
 - Predictable (pinned tools, repeatable builds)
 
@@ -173,12 +173,12 @@ On resource-constrained clusters (edge, IoT, Kubernetes on laptops), every MB co
 ## Use Cases
 
 **Ephemeral debugging with `kubectl debug`:**
-- ✅ One-off troubleshooting sessions
-- ✅ Resource-constrained environments (edge, IoT, bandwidth-limited)
-- ✅ Multi-cluster operations (kubectx/kubens included)
-- ✅ Incident response (fast pull, ready to go)
-- ✅ Learning Kubernetes networking
-- ✅ SRE forensics workflows (power variant)
+- One-off troubleshooting sessions
+- Resource-constrained environments (edge, IoT, bandwidth-limited)
+- Multi-cluster operations (kubectx/kubens included)
+- Incident response (fast pull, ready to go)
+- Learning Kubernetes networking
+- SRE forensics workflows (power variant)
 
 **Not for:**
 - Persistent sidecars (use for ephemeral debugging only)
@@ -191,7 +191,7 @@ On resource-constrained clusters (edge, IoT, Kubernetes on laptops), every MB co
 
 ### Available Images
 
-DebugBox is published to **two registries** with **20 tags per release**:
+DebugBox is published to **two registries** with **22 tags per release**:
 
 | Registry | URL |
 |----------|-----|
@@ -259,8 +259,8 @@ A: You can extend DebugBox by creating your own Dockerfile or submitting a featu
 **Q: How do I pin a specific version in production?**
 A: Use the full tag: `ghcr.io/ibtisam-iq/debugbox:1.0.0` (balanced) or `ghcr.io/ibtisam-iq/debugbox:lite-1.0.0` (lite). See **[Image Tags](https://debugbox.ibtisam-iq.com/latest/reference/tags/)** for full strategy.
 
-**Q: Does DebugBox work on Kubernetes 1.18+?**
-A: Yes, works on Kubernetes 1.18+. Best experience with 1.20+ (has `kubectl debug` support).
+**Q: Does DebugBox work on older Kubernetes versions?**
+A: Yes. `kubectl run` works on any version. `kubectl debug` requires 1.23+.
 
 **Q: Can I use DebugBox outside Kubernetes?**
 A: Yes. `docker run -it ghcr.io/ibtisam-iq/debugbox` works for local debugging.

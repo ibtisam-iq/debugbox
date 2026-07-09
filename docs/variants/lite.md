@@ -12,44 +12,19 @@ Perfect for quick network diagnostics and bandwidth-constrained environments.
 - Init containers or fast pod startup
 - When you only need basic networking tools
 
-## Pull Tags
-
-**Latest:**
-```bash
-ghcr.io/ibtisam-iq/debugbox:lite
-ghcr.io/ibtisam-iq/debugbox:lite-latest
-```
-
-**Production (pinned version):**
-```bash
-ghcr.io/ibtisam-iq/debugbox:lite-1.0.0
-```
-
 ## Quick Usage
 
-### Kubernetes
 ```bash
-# Debug pod with lite variant
-kubectl debug my-pod -it \
-  --image=ghcr.io/ibtisam-iq/debugbox:lite
-
-# Standalone session
-kubectl run debug --rm -it \
-  --image=ghcr.io/ibtisam-iq/debugbox:lite --restart=Never
+kubectl debug my-pod -it --image=ghcr.io/ibtisam-iq/debugbox:lite
 ```
 
-### Docker
-```bash
-docker run -it ghcr.io/ibtisam-iq/debugbox:lite
-
-docker run ghcr.io/ibtisam-iq/debugbox:lite curl -I https://ibtisam-iq.com
-```
+→ **[All tag formats](../reference/tags.md)** | **[Kubernetes usage](../usage/kubernetes.md)** | **[Docker usage](../usage/docker.md)**
 
 ## What's Included
 
 Lite includes **7 focused packages** optimized for fast pulls and basic connectivity testing.
 
-→ **[Complete lite tool list with examples](../guides/examples.md#variant-lite-15-mb)**
+→ **[Complete tool list](../reference/manifest.md)** | **[Usage examples](../guides/examples.md)**
 
 **Key categories:**
 
@@ -61,8 +36,8 @@ Lite includes **7 focused packages** optimized for fast pulls and basic connecti
 
 ## When to Upgrade
 
-**Need more tools?** → **[Balanced Variant](balanced.md)** adds bash, tcpdump, vim, strace, and Kubernetes helpers (+~36 MB)
+**Need more tools?** → **[Balanced Variant](balanced.md)** adds bash, tcpdump, openssl, vim, strace, and Kubernetes helpers (+~32 MB)
 
-**Need forensics?** → **[Power Variant](power.md)** adds packet analysis, routing, and Python scripting (+~97 MB)
+**Need forensics?** → **[Power Variant](power.md)** adds packet analysis, port scanning, and routing tools (+~76 MB)
 
 → **[Variants Overview](overview.md)** | **[Real-world Examples](../guides/examples.md)** | **[Troubleshooting](../guides/troubleshooting.md)**

@@ -1,5 +1,6 @@
 # DebugBox Power — Shell Helpers & Aliases
 # Loaded automatically via /etc/profile.d (bash)
+# Intentionally duplicates balanced-profile rather than sourcing it (simpler, no load-order dependency)
 
 # === File Listing ===
 # ll() is inherited from debugbox-base-profile.sh

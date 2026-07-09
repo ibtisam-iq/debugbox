@@ -1,9 +1,9 @@
 # DebugBox — Balanced variant
 # Daily-driver debugging image for Kubernetes troubleshooting.
 
-ARG BASE_IMAGE=ghcr.io/ibtisam-iq/debugbox-base:latest
+ARG BASE_IMAGE=ghcr.io/ibtisam-iq/debugbox-base@sha256:56a6c7cc829a5b3eefbced578ffc097bdeedee0e0489c7a73604c409e501023f
 
-# Build kubectx/kubens from source
+# Build kubectx/kubens from source (duplicated in Dockerfile.power; extracted builder doesn't work with buildx --load)
 FROM golang:1.25-alpine AS kubectx-builder
 
 ARG KUBECTX_VERSION=v0.11.0

@@ -1,6 +1,6 @@
 # Image Tags & Registries
 
-DebugBox is published to **two identical registries** with **20 tags per release** using a single-repository variant strategy.
+DebugBox is published to **two identical registries** with **22 tags per release** using a single-repository variant strategy.
 
 ## Registries
 
@@ -92,6 +92,6 @@ DebugBox follows **Semantic Versioning** (MAJOR.MINOR.PATCH):
 | Pinned version | `:-1.0.0` (3 variants) | 3 |
 | Default aliases | `:latest`, `:1.0.0` | 2 |
 | **Per registry** | — | **11 tags** |
-| **Both registries** | GHCR + Docker Hub | **20 tags** |
+| **Both registries** | GHCR + Docker Hub | **22 tags** |
 
-→ **[Installation](../getting-started/installation.md)** | **[Variants Overview](../variants/overview.md)** | **[Quick Start](../getting-started/quick-start.md)**
+→ **[Quick Start](../getting-started/quick-start.md)** | **[Variants Overview](../variants/overview.md)**

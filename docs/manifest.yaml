@@ -64,8 +64,7 @@ variants:
         - vim
 
       http-and-tls:
-        - curl
-        - openssl             # TLS certificate inspection, connection testing
+        - openssl             # TLS certificate inspection, connection testing (curl inherited from lite)
 
       version-control:
         - git
@@ -140,7 +139,7 @@ variants:
         - nftables
         - conntrack-tools
 
-      control-plane:
+      data:
         - yq                  # pinned upstream binary (not apk)
 
     shell:
@@ -156,7 +155,7 @@ variants:
         - sniff-http
         - sniff-dns
         - cert-check()
-        - conntrack-watch()   # alias: watch active connections in real-time (power only)
+        - conntrack-watch     # alias: watch active connections in real-time (power only)
 
     environment:
       pager: less

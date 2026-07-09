@@ -6,9 +6,9 @@ Security updates are provided according to our release support windows:
 
 | Version            | Status            | Security Patches       | Support Duration |
 |--------------------|-------------------|------------------------|------------------|
-| Latest (v1.x.x)    | ✅ Full support   | All severity levels    | 12 months        |
-| Previous (N-1)     | ✅ Security-only  | HIGH/CRITICAL only     | 6 months         |
-| Older (N-2+)       | ⚠️ Community     | None guaranteed        | Best effort      |
+| Latest (v1.x.x)    | Full support      | All severity levels    | 12 months        |
+| Previous (N-1)     | Security-only     | HIGH/CRITICAL only     | 6 months         |
+| Older (N-2+)       | Community         | None guaranteed        | Best effort      |
 
 See [RELEASE.md](RELEASE.md) for the complete release and support policy.
 
@@ -98,7 +98,7 @@ By using DebugBox, you trust the maintainers, bundled tools, and source registri
 
 ## Best Practices for Users
 
-- Pin to specific versions: `ghcr.io/ibtisam-iq/debugbox:v1.0.0`
+- Pin to specific versions: `ghcr.io/ibtisam-iq/debugbox:1.0.0`
 - Use in isolated namespaces
 - Apply Kubernetes network policies
 - Run with `--rm` for ephemeral sessions

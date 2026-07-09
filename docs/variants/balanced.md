@@ -1,6 +1,6 @@
 # Balanced Variant (Recommended)
 
-**~51 MB** -- The default for daily debugging.
+**~47 MB** -- The default for daily debugging.
 
 The default and recommended choice for nearly all Kubernetes troubleshooting tasks.
 
@@ -11,49 +11,21 @@ The default and recommended choice for nearly all Kubernetes troubleshooting tas
 - Process tracing, network inspection, system diagnostics
 - **When in doubt, start here**
 
-## Pull Tags
-
-**Latest:**
-```bash
-ghcr.io/ibtisam-iq/debugbox              # Most common
-ghcr.io/ibtisam-iq/debugbox:latest
-ghcr.io/ibtisam-iq/debugbox:balanced
-```
-
-**Production (pinned version):**
-```bash
-ghcr.io/ibtisam-iq/debugbox:1.0.0           # Short form (recommended)
-ghcr.io/ibtisam-iq/debugbox:balanced-1.0.0  # Explicit form
-```
-
 ## Quick Usage
 
-### Kubernetes (Most Common)
 ```bash
-# Default -- balanced variant
-kubectl debug my-pod -it \
-  --image=ghcr.io/ibtisam-iq/debugbox
-
-# Explicit tag
-kubectl debug my-pod -it \
-  --image=ghcr.io/ibtisam-iq/debugbox:balanced
-
-# Standalone
-kubectl run debug --rm -it \
-  --image=ghcr.io/ibtisam-iq/debugbox --restart=Never
+kubectl debug my-pod -it --image=ghcr.io/ibtisam-iq/debugbox
 ```
 
-### Docker
-```bash
-docker run -it ghcr.io/ibtisam-iq/debugbox
-docker run -it ghcr.io/ibtisam-iq/debugbox:1.0.0  # Production
-```
+Balanced is the default -- no variant tag needed.
+
+→ **[All tag formats](../reference/tags.md)** | **[Kubernetes usage](../usage/kubernetes.md)** | **[Docker usage](../usage/docker.md)**
 
 ## What's Included
 
 Balanced includes **all lite tools** plus additional packages for system debugging, process inspection, TLS inspection, and Kubernetes workflows.
 
-→ **[Complete balanced tool list with examples](../guides/examples.md#variant-balanced-51-mb-default)**
+→ **[Complete tool list](../reference/manifest.md)** | **[Usage examples](../guides/examples.md)**
 
 **Key additions over lite:**
 
@@ -73,7 +45,6 @@ Balanced includes **10 custom shell helpers** for rapid debugging:
 
 **Quick reference:**
 
-- `ll()` -- `ls -alF` alias
 - `json()` / `yaml()` -- Pretty-print data
 - `ports` / `connections` -- Socket inspection
 - `routes` -- Display routing table
@@ -83,8 +54,8 @@ Balanced includes **10 custom shell helpers** for rapid debugging:
 
 ## When to Switch
 
-**Downgrade to [Lite Variant](lite.md)?** Save ~36 MB if you only need basic connectivity.
+**Downgrade to [Lite Variant](lite.md)?** Save ~32 MB if you only need basic connectivity.
 
-**Upgrade to [Power Variant](power.md)?** Need packet analysis, routing tools, or scripting.
+**Upgrade to [Power Variant](power.md)?** Need packet analysis, network scanning, or routing tools.
 
 → **[Variants Overview](overview.md)** | **[Real-world Examples](../guides/examples.md)** | **[Troubleshooting](../guides/troubleshooting.md)**

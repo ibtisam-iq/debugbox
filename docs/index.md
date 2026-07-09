@@ -7,16 +7,10 @@ hide:
 ## Quick Start
 
 ```bash
-kubectl debug my-pod -it \
-  --image=ghcr.io/ibtisam-iq/debugbox
+kubectl debug my-pod -it --image=ghcr.io/ibtisam-iq/debugbox
 ```
 
-```bash
-kubectl run debug --rm -it \
-  --image=ghcr.io/ibtisam-iq/debugbox --restart=Never
-```
-
-→ **[Full quick start guide](getting-started/quick-start.md)** | **[Installation](getting-started/installation.md)**
+→ **[Full quick start guide](getting-started/quick-start.md)**
 
 ---
 
@@ -24,7 +18,7 @@ kubectl run debug --rm -it \
 
 Modern pods often lack basic debugging tools. DebugBox gives you **three focused variants** so you only pull what you need.
 
-> 15 MB for basic connectivity. 51 MB for daily debugging. 112 MB only when you need advanced forensics.
+> ~15 MB for basic connectivity. ~47 MB for daily debugging. ~91 MB only when you need advanced forensics.
 
 → **[See the full motivation](getting-started/motivation.md)**
 
@@ -35,7 +29,7 @@ Modern pods often lack basic debugging tools. DebugBox gives you **three focused
 <div class="grid cards" markdown>
 
 - **[:material-run-fast: Getting Started](getting-started/quick-start.md)**
-  First steps, installation, motivation
+  First steps, registries, motivation
 
 - **[:material-layers: Variants](variants/overview.md)**
   Compare lite, balanced, and power, then choose the right one

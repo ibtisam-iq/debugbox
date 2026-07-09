@@ -37,8 +37,8 @@ debugbox:power-local
 
 ```bash
 make build-lite      # ~15 MB
-make build-balanced  # ~51 MB
-make build-power     # ~112 MB
+make build-balanced  # ~47 MB
+make build-power     # ~91 MB
 ```
 
 ### Build for Specific Architecture
@@ -175,10 +175,10 @@ mkdocs build
 Before committing, run the full pipeline:
 
 ```bash
-make lint        # ✅ Dockerfile syntax
-make build-all   # ✅ All variants build
-make test-all    # ✅ All tests pass
-make scan        # ✅ No vulnerabilities
+make lint        # Dockerfile syntax
+make build-all   # All variants build
+make test-all    # All tests pass
+make scan        # No vulnerabilities
 ```
 
 Or shortcut:

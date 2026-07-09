@@ -1,7 +1,7 @@
 # DebugBox — Lite variant
 # Minimal debugging image for quick Kubernetes network diagnostics.
 
-ARG BASE_IMAGE=ghcr.io/ibtisam-iq/debugbox-base:latest
+ARG BASE_IMAGE=ghcr.io/ibtisam-iq/debugbox-base@sha256:56a6c7cc829a5b3eefbced578ffc097bdeedee0e0489c7a73604c409e501023f
 FROM ${BASE_IMAGE}
 
 # Build args for OCI labels (passed from workflow)
@@ -24,7 +24,7 @@ LABEL org.opencontainers.image.title="DebugBox Lite" \
       org.opencontainers.image.vendor="Ibtisam IQ" \
       org.opencontainers.image.authors="Muhammad Ibtisam <contact@ibtisam-iq.com>"
 
-# Networking and data inspection tools
+# Networking and data inspection tools (inline rather than external .packages file; lite is small enough to keep self-contained)
 RUN set -eux && \
     apk add --no-cache \
       curl \

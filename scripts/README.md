@@ -1,4 +1,4 @@
-# Scripts Directory — Binary Installers
+# Scripts Directory - Binary Installers
 
 This directory contains **executable installer scripts** used by DebugBox Docker images to install tools that **should not be installed via the OS package manager** (apk).
 
@@ -34,7 +34,7 @@ Do **not** create scripts for:
 * Shell helpers or aliases
 * Files that are meant to be **sourced** instead of executed
 
-Those belong directly in Dockerfiles or in `dockerfiles/common/*`.
+Those belong directly in Dockerfiles or in `dockerfiles/profiles/`.
 
 ---
 

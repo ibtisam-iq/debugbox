@@ -111,12 +111,12 @@ ghcr.io/ibtisam-iq/debugbox:1.0.0        ← Points to balanced-1.0.0 (shorter f
 - **GHCR** (recommended): `ghcr.io/ibtisam-iq/debugbox`
 - **Docker Hub** (mirror): `docker.io/mibtisam/debugbox`
 
-**Total tags per release:** 20 tags (10 unique patterns × 2 registries)
+**Total tags per release:** 22 tags (11 unique patterns × 2 registries)
 
 **Real images:** 3 (one per variant)  
 **Aliases/Floating tags:** 8 (all pointing to one of the 3 real images)
 
-**Note:** The **Default** row shows convenience aliases (`:latest` and `:1.0.0`) that always point to the **balanced** variant — the recommended default for most users.
+**Note:** The **Default** row shows convenience aliases (`:latest` and `:1.0.0`) that always point to the **balanced** variant, the recommended default for most users.
 
 **Quick tip:** For production, always use pinned tags (`:lite-1.0.0`, `:balanced-1.0.0`, `:1.0.0`, etc.) or digests (`@sha256:...`) to avoid surprises from floating tags.
 
@@ -262,18 +262,18 @@ Support for pre-releases ends when the corresponding GA version is released.
 ### Automated Build Process
 
 1. **Trigger:** Git tag `v1.0.0` pushed
-2. **Build Stage 1:** Build all three variants for `linux/amd64` only → export to tar files
-3. **Scan Stage:** Run Trivy on all three variants (amd64 tars)
-4. **Decision Point:** If any scan fails → release BLOCKED, workflow stops
-5. **Build & Push Stage 2:** If all scans pass → build and push all three variants for `linux/amd64,linux/arm64` to both registries
+2. **Validate:** Extract and validate semantic version format
+3. **Build & Scan:** Build each variant for `linux/amd64`, load locally, run Trivy scan
+4. **Decision Point:** If any variant fails scan → release BLOCKED, workflow stops
+5. **Push:** If all scans pass → build all three variants for `linux/amd64,linux/arm64` and push to both registries (22 tags)
 6. **Summary:** Display what was pushed
 
 ### Timeline
 
-- **Build (amd64):** ~3-4 min
-- **Scan (all 3):** ~3-4 min
-- **Push (multi-arch, 20 tags):** ~5-7 min
-- **Total:** ~12-18 minutes per release
+- **Validate:** ~10 seconds
+- **Build & Scan (amd64, all 3 variants):** ~6-8 min
+- **Push (multi-arch, 22 tags):** ~5-7 min
+- **Total:** ~12-16 minutes per release
 
 ## Making a New Release (Maintainer Checklist)
 
@@ -284,11 +284,9 @@ Support for pre-releases ends when the corresponding GA version is released.
 - [ ] Decide on the next version number following Semantic Versioning rules
 - [ ] Build and test all three variants locally to catch issues early:
   ```bash
-  # Example for lite variant (repeat for balanced and power)
-  docker build -t debugbox:lite-local -f Dockerfile.lite .
-  docker run -it --rm debugbox:lite-local
+  make check
   ```
-  Verify basic functionality (shell access, key tools present, no obvious crashes)
+  This runs lint, build, test, and scan for all variants.
 
 ### Tag and Trigger the Release
 
@@ -311,16 +309,16 @@ git push origin v1.0.0
 
 1. Go to the repository's **Actions** tab
 2. Locate the workflow run named **"Release"** (triggered by the new tag)
-3. Wait for completion (~12–18 minutes):
-   - Stage 1: Build all variants (linux/amd64) for scanning
-   - Stage 2: Trivy security scan (blocks on HIGH/CRITICAL findings)
-   - Stage 3: Multi-arch build & push to GHCR + Docker Hub (all tags)
-   - Stage 4: Print summary of published tags
+3. Wait for completion (~12-16 minutes):
+   - Validate: Version format check
+   - Build & Scan: Build each variant (amd64), run Trivy (blocks on HIGH/CRITICAL)
+   - Push: Multi-arch build and push to GHCR + Docker Hub (22 tags)
+   - Summary: Print published tags
 4. If the workflow fails:
    - Review the logs for the failing step
    - Fix the root cause on `main` (e.g. vulnerability, build error)
    - Re-run the failed job directly from the Actions UI (GitHub supports re-running jobs on the same tag)
-   - **Do not** force-push or delete the tag unless absolutely necessary — it can confuse users
+   - **Do not** force-push or delete the tag unless absolutely necessary, as it can confuse users
 
 ### Verify the Images Were Published
 
@@ -440,12 +438,12 @@ All three variants are in **one repository** (`debugbox`) with **tag suffixes** 
 - **Aliases:** `debugbox:latest` → balanced-latest, `debugbox:1.0.0` → balanced-1.0.0 (convenience)
 
 **Benefits:**
-- ✅ **Clear mental model:** Users see one tool with three options
-- ✅ **Easy discovery:** `docker pull debugbox:lite`, `docker pull debugbox:balanced`, etc.
-- ✅ **Better Docker Hub UX:** One image card with clear variant options
-- ✅ **Simpler documentation:** "Use `debugbox` or `debugbox:1.0.0` (default) or switch to `-lite` or `-power`"
-- ✅ **Upgrade path:** Users understand `debugbox:1.0.0` → `debugbox:1.0.1`
-- ✅ **Production-friendly:** Short aliases (`debugbox:1.0.0`) are clean and memorable
+- **Clear mental model:** Users see one tool with three options
+- **Easy discovery:** `docker pull debugbox:lite`, `docker pull debugbox:balanced`, etc.
+- **Better Docker Hub UX:** One image card with clear variant options
+- **Simpler documentation:** "Use `debugbox` or `debugbox:1.0.0` (default) or switch to `-lite` or `-power`"
+- **Upgrade path:** Users understand `debugbox:1.0.0` → `debugbox:1.0.1`
+- **Production-friendly:** Short aliases (`debugbox:1.0.0`) are clean and memorable
 
 ### Why Aliases?
 
@@ -464,4 +462,4 @@ Open an issue: [https://github.com/ibtisam-iq/debugbox/issues](https://github.co
 
 **Last Updated:** July 2026  
 **Maintained By:** Muhammad Ibtisam ([@ibtisam-iq](https://github.com/ibtisam-iq))  
-**Release Strategy:** Variant-first tagging with version aliases (20 tags per release)
+**Release Strategy:** Variant-first tagging with version aliases (22 tags per release)

@@ -55,6 +55,7 @@ jobs:
       - name: Set up Buildx
         uses: docker/setup-buildx-action@v4
 
+      # Scan-only build (amd64); the push job rebuilds multi-arch separately — buildx can't --load and --push in one step
       - name: Build ${{ matrix.variant }} (amd64 for scan)
         run: |
           docker buildx build \
@@ -99,7 +100,7 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-      - name: Push all variants (20 tags)
+      - name: Push all variants (22 tags)
         env:
           DOCKER_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
           VERSION: ${{ needs.validate.outputs.version }}
@@ -108,7 +109,7 @@ jobs:
           BUILD_DATE=$(date -u +'%Y-%m-%dT%H:%M:%SZ')
           VCS_REF="${{ github.sha }}"
           variants=("lite" "balanced" "power")
-          echo "All scans passed. Pushing all variants (20 tags)..."
+          echo "All scans passed. Pushing all variants (22 tags)..."
           for variant in "${variants[@]}"; do
             echo "Pushing $variant..."
             TAGS=(
@@ -147,7 +148,7 @@ jobs:
           echo ""
           echo "Release v${VERSION} completed successfully!"
           echo ""
-          echo "Published images (20 tags across 2 registries):"
+          echo "Published images (22 tags across 2 registries):"
           echo ""
           echo "Lite variant:"
           echo "  ghcr.io/ibtisam-iq/debugbox:lite"

@@ -96,9 +96,7 @@ docker run -it ghcr.io/ibtisam-iq/debugbox:lite-1.0.0
 
 ### Variant Selection
 
-- Use **lite** when possible (~15 MB, smallest attack surface)
-- Upgrade to **balanced** for standard debugging (~51 MB)
-- Use **power** only when needed for advanced forensics (~112 MB)
+Smaller variants have smaller attack surfaces. Use the smallest variant that fits your task. See **[Variants Overview](../variants/overview.md)**.
 
 ### Runtime Hygiene
 
@@ -118,12 +116,6 @@ docker run -it ghcr.io/ibtisam-iq/debugbox:lite-1.0.0
 All previously suppressed CVEs have been resolved. kubectx/kubens is built from source with patched dependencies, and yq uses a current binary release.
 
 All three variants pass Trivy scanning with zero HIGH/CRITICAL findings. See **[SECURITY.md](https://github.com/ibtisam-iq/debugbox/blob/main/SECURITY.md)** for details.
-
-## Acknowledgments
-
-Thank you to security researchers who report issues responsibly.
-
-**Hall of Fame:** *No reports yet. Help us keep DebugBox secure!*
 
 ---
 
