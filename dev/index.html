@@ -456,14 +456,14 @@
           <a href="variants/balanced/" class="db-hero__variant db-hero__variant--balanced">
             <div class="db-hero__variant-bar"></div>
             <p class="db-hero__variant-name">Balanced</p>
-            <p class="db-hero__variant-size">~51 MB</p>
+            <p class="db-hero__variant-size">~47 MB</p>
             <p class="db-hero__variant-desc">Daily Kubernetes troubleshooting</p>
             <span class="db-hero__variant-tag">Default</span>
           </a>
           <a href="variants/power/" class="db-hero__variant db-hero__variant--power">
             <div class="db-hero__variant-bar"></div>
             <p class="db-hero__variant-name">Power</p>
-            <p class="db-hero__variant-size">~112 MB</p>
+            <p class="db-hero__variant-size">~91 MB</p>
             <p class="db-hero__variant-desc">Packet capture and deep forensics</p>
           </a>
         </div>
@@ -692,34 +692,6 @@
     
   
     Quick Start
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="getting-started/installation/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Installation
   
 
     
@@ -1487,18 +1459,14 @@
   <h1>Overview</h1>
 
 <h2 id="quick-start">Quick Start<a class="headerlink" href="#quick-start" title="Permanent link">&para;</a></h2>
-<div class="highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>kubectl<span class="w"> </span>debug<span class="w"> </span>my-pod<span class="w"> </span>-it<span class="w"> </span><span class="se">\</span>
-</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="w">  </span>--image<span class="o">=</span>ghcr.io/ibtisam-iq/debugbox
+<div class="highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>kubectl<span class="w"> </span>debug<span class="w"> </span>my-pod<span class="w"> </span>-it<span class="w"> </span>--image<span class="o">=</span>ghcr.io/ibtisam-iq/debugbox
 </span></code></pre></div>
-<div class="highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>kubectl<span class="w"> </span>run<span class="w"> </span>debug<span class="w"> </span>--rm<span class="w"> </span>-it<span class="w"> </span><span class="se">\</span>
-</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="w">  </span>--image<span class="o">=</span>ghcr.io/ibtisam-iq/debugbox<span class="w"> </span>--restart<span class="o">=</span>Never
-</span></code></pre></div>
-<p>→ <strong><a href="getting-started/quick-start/">Full quick start guide</a></strong> | <strong><a href="getting-started/installation/">Installation</a></strong></p>
+<p>→ <strong><a href="getting-started/quick-start/">Full quick start guide</a></strong></p>
 <hr />
 <h2 id="why-debugbox">Why DebugBox?<a class="headerlink" href="#why-debugbox" title="Permanent link">&para;</a></h2>
 <p>Modern pods often lack basic debugging tools. DebugBox gives you <strong>three focused variants</strong> so you only pull what you need.</p>
 <blockquote>
-<p>15 MB for basic connectivity. 51 MB for daily debugging. 112 MB only when you need advanced forensics.</p>
+<p>~15 MB for basic connectivity. ~47 MB for daily debugging. ~91 MB only when you need advanced forensics.</p>
 </blockquote>
 <p>→ <strong><a href="getting-started/motivation/">See the full motivation</a></strong></p>
 <hr />
@@ -1507,7 +1475,7 @@
 <ul>
 <li>
 <p><strong><a href="getting-started/quick-start/"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M16.5 5.5a2 2 0 0 0 2-2 2 2 0 0 0-2-2 2 2 0 0 0-2 2 2 2 0 0 0 2 2m-3.6 13.9 1-4.4 2.1 2v6h2v-7.5l-2.1-2 .6-3A7.3 7.3 0 0 0 22 13v-2c-1.76.03-3.4-.89-4.3-2.4l-1-1.6c-.36-.6-1-1-1.7-1-.3 0-.5.1-.8.1L9 8.3V13h2V9.6l1.8-.7-1.6 8.1-4.9-1-.4 2zM4 9a1 1 0 0 1-1-1 1 1 0 0 1 1-1h3v2zm1-4a1 1 0 0 1-1-1 1 1 0 0 1 1-1h5v2zm-2 8a1 1 0 0 1-1-1 1 1 0 0 1 1-1h4v2z"/></svg></span> Getting Started</a></strong>
-  First steps, installation, motivation</p>
+  First steps, registries, motivation</p>
 </li>
 <li>
 <p><strong><a href="variants/overview/"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m12 16 7.36-5.73L21 9l-9-7-9 7 1.63 1.27M12 18.54l-7.38-5.73L3 14.07l9 7 9-7-1.63-1.27z"/></svg></span> Variants</a></strong>
@@ -1563,7 +1531,7 @@
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-custom" title="July 6, 2026 20:52:18 PKT">July 06, 2026 08:52:18 PM</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-custom" title="July 9, 2026 07:04:40 PKT">July 09, 2026 07:04:40 AM</span>
   </span>
 
     

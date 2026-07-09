@@ -597,34 +597,6 @@
   
   
     <li class="md-nav__item">
-      <a href="../../getting-started/installation/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Installation
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
       <a href="../../getting-started/motivation/" class="md-nav__link">
         
   
@@ -1321,67 +1293,6 @@
   
 </li>
       
-        <li class="md-nav__item">
-  <a href="#complete-tool-coverage-summary" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Complete Tool Coverage Summary
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Complete Tool Coverage Summary">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#variant-lite-15-mb" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Variant: Lite (~15 MB)
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#variant-balanced-51-mb-default" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Variant: Balanced (~51 MB) -- Default
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#variant-power-112-mb-full-forensics" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Variant: Power (~112 MB) -- Full Forensics
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#capability-requirements-reference" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Capability Requirements Reference
-      
-    </span>
-  </a>
-  
-</li>
-      
     </ul>
   
 </nav>
@@ -1936,67 +1847,6 @@
   
 </li>
       
-        <li class="md-nav__item">
-  <a href="#complete-tool-coverage-summary" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Complete Tool Coverage Summary
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Complete Tool Coverage Summary">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#variant-lite-15-mb" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Variant: Lite (~15 MB)
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#variant-balanced-51-mb-default" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Variant: Balanced (~51 MB) -- Default
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#variant-power-112-mb-full-forensics" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Variant: Power (~112 MB) -- Full Forensics
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#capability-requirements-reference" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Capability Requirements Reference
-      
-    </span>
-  </a>
-  
-</li>
-      
     </ul>
   
 </nav>
@@ -2075,7 +1925,7 @@
 </span></code></pre></div>
 <hr />
 <h2 id="network-interface-ip-configuration">Network Interface &amp; IP Configuration<a class="headerlink" href="#network-interface-ip-configuration" title="Permanent link">&para;</a></h2>
-<p><strong>Tools:</strong> <code>ip</code> (iproute2), <code>ifconfig</code> (legacy alternative)</p>
+<p><strong>Tools:</strong> <code>ip</code> (iproute2)</p>
 <div class="highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>kubectl<span class="w"> </span>debug<span class="w"> </span>my-app<span class="w"> </span>-it<span class="w"> </span><span class="se">\</span>
 </span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="w">  </span>--image<span class="o">=</span>ghcr.io/ibtisam-iq/debugbox
 </span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>
@@ -2095,7 +1945,7 @@
 </span></code></pre></div>
 <hr />
 <h2 id="socket-connection-analysis">Socket &amp; Connection Analysis<a class="headerlink" href="#socket-connection-analysis" title="Permanent link">&para;</a></h2>
-<p><strong>Tools:</strong> <code>ss</code>, <code>netstat</code>, <code>lsof</code></p>
+<p><strong>Tools:</strong> <code>ss</code>, <code>lsof</code></p>
 <div class="highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>kubectl<span class="w"> </span>debug<span class="w"> </span>my-app<span class="w"> </span>-it<span class="w"> </span><span class="se">\</span>
 </span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="w">  </span>--image<span class="o">=</span>ghcr.io/ibtisam-iq/debugbox
 </span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>
@@ -2104,13 +1954,10 @@
 </span><span id="__span-3-6"><a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a>ss<span class="w"> </span>-tulnp<span class="w">                 </span><span class="c1"># Listening sockets only</span>
 </span><span id="__span-3-7"><a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a>ss<span class="w"> </span>-t<span class="w"> </span>state<span class="w"> </span>established<span class="w">   </span><span class="c1"># Established TCP connections</span>
 </span><span id="__span-3-8"><a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a>
-</span><span id="__span-3-9"><a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a><span class="c1"># Legacy netstat (from procps)</span>
-</span><span id="__span-3-10"><a id="__codelineno-3-10" name="__codelineno-3-10" href="#__codelineno-3-10"></a>netstat<span class="w"> </span>-tulnp<span class="w">            </span><span class="c1"># Listening ports</span>
-</span><span id="__span-3-11"><a id="__codelineno-3-11" name="__codelineno-3-11" href="#__codelineno-3-11"></a>
-</span><span id="__span-3-12"><a id="__codelineno-3-12" name="__codelineno-3-12" href="#__codelineno-3-12"></a><span class="c1"># What&#39;s using a specific port?</span>
-</span><span id="__span-3-13"><a id="__codelineno-3-13" name="__codelineno-3-13" href="#__codelineno-3-13"></a>lsof<span class="w"> </span>-i<span class="w"> </span>:8080
-</span><span id="__span-3-14"><a id="__codelineno-3-14" name="__codelineno-3-14" href="#__codelineno-3-14"></a>lsof<span class="w"> </span>-i<span class="w"> </span>TCP:80
-</span><span id="__span-3-15"><a id="__codelineno-3-15" name="__codelineno-3-15" href="#__codelineno-3-15"></a>lsof<span class="w"> </span>-p<span class="w"> </span><span class="k">$(</span>pgrep<span class="w"> </span>nginx<span class="k">)</span><span class="w">    </span><span class="c1"># Files opened by nginx</span>
+</span><span id="__span-3-9"><a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a><span class="c1"># What&#39;s using a specific port?</span>
+</span><span id="__span-3-10"><a id="__codelineno-3-10" name="__codelineno-3-10" href="#__codelineno-3-10"></a>lsof<span class="w"> </span>-i<span class="w"> </span>:8080
+</span><span id="__span-3-11"><a id="__codelineno-3-11" name="__codelineno-3-11" href="#__codelineno-3-11"></a>lsof<span class="w"> </span>-i<span class="w"> </span>TCP:80
+</span><span id="__span-3-12"><a id="__codelineno-3-12" name="__codelineno-3-12" href="#__codelineno-3-12"></a>lsof<span class="w"> </span>-p<span class="w"> </span><span class="k">$(</span>pgrep<span class="w"> </span>nginx<span class="k">)</span><span class="w">    </span><span class="c1"># Files opened by nginx</span>
 </span></code></pre></div>
 <hr />
 <h2 id="route-tracing">Route Tracing<a class="headerlink" href="#route-tracing" title="Permanent link">&para;</a></h2>
@@ -2486,108 +2333,11 @@
 </span><span id="__span-26-6"><a id="__codelineno-26-6" name="__codelineno-26-6" href="#__codelineno-26-6"></a><span class="c1"># Decode and inspect secret certificate</span>
 </span><span id="__span-26-7"><a id="__codelineno-26-7" name="__codelineno-26-7" href="#__codelineno-26-7"></a>kubectl<span class="w"> </span>get<span class="w"> </span>secret<span class="w"> </span>my-tls<span class="w"> </span>-o<span class="w"> </span><span class="nv">jsonpath</span><span class="o">=</span><span class="s1">&#39;{.data.tls\.crt}&#39;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>base64<span class="w"> </span>-d<span class="w"> </span><span class="p">|</span><span class="w"> </span><span class="se">\</span>
 </span><span id="__span-26-8"><a id="__codelineno-26-8" name="__codelineno-26-8" href="#__codelineno-26-8"></a><span class="w">  </span>kubectl<span class="w"> </span>run<span class="w"> </span>cert-tool<span class="w"> </span>--rm<span class="w"> </span>-i<span class="w"> </span><span class="se">\</span>
-</span><span id="__span-26-9"><a id="__codelineno-26-9" name="__codelineno-26-9" href="#__codelineno-26-9"></a><span class="w">  </span>--image<span class="o">=</span>ghcr.io/ibtisam-iq/debugbox:power<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-26-9"><a id="__codelineno-26-9" name="__codelineno-26-9" href="#__codelineno-26-9"></a><span class="w">  </span>--image<span class="o">=</span>ghcr.io/ibtisam-iq/debugbox:balanced<span class="w"> </span><span class="se">\</span>
 </span><span id="__span-26-10"><a id="__codelineno-26-10" name="__codelineno-26-10" href="#__codelineno-26-10"></a><span class="w">  </span>--restart<span class="o">=</span>Never<span class="w"> </span>--<span class="w"> </span>openssl<span class="w"> </span>x509<span class="w"> </span>-text<span class="w"> </span>-noout
 </span></code></pre></div>
 <hr />
-<h2 id="complete-tool-coverage-summary">Complete Tool Coverage Summary<a class="headerlink" href="#complete-tool-coverage-summary" title="Permanent link">&para;</a></h2>
-<h3 id="variant-lite-15-mb">Variant: <strong>Lite</strong> (~15 MB)<a class="headerlink" href="#variant-lite-15-mb" title="Permanent link">&para;</a></h3>
-<ul>
-<li>DNS: dig, nslookup, host</li>
-<li>HTTP: curl</li>
-<li>Connectivity: ping, nc</li>
-<li>Data: jq, yq</li>
-<li>Basic IP: ip, ss</li>
-</ul>
-<h3 id="variant-balanced-51-mb-default">Variant: <strong>Balanced</strong> (~51 MB) -- Default<a class="headerlink" href="#variant-balanced-51-mb-default" title="Permanent link">&para;</a></h3>
-<ul>
-<li>
-<p><strong>All Lite tools, plus:</strong></p>
-</li>
-<li>
-<p>TLS/SSL: openssl</p>
-</li>
-<li>Advanced networking: socat, mtr</li>
-<li>Packet capture: tcpdump</li>
-<li>Process tools: htop, ps, top, pstree, killall, fuser</li>
-<li>Tracing: strace, lsof</li>
-<li>Files: file, tar, gzip, vim</li>
-<li>Version control: git</li>
-<li>Kubernetes: kubectx, kubens</li>
-</ul>
-<h3 id="variant-power-112-mb-full-forensics">Variant: <strong>Power</strong> (~112 MB) -- Full Forensics<a class="headerlink" href="#variant-power-112-mb-full-forensics" title="Permanent link">&para;</a></h3>
-<ul>
-<li>
-<p><strong>All Balanced tools, plus:</strong></p>
-</li>
-<li>
-<p>Deep packet analysis: tshark, ngrep</p>
-</li>
-<li>Network scanning: nmap, nping, NSE scripts</li>
-<li>Network performance: iperf3, ethtool, iftop</li>
-<li>Advanced routing: tcptraceroute, fping</li>
-<li>Library tracing: ltrace</li>
-<li>Firewall: iptables, nftables (need NET_ADMIN)</li>
-<li>Connection tracking: conntrack (need NET_ADMIN)</li>
-</ul>
-<hr />
-<h2 id="capability-requirements-reference">Capability Requirements Reference<a class="headerlink" href="#capability-requirements-reference" title="Permanent link">&para;</a></h2>
-<table>
-<thead>
-<tr>
-<th>Tool</th>
-<th>Capability</th>
-<th>Docker</th>
-<th>Kubernetes</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><strong>Most tools</strong></td>
-<td>None</td>
-<td>Standard run</td>
-<td>kubectl run/debug</td>
-</tr>
-<tr>
-<td><strong>tcpdump</strong></td>
-<td>NET_RAW</td>
-<td><code>--cap-add=NET_RAW</code></td>
-<td><a href="https://raw.githubusercontent.com/ibtisam-iq/debugbox/main/examples/balanced-debug-pod.yaml">Use manifest</a></td>
-</tr>
-<tr>
-<td><strong>tshark</strong></td>
-<td>NET_ADMIN</td>
-<td><code>--cap-add=NET_ADMIN</code></td>
-<td><a href="https://raw.githubusercontent.com/ibtisam-iq/debugbox/main/examples/power-debug-pod.yaml">Use manifest</a></td>
-</tr>
-<tr>
-<td><strong>ngrep</strong></td>
-<td>NET_ADMIN</td>
-<td><code>--cap-add=NET_ADMIN</code></td>
-<td>Use manifest</td>
-</tr>
-<tr>
-<td><strong>iptables</strong></td>
-<td>NET_ADMIN</td>
-<td><code>--cap-add=NET_ADMIN</code></td>
-<td>Use manifest</td>
-</tr>
-<tr>
-<td><strong>nftables</strong></td>
-<td>NET_ADMIN</td>
-<td><code>--cap-add=NET_ADMIN</code></td>
-<td>Use manifest</td>
-</tr>
-<tr>
-<td><strong>conntrack</strong></td>
-<td>NET_ADMIN</td>
-<td><code>--cap-add=NET_ADMIN</code></td>
-<td>Use manifest</td>
-</tr>
-</tbody>
-</table>
-<hr />
-<p>→ <strong><a href="../../usage/kubernetes/">Kubernetes Usage</a></strong> | <strong><a href="../../usage/docker/">Docker Usage</a></strong> | <strong><a href="../troubleshooting/">Troubleshooting</a></strong> | <strong><a href="../../variants/overview/">Variants Overview</a></strong></p>
+<p>→ <strong><a href="../../reference/manifest/">Complete tool list per variant</a></strong> | <strong><a href="../troubleshooting/#permission-denied-tcpdump-iptables-conntrack-tshark">Capability requirements</a></strong> | <strong><a href="../../usage/kubernetes/">Kubernetes Usage</a></strong> | <strong><a href="../../usage/docker/">Docker Usage</a></strong></p>
 
 
 
@@ -2608,7 +2358,7 @@
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-custom" title="July 6, 2026 20:52:18 PKT">July 06, 2026 08:52:18 PM</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-custom" title="July 9, 2026 07:04:40 PKT">July 09, 2026 07:04:40 AM</span>
   </span>
 
     
