@@ -8,7 +8,6 @@
 [![Docker Pulls](https://img.shields.io/docker/pulls/mibtisam/debugbox?logo=docker&label=Docker%20Hub&logoColor=white)](https://hub.docker.com/r/mibtisam/debugbox)
 [![GitHub Container Registry](https://img.shields.io/badge/GHCR-Available-brightgreen?logo=github&logoColor=white)](https://github.com/ibtisam-iq/debugbox/pkgs/container/debugbox)
 [![Multi-Arch](https://img.shields.io/badge/Multi--Arch-amd64%20%7C%20arm64-blue?logo=docker&logoColor=white)](https://github.com/ibtisam-iq/debugbox)
-[![Kubernetes Ready](https://img.shields.io/badge/Kubernetes-Ready-326ce5?logo=kubernetes&logoColor=white)](https://kubernetes.io/)
 
 **Docs:** https://debugbox.ibtisam-iq.com
 
@@ -18,31 +17,30 @@
 
 You need to debug a pod. You run `kubectl debug my-pod --image=netshoot` and wait for **~202 MB** to download.
 
-On an edge cluster? Mobile network? Restricted bandwidth? **Every MB costs time.**
+On an edge cluster? A metered connection? **Every MB costs time.**
 
-Worse still: you just need to check DNS. You don't need tcpdump, tshark, routing tools. But netshoot is all-or-nothing.
+And you just need to check DNS. You don't need tcpdump, tshark, routing tools. But netshoot is all-or-nothing.
 
 ---
 
 ## The Solution
 
-**DebugBox** is a Kubernetes-native debugging container that lets you choose exactly what you need.
-
-- `kubectl debug` ephemeral containers, launch in seconds
-- `kubectx`/`kubens` context switching built in
-- Shell helpers pre-loaded: `json()` and `yaml()` functions ready to use
-- Pinned tool versions for deterministic, repeatable builds
+**DebugBox** is a debugging container designed for Kubernetes. Pick the variant that fits your task.
 
 Three sizes:
+
 - **LITE** (~15 MB): DNS and connectivity
 - **BALANCED** (~47 MB): Daily Kubernetes debugging
 - **POWER** (~91 MB): Packet analysis and forensics
+
+Includes `kubectx`/`kubens` (balanced+), `json()`/`yaml()` shell helpers, and pinned tool versions.
+
+Not for persistent sidecars, production workloads, or control plane access. Runs as root, meant for ephemeral debugging only.
 
 ---
 
 ## Choosing Your Variant
 
-Pick the right size for your task:
 ```
                 Need packet analysis or nmap?
                          │
@@ -58,24 +56,25 @@ Pick the right size for your task:
                NO       YES ─────────► BALANCED (~47 MB)
                 │                     (tcpdump, openssl, kubectx/ns)
                 │
-               YES ────────────────► LITE (~15 MB)
-                                    (minimal, fast)
+                ▼
+            LITE (~15 MB)
+            (minimal, fast)
 ```
 
 ---
 
 ## Quick Start
 
-### Kubernetes (Recommended)
+### Kubernetes
 
 ```bash
 # Debug a running pod (default: balanced variant)
 kubectl debug my-pod -it --image=ghcr.io/ibtisam-iq/debugbox
 
-# Use lite variant (minimal, fastest pull)
+# Lite variant
 kubectl debug my-pod -it --image=ghcr.io/ibtisam-iq/debugbox:lite
 
-# Use power variant (full forensics toolkit)
+# Power variant
 kubectl debug my-pod -it --image=ghcr.io/ibtisam-iq/debugbox:power
 
 # Standalone debugging session
@@ -85,21 +84,14 @@ kubectl run debug --rm -it --image=ghcr.io/ibtisam-iq/debugbox --restart=Never
 ### Docker
 
 ```bash
-# Interactive session (latest balanced variant)
-docker run -it ghcr.io/ibtisam-iq/debugbox
-
-# Lite variant
+docker run -it ghcr.io/ibtisam-iq/debugbox         # balanced (default)
 docker run -it ghcr.io/ibtisam-iq/debugbox:lite
-
-# Power variant
 docker run -it ghcr.io/ibtisam-iq/debugbox:power
 ```
 
 ---
 
-## Why DebugBox?
-
-### Smaller Than netshoot
+## Size Comparison
 
 | Image | Compressed Size |
 |-------|-----------------|
@@ -108,25 +100,15 @@ docker run -it ghcr.io/ibtisam-iq/debugbox:power
 | DebugBox power | ~91 MB |
 | netshoot v0.15 | ~202 MB |
 
-DebugBox power is ~111 MB smaller than netshoot (55% reduction).
-DebugBox lite is ~13x smaller than netshoot.
+DebugBox power is ~111 MB smaller than netshoot (55% reduction). DebugBox lite is ~13x smaller.
 
-On resource-constrained clusters (edge, IoT, Kubernetes on laptops), every MB counts. [See detailed bandwidth analysis](https://debugbox.ibtisam-iq.com/latest/guides/bandwidth-savings/)
-
-### Secure by Default
-
-- Trivy scans block HIGH/CRITICAL on every release
-- Alpine Linux base (minimal attack surface)
-- No unnecessary packages
-- Multi-architecture support (amd64, arm64)
-
-**[Security policy →](SECURITY.md)**
+[Detailed bandwidth analysis](https://debugbox.ibtisam-iq.com/latest/guides/bandwidth-savings/)
 
 ---
 
 ## Features by Variant
 
-**What tools are included in each variant?** → **[Complete tool list](https://github.com/ibtisam-iq/debugbox/blob/main/docs/manifest.yaml)**
+**Source of truth:** [`docs/manifest.yaml`](https://github.com/ibtisam-iq/debugbox/blob/main/docs/manifest.yaml)
 
 | Category | Tools | Lite | Balanced | Power |
 |---|---|:---:|:---:|:---:|
@@ -147,7 +129,7 @@ On resource-constrained clusters (edge, IoT, Kubernetes on laptops), every MB co
 | **Network Helpers** | ports, connections, routes, k8s-info, sniff, sniff-http, sniff-dns, cert-check() | -- | ✓ | ✓ |
 | **Forensics Helpers** | conntrack-watch | -- | -- | ✓ |
 
-**→ [Detailed variant breakdown](https://debugbox.ibtisam-iq.com/latest/variants/overview/)**
+→ **[Detailed variant breakdown](https://debugbox.ibtisam-iq.com/latest/variants/overview/)**
 
 ---
 
@@ -162,74 +144,46 @@ On resource-constrained clusters (edge, IoT, Kubernetes on laptops), every MB co
 | **Kubernetes helpers** | ✓ kubectx/ns | ✗ none | ✗ none | ✗ none |
 | **Security scanned** | ✓ Trivy | ✗ manual | ✗ manual | ✗ manual |
 
-**Advantages:**
-- Smaller when you need it (~15 MB vs ~202 MB)
-- Larger when you need it (~91 MB for SRE workflows)
-- Kubernetes-first design (kubectx/kubens built in)
-- Predictable (pinned tools, repeatable builds)
+---
+
+## Image Tags
+
+| Variant | Floating | Pinned |
+|---------|----------|--------|
+| lite | `debugbox:lite` | `debugbox:lite-X.Y.Z` |
+| balanced (default) | `debugbox:latest` | `debugbox:X.Y.Z` |
+| power | `debugbox:power` | `debugbox:power-X.Y.Z` |
+
+Published to **GHCR** (`ghcr.io/ibtisam-iq/debugbox`) and **Docker Hub** (`docker.io/mibtisam/debugbox`). 22 tags per release.
+
+For production, always pin versions. → **[Full tag reference](https://debugbox.ibtisam-iq.com/latest/reference/tags/)**
 
 ---
 
-## Use Cases
+## Security
 
-**Ephemeral debugging with `kubectl debug`:**
-- One-off troubleshooting sessions
-- Resource-constrained environments (edge, IoT, bandwidth-limited)
-- Multi-cluster operations (kubectx/kubens included)
-- Incident response (fast pull, ready to go)
-- Learning Kubernetes networking
-- SRE forensics workflows (power variant)
+- Trivy scans block HIGH/CRITICAL on every release
+- Alpine Linux base (minimal attack surface)
 
-**Not for:**
-- Persistent sidecars (use for ephemeral debugging only)
-- Production workloads (runs as root, for debugging only)
-- Kubernetes control plane access (no kubectl, no kube-proxy config)
+**[Security policy →](SECURITY.md)**
 
 ---
 
-## Image Tags & Registries
+## FAQ
 
-### Available Images
+**Q: Can I use DebugBox in production?**
 
-DebugBox is published to **two registries** with **22 tags per release**:
+A: No. It runs as root and is designed for ephemeral debugging only.
 
-| Registry | URL |
-|----------|-----|
-| **GHCR (Recommended)** | `ghcr.io/ibtisam-iq/debugbox` |
-| **Docker Hub** | `docker.io/mibtisam/debugbox` |
+**Q: Does DebugBox work on older Kubernetes versions?**
 
-### Tag Strategy
+A: `kubectl run` works on any version. `kubectl debug` requires 1.23+.
 
-All three variants are in **one repository** with **variant-based tags**:
+**Q: What if I need a tool not in DebugBox?**
 
-#### **Primary Tags** (Variant Discovery)
-```bash
-debugbox:lite              # Latest lite variant
-debugbox:balanced          # Latest balanced variant (default)
-debugbox:power             # Latest power variant
-```
+A: Extend it with your own Dockerfile or submit a feature request. See **[Local Development](https://debugbox.ibtisam-iq.com/latest/development/local-setup/)**.
 
-#### **Floating Version Tags** (Latest per Variant)
-```bash
-debugbox:lite-latest       # Latest lite
-debugbox:balanced-latest   # Latest balanced
-debugbox:power-latest      # Latest power
-```
-
-#### **Pinned Version Tags** (Immutable, for Production)
-```bash
-debugbox:lite-1.0.0        # Lite v1.0.0
-debugbox:balanced-1.0.0    # Balanced v1.0.0
-debugbox:power-1.0.0       # Power v1.0.0
-```
-
-#### **Default Aliases** (Convenience)
-```bash
-debugbox:latest            # Alias to balanced-latest (default)
-debugbox:1.0.0             # Alias to balanced-1.0.0 (short form)
-```
-
-**Production:** Always pin specific versions [See Image Tags](https://debugbox.ibtisam-iq.com/latest/reference/tags/)
+→ **[More questions](https://debugbox.ibtisam-iq.com/latest/guides/troubleshooting/)**
 
 ---
 
@@ -237,35 +191,14 @@ debugbox:1.0.0             # Alias to balanced-1.0.0 (short form)
 
 **Full docs:** https://debugbox.ibtisam-iq.com
 
-**Essential guides:**
-- [Kubernetes Usage](https://debugbox.ibtisam-iq.com/latest/usage/kubernetes/): kubectl debug examples
-- [Docker Usage](https://debugbox.ibtisam-iq.com/latest/usage/docker/): Docker run examples
-- [Variants Overview](https://debugbox.ibtisam-iq.com/latest/variants/overview/): detailed tool breakdown
-- [Image Tags & Registries](https://debugbox.ibtisam-iq.com/latest/reference/tags/): tagging strategy
-- [Common Workflows](https://debugbox.ibtisam-iq.com/latest/guides/examples/): real debugging scenarios
-- [Local Development](https://debugbox.ibtisam-iq.com/latest/development/local-setup/): build and test locally
-- [Contributing](CONTRIBUTING.md): how to contribute
-
----
-
-## FAQ
-
-**Q: Can I use DebugBox in production?**
-A: No. DebugBox runs as root and is designed for ephemeral debugging containers only. Use `kubectl debug` or temporary pods.
-
-**Q: What if I need a tool not in DebugBox?**
-A: You can extend DebugBox by creating your own Dockerfile or submitting a feature request. See **[Local Development](https://debugbox.ibtisam-iq.com/latest/development/local-setup/)**.
-
-**Q: How do I pin a specific version in production?**
-A: Use the full tag: `ghcr.io/ibtisam-iq/debugbox:1.0.0` (balanced) or `ghcr.io/ibtisam-iq/debugbox:lite-1.0.0` (lite). See **[Image Tags](https://debugbox.ibtisam-iq.com/latest/reference/tags/)** for full strategy.
-
-**Q: Does DebugBox work on older Kubernetes versions?**
-A: Yes. `kubectl run` works on any version. `kubectl debug` requires 1.23+.
-
-**Q: Can I use DebugBox outside Kubernetes?**
-A: Yes. `docker run -it ghcr.io/ibtisam-iq/debugbox` works for local debugging.
-
-**More questions?** → **[Full Troubleshooting Guide](https://debugbox.ibtisam-iq.com/latest/guides/troubleshooting/)**
+- [Kubernetes Usage](https://debugbox.ibtisam-iq.com/latest/usage/kubernetes/)
+- [Docker Usage](https://debugbox.ibtisam-iq.com/latest/usage/docker/)
+- [Variants Overview](https://debugbox.ibtisam-iq.com/latest/variants/overview/)
+- [Common Workflows](https://debugbox.ibtisam-iq.com/latest/guides/examples/)
+- [Local Development](https://debugbox.ibtisam-iq.com/latest/development/local-setup/)
+- [Contributing](CONTRIBUTING.md)
+- [Changelog](CHANGELOG.md)
+- [Code of Conduct](CODE_OF_CONDUCT.md)
 
 ---
 
@@ -274,50 +207,11 @@ A: Yes. `docker run -it ghcr.io/ibtisam-iq/debugbox` works for local debugging.
 ```bash
 git clone https://github.com/ibtisam-iq/debugbox.git
 cd debugbox
-
-make build-all     # All variants
-make test-all      # Smoke tests
-make scan          # Trivy scan
+make check    # lint, build, test, scan
 ```
 
 See **[Local Development](https://debugbox.ibtisam-iq.com/latest/development/local-setup/)** for detailed setup.
 
 ---
 
-## Contributing
-
-Found a bug? Have an idea? We welcome contributions!
-
-→ **[Contributing Guidelines](CONTRIBUTING.md)**
-
----
-
-## License
-
-[MIT License](LICENSE)
-
----
-
-## Changelog
-
-**v1.0.0** (Feb 2026)
-- Public release
-- 3 variants: lite, balanced, power
-- Multi-arch support (amd64, arm64)
-- Kubernetes-optimized with kubectx/kubens
-- SRE-grade routing and analysis tools in power variant
-
-→ **[Full changelog](CHANGELOG.md)**
-
----
-
-## Support & Community
-
-- **GitHub Discussions**: ask questions, share ideas
-- **GitHub Issues**: report bugs or request features
-- **Documentation**: https://debugbox.ibtisam-iq.com
-- **Code of Conduct**: [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md)
-
----
-
-Built for Kubernetes debugging by [@ibtisam-iq](https://github.com/ibtisam-iq)
+[MIT License](LICENSE) | Built for Kubernetes debugging by [@ibtisam-iq](https://github.com/ibtisam-iq)
