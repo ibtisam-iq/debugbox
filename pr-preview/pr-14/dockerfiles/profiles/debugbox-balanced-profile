@@ -1,0 +1,32 @@
+# DebugBox Balanced — Shell Helpers & Aliases
+# Loaded automatically via /etc/profile.d (bash)
+
+# === File Listing ===
+# ll() is inherited from debugbox-base-profile.sh
+
+# === Data Inspection ===
+json() {
+  jq . "$@" 2>/dev/null || cat "$@"
+}
+
+yaml() {
+  yq . "$@" 2>/dev/null || cat "$@"
+}
+
+# === Network Inspection ===
+alias ports="ss -tulnp"
+alias connections="ss -tunap"
+alias routes="ip route show"
+
+# === Packet Capture ===
+alias sniff="tcpdump -i any -n -s 0"
+alias sniff-http="tcpdump -i any -n -s 0 'tcp port 80 or tcp port 443'"
+alias sniff-dns="tcpdump -i any -n -s 0 'port 53'"
+
+# === TLS/Certificate Inspection ===
+cert-check() {
+  echo | openssl s_client -connect "$1" -showcerts 2>/dev/null | openssl x509 -text -noout
+}
+
+# === Kubernetes ===
+alias k8s-info='echo Context: $(kubectx -c 2>/dev/null || echo unknown); echo Namespace: $(kubens -c 2>/dev/null || echo unknown)'
