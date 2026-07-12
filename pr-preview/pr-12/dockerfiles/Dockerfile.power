@@ -1,0 +1,80 @@
+# DebugBox — Power variant
+# Advanced SRE-grade debugging and network forensics image.
+
+ARG BASE_IMAGE=ghcr.io/ibtisam-iq/debugbox-base@sha256:56a6c7cc829a5b3eefbced578ffc097bdeedee0e0489c7a73604c409e501023f
+
+# Build kubectx/kubens from source
+FROM golang:1.25-alpine AS kubectx-builder
+
+ARG KUBECTX_VERSION=v0.11.0
+WORKDIR /src
+
+RUN apk add --no-cache git
+
+RUN git clone --branch ${KUBECTX_VERSION} --depth 1 \
+    https://github.com/ahmetb/kubectx.git .
+
+RUN go get golang.org/x/net@v0.55.0 && go mod tidy
+
+RUN CGO_ENABLED=0 go build -trimpath \
+      -ldflags="-s -w -X main.version=${KUBECTX_VERSION}" \
+      -o kubectx ./cmd/kubectx && \
+    CGO_ENABLED=0 go build -trimpath \
+      -ldflags="-s -w -X main.version=${KUBECTX_VERSION}" \
+      -o kubens ./cmd/kubens
+
+# Runtime image
+FROM ${BASE_IMAGE}
+
+# Build args for OCI labels (passed from workflow)
+ARG BUILD_DATE
+ARG VCS_REF
+ARG VERSION
+
+# OCI IMAGE LABELS
+LABEL org.opencontainers.image.title="DebugBox Power" \
+      org.opencontainers.image.description="Advanced SRE-grade network forensics and troubleshooting image" \
+      org.opencontainers.image.variant="power" \
+      org.opencontainers.image.base.name="${BASE_IMAGE}" \
+      org.opencontainers.image.created="${BUILD_DATE}" \
+      org.opencontainers.image.revision="${VCS_REF}" \
+      org.opencontainers.image.version="${VERSION}" \
+      org.opencontainers.image.licenses="MIT" \
+      org.opencontainers.image.url="https://github.com/ibtisam-iq/debugbox" \
+      org.opencontainers.image.source="https://github.com/ibtisam-iq/debugbox" \
+      org.opencontainers.image.documentation="https://debugbox.ibtisam-iq.com" \
+      org.opencontainers.image.vendor="Ibtisam IQ" \
+      org.opencontainers.image.authors="Muhammad Ibtisam <contact@ibtisam-iq.com>"
+
+# Copy Kubernetes context switchers
+COPY --from=kubectx-builder /src/kubectx /usr/local/bin/kubectx
+COPY --from=kubectx-builder /src/kubens  /usr/local/bin/kubens
+
+# Install power package set (balanced + advanced tools)
+COPY dockerfiles/build/ /tmp/build/
+RUN set -eux && \
+    sh /tmp/build/balanced.packages && \
+    sh /tmp/build/power.packages
+
+# Install pinned upstream binaries
+COPY scripts/ /tmp/scripts
+RUN set -eux && \
+    sh /tmp/scripts/install-yq-binary && \
+    rm -rf /tmp/scripts
+
+# Verify installed tools
+RUN set -eux && \
+    sh /tmp/build/balanced.verify && \
+    sh /tmp/build/power.verify && \
+    rm -rf /tmp/build && \
+    echo "=== DebugBox Power: ALL TOOLS VERIFIED ✓ ===" && \
+    echo "Ready for SRE-grade debugging and forensics."
+
+ENV PAGER=less
+
+# Shell helpers for advanced debugging and forensics
+COPY dockerfiles/profiles/debugbox-power-profile /etc/profile.d/debugbox-power-profile.sh
+RUN chmod 0644 /etc/profile.d/debugbox-power-profile.sh && \
+    echo "DebugBox Power: shell helpers configured ✓"
+
+CMD ["/bin/bash", "-l"]

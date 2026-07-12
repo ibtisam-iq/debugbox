@@ -1,0 +1,36 @@
+#!/bin/sh
+set -eux
+
+echo "=== DebugBox Power: Verifying Network Scanning ===" && \
+nmap --version >/dev/null && \
+echo "  nmap ✓" && \
+command -v nping >/dev/null && \
+echo "  nmap-nping ✓" && \
+iperf3 --version >/dev/null && \
+echo "  iperf3 ✓" && \
+ethtool --version >/dev/null 2>&1 && \
+echo "  ethtool ✓" && \
+command -v iftop >/dev/null && \
+echo "  iftop ✓" && \
+\
+echo "=== DebugBox Power: Verifying Deep Packet Analysis ===" && \
+tshark -v >/dev/null && \
+echo "  tshark ✓" && \
+command -v ngrep >/dev/null && \
+echo "  ngrep ✓" && \
+fping -v >/dev/null 2>&1 && \
+echo "  fping ✓" && \
+command -v tcptraceroute >/dev/null && \
+echo "  tcptraceroute ✓" && \
+ltrace --version >/dev/null 2>&1 && \
+echo "  ltrace ✓" && \
+\
+echo "=== DebugBox Power: Verifying Firewall & Routing ===" && \
+command -v iptables >/dev/null && \
+echo "  iptables ✓" && \
+command -v nft >/dev/null && \
+echo "  nftables ✓" && \
+command -v conntrack >/dev/null && \
+echo "  conntrack-tools ✓" && \
+\
+echo ""

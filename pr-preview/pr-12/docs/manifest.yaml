@@ -1,0 +1,182 @@
+# DebugBox Product Manifest
+#
+# This file documents the user-visible contract of DebugBox images.
+# It describes what tools, shell behavior, helpers, and environment
+# guarantees are provided by each variant.
+#
+# Build and implementation details live in Dockerfiles.
+
+base:
+  description: "Shared foundation for all DebugBox variants"
+
+  packages:
+    - ca-certificates
+
+  shell:
+    default: ash
+    helpers:
+      - ll()                  # ls -alF wrapper
+
+  environment:
+    editor: vi
+    locale: C.UTF-8
+    prompt: "\\n\\u@\\h:\\w# (root) or $ (user) — with color support when in terminal"
+
+
+variants:
+  lite:
+    description: "Minimal, fast-pull image for ephemeral Kubernetes debugging"
+
+    tools:
+      networking:
+        - curl
+        - netcat-openbsd
+        - iproute2
+        - iputils
+        - bind-tools
+
+      data:
+        - jq
+        - yq                  # YAML (apk version)
+
+    shell:
+      default: ash
+      helpers:
+        - json()              # function: Pretty-print JSON with fallback
+        - yaml()              # function: Pretty-print YAML with fallback
+
+    environment:
+      editor: vi
+      locale: C.UTF-8
+
+
+  balanced:
+    description: "Recommended daily-driver image for cloud-native debugging"
+    includes: lite
+
+    tools:
+      shell-and-ux:
+        - bash
+        - bash-completion
+        - less
+
+      editors:
+        - vim
+
+      http-and-tls:
+        - openssl             # TLS certificate inspection, connection testing (curl inherited from lite)
+
+      version-control:
+        - git
+
+      filesystem:
+        - file
+        - tar
+        - gzip
+
+      networking:
+        - tcpdump
+        - socat
+        - mtr
+
+      system:
+        - htop
+        - strace
+        - lsof
+        - procps
+        - psmisc
+
+      kubernetes:
+        - kubectx
+        - kubens
+
+    shell:
+      default: bash
+      helpers:
+        - json()
+        - yaml()
+        - ports               # alias: ss -tulnp (show listening ports)
+        - connections         # alias: ss -tunap (show all connections)
+        - routes              # alias: ip route show (show routing table)
+        - k8s-info            # alias: show current K8s context + namespace
+        - sniff               # alias: tcpdump -i any -n -s 0 (quick packet capture)
+        - sniff-http          # alias: capture HTTP traffic (ports 80/443)
+        - sniff-dns           # alias: capture DNS queries (port 53)
+        - cert-check()        # function: inspect TLS certificates (openssl s_client wrapper)
+
+    environment:
+      pager: less
+      editor: vim
+      locale: C.UTF-8
+
+
+  power:
+    description: "Full SRE-grade image for deep system and network forensics"
+    includes: balanced
+
+    tools:
+      network-scanning:
+        - nmap
+        - nmap-nping
+        - nmap-scripts
+
+      network-performance:
+        - iperf3
+        - ethtool
+        - iftop
+
+      deep-packet-analysis:
+        - tshark
+        - ngrep
+        - tcptraceroute
+        - fping
+
+      system-internals:
+        - ltrace
+
+      firewall-and-routing:
+        - iptables
+        - nftables
+        - conntrack-tools
+
+      data:
+        - yq                  # pinned upstream binary (not apk)
+
+    shell:
+      default: bash
+      helpers:
+        - json()
+        - yaml()
+        - ports
+        - connections
+        - routes
+        - k8s-info
+        - sniff
+        - sniff-http
+        - sniff-dns
+        - cert-check()
+        - conntrack-watch     # alias: watch active connections in real-time (power only)
+
+    environment:
+      pager: less
+      editor: vim
+      locale: C.UTF-8
+
+
+notes:
+  - Helpers are loaded via /etc/profile.d
+  - All images run as root by design
+  - Lite prioritizes speed and small size
+  - Balanced prioritizes daily usability
+  - Power prioritizes determinism and SRE workflows
+  - Base prompt: user@hostname:workdir with # (root) or $ (user)
+  - Shell helpers in balanced: 10 total (json, yaml, ports, connections, routes, k8s-info, sniff, sniff-http, sniff-dns, cert-check)
+  - Shell helpers in power: 11 total (10 from balanced + conntrack-watch)
+
+
+contributing:
+  - "Group tools by function, not by package name"
+  - "Document behavioral changes here when Dockerfiles change"
+  - "Avoid copying build or verification logic into this file"
+  - "Shell helpers should describe their purpose (function vs alias)"
+  - "New tools must include brief description for 'why power only' or 'why balanced+'"
