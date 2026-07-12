@@ -1,0 +1,83 @@
+{% extends "base.html" %}
+
+{% block announce %}
+  <a id="announce-link" href="https://github.com/ibtisam-iq/debugbox/releases/latest">
+    DebugBox -- see the latest release notes
+  </a>
+  <script>
+    fetch("https://api.github.com/repos/ibtisam-iq/debugbox/releases/latest")
+      .then(function(r) { return r.json(); })
+      .then(function(d) {
+        if (d.tag_name) {
+          var el = document.getElementById("announce-link");
+          el.href = d.html_url;
+          el.textContent = "DebugBox " + d.tag_name + " is out -- see the release notes";
+        }
+      });
+  </script>
+{% endblock %}
+
+{% block hero %}
+  {% if page.is_homepage %}
+    <section class="db-hero">
+      <div class="db-hero__inner">
+        <h1 class="db-hero__title">DebugBox</h1>
+        <p class="db-hero__tagline">
+          Multi-variant debugging containers for Kubernetes.
+          Pull only what you need.
+        </p>
+        <div class="db-hero__variants">
+          <a href="{{ 'variants/lite/' | url }}" class="db-hero__variant db-hero__variant--lite">
+            <div class="db-hero__variant-bar"></div>
+            <p class="db-hero__variant-name">Lite</p>
+            <p class="db-hero__variant-size">~15 MB</p>
+            <p class="db-hero__variant-desc">Network and DNS checks</p>
+          </a>
+          <a href="{{ 'variants/balanced/' | url }}" class="db-hero__variant db-hero__variant--balanced">
+            <div class="db-hero__variant-bar"></div>
+            <p class="db-hero__variant-name">Balanced</p>
+            <p class="db-hero__variant-size">~47 MB</p>
+            <p class="db-hero__variant-desc">Daily Kubernetes troubleshooting</p>
+            <span class="db-hero__variant-tag">Default</span>
+          </a>
+          <a href="{{ 'variants/power/' | url }}" class="db-hero__variant db-hero__variant--power">
+            <div class="db-hero__variant-bar"></div>
+            <p class="db-hero__variant-name">Power</p>
+            <p class="db-hero__variant-size">~91 MB</p>
+            <p class="db-hero__variant-desc">Packet capture and deep forensics</p>
+          </a>
+        </div>
+        <div class="db-hero__actions">
+          <a href="{{ 'getting-started/quick-start/' | url }}" class="db-hero__btn db-hero__btn--primary">
+            Quick Start
+          </a>
+          <a href="{{ 'variants/overview/' | url }}" class="db-hero__btn db-hero__btn--secondary">
+            Choose Your Variant
+          </a>
+        </div>
+      </div>
+    </section>
+  {% endif %}
+{% endblock %}
+
+{% block content %}
+  {% if page.is_homepage %}
+    <style>.md-content__inner > h1 { display: none; }</style>
+  {% endif %}
+  {{ super() }}
+{% endblock %}
+
+{% block footer %}
+  {{ super() }}
+  <script>
+    (function() {
+      var el = document.querySelector(".md-copyright");
+      if (el) {
+        var startYear = 2026;
+        var y = new Date().getFullYear();
+        var range = y > startYear ? startYear + "–" + y : String(startYear);
+        el.innerHTML = "Copyright © " + range + " DebugBox";
+      }
+    })();
+  </script>
+{% endblock %}

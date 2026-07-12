@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: debug-lite
+  labels:
+    app: debugbox
+    variant: lite
+spec:
+  containers:
+  - name: debugbox
+    image: ghcr.io/ibtisam-iq/debugbox:lite
+    command: ["/bin/ash", "-l"]
+    tty: true
+    stdin: true
+  restartPolicy: Never

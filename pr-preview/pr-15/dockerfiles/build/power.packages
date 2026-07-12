@@ -1,0 +1,44 @@
+#!/bin/sh
+set -eux
+
+# ====================================================================
+# GROUP 9: NETWORK SCANNING & PERFORMANCE
+# ====================================================================
+# nmap — Network scanner for port discovery and service detection
+# nmap-nping — Packet generation and response analysis
+# nmap-scripts — NSE scripts for advanced network discovery
+# iperf3 — Bandwidth testing between containers
+# ethtool — NIC diagnostics
+# iftop — Real-time bandwidth per host
+
+# ====================================================================
+# GROUP 10: DEEP PACKET ANALYSIS
+# ====================================================================
+# tshark — Command-line packet analyzer (Wireshark backend)
+# ngrep — Network grep: search packets by regex patterns
+# fping — Parallel ICMP ping with statistics
+# tcptraceroute — TCP-based traceroute (works through firewalls)
+# ltrace — Library call tracer (complements strace)
+
+# ====================================================================
+# GROUP 11: FIREWALL & ROUTING INTERNALS
+# ====================================================================
+# iptables — Netfilter firewall rules inspection (requires NET_ADMIN)
+# nftables — Modern firewall replacement (requires NET_ADMIN)
+# conntrack-tools — Connection tracking inspection (requires NET_ADMIN)
+
+apk add --no-cache \
+      nmap \
+      nmap-nping \
+      nmap-scripts \
+      iperf3 \
+      ethtool \
+      iftop \
+      tshark \
+      ngrep \
+      fping \
+      tcptraceroute \
+      ltrace \
+      iptables \
+      nftables \
+      conntrack-tools
