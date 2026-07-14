@@ -20,7 +20,7 @@ base:
   environment:
     editor: vi
     locale: C.UTF-8
-    prompt: "\\n\\u@\\h:\\w# (root) or $ (user) — with color support when in terminal"
+    prompt: "\n\u@\h:\w# (root) or $ (user) - with color support when in terminal"
 
 
 variants:
@@ -95,14 +95,14 @@ variants:
       helpers:
         - json()
         - yaml()
-        - ports               # alias: ss -tulnp (show listening ports)
-        - connections         # alias: ss -tunap (show all connections)
-        - routes              # alias: ip route show (show routing table)
-        - k8s-info            # alias: show current K8s context + namespace
-        - sniff               # alias: tcpdump -i any -n -s 0 (quick packet capture)
-        - sniff-http          # alias: capture HTTP traffic (ports 80/443)
-        - sniff-dns           # alias: capture DNS queries (port 53)
-        - cert-check()        # function: inspect TLS certificates (openssl s_client wrapper)
+        - ports()             # function: ss -tulnp (show listening ports)
+        - connections()       # function: ss -tunap (show all connections)
+        - routes()            # function: ip route show (show routing table)
+        - k8s-info()          # function: show current K8s context + namespace
+        - sniff()             # function: tcpdump -i any -n -s 0 (quick packet capture, accepts extra args)
+        - sniff-http()        # function: capture HTTP traffic (ports 80/443)
+        - sniff-dns()         # function: capture DNS queries (port 53)
+        - cert-check()        # function: inspect TLS certificates - usage: cert-check <host> [port]
 
     environment:
       pager: less
@@ -155,7 +155,7 @@ variants:
         - sniff-http
         - sniff-dns
         - cert-check()
-        - conntrack-watch     # alias: watch active connections in real-time (power only)
+        - conntrack-watch()   # function: list active conntrack entries (power only, requires NET_ADMIN)
 
     environment:
       pager: less
