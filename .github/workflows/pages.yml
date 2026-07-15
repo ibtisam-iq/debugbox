@@ -46,7 +46,7 @@ jobs:
       # internals (e.g. hidden checkbox <label> associations), not content.
 
       - name: QA - Check for broken links
-        uses: lycheeverse/lychee-action@v2.8.0
+        uses: lycheeverse/lychee-action@v2.9.0
         with:
           args: >
             --no-progress
