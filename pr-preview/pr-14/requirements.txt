@@ -23,5 +23,5 @@ python-dateutil==2.9.0.post0
 mkdocs-git-revision-date-localized-plugin==1.5.3
 
 # Social card generation (OG images)
-pillow>=10.0.0
+pillow>=12.3.0
 cairosvg>=2.9.0

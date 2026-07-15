@@ -1,3 +1,5 @@
-# No suppressed CVEs at this time.
-# All previously ignored vulnerabilities have been resolved.
-# Add entries here only with justification documented in SECURITY.md.
+# CVE-2026-39822: Go os.Root symlink traversal in stdlib
+# yq v4.53.3 is compiled with Go v1.26.4; fix landed in Go v1.26.5
+# No newer yq release available as of 2026-07-15
+# Remove this entry when yq releases a binary built with Go v1.26.5+
+CVE-2026-39822

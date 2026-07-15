@@ -1,11 +1,11 @@
-# DebugBox Lite — Shell Helpers
+# DebugBox Lite - Shell Helpers
 # Loaded automatically via /etc/profile.d
 
 # === File Listing ===
 # ll() is inherited from debugbox-base-profile.sh
 
 # === Data Inspection ===
-# json() — Pretty-print JSON or fallback to raw output
+# json() - Pretty-print JSON or fallback to raw output
 #   Usage: cat file.json | json
 #          json < data.json
 #          json file.json
@@ -13,7 +13,7 @@ json() {
   jq . "$@" 2>/dev/null || cat "$@"
 }
 
-# yaml() — Pretty-print YAML or fallback to raw output
+# yaml() - Pretty-print YAML or fallback to raw output
 #   Usage: kubectl get pod -o yaml | yaml
 #          yaml < config.yaml
 #          yaml file.yaml
