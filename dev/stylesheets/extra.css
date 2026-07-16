@@ -2,6 +2,8 @@
    DebugBox Theme – Indigo + Amber
    ============================================================ */
 
+/* Indigo 800 + Amber 800: avoids Material's generic blue/cyan default while keeping
+   accessible contrast on both light and dark surfaces. */
 :root {
   --md-primary-fg-color: #283593;
   --md-primary-fg-color--light: #5c6bc0;
@@ -34,7 +36,8 @@
   background: linear-gradient(135deg, #0d1137 0%, #1a237e 50%, #1e2a6e 100%);
 }
 
-/* Fade the hero into the page background instead of a hard color cut */
+/* Pseudo-element used to fade the hero bottom edge into the page background,
+   avoiding the abrupt color boundary a hard border or padding would create. */
 .db-hero::after {
   content: "";
   position: absolute;
@@ -86,7 +89,27 @@
   background: rgba(255, 255, 255, 0.12);
 }
 
-.db-hero__variant--default {
+/* Negative margins pull the bar flush with the card edges, countering the 1rem card padding. */
+.db-hero__variant-bar {
+  height: 4px;
+  border-radius: 2px 2px 0 0;
+  margin: -1.5rem -1rem 1rem;
+}
+
+.db-hero__variant--lite .db-hero__variant-bar {
+  background: #78909C;
+}
+
+.db-hero__variant--balanced .db-hero__variant-bar {
+  background: var(--md-accent-fg-color);
+}
+
+.db-hero__variant--power .db-hero__variant-bar {
+  background: #E53935;
+}
+
+/* Balanced is the recommended default: amber border + tint */
+.db-hero__variant--balanced {
   border-color: var(--md-accent-fg-color);
   background: rgba(255, 143, 0, 0.1);
 }
@@ -166,6 +189,15 @@
   .db-hero__actions { flex-direction: column; align-items: center; }
 }
 
+@media (max-width: 480px) {
+  .md-typeset pre { font-size: 0.78rem; }
+}
+
+@media (max-width: 400px) {
+  .db-hero { padding: 1.75rem 0.75rem 1.5rem; }
+  .db-hero__title { font-size: 1.75rem; }
+}
+
 /* ============================================================
    Grid Cards (Explore the Docs)
    ============================================================ */
@@ -212,6 +244,15 @@
   border-bottom-color: var(--md-primary-fg-color--dark);
 }
 
+/* display:block is required before overflow-x takes effect; the native table display model
+   expands to content width regardless of overflow settings. */
+.md-typeset table:not([class]) {
+  display: block;
+  max-width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
 .md-typeset table:not([class]) td {
   font-size: 0.875rem;
   font-weight: 400;
@@ -225,32 +266,22 @@
 }
 
 [data-md-color-scheme="slate"] .md-typeset table:not([class]) tbody tr:nth-child(even) {
-  background-color: rgba(255, 255, 255, 0.02);
+  background-color: rgba(255, 255, 255, 0.05);
 }
 
 /* ============================================================
    Code Blocks
    ============================================================ */
 
+/* Horizontal scroll over word-wrap: wrapping breaks command syntax and multi-token flags. */
 .md-typeset pre {
   border-radius: 6px;
   border: 1px solid var(--md-default-fg-color--lightest);
+  overflow-x: auto;
 }
 
 [data-md-color-scheme="slate"] .md-typeset pre {
   border-color: rgba(255, 255, 255, 0.06);
-}
-
-.md-typeset pre,
-.md-typeset code {
-  white-space: pre-wrap !important;
-  word-break: break-word !important;
-  overflow-wrap: break-word !important;
-}
-
-.md-typeset pre code {
-  word-break: normal;
-  overflow-wrap: anywhere;
 }
 
 /* ============================================================
@@ -291,11 +322,32 @@
 
 [data-md-color-scheme="slate"] .md-header,
 [data-md-color-scheme="slate"] .md-tabs {
-  background-color: #1a237e;
+  background-color: #141d5e;
 }
 
 /* ============================================================
-   Announcement Bar – subtle, not shouty
+   Navigation – hover and focus-visible states
+   ============================================================ */
+
+.md-tabs__link:hover {
+  color: rgba(255, 255, 255, 0.9);
+  opacity: 1;
+}
+
+.md-header__title a:hover {
+  opacity: 0.85;
+}
+
+/* focus-visible limits the outline to keyboard navigation; mouse clicks do not trigger it. */
+.md-tabs__link:focus-visible,
+.md-nav__link:focus-visible {
+  outline: 2px solid var(--md-accent-fg-color);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+/* ============================================================
+   Announcement Bar
    ============================================================ */
 
 .md-banner {
@@ -316,4 +368,123 @@
 
 [data-md-color-scheme="slate"] .md-banner a {
   color: #FFD54F;
+}
+
+/* ============================================================
+   Reading Scroll Progress Bar
+   ============================================================ */
+
+/* animation-timeline: scroll() requires Chrome 115+ / Firefox 110+. Degrades silently
+   in older browsers; the bar is simply absent with no functional loss. */
+body::after {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  background: var(--md-accent-fg-color);
+  z-index: 9999;
+  pointer-events: none;
+  transform-origin: left;
+  transform: scaleX(0);
+  animation: scroll-progress-grow linear;
+  animation-timeline: scroll();
+}
+
+@keyframes scroll-progress-grow {
+  from { transform: scaleX(0); }
+  to   { transform: scaleX(1); }
+}
+
+/* ============================================================
+   Typography
+   ============================================================ */
+
+/* Material sets html { font-size: 125% }, so 1rem = 20px. 0.9rem (~18px) is more
+   comfortable than the library default for dense technical prose. */
+.md-typeset {
+  font-size: 0.9rem;
+  line-height: 1.7;
+}
+
+.md-content__inner {
+  max-width: 860px;
+}
+
+.md-typeset h1 {
+  letter-spacing: -0.02em;
+  line-height: 1.25;
+}
+
+.md-typeset h2 {
+  letter-spacing: -0.01em;
+  line-height: 1.3;
+}
+
+.md-typeset h3 {
+  line-height: 1.4;
+}
+
+/* ============================================================
+   Inline Code – palette-aware indigo tint
+   ============================================================ */
+
+/* :not(pre > code) targets inline spans only; without it, the tint would override
+   syntax-highlight colors inside code blocks. */
+.md-typeset code:not(pre > code) {
+  background-color: rgba(40, 53, 147, 0.07);
+  color: #283593;
+  border-radius: 3px;
+}
+
+[data-md-color-scheme="slate"] .md-typeset code:not(pre > code) {
+  background-color: rgba(159, 168, 218, 0.14);
+  color: #c5cae9;
+}
+
+/* ============================================================
+   Code Block – dark mode contrast
+   ============================================================ */
+
+/* Material's default dark-mode code background is too light against the deeper slate
+   surface used here; this darkens it to match. */
+[data-md-color-scheme="slate"] {
+  --md-code-bg-color: hsla(225, 15%, 20%, 1);
+}
+
+/* ============================================================
+   Admonitions – remap note and tip to the site palette
+   ============================================================ */
+
+/* note: indigo */
+.md-typeset .admonition.note,
+.md-typeset details.note {
+  border-color: #5c6bc0;
+}
+
+.md-typeset .note > .admonition-title,
+.md-typeset .note > summary {
+  background-color: rgba(92, 107, 192, 0.1);
+}
+
+.md-typeset .note > .admonition-title::before,
+.md-typeset .note > summary::before {
+  background-color: #5c6bc0;
+}
+
+/* tip: amber */
+.md-typeset .admonition.tip,
+.md-typeset details.tip {
+  border-color: #FF8F00;
+}
+
+.md-typeset .tip > .admonition-title,
+.md-typeset .tip > summary {
+  background-color: rgba(255, 143, 0, 0.1);
+}
+
+.md-typeset .tip > .admonition-title::before,
+.md-typeset .tip > summary::before {
+  background-color: #FF8F00;
 }

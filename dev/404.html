@@ -45,8 +45,8 @@
         
         
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
-        <style>:root{--md-text-font:"Inter";--md-code-font:"Roboto Mono"}</style>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:300,300i,400,400i,700,700i%7CJetBrains+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Inter";--md-code-font:"JetBrains Mono"}</style>
       
     
     
@@ -61,7 +61,7 @@
   
   
 
-<script id="__analytics">function __md_analytics(){function e(){dataLayer.push(arguments)}window.dataLayer=window.dataLayer||[],e("js",new Date),e("config","G-XJ4731TZ78"),document.addEventListener("DOMContentLoaded",(function(){document.forms.search&&document.forms.search.query.addEventListener("blur",(function(){this.value&&e("event","search",{search_term:this.value})}));document$.subscribe((function(){var t=document.forms.feedback;if(void 0!==t)for(var a of t.querySelectorAll("[type=submit]"))a.addEventListener("click",(function(a){a.preventDefault();var n=document.location.pathname,d=this.getAttribute("data-md-value");e("event","feedback",{page:n,data:d}),t.firstElementChild.disabled=!0;var r=t.querySelector(".md-feedback__note [data-md-value='"+d+"']");r&&(r.hidden=!1)})),t.hidden=!1})),location$.subscribe((function(t){e("config","G-XJ4731TZ78",{page_path:t.pathname})}))}));var t=document.createElement("script");t.async=!0,t.src="https://www.googletagmanager.com/gtag/js?id=G-XJ4731TZ78",document.getElementById("__analytics").insertAdjacentElement("afterEnd",t)}</script>
+<script id="__analytics">function __md_analytics(){function e(){dataLayer.push(arguments)}window.dataLayer=window.dataLayer||[],e("js",new Date),e("config","G-NBK3K2CPEP"),document.addEventListener("DOMContentLoaded",(function(){document.forms.search&&document.forms.search.query.addEventListener("blur",(function(){this.value&&e("event","search",{search_term:this.value})}));document$.subscribe((function(){var t=document.forms.feedback;if(void 0!==t)for(var a of t.querySelectorAll("[type=submit]"))a.addEventListener("click",(function(a){a.preventDefault();var n=document.location.pathname,d=this.getAttribute("data-md-value");e("event","feedback",{page:n,data:d}),t.firstElementChild.disabled=!0;var r=t.querySelector(".md-feedback__note [data-md-value='"+d+"']");r&&(r.hidden=!1)})),t.hidden=!1})),location$.subscribe((function(t){e("config","G-NBK3K2CPEP",{page_path:t.pathname})}))}));var t=document.createElement("script");t.async=!0,t.src="https://www.googletagmanager.com/gtag/js?id=G-NBK3K2CPEP",document.getElementById("__analytics").insertAdjacentElement("afterEnd",t)}</script>
   
     <script>"undefined"!=typeof __md_analytics&&__md_analytics()</script>
   
@@ -99,7 +99,7 @@
             
             
   <a id="announce-link" href="https://github.com/ibtisam-iq/debugbox/releases/latest">
-    DebugBox -- see the latest release notes
+    DebugBox: see the latest release notes
   </a>
   <script>
     fetch("https://api.github.com/repos/ibtisam-iq/debugbox/releases/latest")
@@ -108,7 +108,7 @@
         if (d.tag_name) {
           var el = document.getElementById("announce-link");
           el.href = d.html_url;
-          el.textContent = "DebugBox " + d.tag_name + " is out -- see the release notes";
+          el.textContent = "DebugBox " + d.tag_name + " released. Read the release notes";
         }
       });
   </script>
@@ -269,7 +269,7 @@
   
     
   
-  Overview
+  Home
 
       </a>
     </li>
@@ -480,7 +480,7 @@
   <span class="md-ellipsis">
     
   
-    Overview
+    Home
   
 
     
@@ -1261,9 +1261,129 @@
           
             <div class="md-content" data-md-component="content">
               
+                
+
+
+
+  
+
+
+              
               <article class="md-content__inner md-typeset">
                 
-  <h1>404 - Not found</h1>
+<style>
+  .db-404 {
+    text-align: center;
+    padding: 5rem 1rem 4rem;
+    max-width: 560px;
+    margin: 0 auto;
+  }
+
+  .db-404__code {
+    font-size: 6rem;
+    font-weight: 700;
+    line-height: 1;
+    color: var(--md-primary-fg-color);
+    letter-spacing: -0.04em;
+    margin: 0 0 0.25rem;
+  }
+
+  .db-404__heading {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin: 0 0 1rem;
+    color: var(--md-default-fg-color);
+  }
+
+  .db-404__body {
+    font-size: 0.95rem;
+    color: var(--md-default-fg-color--light);
+    margin: 0 0 2.5rem;
+    line-height: 1.7;
+  }
+
+  .db-404__actions {
+    display: flex;
+    gap: 0.75rem;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-bottom: 3rem;
+  }
+
+  .db-404__btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.6rem 1.4rem;
+    border-radius: 6px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    text-decoration: none;
+    transition: transform 0.15s, box-shadow 0.15s;
+  }
+
+  .db-404__btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  }
+
+  .db-404__btn--primary {
+    background: var(--md-primary-fg-color);
+    color: #fff !important;
+  }
+
+  .db-404__btn--secondary {
+    background: transparent;
+    color: var(--md-default-fg-color) !important;
+    border: 1px solid var(--md-default-fg-color--light);
+  }
+
+  .db-404__links {
+    font-size: 0.85rem;
+    color: var(--md-default-fg-color--light);
+  }
+
+  .db-404__links a {
+    color: var(--md-accent-fg-color);
+    text-decoration: none;
+    font-weight: 500;
+  }
+
+  .db-404__links a:hover {
+    text-decoration: underline;
+  }
+
+  .db-404__sep {
+    margin: 0 0.5rem;
+    opacity: 0.4;
+  }
+</style>
+
+<div class="db-404">
+  <p class="db-404__code">404</p>
+  <h1 class="db-404__heading">Page not found</h1>
+  <p class="db-404__body">
+    This page may have been moved, renamed, or removed.
+    Try the quick start or browse the variants to find what is needed.
+  </p>
+  <div class="db-404__actions">
+    <a href="/" class="db-404__btn db-404__btn--primary">
+      Back to Home
+    </a>
+    <a href="/dev/getting-started/quick-start/" class="db-404__btn db-404__btn--secondary">
+      Quick Start
+    </a>
+  </div>
+  <p class="db-404__links">
+    <a href="/dev/variants/overview/">Variants</a>
+    <span class="db-404__sep">|</span>
+    <a href="/dev/guides/examples/">Examples</a>
+    <span class="db-404__sep">|</span>
+    <a href="/dev/guides/troubleshooting/">Troubleshooting</a>
+    <span class="db-404__sep">|</span>
+    <a href="https://github.com/ibtisam-iq/debugbox/issues" target="_blank" rel="noopener">GitHub Issues</a>
+  </p>
+</div>
 
               </article>
             </div>
@@ -1331,7 +1451,7 @@
       
     
     <a href="https://ibtisam-iq.com" target="_blank" rel="noopener" title="ibtisam-iq.com" class="md-social__link">
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M351.9 280H161c2.9 64.5 17.2 123.9 37.5 167.4 11.4 24.5 23.7 41.8 35.1 52.4 11.2 10.5 18.9 12.2 22.9 12.2s11.7-1.7 22.9-12.2c11.4-10.6 23.7-28 35.1-52.4 20.3-43.5 34.6-102.9 37.5-167.4zm-191-48h190.9c-2.8-64.5-17.1-123.9-37.4-167.4-11.4-24.4-23.7-41.8-35.1-52.4C268.1 1.7 260.4 0 256.4 0s-11.7 1.7-22.9 12.2c-11.4 10.6-23.7 28-35.1 52.4-20.3 43.5-34.6 102.9-37.5 167.4m-48 0c3.5-85.6 25.6-165.1 57.9-217.3C78.7 47.3 10.9 131.2 1.5 232zM1.5 280c9.4 100.8 77.2 184.7 169.3 217.3-32.3-52.2-54.4-131.7-57.9-217.3zm398.4 0c-3.5 85.6-25.6 165.1-57.9 217.3 92.1-32.7 159.9-116.5 169.3-217.3zm111.4-48C501.9 131.2 434.1 47.3 342 14.7c32.3 52.2 54.4 131.7 57.9 217.3z"/></svg>
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
     </a>
   
 </div>
@@ -1363,7 +1483,7 @@
     
       
       
-      <script id="__config" type="application/json">{"annotate": null, "base": "/dev", "features": ["navigation.tabs", "navigation.tabs.sticky", "navigation.sections", "navigation.footer", "navigation.instant", "navigation.instant.progress", "navigation.top", "navigation.tracking", "content.action.edit", "content.tabs.link", "content.code.annotate", "content.code.copy", "content.code.select", "search.suggest", "search.highlight", "search.share", "header.autohide", "announce.dismiss"], "search": "/dev/assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"provider": "mike"}}</script>
+      <script id="__config" type="application/json">{"annotate": null, "base": "/dev", "features": ["navigation.tabs", "navigation.tabs.sticky", "navigation.sections", "navigation.footer", "navigation.instant", "navigation.instant.progress", "navigation.top", "navigation.tracking", "content.action.edit", "content.tabs.link", "content.code.annotate", "content.code.copy", "content.code.select", "content.tooltips", "toc.follow", "navigation.path", "content.action.view", "search.suggest", "search.highlight", "search.share", "announce.dismiss"], "search": "/dev/assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"provider": "mike"}}</script>
     
     
       <script src="/dev/assets/javascripts/bundle.79ae519e.min.js"></script>
