@@ -13,7 +13,7 @@ Please report privately via **[Email](mailto:contact@ibtisam-iq.com)**.
 Include:
 
 - Description and steps to reproduce
-- Affected variant and version (e.g., `power-1.0.0`)
+- Affected variant and version (e.g., `power-1.2.0`)
 - Potential impact and severity assessment
 
 We follow responsible disclosure:
@@ -50,11 +50,11 @@ make scan
 
 ### Image Design Security
 
-- **Runs as root** -- required for tools like `tcpdump`, `strace` (ephemeral debugging only)
-- **No baked-in secrets** -- credentials not compiled in
-- **Minimal variants** -- lite excludes compilers/development tools to reduce attack surface
-- **Pinned dependencies** -- critical tools version-locked and SHA-verified where possible
-- **Alpine Linux base** -- minimal (~3.9 MB) attack surface vs. Debian/Ubuntu
+- **Runs as root**: required for tools like `tcpdump`, `strace` (ephemeral debugging only)
+- **No baked-in secrets**: credentials not compiled in
+- **Minimal variants**: lite excludes compilers/development tools to reduce attack surface
+- **Pinned dependencies**: critical tools version-locked and SHA-verified where possible
+- **Alpine Linux base**: minimal (~3.9 MB) attack surface vs. Debian/Ubuntu
 
 ### Release Security
 
@@ -66,17 +66,17 @@ From **[RELEASE.md](https://github.com/ibtisam-iq/debugbox/blob/main/RELEASE.md)
 | Previous (v1.x-1) | 6 months | HIGH/CRITICAL only |
 | Older (v1.x-2+) | Community/best-effort | None guaranteed |
 
-**Example:** When v1.1.0 is released:
+**Example:** When v1.2.0 is released:
 
-- v1.0.x gets 6 months of security-only patches
-- v0.9.x shifts to community support
+- v1.1.x gets 6 months of security-only patches
+- v1.0.x shifts to community support
 
 ### Immutable Released Images
 
-- **Released versions never change** -- once published, images are immutable
-- **Older versions remain available forever** -- for historical reference or rollback
+- **Released versions never change**: once published, images are immutable
+- **Older versions remain available forever**: for historical reference or rollback
 - **If a vulnerability is found:**
-    1. Patched version released immediately (e.g., v1.0.0 → v1.0.1)
+    1. Patched version released immediately (e.g., v1.2.0 → v1.1.1)
     2. Old release marked with warning in GitHub Releases
     3. Users on `:latest` auto-receive fix
     4. Users on pinned versions can upgrade at their discretion
@@ -88,8 +88,8 @@ From **[RELEASE.md](https://github.com/ibtisam-iq/debugbox/blob/main/RELEASE.md)
 **Production:**
 ```bash
 # Always pin version AND variant
-kubectl debug my-pod -it --image=ghcr.io/ibtisam-iq/debugbox:1.0.0
-docker run -it ghcr.io/ibtisam-iq/debugbox:lite-1.0.0
+kubectl debug my-pod -it --image=ghcr.io/ibtisam-iq/debugbox:1.2.0
+docker run -it ghcr.io/ibtisam-iq/debugbox:lite-1.2.0
 ```
 
 **Never use `:latest` in production manifests.**
@@ -113,7 +113,7 @@ Smaller variants have smaller attack surfaces. Use the smallest variant that fit
 
 ## Known Vulnerabilities
 
-All previously suppressed CVEs have been resolved. kubectx/kubens is built from source with patched dependencies, and yq uses a current binary release.
+**CVE-2026-39822** (suppressed): Go `os.Root` symlink traversal in the standard library. `yq` v4.53.3 is compiled with Go v1.26.4; the fix landed in Go v1.26.5. No `yq` release built with the patched Go version is available as of 2026-07-16. Suppression will be lifted when a new `yq` binary is released. See [`.trivyignore`](https://github.com/ibtisam-iq/debugbox/blob/main/.trivyignore) for the entry.
 
 All three variants pass Trivy scanning with zero HIGH/CRITICAL findings. See **[SECURITY.md](https://github.com/ibtisam-iq/debugbox/blob/main/SECURITY.md)** for details.
 
