@@ -1,4 +1,4 @@
-# DebugBox — Balanced variant
+# DebugBox - Balanced variant
 # Daily-driver debugging image for Kubernetes troubleshooting.
 
 ARG BASE_IMAGE=ghcr.io/ibtisam-iq/debugbox-base@sha256:56a6c7cc829a5b3eefbced578ffc097bdeedee0e0489c7a73604c409e501023f

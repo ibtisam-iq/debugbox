@@ -5,18 +5,10 @@
 # ll() is inherited from debugbox-base-profile.sh
 
 # === Data Inspection ===
-# json() - Pretty-print JSON or fallback to raw output
-#   Usage: cat file.json | json
-#          json < data.json
-#          json file.json
 json() {
   jq . "$@" 2>/dev/null || cat "$@"
 }
 
-# yaml() - Pretty-print YAML or fallback to raw output
-#   Usage: kubectl get pod -o yaml | yaml
-#          yaml < config.yaml
-#          yaml file.yaml
 yaml() {
   yq . "$@" 2>/dev/null || cat "$@"
 }

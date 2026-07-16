@@ -1,7 +1,7 @@
 #!/bin/sh
 set -eux
 
-echo "=== DebugBox Balanced: Verifying Shell & Editors ===" && \
+echo "=== DebugBox Balanced: Verifying Shell, Editors & Version Control ===" && \
 bash --version >/dev/null && \
 echo "  bash ✓" && \
 vim --version >/dev/null && \

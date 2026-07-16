@@ -1,9 +1,9 @@
-# DebugBox — Power variant
+# DebugBox - Power variant
 # Advanced SRE-grade debugging and network forensics image.
 
 ARG BASE_IMAGE=ghcr.io/ibtisam-iq/debugbox-base@sha256:56a6c7cc829a5b3eefbced578ffc097bdeedee0e0489c7a73604c409e501023f
 
-# Build kubectx/kubens from source
+# Build kubectx/kubens from source (duplicated from Dockerfile.balanced; extracted builder doesn't work with buildx --load)
 FROM golang:1.25-alpine AS kubectx-builder
 
 ARG KUBECTX_VERSION=v0.11.0

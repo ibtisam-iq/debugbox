@@ -1,6 +1,6 @@
 #!/bin/sh
 # DebugBox Base Shell Profile
-# Consistent prompt + ll alias for all variants (ash in base/lite, bash in balanced/power)
+# Consistent prompt + ll() for all variants (ash in base/lite, bash in balanced/power)
 
 # Enhanced ls shortcut
 ll() { ls -alF "$@"; }
@@ -18,7 +18,7 @@ PS1="\n\u@\h:\w${PROMPT_SYMBOL} "
 # Apply colors only if allowed and in an interactive terminal
 if [ -z "${NO_COLOR:-}" ] && [ -t 1 ]; then
     if [ -n "$BASH_VERSION" ]; then
-        # Bash/zsh: use \[ \] to prevent wrapping/editing issues
+        # Bash: use \[ \] to prevent line-wrapping issues in readline
         PS1="\n\[\e[1;32m\]\u@\h\[\e[0m\]:\[\e[1;34m\]\w\[\e[0m\] ${PROMPT_SYMBOL} "
     else
         # ash / POSIX sh: raw escapes (colors work, minor wrapping risk on very long lines)

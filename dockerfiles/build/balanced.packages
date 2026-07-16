@@ -4,59 +4,59 @@ set -eux
 # ====================================================================
 # GROUP 1: SHELL & UX
 # ====================================================================
-# bash — Full Bourne Again Shell for scripting, functions, aliases, history
-# bash-completion — Tab-completion for bash
-# less — Pager for scrolling through large outputs
+# bash - Full Bourne Again Shell for scripting, functions, aliases, history
+# bash-completion - Tab-completion for bash
+# less - Pager for scrolling through large outputs
 
 # ====================================================================
-# GROUP 2: EDITORS & TEXT PROCESSING
+# GROUP 2: EDITORS & VERSION CONTROL
 # ====================================================================
-# vim — Full-featured text editor for config inspection
-# git — Version control: clone repos, inspect git history, fetch configs
+# vim - Full-featured text editor for config inspection
+# git - Version control: clone repos, inspect git history, fetch configs
 
 # ====================================================================
 # GROUP 3: FILESYSTEM & ARCHIVES
 # ====================================================================
-# file — Identify file types (not all files have extensions)
-# tar — Archive tool for decompressing log files, configs
-# gzip — Compression tool for working with .gz files
+# file - Identify file types (not all files have extensions)
+# tar - Archive tool for decompressing log files, configs
+# gzip - Compression tool for working with .gz files
 
 # ====================================================================
 # GROUP 4: DATA INSPECTION (JSON/YAML)
 # ====================================================================
-# jq — JSON parser and transformer
+# jq - JSON parser and transformer
 #      Essential for parsing K8s API responses and logs
 
 # ====================================================================
 # GROUP 5: HTTP/HTTPS & TLS
 # ====================================================================
-# curl — HTTP/HTTPS client for API testing, service checks
-# openssl — SSL/TLS toolkit for certificate inspection and TLS debugging
+# curl - HTTP/HTTPS client for API testing, service checks
+# openssl - SSL/TLS toolkit for certificate inspection and TLS debugging
 #           Used for: testing connections, checking cert expiry, inspecting CA chains
 
 # ====================================================================
 # GROUP 6: BASIC NETWORKING
 # ====================================================================
-# bind-tools — DNS utilities (dig, nslookup, host)
-# iproute2 — Advanced IP networking (ip, ss)
-# iputils — ICMP utilities (ping, arping, tracepath)
-# netcat-openbsd — TCP/UDP socket manipulation
+# bind-tools - DNS utilities (dig, nslookup, host)
+# iproute2 - Advanced IP networking (ip, ss)
+# iputils - ICMP utilities (ping, arping, tracepath)
+# netcat-openbsd - TCP/UDP socket manipulation
 
 # ====================================================================
 # GROUP 7: ADVANCED NETWORKING
 # ====================================================================
-# socat — TCP/UDP relay, powerful socket manipulator
-# mtr — Route tracing with real-time statistics
-# tcpdump — Packet capture
+# socat - TCP/UDP relay, powerful socket manipulator
+# mtr - Route tracing with real-time statistics
+# tcpdump - Packet capture
 
 # ====================================================================
 # GROUP 8: SYSTEM INSPECTION
 # ====================================================================
-# htop — Interactive process viewer
-# strace — System call tracing
-# lsof — Open file descriptors
-# procps — Process utilities (ps, top, kill)
-# psmisc — Process hierarchy tools (pstree, killall, fuser)
+# htop - Interactive process viewer
+# strace - System call tracing
+# lsof - Open file descriptors
+# procps - Process utilities (ps, top, kill)
+# psmisc - Process hierarchy tools (pstree, killall, fuser)
 
 apk add --no-cache \
       bash \
