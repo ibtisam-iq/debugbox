@@ -37,4 +37,4 @@ k8s-info() {
 }
 
 # === Connection Tracking (Power only, requires NET_ADMIN) ===
-conntrack-watch() { conntrack -L -o extended 2>/dev/null | head -40; }
+conntrack-watch() { conntrack -L -o extended | head -40; }
