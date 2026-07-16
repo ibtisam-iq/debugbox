@@ -2,7 +2,7 @@
 
 {% block announce %}
   <a id="announce-link" href="https://github.com/ibtisam-iq/debugbox/releases/latest">
-    DebugBox -- see the latest release notes
+    DebugBox: see the latest release notes
   </a>
   <script>
     fetch("https://api.github.com/repos/ibtisam-iq/debugbox/releases/latest")
@@ -11,7 +11,7 @@
         if (d.tag_name) {
           var el = document.getElementById("announce-link");
           el.href = d.html_url;
-          el.textContent = "DebugBox " + d.tag_name + " is out -- see the release notes";
+          el.textContent = "DebugBox " + d.tag_name + " released. Read the release notes";
         }
       });
   </script>

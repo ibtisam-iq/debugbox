@@ -1,10 +1,4 @@
-# ============================================================
 # DebugBox Documentation Configuration
-# ============================================================
-
-# ------------------------------------------------------------
-# Site Identity
-# ------------------------------------------------------------
 
 site_name: DebugBox
 site_author: Muhammad Ibtisam
@@ -14,10 +8,9 @@ site_description: >
   for Kubernetes and Docker environments.
 
 docs_dir: docs
-
-# ------------------------------------------------------------
-# Repository
-# ------------------------------------------------------------
+# Prevents MkDocs from building includes/ as navigable doc pages
+exclude_docs: |
+  includes/
 
 repo_url: https://github.com/ibtisam-iq/debugbox
 repo_name: GitHub
@@ -25,15 +18,7 @@ repo_name: GitHub
 # Use blob (not edit) to encourage PR-based contributions
 edit_uri: blob/main/docs/
 
-# ------------------------------------------------------------
-# Copyright
-# ------------------------------------------------------------
-
 copyright: Copyright &copy; 2026 DebugBox
-
-# ------------------------------------------------------------
-# Theme
-# ------------------------------------------------------------
 
 theme:
   name: material
@@ -62,6 +47,7 @@ theme:
 
   font:
     text: Inter
+    code: JetBrains Mono
 
   custom_dir: overrides
 
@@ -79,15 +65,14 @@ theme:
     - content.code.annotate
     - content.code.copy
     - content.code.select
+    - content.tooltips
+    - toc.follow
+    - navigation.path
+    - content.action.view
     - search.suggest
     - search.highlight
     - search.share
-    - header.autohide
     - announce.dismiss
-
-# ------------------------------------------------------------
-# Markdown Extensions
-# ------------------------------------------------------------
 
 markdown_extensions:
   - abbr
@@ -103,7 +88,16 @@ markdown_extensions:
       line_spans: __span
       anchor_linenums: true
   - pymdownx.details
+  - pymdownx.inlinehilite
+  - pymdownx.keys
+  - pymdownx.mark
   - pymdownx.magiclink
+  # base_path must be set explicitly; the default resolves paths from the project root,
+  # not docs_dir, causing auto_append lookups to fail silently.
+  - pymdownx.snippets:
+      base_path: [docs]
+      auto_append:
+        - includes/abbreviations.md
 
   # Mermaid diagram support
   - pymdownx.superfences:
@@ -120,17 +114,17 @@ markdown_extensions:
       emoji_index: !!python/name:material.extensions.emoji.twemoji
       emoji_generator: !!python/name:material.extensions.emoji.to_svg
 
-# ------------------------------------------------------------
-# Plugins
-# ------------------------------------------------------------
-
 plugins:
   - search
+  - section-index
+  - glightbox
   - macros
   - social:
       cards_layout_options:
         background_color: "#283593"
         color: "#ffffff"
+  # fallback_to_build_date: false keeps pages without git history from showing the build
+  # timestamp as a misleading "last updated" date.
   - git-revision-date-localized:
       type: custom
       custom_format: "%B %d, %Y %I:%M:%S %p"
@@ -139,16 +133,12 @@ plugins:
       timezone: Asia/Karachi
       locale: en
 
-# ------------------------------------------------------------
-# Extra Configuration
-# ------------------------------------------------------------
-
 extra:
   generator: false
 
   analytics:
     provider: google
-    property: G-XJ4731TZ78
+    property: G-NBK3K2CPEP
 
   # Mike versioning support
   version:
@@ -159,18 +149,14 @@ extra:
       link: https://www.linkedin.com/in/ibtisam-iq/
     - icon: fontawesome/brands/github
       link: https://github.com/ibtisam-iq/debugbox
-    - icon: fontawesome/solid/globe
+    - icon: personal-site
       link: https://ibtisam-iq.com
 
 extra_css:
   - stylesheets/extra.css
 
-# ------------------------------------------------------------
-# Navigation
-# ------------------------------------------------------------
-
 nav:
-  - Overview: index.md
+  - Home: index.md
   - Getting Started:
     - Quick Start: getting-started/quick-start.md
     - Motivation: getting-started/motivation.md

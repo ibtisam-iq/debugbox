@@ -1,4 +1,9 @@
 ---
+title: DebugBox - Multi-Variant Kubernetes Debugging. Pull Only What You Need.
+description: >
+  DebugBox provides three focused debugging container images for Kubernetes and Docker:
+  lite (15 MB) for DNS and connectivity, balanced (47 MB) for daily troubleshooting,
+  and power (91 MB) for packet capture and deep forensics. Pull only what you need.
 hide:
   - navigation
   - toc
@@ -46,8 +51,11 @@ Modern pods often lack basic debugging tools. DebugBox gives you **three focused
 - **[:material-book-open-page-variant: Examples](guides/examples.md)**
   Real-world debugging scenarios
 
+- **[:material-school: Interactive Tutorial](https://labs.iximiuz.com/tutorials/kubernetes-debugging-with-debugbox-74e481c8)**
+  Hands-on Kubernetes debugging in a live playground
+
 - **[:material-shield-check: Security](security/policy.md)**
-  Reporting, scanning, design trade-offs
+  Reporting, scanning, and security practices
 
 - **[:material-console-line: Development](development/local-setup.md)**
   Build, test, and scan locally
