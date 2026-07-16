@@ -672,7 +672,7 @@ kubectl run helper-demo --rm -it \
 sniff tcp port 8080   # Quick packet capture filtered by port
 sniff-http            # Capture HTTP traffic
 sniff-dns             # Capture DNS queries
-cert-check ibtisam-iq.com 443
+cert-check kubernetes.default.svc.cluster.local 443
 ```
 
 **Power-only helpers** (require NET_ADMIN):
