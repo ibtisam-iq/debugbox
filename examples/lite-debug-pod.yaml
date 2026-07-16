@@ -13,3 +13,4 @@ spec:
     tty: true
     stdin: true
   restartPolicy: Never
+  terminationGracePeriodSeconds: 0
