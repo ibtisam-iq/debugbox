@@ -7,6 +7,50 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.2.0] - 2026-07-16
+
+### Added
+
+#### Site
+- Custom 404 page (`overrides/404.html`): branded error page with site header, "Page not found" message, Back to Home and Quick Start buttons, and quick links to Variants, Examples, Troubleshooting, and GitHub Issues
+- Image lightbox (`mkdocs-glightbox`): clicking any image opens a full-screen zoomable overlay with keyboard navigation
+- `mkdocs-section-index` plugin: section headings in the left nav are now clickable and link to the section overview page without requiring an `index.md` per section
+- Material features: `content.tooltips` (abbreviation and link previews), `toc.follow` (active TOC item tracks scroll), `navigation.path` (breadcrumb trail), `content.action.view` (view-source link alongside edit)
+- CSS additions: scroll-driven reading progress bar (`body::after`, degrades silently in older browsers); navigation hover and `focus-visible` keyboard outline states; announcement bar theming; typography scale and line-height for `.md-typeset`; inline code indigo tint that does not affect syntax-highlighted blocks; dark-mode code block background contrast fix
+- `JetBrains Mono` set as the code font
+- Custom personal-site footer icon (`overrides/.icons/personal-site.svg`) replacing the generic globe icon in the social links row
+- `exclude_docs: includes/` in `mkdocs.yml`: keeps snippet source files out of the public site navigation
+- Markdown extensions: `pymdownx.inlinehilite`, `pymdownx.keys`, `pymdownx.mark`
+
+#### Documentation
+- [Interactive tutorial on iximiuz Labs](https://labs.iximiuz.com/tutorials/kubernetes-debugging-with-debugbox-74e481c8) by [@iximiuz](https://labs.iximiuz.com/a/ibtisam-iq): covers live Kubernetes debugging with all three variants end-to-end; linked from the homepage, quick-start, examples, and Kubernetes usage pages
+- `docs/includes/abbreviations.md`: new shared abbreviations list (DNS, TLS, TCP, UDP, ICMP, ARP, BPF, MTU, NIC, NSE, QEMU, binfmt, OCI, and more) auto-appended to every page via `pymdownx.snippets`; hovering any defined term shows a tooltip
+- Homepage `title` and `description` front matter: controls the browser tab title, search result snippet, and social card heading independently of the global `site_description`
+
+#### Example Manifests
+- `terminationGracePeriodSeconds: 0` added to all three example pod manifests (`lite`, `balanced`, `power`) so pods delete immediately on `kubectl delete` without waiting out the default 30-second grace period
+
+### Changed
+
+#### Documentation
+- `docs/guides/troubleshooting.md` rewritten from a loose FAQ into a structured numbered guide with 8 sections, a placeholder conventions table, and 20+ specific entries covering image pull failures, pod startup, shell environment, DNS resolution, service connectivity, capability permissions (`NET_RAW`, `NET_ADMIN`), network debugging, and tool-specific behavior (`ltrace`, `nft`, `lsof`, `socat`, `openssl`, `ps`)
+- `docs/guides/examples.md` reorganized: every scenario now opens with a prerequisite admonition showing exactly what to deploy before entering the pod; inline code comments explain why commands are constructed the way they are rather than what they do; all examples use consistent pod and service names
+- Minor factual and phrasing improvements across `docs/usage/`, `docs/variants/`, `docs/reference/`, and `docs/security/`
+
+#### Shell Helpers
+- All helpers (`ports`, `connections`, `routes`, `sniff`, `sniff-http`, `sniff-dns`, `k8s-info`) converted from aliases to shell functions; functions work correctly in non-interactive shells and when the profile is sourced explicitly
+- `cert-check()` now accepts hostname and port as separate arguments (`cert-check <host> [port]`, default port 443) and wraps the `openssl s_client` call in `timeout 5` to prevent hanging on unresponsive hosts; previously accepted only a pre-formatted `host:port` string with no timeout
+- `conntrack-watch()` replaced: the previous implementation ran `watch -n 2` in a loop printing a connection count line; the new implementation runs `conntrack -L -o extended` once and shows up to 40 entries in extended format, making it pipe-friendly and consistent with the rest of the helper set
+
+#### Site
+- Announcement bar now fetches the latest release tag from the GitHub API at page load and updates the link and text dynamically; previously showed a hardcoded version string
+- Hero variant cards: each card now has a colored top bar (grey for lite, amber for balanced, red for power); balanced card is visually highlighted as the recommended default
+- Tables: added `display: block` and `overflow-x: auto` so wide tables scroll horizontally instead of overflowing the content column
+- Removed `header.autohide`: header remains visible at all scroll positions
+
+### Security
+- **CVE-2026-39822** (suppressed, HIGH): Go `os.Root` symlink traversal in stdlib; `yq` v4.53.3 is compiled with Go v1.26.4, fixed in Go v1.26.5. No `yq` release with the patched Go version is available as of 2026-07-16. Entry added to `.trivyignore`; will be lifted when `yq` publishes a binary built with Go v1.26.5+.
+
 ## [1.1.0] - 2026-07-09
 
 ### Added
@@ -59,8 +103,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 #### Image Variants
 - **`lite`** – Minimal image (~15 MB) with essential networking tools (`curl`, `netcat`, `iproute2`, `iputils`, `bind-tools`) and data tools (`jq`, `yq`)
-- **`balanced`** (default) – Recommended daily image (~47 MB) adding `bash`, `vim`, `git`, `openssl`, `tcpdump`, `socat`, `mtr`, `htop`, `strace`, `lsof`, `kubectx`, `kubens`
-- **`power`** – Comprehensive SRE image (~91 MB) adding `tshark`, `nmap`, `iperf3`, `ltrace`, `iptables`, `nftables`, `conntrack-tools`, and more
+- **`balanced`** (default) – Recommended daily image (~51 MB) adding `bash`, `vim`, `git`, `tcpdump`, `socat`, `mtr`, `htop`, `strace`, `lsof`, `kubectx`, `kubens`
+- **`power`** – Comprehensive SRE image (~112 MB) adding `openssl`, `tshark`, `nmap`, `iperf3`, `ltrace`, `iptables`, `nftables`, `conntrack-tools`, and more
 - **`base`** – Shared Alpine foundation (~4 MB) with CA certificates and improved shell UX
 
 #### Features

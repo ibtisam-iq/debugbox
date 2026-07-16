@@ -32,7 +32,7 @@ DebugBox uses **Semantic Versioning** (`MAJOR.MINOR.PATCH`):
 
 - `v1.0.0` – First stable release
 - `v1.0.1` – Patch (bug fix, no breaking changes)
-- `v1.1.0` – Minor (new features, backward compatible)
+- `v1.2.0` – Minor (new features, backward compatible)
 - `v2.0.0` – Major (breaking changes)
 
 Pre-releases use identifiers:
@@ -43,7 +43,7 @@ Pre-releases use identifiers:
 
 ### Key Versioning Rules
 
-- Released versions are **immutable** – images never change after publishing
+- Released versions are **immutable**, images never change after publishing
 - Older versions remain available forever
 - The `:latest` tag points only to the newest **stable** release (never pre-releases)
 
@@ -64,7 +64,7 @@ DebugBox publishes a **single repository** with **three variants**, each discove
 For each release version (e.g., `v1.0.0`), all three variants are published with consistent tag patterns:
 
 #### **Primary Tags (Variant Discovery)**
-These are the easiest way to pull a variant – users just remember the variant name:
+These are the easiest way to pull a variant (users remember the variant name):
 
 ```
 ghcr.io/ibtisam-iq/debugbox:lite
@@ -82,7 +82,7 @@ ghcr.io/ibtisam-iq/debugbox:power-latest
 ```
 
 #### **Pinned Version + Variant Tags (Production)**
-These are for production deployments – specific version + specific variant, never changes:
+These are for production deployments - specific version + specific variant, never changes:
 
 ```
 ghcr.io/ibtisam-iq/debugbox:lite-1.0.0
@@ -98,14 +98,14 @@ ghcr.io/ibtisam-iq/debugbox:latest       ← Points to balanced-latest
 ghcr.io/ibtisam-iq/debugbox:1.0.0        ← Points to balanced-1.0.0 (shorter form)
 ```
 
-### Complete Tag List for v1.0.0
+### Complete Tag List for v1.2.0
 
 | Variant                        | Primary                  | Floating                     | Pinned                          |
 |--------------------------------|--------------------------|------------------------------|---------------------------------|
-| **Lite**                       | `debugbox:lite`          | `debugbox:lite-latest`       | `debugbox:lite-1.0.0`           |
-| **Balanced**                   | `debugbox:balanced`      | `debugbox:balanced-latest`   | `debugbox:balanced-1.0.0`       |
-| **Power**                      | `debugbox:power`         | `debugbox:power-latest`      | `debugbox:power-1.0.0`          |
-| **Default** (aliases → balanced) | `debugbox:latest`      | –                            | `debugbox:1.0.0`                |
+| **Lite**                       | `debugbox:lite`          | `debugbox:lite-latest`       | `debugbox:lite-1.2.0`           |
+| **Balanced**                   | `debugbox:balanced`      | `debugbox:balanced-latest`   | `debugbox:balanced-1.2.0`       |
+| **Power**                      | `debugbox:power`         | `debugbox:power-latest`      | `debugbox:power-1.2.0`          |
+| **Default** (aliases → balanced) | `debugbox:latest`      | –                            | `debugbox:1.2.0`                |
 
 **Published to both registries:**
 - **GHCR** (recommended): `ghcr.io/ibtisam-iq/debugbox`
@@ -116,9 +116,9 @@ ghcr.io/ibtisam-iq/debugbox:1.0.0        ← Points to balanced-1.0.0 (shorter f
 **Real images:** 3 (one per variant)  
 **Aliases/Floating tags:** 8 (all pointing to one of the 3 real images)
 
-**Note:** The **Default** row shows convenience aliases (`:latest` and `:1.0.0`) that always point to the **balanced** variant, the recommended default for most users.
+**Note:** The **Default** row shows convenience aliases (`:latest` and `:1.2.0`) that always point to the **balanced** variant, the recommended default for most users.
 
-**Quick tip:** For production, always use pinned tags (`:lite-1.0.0`, `:balanced-1.0.0`, `:1.0.0`, etc.) or digests (`@sha256:...`) to avoid surprises from floating tags.
+**Quick tip:** For production, always use pinned tags (`:lite-1.2.0`, `:balanced-1.2.0`, `:1.2.0`, etc.) or digests (`@sha256:...`) to avoid surprises from floating tags.
 
 
 ## Common Usage Examples
@@ -232,7 +232,7 @@ Before any image is published, all three variants (lite, balanced, power) must p
 
 We never delete or overwrite released images. If a vulnerability or critical bug is discovered:
 
-1. A patched version is released immediately (e.g., `v1.0.0` → `v1.0.1`)
+1. A patched version is released immediately (e.g., `v1.2.0` → `v1.2.1`)
 2. The affected release is clearly marked in GitHub Release notes with a warning
 3. Users pulling `:latest` or `:balanced-latest` automatically receive the fixed version
 4. Users on older versions can upgrade at their discretion
@@ -326,14 +326,14 @@ Once the workflow completes successfully, confirm the images are live:
 
 ```bash
 # Quick smoke test – GHCR (recommended registry)
-docker pull ghcr.io/ibtisam-iq/debugbox:balanced-1.0.0
-docker pull ghcr.io/ibtisam-iq/debugbox:lite-1.0.0
-docker pull ghcr.io/ibtisam-iq/debugbox:power-1.0.0
-docker pull ghcr.io/ibtisam-iq/debugbox:1.0.0         # Alias
+docker pull ghcr.io/ibtisam-iq/debugbox:balanced-1.2.0
+docker pull ghcr.io/ibtisam-iq/debugbox:lite-1.2.0
+docker pull ghcr.io/ibtisam-iq/debugbox:power-1.2.0
+docker pull ghcr.io/ibtisam-iq/debugbox:1.2.0         # Alias
 docker pull ghcr.io/ibtisam-iq/debugbox:latest        # Alias
 
 # Optional: Docker Hub mirror
-docker pull mibtisam/debugbox:balanced-1.0.0
+docker pull mibtisam/debugbox:balanced-1.2.0
 
 # Confirm multi-architecture support
 docker inspect ghcr.io/ibtisam-iq/debugbox:balanced-1.0.0 | grep -A 5 Architecture
@@ -387,17 +387,17 @@ ghcr.io/ibtisam-iq/debugbox:power-latest
 ### Specific Version Tags
 
 ```bash
+# Version 1.2.0 (current)
+ghcr.io/ibtisam-iq/debugbox:1.2.0                # Short form (alias)
+ghcr.io/ibtisam-iq/debugbox:lite-1.2.0
+ghcr.io/ibtisam-iq/debugbox:balanced-1.2.0
+ghcr.io/ibtisam-iq/debugbox:power-1.2.0
+
 # Version 1.0.0
 ghcr.io/ibtisam-iq/debugbox:1.0.0                # Short form (alias)
 ghcr.io/ibtisam-iq/debugbox:lite-1.0.0
 ghcr.io/ibtisam-iq/debugbox:balanced-1.0.0
 ghcr.io/ibtisam-iq/debugbox:power-1.0.0
-
-# Version 1.0.1
-ghcr.io/ibtisam-iq/debugbox:1.0.1                # Short form (alias)
-ghcr.io/ibtisam-iq/debugbox:lite-1.0.1
-ghcr.io/ibtisam-iq/debugbox:balanced-1.0.1
-ghcr.io/ibtisam-iq/debugbox:power-1.0.1
 ```
 
 ### Docker Hub (Alternative Registry)
@@ -422,7 +422,7 @@ docker.io/mibtisam/debugbox:power-1.0.0
 DebugBox is distributed in three variants to meet different user needs:
 
 - **Lite:** For constrained environments (Kubernetes init containers, edge devices, minimal deployments)
-- **Balanced:** For most users – balanced between functionality and size (default)
+- **Balanced:** For most users (balanced between functionality and size, default)
 - **Power:** For advanced use cases (SRE, forensics, production incident response)
 
 Users choose based on their environment and needs, not on base OS or minor feature differences.
@@ -449,8 +449,8 @@ All three variants are in **one repository** (`debugbox`) with **tag suffixes** 
 
 Two aliases make the UX perfect:
 
-1. **`debugbox:latest`** – For users who just want the default (balanced, latest stable)
-2. **`debugbox:1.0.0`** – For production users who want version pinning without typing `balanced-1.0.0`
+1. **`debugbox:latest`** - For users who just want the default (balanced, latest stable)
+2. **`debugbox:1.0.0`** - For production users who want version pinning without typing `balanced-1.0.0`
 
 This balances discoverability (people discover `debugbox:power`) with conciseness (production uses `debugbox:1.0.0`).
 

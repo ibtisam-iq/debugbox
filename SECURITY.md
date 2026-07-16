@@ -75,12 +75,16 @@ docker run -it --user 1000:1000 ghcr.io/ibtisam-iq/debugbox:lite
 
 ## Known Ignored Vulnerabilities
 
-All previously listed CVEs (CVE-2023-39325, CVE-2025-22868 in kubectx; CVE-2025-61728, CVE-2025-61726 in yq) have been resolved:
+Previously resolved CVEs (CVE-2023-39325, CVE-2025-22868 in kubectx; CVE-2025-61728, CVE-2025-61726 in yq):
 
 - **kubectx/kubens**: Bumped to v0.11.0 and patched `golang.org/x/net` to v0.55.0 at build time.
 - **yq**: Bumped to v4.53.3 (compiled with Go 1.26.4).
 
-All three variants currently pass Trivy scanning with zero HIGH/CRITICAL findings. If new vulnerabilities are discovered, they will be documented here with justification if suppressed.
+Currently suppressed (tracked in `.trivyignore`):
+
+- **CVE-2026-39822** (HIGH) in `yq` stdlib: Go `os.Root` symlink traversal, fixed in Go v1.26.5. yq v4.53.3 is compiled with Go v1.26.4; no newer yq release is available as of 2026-07-15. Suppressed until yq ships a binary built with Go v1.26.5+. Exploitability in this context is low (yq processes YAML input, does not serve files or traverse untrusted paths).
+
+All three variants pass Trivy scanning with zero unaddressed HIGH/CRITICAL findings.
 
 ---
 
@@ -98,7 +102,7 @@ By using DebugBox, you trust the maintainers, bundled tools, and source registri
 
 ## Best Practices for Users
 
-- Pin to specific versions: `ghcr.io/ibtisam-iq/debugbox:1.0.0`
+- Pin to specific versions: `ghcr.io/ibtisam-iq/debugbox:1.2.0`
 - Use in isolated namespaces
 - Apply Kubernetes network policies
 - Run with `--rm` for ephemeral sessions

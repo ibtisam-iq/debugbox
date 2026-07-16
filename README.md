@@ -126,8 +126,8 @@ DebugBox power is ~111 MB smaller than netshoot (55% reduction). DebugBox lite i
 | **Routing** | iptables, nftables, conntrack-tools | -- | -- | ✓ |
 | **Kubernetes** | kubectx, kubens | -- | ✓ | ✓ |
 | **Helpers** | json(), yaml(), ll() | ✓ | ✓ | ✓ |
-| **Network Helpers** | ports, connections, routes, k8s-info, sniff, sniff-http, sniff-dns, cert-check() | -- | ✓ | ✓ |
-| **Forensics Helpers** | conntrack-watch | -- | -- | ✓ |
+| **Network Helpers** | ports(), connections(), routes(), k8s-info(), sniff(), sniff-http(), sniff-dns(), cert-check() | -- | ✓ | ✓ |
+| **Forensics Helpers** | conntrack-watch() | -- | -- | ✓ |
 
 → **[Detailed variant breakdown](https://debugbox.ibtisam-iq.com/latest/variants/overview/)**
 
@@ -184,6 +184,15 @@ A: `kubectl run` works on any version. `kubectl debug` requires 1.23+.
 A: Extend it with your own Dockerfile or submit a feature request. See **[Local Development](https://debugbox.ibtisam-iq.com/latest/development/local-setup/)**.
 
 → **[More questions](https://debugbox.ibtisam-iq.com/latest/guides/troubleshooting/)**
+
+---
+
+## Interactive Tutorial
+
+> [!TIP]
+> Practice debugging in a live Kubernetes environment (no local cluster required):
+> **[Kubernetes Debugging with DebugBox](https://labs.iximiuz.com/tutorials/kubernetes-debugging-with-debugbox-74e481c8)**
+> Covers all three variants end-to-end on [iximiuz.com](https://labs.iximiuz.com/a/ibtisam-iq)
 
 ---
 
