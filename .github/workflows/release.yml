@@ -55,7 +55,7 @@ jobs:
       - name: Set up Buildx
         uses: docker/setup-buildx-action@v4
 
-      # Scan-only build (amd64); the push job rebuilds multi-arch separately — buildx can't --load and --push in one step
+      # Scan-only build (amd64); the push job rebuilds multi-arch separately - buildx can't --load and --push in one step
       - name: Build ${{ matrix.variant }} (amd64 for scan)
         run: |
           docker buildx build \

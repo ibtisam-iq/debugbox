@@ -19,7 +19,7 @@ body:
     id: version
     attributes:
       label: Image tag or version
-      placeholder: "e.g. balanced-1.0.0, lite-latest"
+      placeholder: "e.g. balanced-1.2.0, lite-latest"
     validations:
       required: true
 

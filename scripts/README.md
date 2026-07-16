@@ -101,7 +101,7 @@ Scripts may allow overrides via environment variables, but **must have safe defa
 Example:
 
 ```sh
-YQ_VERSION="${YQ_VERSION:-v4.50.1}"
+YQ_VERSION="${YQ_VERSION:-v4.53.3}"
 ```
 
 This allows flexibility without leaking complexity into Dockerfiles.

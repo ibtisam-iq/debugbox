@@ -55,7 +55,7 @@ jobs:
             org.opencontainers.image.vendor=Ibtisam IQ
             org.opencontainers.image.authors=Muhammad Ibtisam <contact@ibtisam-iq.com>
 
-      # BASE_IMAGE not overridden — uses the SHA-pinned default in each Dockerfile
+      # BASE_IMAGE not overridden - uses the SHA-pinned default in each Dockerfile
       - name: Build ${{ matrix.variant }} image for ${{ matrix.arch }}
         uses: docker/build-push-action@v7
         with:

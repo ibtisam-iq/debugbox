@@ -33,7 +33,7 @@ BASE_IMAGE   ?= $(IMAGE_NAME):base-$(LOCAL_TAG)
 .PHONY: help
 help:
 	@echo ""
-	@echo "DebugBox — Local Development Makefile"
+	@echo "DebugBox - Local Development Makefile"
 	@echo ""
 	@echo "Build:"
 	@echo "  make build-<variant>     Build image (lite | balanced | power)"
