@@ -8,9 +8,9 @@ All variants run as **root** by design (required for debugging privileges).
 
 ## Variant Inheritance
 
-- **lite** -- includes base
-- **balanced** -- includes everything in lite
-- **power** -- includes everything in balanced
+- **lite**: includes base
+- **balanced**: includes everything in lite
+- **power**: includes everything in balanced
 
 Tools marked with a check are included in that variant and all higher tiers.
 
@@ -30,18 +30,18 @@ Tools marked with a check are included in that variant and all higher tiers.
 
 | Helper | Lite | Balanced | Power | Description |
 |--------|------|----------|-------|-------------|
-| `ll()` | ✓ | ✓ | ✓ | `ls -alF` alias |
+| `ll()` | ✓ | ✓ | ✓ | `ls -alF` (long listing) |
 | `json()` | ✓ | ✓ | ✓ | Pretty-print JSON |
 | `yaml()` | ✓ | ✓ | ✓ | Pretty-print YAML |
-| `ports` | -- | ✓ | ✓ | List listening ports |
-| `connections` | -- | ✓ | ✓ | Show all connections |
-| `routes` | -- | ✓ | ✓ | Display routing table |
-| `k8s-info` | -- | ✓ | ✓ | K8s context & namespace |
-| `sniff` | -- | ✓ | ✓ | Quick packet capture |
-| `sniff-http` | -- | ✓ | ✓ | Capture HTTP (80/443) |
-| `sniff-dns` | -- | ✓ | ✓ | Capture DNS queries |
+| `ports()` | -- | ✓ | ✓ | List listening ports |
+| `connections()` | -- | ✓ | ✓ | Show all connections |
+| `routes()` | -- | ✓ | ✓ | Display routing table |
+| `k8s-info()` | -- | ✓ | ✓ | K8s context & namespace |
+| `sniff()` | -- | ✓ | ✓ | Quick packet capture |
+| `sniff-http()` | -- | ✓ | ✓ | Capture HTTP (80/443) |
+| `sniff-dns()` | -- | ✓ | ✓ | Capture DNS queries |
 | `cert-check()` | -- | ✓ | ✓ | Inspect TLS certs |
-| `conntrack-watch` | -- | -- | ✓ | Monitor connections |
+| `conntrack-watch()` | -- | -- | ✓ | List active conntrack entries |
 
 ### Networking
 

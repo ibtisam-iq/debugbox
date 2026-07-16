@@ -18,9 +18,9 @@ cd debugbox
 
 ## Build Commands
 
-### Build All Variants (Multi-Architecture)
+### Build All Variants
 
-Builds all three variants for both amd64 and arm64:
+Builds all three variants for the host architecture:
 
 ```bash
 make build-all
@@ -96,7 +96,7 @@ make test-balanced
 make test-power
 ```
 
-**What's tested:** Each variant runs `tests/smoke.sh` to verify:
+**What's tested:** Each variant runs [`tests/smoke.sh`](https://github.com/ibtisam-iq/debugbox/blob/main/tests/smoke.sh) to verify:
 
 - Essential tools are present
 - Shells work correctly
@@ -106,14 +106,11 @@ make test-power
 ### Manual Testing
 
 ```bash
-# Interactive shell in lite
 docker run -it debugbox:lite-local sh
 
-# Test balanced with tcpdump
 docker run -it debugbox:balanced-local bash
 tcpdump --version
 
-# Test power with tshark
 docker run -it debugbox:power-local bash
 tshark -v
 ```
@@ -160,7 +157,7 @@ mkdocs build
    make build-balanced
    ```
 
-4. **Test your changes:**
+4. **Test the changes:**
    ```bash
    make test-balanced
    ```
@@ -192,7 +189,8 @@ make check       # Runs lint → build-all → test-all → scan
 | Command | Purpose |
 |---------|---------|
 | `make help` | Show all available commands |
-| `make build-all` | Build all variants (amd64 + arm64) |
+| `make build-all` | Build all variants (host architecture) |
+| `make run-<variant>` | Run variant interactively |
 | `make build-<variant>` | Build single variant (lite/balanced/power) |
 | `make test-all` | Test all variants |
 | `make test-<variant>` | Test single variant |
@@ -206,7 +204,7 @@ make check       # Runs lint → build-all → test-all → scan
 | Variable | Default | Description |
 |----------|---------|-------------|
 | `LOCAL_TAG` | `local` | Local build tag suffix |
-| `PLATFORM` | `linux/amd64,linux/arm64` | Target architectures |
+| `PLATFORM` | host architecture (e.g. `linux/amd64`) | Target architecture |
 | `NO_CACHE` | `false` | Disable Docker build cache |
 
 **Example:**
@@ -237,42 +235,33 @@ sudo systemctl start docker
 
 ### Build fails with `exec /bin/sh: exec format error`
 
-This happens when building for multiple architectures on a system **without binfmt/QEMU support**.
-
-Choose **one** of the following:
+This error occurs when building for a foreign architecture without binfmt/QEMU support. The Makefile defaults to the host architecture automatically (`PLATFORM ?= linux/$(HOST_ARCH)`), so this error only appears when `PLATFORM` is explicitly set to a different architecture than the host.
 
 **Option 1: Enable multi-architecture builds (recommended)**
 
-Use this if you want to build for `linux/amd64` and `linux/arm64`:
+Install binfmt/QEMU emulation to build for any architecture on any host:
 
 ```bash
 docker run --privileged --rm tonistiigi/binfmt --install all
 ```
 
-**Option 2: Build for a single architecture**
+**Option 2: Build for the host architecture only**
 
-Use this if you don’t want multi-arch builds.
+Omit the `PLATFORM` override and let the Makefile detect the host:
 
-First, check your system architecture:
+```bash
+make build-lite
+```
+
+To verify which platform will be used:
 
 ```bash
 uname -m
 ```
 
-Then build accordingly:
-
-```bash
-# amd64 systems
-PLATFORM=linux/amd64 make build-lite
-
-# arm64 systems
-PLATFORM=linux/arm64 make build-lite
-```
-
 ### Trivy scan errors
 
 ```bash
-# Install Trivy
 curl -sfL https://raw.githubusercontent.com/aquasecurity/trivy/main/contrib/install.sh | sudo sh -s -- -b /usr/local/bin v0.69.1
 
 # Or skip scan
@@ -282,7 +271,6 @@ make build-all test-all
 ### MkDocs port already in use
 
 ```bash
-# Use different port
 mkdocs serve --dev-addr=127.0.0.1:8001
 ```
 

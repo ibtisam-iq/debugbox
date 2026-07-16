@@ -1,6 +1,6 @@
 # Lite Variant
 
-**~15 MB** -- Minimal and fast.
+**~15 MB**: Minimal and fast.
 
 Perfect for quick network diagnostics and bandwidth-constrained environments.
 

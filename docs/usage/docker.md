@@ -13,8 +13,8 @@ docker run -it --rm ghcr.io/ibtisam-iq/debugbox:lite
 docker run -it --rm ghcr.io/ibtisam-iq/debugbox:power
 
 # Production (pinned version)
-docker run -it --rm ghcr.io/ibtisam-iq/debugbox:1.0.0
-docker run -it --rm ghcr.io/ibtisam-iq/debugbox:lite-1.0.0
+docker run -it --rm ghcr.io/ibtisam-iq/debugbox:1.2.0
+docker run -it --rm ghcr.io/ibtisam-iq/debugbox:lite-1.2.0
 ```
 
 ## Power Variant with Capabilities
@@ -68,8 +68,8 @@ Add a debugging sidecar to your compose file:
 ```yaml
 services:
   app:
-    image: nginx:alpine
-    ports: ["80:80"]
+    image: ghcr.io/ibtisam-iq/ibtisam-iq:latest
+    ports: ["8080:8080"]
 
   debugbox:
     image: ghcr.io/ibtisam-iq/debugbox:balanced
@@ -82,8 +82,8 @@ services:
 ```yaml
 services:
   app:
-    image: nginx:alpine
-    ports: ["80:80"]
+    image: ghcr.io/ibtisam-iq/ibtisam-iq:latest
+    ports: ["8080:8080"]
 
   debugbox-power:
     image: ghcr.io/ibtisam-iq/debugbox:power
@@ -98,10 +98,10 @@ services:
 Access:
 ```bash
 # Standard
-docker compose exec debugbox bash
+docker compose exec debugbox bash -l
 
 # Power with capabilities
-docker compose exec debugbox-power bash
+docker compose exec debugbox-power bash -l
 ```
 
 → **[Which variant to use?](../variants/overview.md)** | **[Kubernetes Usage](kubernetes.md)** | **[Real-world Examples](../guides/examples.md)** | **[Troubleshooting](../guides/troubleshooting.md)**

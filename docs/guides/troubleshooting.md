@@ -1,434 +1,529 @@
-# Troubleshooting & FAQ
+# Troubleshooting
 
-## Common Issues
+This guide covers real issues encountered when running DebugBox in Kubernetes and Docker environments. Each entry follows the same structure: symptom, root cause, and a concrete fix.
 
-### Image Pull Failures
+**Placeholder conventions used throughout this guide:**
+
+| Placeholder | Meaning |
+|-------------|---------|
+| `<SERVICE_NAME>` | Name of the Kubernetes Service being debugged |
+| `<SERVICE_PORT>` | Port the Service exposes (e.g. `8080`) |
+| `<POD_NAME>` | Name of the target application pod |
+| `<NAMESPACE>` | Kubernetes namespace (default: `default`) |
+| `<DOMAIN>` | External hostname or domain (e.g. `example.com`) |
+| `<CLUSTER_DNS_IP>` | Cluster DNS server IP (find with `kubectl get svc -n kube-system kube-dns`) |
+| `<NODE_POD_CIDR>` | Pod CIDR for a specific node (find with `kubectl get nodes -o jsonpath='{.items[*].spec.podCIDR}'`) |
+
+---
+
+## 1. Image Pull Failures
 
 **Symptoms:** `ImagePullBackOff`, `ErrImagePull`, `FailedToResolveImage`
 
-**Step 1: Verify image name syntax**
+**Step 1: Verify the image reference**
 ```bash
-# Correct formats
+# Valid image references
 ghcr.io/ibtisam-iq/debugbox              # balanced (default)
-ghcr.io/ibtisam-iq/debugbox:lite         # lightweight
-ghcr.io/ibtisam-iq/debugbox:power        # full forensics
-ghcr.io/ibtisam-iq/debugbox:1.0.0        # production (pinned)
-ghcr.io/ibtisam-iq/debugbox:lite-1.0.0   # lite pinned version
+ghcr.io/ibtisam-iq/debugbox:lite
+ghcr.io/ibtisam-iq/debugbox:power
+ghcr.io/ibtisam-iq/debugbox:1.2.0
+ghcr.io/ibtisam-iq/debugbox:lite-1.2.0
 ```
 
-**Step 2: Check network connectivity**
+**Step 2: Test GHCR reachability from inside the cluster**
 ```bash
-# From your node, can you reach GHCR?
 kubectl run net-test --rm -it --image=busybox --restart=Never -- wget -O- https://ghcr.io
+```
+A timeout or connection refused indicates a firewall, proxy, or DNS issue blocking GHCR.
 
-# If timeout/blocked, GHCR is unreachable (firewall, proxy, DNS)
+**Step 3: If authentication is required**
+```bash
+kubectl create secret docker-registry ghcr-secret \
+  --docker-server=ghcr.io \
+  --docker-username=<github-username> \
+  --docker-password=<personal-access-token>
+kubectl patch serviceaccount default \
+  -p '{"imagePullSecrets":[{"name":"ghcr-secret"}]}'
 ```
 
-**Step 3: If GHCR unreachable or auth required**
-
-- **Option A:** Configure image pull secret for `ghcr.io`
-  ```bash
-  kubectl create secret docker-registry ghcr-secret \
-    --docker-server=ghcr.io \
-    --docker-username=<token> \
-    --docker-password=<token>
-
-  kubectl patch serviceaccount default -p '{"imagePullSecrets":[{"name":"ghcr-secret"}]}'
-  ```
-
-- **Option B:** Use Docker Hub mirror (if available)
-  ```bash
-  --image=docker.io/mibtisam/debugbox
-  ```
-
-- **Option C:** Pre-pull to nodes (if you have node access)
-  ```bash
-  # On each node
-  docker pull ghcr.io/ibtisam-iq/debugbox:lite
-  ```
-
-**Step 4: Check pod events for details**
+**Step 4: Check pod events for the exact error**
 ```bash
-kubectl describe pod debug-pod
-# Look for "Events" section with specific error
+kubectl describe pod <POD_NAME>
+# Review the Events section at the bottom
 ```
 
 ---
 
-### Tool Not Found / Command Not Found
+## 2. Pod and Container Startup
 
-**Symptoms:** `bash: command not found`, `vim: not found`, `tcpdump: not found`
+### Pod exits immediately after creation
 
-**Cause:** Using wrong variant. Each variant has different tools.
+**Symptom:** Pod reaches `Completed` status within seconds.
 
-**Solution: Pick right variant**
+**Cause:** Without a terminal attached (`-it`), the shell (bash or ash) finds no stdin and exits immediately.
 
-| Tool Missing | Variant | Image | Why |
-|--------------|---------|-------|-----|
-| bash, sh, ash | lite+ | Need balanced+ | Lite has only ash (minimal shell) |
-| vim, git, openssl | lite | Need balanced+ | Lite is minimal |
-| tcpdump, strace, lsof | lite | Need balanced+ | Lite doesn't have advanced tools |
-| tshark, nmap, nftables | balanced | Need power | Power adds forensics and scanning tools |
-| iptables, conntrack | balanced | Need power | Power adds firewall inspection (needs NET_ADMIN) |
-
-**Tool availability by variant:**
-
-| Variant | Size | Includes |
-|---------|------|----------|
-| **lite** | ~15 MB | curl, dig, nslookup, jq, yq, nc, ping, ash, vi |
-| **balanced** | ~47 MB | lite + bash, git, vim, openssl, tcpdump, strace, lsof, htop, socat, mtr, kubectx/ns |
-| **power** | ~91 MB | balanced + tshark, ngrep, ltrace, nmap, nping, iperf3, iptables, nftables, conntrack |
-
-**Quick fix:**
+**Fix:**
 ```bash
-# If tool not found, try balanced
-kubectl debug my-pod -it --image=ghcr.io/ibtisam-iq/debugbox
+kubectl run debug --rm -it \
+  --image=ghcr.io/ibtisam-iq/debugbox \
+  --restart=Never
+```
+The `-it` flags allocate a pseudo-TTY and keep stdin open.
 
-# If still not found, try power
-kubectl debug my-pod -it --image=ghcr.io/ibtisam-iq/debugbox:power
+---
+
+### `error: unable to upgrade connection: container not found`
+
+**Symptom:** `kubectl exec` fails immediately after `kubectl apply`.
+
+**Cause:** The pod has been scheduled but the container has not finished starting. `kubectl exec` connects to the container runtime directly; if the container is not yet running, the connection is refused.
+
+**Fix:** Always wait for readiness before exec:
+```bash
+kubectl apply -f examples/power-debug-pod.yaml
+kubectl wait pod/debug-power --for=condition=Ready --timeout=60s
+kubectl exec -it debug-power -- bash -l
 ```
 
 ---
 
-### Permission Denied (tcpdump, iptables, conntrack, tshark)
+### Pod takes 30 seconds to delete
+
+**Symptom:** `kubectl delete pod` blocks for 30 seconds before the pod disappears.
+
+**Cause:** Kubernetes sends SIGTERM and waits `terminationGracePeriodSeconds` (default: 30) before force-killing. bash does not exit on SIGTERM, so the full wait always elapses.
+
+**Fix:** The pre-built manifests in [`examples/`](https://github.com/ibtisam-iq/debugbox/blob/main/examples) include `terminationGracePeriodSeconds: 0`. For `kubectl run` pods, add it via overrides:
+```bash
+kubectl run debug --rm -it \
+  --image=ghcr.io/ibtisam-iq/debugbox \
+  --restart=Never \
+  --overrides='{"spec":{"terminationGracePeriodSeconds":0}}'
+```
+
+---
+
+## 3. Shell Environment and Tool Availability
+
+### Built-in helpers not found (`ports`, `routes`, `connections`, `sniff`, etc.)
+
+**Symptom:** Helper commands are missing even though the correct variant is running.
+
+**Cause:** Without the `-l` (login) flag, bash and ash skip `/etc/profile.d/`, where DebugBox registers all helper functions.
+
+**Fix:** Always pass `-l` when opening a shell:
+```bash
+# Balanced and power variants
+kubectl exec -it <POD_NAME> -- bash -l
+
+# Lite variant
+kubectl exec -it <POD_NAME> -- ash -l
+
+# kubectl debug sessions
+kubectl debug <POD_NAME> -it --image=ghcr.io/ibtisam-iq/debugbox -- bash -l
+```
+
+---
+
+### Tool not found (`bash: <tool>: not found`)
+
+**Cause:** The tool belongs to a heavier variant than the one currently running.
+
+| Tool | Minimum variant required |
+|------|--------------------------|
+| `ash`, `curl`, `dig`, `nc`, `ping`, `jq`, `yq`, `vi` | lite |
+| `bash`, `git`, `vim`, `openssl`, `tcpdump`, `strace`, `lsof`, `htop`, `socat`, `mtr` | balanced |
+| `tshark`, `ngrep`, `ltrace`, `nmap`, `nping`, `iperf3`, `iptables`, `conntrack`, `nft` | power |
+
+**Fix:** Switch to the appropriate variant:
+```bash
+# Upgrade to balanced
+kubectl debug <POD_NAME> -it --image=ghcr.io/ibtisam-iq/debugbox
+
+# Upgrade to power
+kubectl debug <POD_NAME> -it --image=ghcr.io/ibtisam-iq/debugbox:power
+```
+
+---
+
+## 4. DNS Resolution
+
+### `dig` / `nslookup` / `curl` cannot resolve hostnames
+
+**Symptoms:** `dig <SERVICE_NAME>` returns SERVFAIL or times out; `curl http://<SERVICE_NAME>:<SERVICE_PORT>/` fails with "Could not resolve host".
+
+**Step 1: Inspect the container's resolver configuration**
+```bash
+cat /etc/resolv.conf
+# The nameserver line should point to the cluster DNS server
+# On kubeadm clusters this is commonly 10.96.0.10; on other distributions it varies
+```
+
+**Step 2: Test the cluster DNS server directly**
+```bash
+# Replace <CLUSTER_DNS_IP> with the nameserver from /etc/resolv.conf
+dig @<CLUSTER_DNS_IP> <SERVICE_NAME>.<NAMESPACE>.svc.cluster.local
+dig @<CLUSTER_DNS_IP> kubernetes.default.svc.cluster.local
+```
+
+**Step 3: Check CoreDNS health from the local machine**
+```bash
+kubectl get pods -n kube-system -l k8s-app=kube-dns
+kubectl logs -n kube-system <coredns-pod-name>
+```
+
+**Temporary workaround inside the container:**
+```bash
+# Add a public resolver; changes are lost when the pod restarts
+echo "nameserver 8.8.8.8" >> /etc/resolv.conf
+```
+
+---
+
+## 5. Service Connectivity
+
+### Internal cluster Service not reachable from the local machine
+
+**Symptom:** `curl http://<SERVICE_NAME>:<SERVICE_PORT>/` fails with "Could not resolve host" when run from the local machine.
+
+**Cause:** Kubernetes Service DNS names (`<SERVICE_NAME>.<NAMESPACE>.svc.cluster.local`) are only resolvable inside the cluster network.
+
+**Fix:** Use `kubectl port-forward` to proxy the Service to a local port:
+```bash
+kubectl port-forward service/<SERVICE_NAME> <SERVICE_PORT>:<SERVICE_PORT>
+curl http://localhost:<SERVICE_PORT>/
+```
+Keep the port-forward running in a separate terminal while generating traffic.
+
+---
+
+### Pod-to-pod bandwidth test fails with "Connection refused"
+
+**Symptom:** `iperf3 -c <pod-name>` from a client pod is refused immediately.
+
+**Cause:** Pod names are not DNS-resolvable inside the cluster. DNS resolution in Kubernetes requires a Service object; bare pod names have no DNS entry.
+
+**Fix:** Expose the server pod as a Service before running the client:
+```bash
+kubectl run iperf-server \
+  --image=ghcr.io/ibtisam-iq/debugbox:power \
+  --command -- iperf3 -s
+kubectl expose pod iperf-server --port=5201
+kubectl wait pod/iperf-server --for=condition=Ready --timeout=60s
+
+# Client can now resolve "iperf-server" via cluster DNS
+kubectl run iperf-client --rm -it \
+  --image=ghcr.io/ibtisam-iq/debugbox:power \
+  --command -- iperf3 -c iperf-server -t 30
+```
+This principle applies to any pod-to-pod DNS resolution: a pod name alone is not addressable; a Service is required.
+
+---
+
+### Raw HTTP request returns a proxy error (403, 421, or similar)
+
+**Symptom:** Sending a raw HTTP/1.0 request via `nc` or `socat` to a hostname behind a reverse proxy or CDN returns an error page instead of the expected response.
+
+**Cause:** HTTP/1.0 does not include a `Host` header. Reverse proxies and CDNs (Cloudflare, AWS CloudFront, GCP Load Balancer) use the `Host` header to route requests to the correct backend. Without it, the proxy cannot identify the target virtual host and returns an error.
+
+**Fix:** Use HTTP/1.1 and include an explicit `Host` header:
+```bash
+# For an external domain
+printf "GET / HTTP/1.1\r\nHost: <DOMAIN>\r\nConnection: close\r\n\r\n" | nc <DOMAIN> 80
+
+# For an internal cluster Service
+printf "GET / HTTP/1.1\r\nHost: <SERVICE_NAME>\r\nConnection: close\r\n\r\n" | nc <SERVICE_NAME> <SERVICE_PORT>
+```
+
+---
+
+## 6. Permissions (NET_RAW and NET_ADMIN)
+
+### `tcpdump`, `tshark`, `iptables`, or `conntrack` return "Operation not permitted"
 
 **Symptoms:**
 ```
-tcpdump: permission denied
-iptables: permission denied
-conntrack v1.4.8: Operation failed: sorry, you must be root or get CAP_NET_ADMIN capability
+tcpdump: socket: Operation not permitted
 tshark: Couldn't run dumpcap in child process: Operation not permitted
+iptables: Operation not permitted
+conntrack: Operation failed: sorry, you must be root or get CAP_NET_ADMIN capability
 ```
 
-**Root cause:** Missing Linux capabilities (NET_ADMIN, NET_RAW)
+**Cause:** The container is missing the Linux capabilities required by these tools.
 
-**Quick diagnosis:**
+| Tool category | Required capability |
+|---------------|---------------------|
+| `tcpdump`, `tshark`, `ngrep` | `NET_RAW` |
+| `iptables`, `nftables`, `conntrack` | `NET_ADMIN` |
+
+**Fix on Kubernetes:** Use the pre-built power manifest, which declares both capabilities:
 ```bash
-# Which capability do you need?
-tshark, ngrep, iptables, nftables, conntrack → NET_ADMIN
+kubectl apply -f \
+  https://raw.githubusercontent.com/ibtisam-iq/debugbox/main/examples/power-debug-pod.yaml
+kubectl wait pod/debug-power --for=condition=Ready --timeout=60s
+kubectl exec -it debug-power -- bash -l
+```
 
-# Check current capabilities
+**Fix on Docker:**
+```bash
+docker run --rm -it \
+  --cap-add=NET_RAW \
+  --cap-add=NET_ADMIN \
+  ghcr.io/ibtisam-iq/debugbox:power
+```
+
+**Verify current capabilities inside the container:**
+```bash
 grep Cap /proc/self/status
 ```
 
-**Solutions (in priority order):**
+---
 
-**Option 1: Use manifest with capabilities (Recommended)**
+## 7. Network Debugging
+
+### `nmap` reports "Host seems down"
+
+**Symptom:** `nmap <SERVICE_NAME>` or `nmap <SERVICE_CLUSTER_IP>` exits with "Note: Host seems down."
+
+**Cause:** nmap's default host discovery phase sends ICMP echo probes. Kubernetes ClusterIPs do not respond to ICMP, so nmap treats the target as unreachable before scanning a single port.
+
+**Fix:** Pass `-Pn` to disable host discovery and scan ports directly:
 ```bash
-kubectl apply -f https://raw.githubusercontent.com/ibtisam-iq/debugbox/main/examples/power-debug-pod.yaml
-kubectl exec -it debug-power -- bash
-
-# Now these work:
-tshark -i eth0
-iptables -L -nv
-conntrack -L
-```
-
-**Option 2: Add capabilities to kubectl run**
-```bash
-# For packet capture
-kubectl run debug --rm -it \
-  --image=ghcr.io/ibtisam-iq/debugbox:power \
-  --overrides='{"spec":{"containers":[{"name":"debug","securityContext":{"capabilities":{"add":["NET_RAW"]}}}]}}' \
-  --restart=Never
-
-# For firewall tools
-kubectl run debug --rm -it \
-  --image=ghcr.io/ibtisam-iq/debugbox:power \
-  --overrides='{"spec":{"containers":[{"name":"debug","securityContext":{"capabilities":{"add":["NET_ADMIN"]}}}]}}' \
-  --restart=Never
-```
-
-**Option 3: Docker equivalent**
-```bash
-docker run --rm -it --cap-add=NET_RAW --cap-add=NET_ADMIN ghcr.io/ibtisam-iq/debugbox:power
+nmap -Pn -p <SERVICE_PORT> <SERVICE_NAME>
+nmap -Pn -p 80,443,<SERVICE_PORT> <SERVICE_NAME>
 ```
 
 ---
 
-### Container Exits Immediately
+### `nmap` hangs for a very long time
 
-**Symptoms:** Pod runs for 1 second and exits. `Status: Completed` but you wanted interactive shell.
+**Symptom:** `nmap <SERVICE_NAME>` or `nmap -p- <SERVICE_NAME>` runs for minutes without output.
 
-**Cause 1: Missing `-it` flags**
+**Cause:** All ports outside the Service's exposed port set are filtered at the cluster networking layer: they silently drop packets rather than sending a reset. nmap waits for a configurable timeout on each filtered port. With a /16 port scan (65,535 ports), this takes hours.
+
+**Fix:** Always scope nmap to known ports when targeting a ClusterIP:
 ```bash
-# Wrong - pod exits immediately
-kubectl run debug --image=ghcr.io/ibtisam-iq/debugbox --restart=Never
+# Scan only the port the Service is known to expose
+nmap -Pn -p <SERVICE_PORT> <SERVICE_NAME>
 
-# Correct - keeps container running
-kubectl run debug -it --image=ghcr.io/ibtisam-iq/debugbox --restart=Never
-```
-
-**Cause 2: Wrong command**
-```bash
-# Wrong - pod exits when `sleep 5` finishes
-kubectl run debug -it --image=ghcr.io/ibtisam-iq/debugbox --command -- sleep 5
-
-# Correct - keep running
-kubectl run debug -it --image=ghcr.io/ibtisam-iq/debugbox --restart=Never
+# Service version detection with a port scope
+nmap -Pn -sV -p <SERVICE_PORT> <SERVICE_NAME>
 ```
 
 ---
 
-### kubectl debug Not Working
+### `tcpdump` captures 0 packets
 
-**Symptoms:** `kubectl debug: command not found` or `error: debug is not a kubectl command`
+**Symptom:** `tcpdump -i eth0` runs without error but counts 0 packets even while traffic is flowing to the target pod.
 
-**Cause:** kubectl debug is only available in Kubernetes 1.23+
+**Cause:** `kubectl run` creates a pod with its own isolated network namespace. Traffic sent to a different pod is not visible in this namespace; the two pods have separate virtual NICs.
 
-**Check version:**
+**Fix:** Use `kubectl debug` to attach to the target pod's network namespace. The debug container shares the pod's `eth0` interface and sees all its traffic:
 ```bash
-kubectl version --short
-# Output: v1.23.0 or higher needed
-```
-
-**Solutions:**
-
-**If K8s < 1.23:** Use kubectl run instead
-```bash
-# Instead of:
-kubectl debug my-pod -it \
+kubectl debug <POD_NAME> -it \
   --image=ghcr.io/ibtisam-iq/debugbox
 
-# Use:
-kubectl run debug --rm -it \
-  --image=ghcr.io/ibtisam-iq/debugbox --restart=Never
+tcpdump -i eth0 -n 'tcp port <SERVICE_PORT>'
 ```
 
-**If kubectl is old:** Update kubectl locally
+To generate traffic while capture is running, open a second terminal on the local machine:
 ```bash
-# macOS
-brew upgrade kubernetes-cli
-
-# Linux
-curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
-
-# Windows
-choco upgrade kubernetes-cli
+kubectl port-forward service/<SERVICE_NAME> <SERVICE_PORT>:<SERVICE_PORT>
+curl http://localhost:<SERVICE_PORT>/
 ```
 
 ---
 
-### DNS Not Working Inside Container
+### `tshark -r /tmp/capture.pcap` fails with "No such file or directory"
 
-**Symptoms:**
+**Symptom:** tshark read mode fails immediately.
+
+**Cause:** The `.pcap` file does not exist until a prior capture command writes it. tshark or tcpdump must run first.
+
+**Fix:** Capture to a file, then read it:
 ```bash
-dig example.com → timeout/SERVFAIL
-nslookup kubernetes.default → no answer
-curl http://my-service.default.svc.cluster.local → Connection refused
-```
+# Step 1: capture traffic (Ctrl+C to stop)
+tshark -i eth0 -w /tmp/capture.pcap
 
-**Step 1: Check resolv.conf**
-```bash
-cat /etc/resolv.conf
-# Should show cluster DNS server (usually 10.96.0.10 for minikube)
-```
-
-**Step 2: Test specific DNS server**
-```bash
-dig @10.96.0.10 kubernetes.default
-dig @8.8.8.8 google.com  # If you can reach internet
-```
-
-**Step 3: If DNS broken, check cluster**
-```bash
-# From your local machine:
-kubectl get pods -n kube-system | grep coredns
-kubectl logs -n kube-system <coredns-pod-name>
-
-# Check if CoreDNS service exists
-kubectl get svc -n kube-system kube-dns
-```
-
-**Step 4: Quick workaround**
-```bash
-# Add manual DNS entry inside container
-echo "nameserver 8.8.8.8" >> /etc/resolv.conf
-dig google.com  # Should work now
-
-# Or use IP directly if you have it
-curl http://10.1.2.3:8080/health  # Instead of hostname
+# Step 2: read and filter the saved capture
+tshark -r /tmp/capture.pcap -Y "dns"
+tshark -r /tmp/capture.pcap -Y "http.request"
 ```
 
 ---
 
-### Slow Image Pull
+### `fping -g <CIDR>` shows all hosts unreachable
 
-**Symptoms:** Pod takes 30+ seconds to start, image pull takes most of time
+**Symptom:** Sweeping a CIDR range returns only "is unreachable" lines.
 
-**Option 1: Use lite (fastest)**
+**Cause:** In a multi-node cluster, each node is assigned its own pod CIDR subnet. Sweeping the wrong node's subnet (commonly the control plane's `/24`) finds no running pods because application pods are scheduled on worker nodes with different subnets.
+
+**Fix:** Identify the correct subnet before sweeping:
 ```bash
---image=ghcr.io/ibtisam-iq/debugbox:lite  # ~15 MB (~1-2 seconds)
-```
+# On the local machine: list pod CIDR per node
+kubectl get nodes -o jsonpath='{range .items[*]}{.metadata.name}{"\t"}{.spec.podCIDR}{"\n"}{end}'
 
-**Option 2: Pre-pull image to nodes** (for frequent use)
-```bash
-# Manually on each node
-docker pull ghcr.io/ibtisam-iq/debugbox:lite
-
-# Or via DaemonSet (automatic on all nodes)
-kubectl apply -f - <<EOF
-apiVersion: apps/v1
-kind: DaemonSet
-metadata:
-  name: debugbox-prepull
-  namespace: kube-system
-spec:
-  selector:
-    matchLabels:
-      app: debugbox-prepull
-  template:
-    metadata:
-      labels:
-        app: debugbox-prepull
-    spec:
-      containers:
-      - name: prepull
-        image: ghcr.io/ibtisam-iq/debugbox:lite
-        command: ["sleep", "999999"]
-      terminationGracePeriodSeconds: 0
-EOF
-
-# Clean up when done
-kubectl delete daemonset debugbox-prepull -n kube-system
-```
-
-**Option 3: Check network**
-```bash
-# From your node, test GHCR connection
-docker pull ghcr.io/ibtisam-iq/debugbox:lite
-
-# If slow, could be:
-# - Firewall/proxy slowing downloads
-# - Regional GHCR mirror slow
-# - Network congestion
+# Inside the pod: sweep the correct worker node subnet
+fping -a -g <NODE_POD_CIDR>
 ```
 
 ---
 
-### Architecture Mismatch (ARM64 nodes)
+## 8. Tool-Specific Behavior
 
-**Symptoms:** `exec format error`, pod fails to run on ARM nodes
+### `ltrace` reports 0 library calls
 
-**Status:** NOT AN ISSUE - DebugBox images are multi-arch
+**Symptom:** `ltrace -c <command>` completes successfully but prints `0 total` in the summary.
 
-**Verification:**
+**Cause:** `ltrace` hooks shared library calls via the PLT (Procedure Linkage Table), a glibc mechanism. DebugBox is Alpine-based and uses musl libc, which does not implement glibc's PLT ABI. No hooks fire, so ltrace sees no calls.
+
+**When ltrace works:** Only against processes from glibc-based images (Debian, Ubuntu, Red Hat). To trace such a process, attach using `--target`:
 ```bash
-# Check your node architecture
-kubectl get nodes -o jsonpath='{range .items[*]}{.metadata.name}{"\t"}{.status.nodeInfo.architecture}{"\n"}{end}}'
+kubectl debug <POD_NAME> -it \
+  --image=ghcr.io/ibtisam-iq/debugbox:power \
+  --target=<POD_NAME>
 
-# All DebugBox variants support:
-# - amd64 (Intel/AMD)
-# - arm64 (Apple Silicon, AWS Graviton, Raspberry Pi)
+APP_PID=$(ps aux | awk 'NR==2{print $2}')
+ltrace -p "$APP_PID"
+```
+For musl-linked processes, use `strace` instead.
 
-# Images include both architectures
-docker buildx build --platform linux/amd64,linux/arm64 -t debugbox .
+---
+
+### `nft list ruleset` fails with "No such file or directory"
+
+**Symptom:** Any `nft` command returns `Error: No such file or directory`.
+
+**Cause:** `nft` communicates with the kernel through the `nf_tables` subsystem. Many Kubernetes clusters run kube-proxy in iptables mode and never load the `nf_tables` kernel module, leaving the netlink socket absent.
+
+**Workaround on affected clusters:** Use `iptables` for firewall inspection:
+```bash
+iptables -L -nv
+iptables -L -nv -t nat
 ```
 
-**If you still get exec format error:**
+On Docker hosts where the kernel has nftables loaded, `nft` works correctly with `NET_ADMIN`:
 ```bash
-# Check if you're actually on the right architecture
-uname -m
-
-# If mismatch, the image might be corrupted - try re-pulling
-docker rmi ghcr.io/ibtisam-iq/debugbox:lite
-docker pull ghcr.io/ibtisam-iq/debugbox:lite
+docker run --rm -it --cap-add=NET_ADMIN ghcr.io/ibtisam-iq/debugbox:power
+nft list ruleset
 ```
 
 ---
 
-### "No such file or directory" on vim command
+### `lsof -p <PID>` prints repeated "no pwd entry for UID N" warnings
 
-**Symptoms:** `vim: command not found` when using lite variant
+**Symptom:** Every line of lsof output is preceded by a warning like `lsof: no pwd entry for UID 101`.
 
-**Cause:** Lite only has `vi` (busybox), not full `vim`
+**Cause:** The application container runs as a numeric UID (e.g. 101 for the nginx user in Alpine nginx images) that does not exist in DebugBox's `/etc/passwd`. lsof cannot resolve the UID to a name and logs a warning per file descriptor.
 
-**Solution:**
+**Behavior:** The warnings are harmless. The complete file descriptor list is still printed.
+
+**Suppress the warnings:**
 ```bash
-# Lite has minimal vi
---image=ghcr.io/ibtisam-iq/debugbox:lite → vi only
+lsof -p "$APP_PID" 2>/dev/null
+```
 
-# Use balanced or power for full vim
---image=ghcr.io/ibtisam-iq/debugbox → vim available
+---
+
+### `socat - OPENSSL:<host>:443` produces no output
+
+**Symptom:** The command runs without error but prints nothing, then exits.
+
+**Cause:** `socat -` reads from stdin and forwards to the TLS socket. When stdin reaches EOF (or nothing is typed), socat sends nothing to the server. The server waits for a request and returns nothing.
+
+**Fix:** Pipe a complete HTTP request so the server has something to respond to:
+```bash
+printf "GET / HTTP/1.1\r\nHost: <DOMAIN>\r\nConnection: close\r\n\r\n" | \
+  socat - OPENSSL:<DOMAIN>:443,verify=0
+```
+
+---
+
+### `ps aux | awk 'NR==2{print $1}'` returns a UID instead of a PID
+
+**Symptom:** `APP_PID` is set to a number like `101` (a UID) rather than a process ID.
+
+**Cause:** The `ps aux` column order is `USER PID %CPU %MEM ...`. Column `$1` is `USER`, not `PID`.
+
+**Fix:** Use column `$2`:
+```bash
+APP_PID=$(ps aux | awk 'NR==2{print $2}')
+strace -p "$APP_PID"
+```
+
+---
+
+### `openssl verify cert.pem` fails with "No such file or directory"
+
+**Symptom:** openssl cannot open `cert.pem` even though the generate command was run.
+
+**Cause:** The verify command was run before the generate command, or the generate command failed silently.
+
+**Fix:** Generate the certificate first, then verify:
+```bash
+openssl req -x509 -newkey rsa:2048 -keyout key.pem -out cert.pem \
+  -days 365 -nodes -subj '/CN=example.com'
+openssl verify cert.pem
+openssl x509 -in cert.pem -text -noout
+```
+
+---
+
+### `openssl req -x509` prompts for interactive input
+
+**Symptom:** The command pauses and prompts for Country, State, Organization, and Common Name.
+
+**Cause:** Without a `-subj` flag, openssl reads the Distinguished Name fields interactively.
+
+**Fix:** Pass `-subj` to make the command non-interactive:
+```bash
+openssl req -x509 -newkey rsa:2048 -keyout key.pem -out cert.pem \
+  -days 365 -nodes -subj '/CN=example.com'
 ```
 
 ---
 
 ## Frequently Asked Questions
 
-**Q: Does DebugBox include kubectl?**
+**Does DebugBox include kubectl?**
 
-A: No, intentionally. DebugBox is for low-level debugging inside containers. Use `kubectl` locally and pipe output to DebugBox if needed.
+No. DebugBox is for low-level inspection inside running containers. Use kubectl from the local machine and pipe its output into DebugBox where needed (see [ConfigMap/Secret Inspection](examples.md#configmapsecret-inspection)).
 
-**Q: Can I run as non-root?**
+**Can DebugBox run as non-root?**
 
-A: Yes. Most tools work fine as non-root. Only tools needing raw sockets (tshark) or system access (strace, iptables) require root/capabilities.
+Most tools work without root. Tools that open raw sockets (`tcpdump`, `tshark`) or modify firewall state (`iptables`, `conntrack`) require root or the appropriate Linux capability (`NET_RAW` or `NET_ADMIN`).
 
-**Q: Why no helm, k9s, or kustomize?**
+**Why no helm, k9s, or kustomize?**
 
-A: DebugBox focuses on debugging inside containers (network, processes, files). Deployment/management tools are out of scope.
+DebugBox focuses on low-level runtime inspection: networking, processes, and filesystem. Cluster management and deployment tools are out of scope.
 
-**Q: Does DebugBox work with Kubernetes 1.18?**
+**Does DebugBox work on ARM64 nodes?**
 
-A: Yes for most things. `kubectl debug` requires 1.23+. Use `kubectl run` for older clusters.
+Yes. All variants ship multi-arch images covering `linux/amd64` and `linux/arm64`. No platform override or node selector is needed.
 
-**Q: Can I extend DebugBox with my own tools?**
+**Can DebugBox be extended with additional packages?**
 
-A: Yes, create a custom image:
+Yes, build a custom image from any DebugBox variant as the base:
 ```dockerfile
-FROM ghcr.io/ibtisam-iq/debugbox:1.0.0
-RUN apk add --no-cache my-package-name
+FROM ghcr.io/ibtisam-iq/debugbox:1.2.0
+RUN apk add --no-cache <package-name>
 ```
 
-**Q: How often are new versions released?**
+**How can the latest released version be found?**
 
-A: As needed. Track releases:
 ```bash
-# Check latest version
-curl -s https://api.github.com/repos/ibtisam-iq/debugbox/releases/latest | jq '.tag_name'
-
-# Or visit
-https://github.com/ibtisam-iq/debugbox/releases
+curl -s https://api.github.com/repos/ibtisam-iq/debugbox/releases/latest | jq -r '.tag_name'
 ```
-
-**Q: What if I need to debug a pod that's not running?**
-
-A: You can't attach to a crashed pod. Options:
-```bash
-# 1. Check logs
-kubectl logs my-pod
-
-# 2. Create a new pod with same image
-kubectl run debug-pod --image=my-image --restart=Never -it
-
-# 3. Use a sidecar pattern for permanent debugging
-```
-
-For variant selection, tool lists, and tag formats, see **[Variants Overview](../variants/overview.md)**, **[Tooling Manifest](../reference/manifest.md)**, and **[Image Tags](../reference/tags.md)**.
 
 ---
 
 ## Still Stuck?
 
-**1. Check the Examples** → [Examples](examples.md) has 40+ real scenarios
+Open a GitHub issue and include:
 
-**2. Check your cluster** → Is CoreDNS running? Node ready?
-```bash
-kubectl get nodes
-kubectl get pods -n kube-system | grep coredns
-```
-
-**3. Verify image access** → Can you pull locally?
-```bash
-docker pull ghcr.io/ibtisam-iq/debugbox:lite
-```
-
-**4. Open GitHub issue** with:
-
-- DebugBox variant/version used: `ghcr.io/ibtisam-iq/debugbox:power-1.0.0`
-- Kubernetes version: `kubectl version --short`
-- Exact command: `kubectl debug my-pod -it --image=...`
-- Error message (full output, not summarized)
-- Your cluster setup (minikube, EKS, GKE, etc.)
+- DebugBox variant and version used (e.g. `ghcr.io/ibtisam-iq/debugbox:power-1.2.0`)
+- Kubernetes version: `kubectl version`
+- Exact command and full error output
+- Cluster type (minikube, kubeadm, EKS, GKE, AKS, etc.)
 
 → **[Examples](examples.md)** | **[Kubernetes Usage](../usage/kubernetes.md)** | **[Docker Usage](../usage/docker.md)** | **[GitHub Issues](https://github.com/ibtisam-iq/debugbox/issues)**

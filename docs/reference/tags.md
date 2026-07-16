@@ -32,16 +32,16 @@ ghcr.io/ibtisam-iq/debugbox:power-latest
 ### Pinned Version Tags (Production)
 
 ```bash
-ghcr.io/ibtisam-iq/debugbox:lite-1.0.0         # Immutable
-ghcr.io/ibtisam-iq/debugbox:balanced-1.0.0
-ghcr.io/ibtisam-iq/debugbox:power-1.0.0
+ghcr.io/ibtisam-iq/debugbox:lite-1.2.0         # Immutable
+ghcr.io/ibtisam-iq/debugbox:balanced-1.2.0
+ghcr.io/ibtisam-iq/debugbox:power-1.2.0
 ```
 
 ### Default Aliases (Convenience, Balanced Only)
 
 ```bash
 ghcr.io/ibtisam-iq/debugbox:latest     # Alias to balanced-latest
-ghcr.io/ibtisam-iq/debugbox:1.0.0      # Alias to balanced-1.0.0
+ghcr.io/ibtisam-iq/debugbox:1.2.0      # Alias to balanced-1.2.0
 ```
 
 ## Quick Reference
@@ -51,9 +51,9 @@ ghcr.io/ibtisam-iq/debugbox:1.0.0      # Alias to balanced-1.0.0
 | Development (latest balanced) | `ghcr.io/ibtisam-iq/debugbox` |
 | Latest lite | `ghcr.io/ibtisam-iq/debugbox:lite` |
 | Latest power | `ghcr.io/ibtisam-iq/debugbox:power` |
-| Production (balanced) | `ghcr.io/ibtisam-iq/debugbox:1.0.0` |
-| Production (lite) | `ghcr.io/ibtisam-iq/debugbox:lite-1.0.0` |
-| Production (power) | `ghcr.io/ibtisam-iq/debugbox:power-1.0.0` |
+| Production (balanced) | `ghcr.io/ibtisam-iq/debugbox:1.2.0` |
+| Production (lite) | `ghcr.io/ibtisam-iq/debugbox:lite-1.2.0` |
+| Production (power) | `ghcr.io/ibtisam-iq/debugbox:power-1.2.0` |
 
 ## Best Practices
 
@@ -66,16 +66,16 @@ ghcr.io/ibtisam-iq/debugbox:1.0.0      # Alias to balanced-1.0.0
 
 - **Always pin specific version and variant**
 - Never use `:latest` in production manifests
-- Example: `ghcr.io/ibtisam-iq/debugbox:balanced-1.0.0`
+- Example: `ghcr.io/ibtisam-iq/debugbox:balanced-1.2.0`
 
 ## Versioning
 
 DebugBox follows **Semantic Versioning** (MAJOR.MINOR.PATCH):
 
-- `v1.0.0` -- First stable release
-- `v1.0.1` -- Patch (bug fix)
-- `v1.1.0` -- Minor (features, backward compatible)
-- `v2.0.0` -- Major (breaking changes)
+- `v1.0.0`: First stable release
+- `v1.0.1`: Patch (bug fix)
+- `v1.2.0`: Minor (features, backward compatible)
+- `v2.0.0`: Major (breaking changes)
 
 **Key Rules:**
 
@@ -89,9 +89,9 @@ DebugBox follows **Semantic Versioning** (MAJOR.MINOR.PATCH):
 |----------|---------|-------|
 | Primary discovery | `:lite`, `:balanced`, `:power` | 3 |
 | Floating version | `:-latest` (3 variants) | 3 |
-| Pinned version | `:-1.0.0` (3 variants) | 3 |
-| Default aliases | `:latest`, `:1.0.0` | 2 |
-| **Per registry** | — | **11 tags** |
+| Pinned version | `:-1.2.0` (3 variants) | 3 |
+| Default aliases | `:latest`, `:1.2.0` | 2 |
+| **Per registry** | - | **11 tags** |
 | **Both registries** | GHCR + Docker Hub | **22 tags** |
 
 → **[Quick Start](../getting-started/quick-start.md)** | **[Variants Overview](../variants/overview.md)**

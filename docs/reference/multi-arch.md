@@ -4,8 +4,8 @@ All DebugBox images are **multi-platform manifests** supporting both common CPU 
 
 ## Supported Architectures
 
-- **`linux/amd64`** (x86_64) -- Intel/AMD servers, most cloud VMs, GitHub Actions
-- **`linux/arm64`** (aarch64) -- Apple Silicon (M1-M5), AWS Graviton, Raspberry Pi 64-bit
+- **`linux/amd64`** (x86_64): Intel/AMD servers, most cloud VMs, GitHub Actions
+- **`linux/arm64`** (aarch64): Apple Silicon (M1–M4), AWS Graviton, Raspberry Pi 64-bit
 
 ## Automatic Selection
 
@@ -13,8 +13,8 @@ Docker, containerd, and Kubernetes automatically pull the correct architecture f
 
 ```bash
 # Works seamlessly on both amd64 and arm64
-docker pull ghcr.io/ibtisam-iq/debugbox:1.0.0
-kubectl debug my-pod -it --image=ghcr.io/ibtisam-iq/debugbox:1.0.0
+docker pull ghcr.io/ibtisam-iq/debugbox:1.2.0
+kubectl debug my-pod -it --image=ghcr.io/ibtisam-iq/debugbox:1.2.0
 ```
 
 The registry returns the correct image for your CPU architecture automatically.
@@ -25,10 +25,10 @@ To explicitly request a specific architecture (for testing or compatibility):
 
 ```bash
 # Force arm64 on an amd64 machine
-docker pull --platform linux/arm64 ghcr.io/ibtisam-iq/debugbox:1.0.0
+docker pull --platform linux/arm64 ghcr.io/ibtisam-iq/debugbox:1.2.0
 
 # Run with specific platform
-docker run --platform linux/arm64 ghcr.io/ibtisam-iq/debugbox:1.0.0
+docker run --platform linux/arm64 ghcr.io/ibtisam-iq/debugbox:1.2.0
 ```
 
 ## Verify Inside Container

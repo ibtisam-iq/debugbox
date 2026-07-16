@@ -2,6 +2,10 @@
 
 DebugBox is Kubernetes-native and optimized for ephemeral debugging workflows.
 
+!!! tip "Practice in a live playground"
+    Work through real debugging scenarios with all three variants (no setup needed):
+    **[Kubernetes Debugging with DebugBox →](https://labs.iximiuz.com/tutorials/kubernetes-debugging-with-debugbox-74e481c8)**
+
 ## Debug a Running Pod (Most Common)
 
 Attach a debugging container to an existing pod:
@@ -15,10 +19,10 @@ kubectl debug my-pod -it --image=ghcr.io/ibtisam-iq/debugbox:lite
 kubectl debug my-pod -it --image=ghcr.io/ibtisam-iq/debugbox:power
 
 # Production (pinned version)
-kubectl debug my-pod -it --image=ghcr.io/ibtisam-iq/debugbox:1.0.0
+kubectl debug my-pod -it --image=ghcr.io/ibtisam-iq/debugbox:1.2.0
 ```
 
-Shares network and process namespace with the target pod.
+Shares the pod's network namespace.
 
 ## Standalone Debugging Pod
 
@@ -45,15 +49,18 @@ For declarative `kubectl apply -f` workflows, pre-made manifests are available f
 ```bash
 kubectl apply -f \
   https://raw.githubusercontent.com/ibtisam-iq/debugbox/main/examples/lite-debug-pod.yaml
-kubectl exec -it debug-lite -- ash
+kubectl wait pod/debug-lite --for=condition=Ready --timeout=60s
+kubectl exec -it debug-lite -- ash -l
 
 kubectl apply -f \
   https://raw.githubusercontent.com/ibtisam-iq/debugbox/main/examples/balanced-debug-pod.yaml
-kubectl exec -it debug-balanced -- bash
+kubectl wait pod/debug-balanced --for=condition=Ready --timeout=60s
+kubectl exec -it debug-balanced -- bash -l
 
 kubectl apply -f \
   https://raw.githubusercontent.com/ibtisam-iq/debugbox/main/examples/power-debug-pod.yaml
-kubectl exec -it debug-power -- bash
+kubectl wait pod/debug-power --for=condition=Ready --timeout=60s
+kubectl exec -it debug-power -- bash -l
 ```
 
 ## Power Variant with Capabilities
@@ -64,8 +71,8 @@ kubectl exec -it debug-power -- bash
 ```bash
 kubectl apply -f \
   https://raw.githubusercontent.com/ibtisam-iq/debugbox/main/examples/power-debug-pod.yaml
-
-kubectl exec -it debug-power -- bash
+kubectl wait pod/debug-power --for=condition=Ready --timeout=60s
+kubectl exec -it debug-power -- bash -l
 ```
 
 ### Create Manually
@@ -87,6 +94,7 @@ spec:
     tty: true
     stdin: true
   restartPolicy: Never
+  terminationGracePeriodSeconds: 0
 ```
 
 **Delete when done:**
@@ -107,7 +115,7 @@ kubens kube-system        # Switch namespace
 kubectx -c                # Show current context
 ```
 
-**Note:** Context/namespace switching works because DebugBox runs in the same network as your local kubeconfig.
+**Note:** kubectx/kubens require a kubeconfig to be available inside the pod (e.g., mounted at `/root/.kube/config`).
 
 ## Node-Level Debugging
 
@@ -133,10 +141,14 @@ metadata:
 spec:
   containers:
   - name: app
-    image: nginx:alpine
+    image: ghcr.io/ibtisam-iq/ibtisam-iq:latest
+    ports:
+    - containerPort: 8080
   - name: debugbox
-    image: ghcr.io/ibtisam-iq/debugbox:1.0.0
+    image: ghcr.io/ibtisam-iq/debugbox:1.2.0
     command: ["sleep", "infinity"]
+    tty: true
+    stdin: true
 ```
 
 ### Power Sidecar with Capabilities
@@ -148,10 +160,14 @@ metadata:
 spec:
   containers:
   - name: app
-    image: nginx:alpine
+    image: ghcr.io/ibtisam-iq/ibtisam-iq:latest
+    ports:
+    - containerPort: 8080
   - name: debugbox
     image: ghcr.io/ibtisam-iq/debugbox:power
     command: ["sleep", "infinity"]
+    tty: true
+    stdin: true
     securityContext:
       capabilities:
         add:
@@ -161,8 +177,8 @@ spec:
 
 Access:
 ```bash
-kubectl exec -it app-with-debug -c debugbox -- bash
-kubectl exec -it app-with-debug-power -c debugbox -- bash
+kubectl exec -it app-with-debug -c debugbox -- bash -l
+kubectl exec -it app-with-debug-power -c debugbox -- bash -l
 ```
 
 → **[Which variant to use?](../variants/overview.md)**
@@ -171,7 +187,7 @@ kubectl exec -it app-with-debug-power -c debugbox -- bash
 
 1. **Always pin versions:**
    ```bash
-   --image=ghcr.io/ibtisam-iq/debugbox:1.0.0
+   --image=ghcr.io/ibtisam-iq/debugbox:1.2.0
    ```
    Never use `:latest` in production manifests.
 

@@ -1,6 +1,6 @@
 # Power Variant
 
-**~91 MB** -- Full SRE-grade forensics toolkit.
+**~91 MB**: Full SRE-grade forensics toolkit.
 
 Everything from balanced, plus advanced tools for deep system and network investigation.
 
@@ -32,7 +32,8 @@ For tools that require capabilities (tshark, conntrack, iptables), use a manifes
 ```bash
 kubectl apply -f \
   https://raw.githubusercontent.com/ibtisam-iq/debugbox/main/examples/power-debug-pod.yaml
-kubectl exec -it debug-power -- bash
+kubectl wait pod/debug-power --for=condition=Ready --timeout=60s
+kubectl exec -it debug-power -- bash -l
 ```
 
 → **[All tag formats](../reference/tags.md)** | **[Kubernetes usage](../usage/kubernetes.md)** | **[Docker usage](../usage/docker.md)**
@@ -60,7 +61,7 @@ Power includes **all balanced helpers** plus **1 additional helper**:
 
 **Power-exclusive helper:**
 
-- `conntrack-watch` -- Monitor active connections in real-time (requires NET_ADMIN)
+- `conntrack-watch()`: List active conntrack entries (requires NET_ADMIN)
 
 ## When to Downgrade
 

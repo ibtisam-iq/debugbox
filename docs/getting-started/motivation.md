@@ -14,8 +14,8 @@ Distroless, scratch, and minimal Alpine images are good for production, but they
 ## Existing Solutions
 
 - **netshoot** (~202 MB): Good tools, but overkill for a simple `curl` test
-- **busybox** (1.5 MB): Tiny, but lacks real debugging tools
-- **Alpine** (7.6 MB): Minimal but not debugging-focused
+- **busybox** (~1.5 MB): Tiny, but lacks real debugging tools
+- **Alpine** (~7.6 MB): Minimal but not debugging-focused
 
 ## The DebugBox Answer
 
@@ -42,7 +42,7 @@ Up to ~13x smaller than netshoot for basic tasks.
 
 ## Core Principles
 
-- **Variants over bloat**: no unnecessary tools in your images
+- **Variants over bloat**: no unnecessary tools
 - **Speed**: faster incident response with minimal pull times
 - **Transparency**: every tool documented in the [manifest](../reference/manifest.md)
 - **Debug-first**: runs as root for full debugging access (ephemeral use only)

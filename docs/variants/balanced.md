@@ -1,6 +1,6 @@
 # Balanced Variant (Recommended)
 
-**~47 MB** -- The default for daily debugging.
+**~47 MB**: The default for daily debugging.
 
 The default and recommended choice for nearly all Kubernetes troubleshooting tasks.
 
@@ -17,7 +17,7 @@ The default and recommended choice for nearly all Kubernetes troubleshooting tas
 kubectl debug my-pod -it --image=ghcr.io/ibtisam-iq/debugbox
 ```
 
-Balanced is the default -- no variant tag needed.
+Balanced is the default: no variant tag needed.
 
 → **[All tag formats](../reference/tags.md)** | **[Kubernetes usage](../usage/kubernetes.md)** | **[Docker usage](../usage/docker.md)**
 
@@ -45,12 +45,12 @@ Balanced includes **10 custom shell helpers** for rapid debugging:
 
 **Quick reference:**
 
-- `json()` / `yaml()` -- Pretty-print data
-- `ports` / `connections` -- Socket inspection
-- `routes` -- Display routing table
-- `k8s-info` -- Current Kubernetes context
-- `sniff` / `sniff-http` / `sniff-dns` -- Packet capture shortcuts
-- `cert-check()` -- TLS certificate inspection
+- `json()` / `yaml()`: Pretty-print data
+- `ports()` / `connections()`: Socket inspection
+- `routes()`: Display routing table
+- `k8s-info()`: Current Kubernetes context
+- `sniff()` / `sniff-http()` / `sniff-dns()`: Packet capture shortcuts
+- `cert-check()`: TLS certificate inspection
 
 ## When to Switch
 

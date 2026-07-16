@@ -6,7 +6,7 @@ How DebugBox reduces bandwidth costs and speeds up debugging
 
 ## Quick Impact
 
-**Scenario: 50 debug pulls per week across your cluster**
+**Scenario: 50 debug pulls per week across a cluster**
 
 | Container | Per Pull | 50 Pulls/week | Monthly |
 |-----------|----------|---------------|---------|
@@ -35,9 +35,9 @@ All scenarios reference the **Quick Impact table** above. Use it as your baselin
 
 **With DebugBox lite:**
 
-- Per pull: ~20–30 seconds (vs ~160–250 seconds netshoot)¹
+- Per pull: ~20–30 seconds (vs ~160–250 seconds netshoot)
 - 20 pulls/week: ~7–10 minutes total (vs ~53–83 minutes netshoot)
-- **Weekly bandwidth:** ~287 MB (vs ~4 GB netshoot)
+- **Weekly bandwidth:** ~300 MB (vs ~4 GB netshoot)
 - **Monthly savings:** ~3+ hours + ~15 GB
 
 Real-world speeds vary by network conditions, latency, and registry response time.
@@ -52,7 +52,7 @@ Real-world speeds vary by network conditions, latency, and registry response tim
 
 - Per pull: ~3–6 seconds (vs ~32–50 seconds netshoot)
 - 75 pulls/week: ~4–7 minutes total (vs ~40–63 minutes netshoot)
-- Memory footprint: ~15 MB per pull (vs ~80+ MB netshoot)
+- Image size: ~15 MB per pull (vs ~202 MB netshoot)
 - Alpine base boot time: < 1 second
 
 **Key benefit:** Minimal resource overhead + fast iteration on tiny nodes
@@ -65,8 +65,8 @@ Real-world speeds vary by network conditions, latency, and registry response tim
 
 **Speed comparison at 20 Mbps (real-world):**
 
-- netshoot: ~40–60 seconds
-- DebugBox lite: ~3–6 seconds
+- netshoot: ~100–150 seconds
+- DebugBox lite: ~7–14 seconds
 
 **Practical impact:**
 
@@ -88,8 +88,8 @@ Real-world speeds vary by network conditions, latency, and registry response tim
 
 **With DebugBox:**
 
-- Baseline (lite): 100 x 15 MB = 1.5 GB/day = **~45 GB/month**
-- Advanced (balanced): 10 x 47 MB = 0.47 GB/day = **~14 GB/month**
+- Baseline (lite): 100 × 15 MB = 1.5 GB/day = **~45 GB/month**
+- Advanced (balanced): 10 × 47 MB = 0.47 GB/day = **~14 GB/month**
 - **Total: ~59 GB/month**
 - **Savings: ~541 GB/month (90% reduction)**
 
@@ -127,13 +127,13 @@ See [Cost Analysis](#cost-analysis) for financial impact.
 
 Rate: $0.045/GB ($32/TB)
 
-**Scenario: 50 pulls/week**
+**Scenario: 50 pulls/month**
 
-| Container | Per week | Monthly | Annual |
-|-----------|----------|---------|--------|
+| Container | Per month (bandwidth) | Monthly cost | Annual cost |
+|-----------|----------------------|--------------|-------------|
 | netshoot | ~10 GB | $0.45 | $5.40 |
 | DebugBox | ~2.3 GB | $0.10 | $1.20 |
-| **Savings** | **$0.35** | **$18.20** | **$218** |
+| **Savings** | **~7.7 GB** | **$0.35** | **$4.20** |
 
 On metered networks, savings scale with team size and pull frequency. Actual costs depend on carrier, region, and data plan.
 
@@ -171,9 +171,9 @@ spec:
 | Bandwidth | Lite | Balanced | Power | Strategy |
 |-----------|------|----------|-------|----------|
 | **> 100 Mbps** | Yes | Yes | Yes | Any variant works; balanced is daily driver |
-| **10–100 Mbps** | Best | Yes | — | Default to lite; use balanced on-demand |
-| **< 10 Mbps** | Best | — | — | Always lite; pre-pull during off-peak |
-| **Metered** | Best | — | — | Lite only; cache locally when possible |
+| **10–100 Mbps** | Best | Yes | - | Default to lite; use balanced on-demand |
+| **< 10 Mbps** | Best | - | - | Always lite; pre-pull during off-peak |
+| **Metered** | Best | - | - | Lite only; cache locally when possible |
 
 ---
 

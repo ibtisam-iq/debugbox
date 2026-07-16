@@ -147,13 +147,13 @@ variants:
       helpers:
         - json()
         - yaml()
-        - ports
-        - connections
-        - routes
-        - k8s-info
-        - sniff
-        - sniff-http
-        - sniff-dns
+        - ports()
+        - connections()
+        - routes()
+        - k8s-info()
+        - sniff()
+        - sniff-http()
+        - sniff-dns()
         - cert-check()
         - conntrack-watch()   # function: list active conntrack entries (power only, requires NET_ADMIN)
 

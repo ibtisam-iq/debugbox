@@ -2,13 +2,17 @@
 
 Get debugging in seconds.
 
+!!! tip "Try it in a live Kubernetes environment"
+    Step through these commands interactively (no local cluster required):
+    **[Kubernetes Debugging with DebugBox →](https://labs.iximiuz.com/tutorials/kubernetes-debugging-with-debugbox-74e481c8)**
+
 ## Debug a Running Pod (Most Common)
 
 ```bash
 kubectl debug my-pod -it --image=ghcr.io/ibtisam-iq/debugbox
 ```
 
-Attaches an ephemeral debugging container with the same network/process namespace as your pod.
+Attaches an ephemeral debugging container sharing the pod's network namespace.
 
 ## Standalone Debugging Session
 
@@ -28,9 +32,9 @@ kubectl run debug --rm -it \
 
 **When in doubt, use balanced.** It's the default.
 
-## What Can I Do Inside?
+## Inside the Container
 
-Once inside the container, you have access to comprehensive debugging tools:
+Comprehensive debugging tools are available:
 
 → **[Complete tool list with examples](../guides/examples.md)**
 
@@ -60,6 +64,6 @@ DebugBox is published to two registries. No authentication required.
 | **GHCR (recommended)** | `ghcr.io/ibtisam-iq/debugbox` |
 | **Docker Hub** | `docker.io/mibtisam/debugbox` |
 
-For production, pin versions: `ghcr.io/ibtisam-iq/debugbox:1.0.0`
+For production, pin versions: `ghcr.io/ibtisam-iq/debugbox:1.2.0`
 
 → **[Complete tag reference](../reference/tags.md)** | **[Variants Overview](../variants/overview.md)** | **[Real-world Examples](../guides/examples.md)**
