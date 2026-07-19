@@ -1,0 +1,39 @@
+# DebugBox — Base image
+# Shared foundation for all DebugBox variants (lite, balanced, power)
+
+FROM alpine:3.21
+
+# OCI image labels
+LABEL org.opencontainers.image.title="DebugBox Base" \
+      org.opencontainers.image.description="Minimal Alpine base image for DebugBox Kubernetes debugging containers" \
+      org.opencontainers.image.version="base-1.0.0" \
+      org.opencontainers.image.variant="base" \
+      org.opencontainers.image.base.name="alpine:3.21" \
+      org.opencontainers.image.licenses="MIT" \
+      org.opencontainers.image.url="https://github.com/ibtisam-iq/debugbox" \
+      org.opencontainers.image.source="https://github.com/ibtisam-iq/debugbox" \
+      org.opencontainers.image.documentation="https://debugbox.ibtisam-iq.com" \
+      org.opencontainers.image.vendor="Ibtisam IQ" \
+      org.opencontainers.image.authors="Muhammad Ibtisam <contact@ibtisam-iq.com>"
+
+# TLS root certificates for HTTPS support
+RUN apk add --no-cache ca-certificates && \
+    if [ ! -d /etc/ssl/certs ] || [ ! -f /etc/ssl/certs/ca-certificates.crt ]; then \
+        echo "ERROR: ca-certificates not properly installed" >&2; exit 1; \
+    fi && \
+    echo "DebugBox Base: ca-certificates verified ✓"
+
+# Locale and default editor
+ENV LANG=C.UTF-8 \
+    LC_ALL=C.UTF-8 \
+    EDITOR=vi
+
+# Shared shell profile (loaded via /etc/profile.d)
+RUN mkdir -p /etc/profile.d
+COPY dockerfiles/profiles/debugbox-base-profile /etc/profile.d/debugbox-base-profile.sh
+RUN chmod 0644 /etc/profile.d/debugbox-base-profile.sh && \
+    [ -f /etc/profile.d/debugbox-base-profile.sh ] || (echo "ERROR: profile not found" && exit 1) && \
+    echo "DebugBox Base: shell profile configured ✓"
+
+WORKDIR /root
+CMD ["/bin/ash", "-l"]
