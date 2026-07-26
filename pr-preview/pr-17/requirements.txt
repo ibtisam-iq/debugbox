@@ -1,0 +1,27 @@
+# Core MkDocs with Material theme
+mkdocs==1.6.1
+mkdocs-material==9.7.7
+
+# Plugins
+mkdocs-macros-plugin==1.5.0
+mkdocs-section-index
+
+# Syntax highlighting
+pygments==2.20.0
+
+# Versioning with mike
+mike==2.2.0
+
+# Python extensions for Material
+pymdown-extensions==11.0.1
+python-dateutil==2.9.0.post0
+
+# Optional (advanced features)
+mkdocs-git-revision-date-localized-plugin==1.5.3
+
+# Social card generation (OG images)
+pillow>=12.3.0
+cairosvg>=2.9.0
+
+# Image lightbox
+mkdocs-glightbox==0.5.2
