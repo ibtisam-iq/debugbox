@@ -1,0 +1,32 @@
+#!/bin/sh
+set -eux
+
+YQ_VERSION="${YQ_VERSION:-v4.53.3}"
+
+YQ_SHA256_AMD64="fa52a4e758c63d38299163fbdd1edfb4c4963247918bf9c1c5d31d84789eded4"
+YQ_SHA256_ARM64="578648e463a11c1b6db6010cbf41eafed6bee79466fcffa1bb446672cf7945ea"
+
+arch="$(apk --print-arch)"
+
+case "$arch" in
+  x86_64)
+    yq_arch=amd64
+    yq_sha="$YQ_SHA256_AMD64"
+    ;;
+  aarch64)
+    yq_arch=arm64
+    yq_sha="$YQ_SHA256_ARM64"
+    ;;
+  *)
+    echo "unsupported arch: $arch" >&2
+    exit 1
+    ;;
+esac
+
+wget -qO /usr/local/bin/yq \
+  "https://github.com/mikefarah/yq/releases/download/${YQ_VERSION}/yq_linux_${yq_arch}"
+
+echo "${yq_sha}  /usr/local/bin/yq" | sha256sum -c -
+
+chmod +x /usr/local/bin/yq
+yq --version >/dev/null

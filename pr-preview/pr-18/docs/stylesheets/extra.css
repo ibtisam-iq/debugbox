@@ -1,0 +1,490 @@
+/* ============================================================
+   DebugBox Theme – Indigo + Amber
+   ============================================================ */
+
+/* Indigo 800 + Amber 800: avoids Material's generic blue/cyan default while keeping
+   accessible contrast on both light and dark surfaces. */
+:root {
+  --md-primary-fg-color: #283593;
+  --md-primary-fg-color--light: #5c6bc0;
+  --md-primary-fg-color--dark: #1a237e;
+  --md-accent-fg-color: #FF8F00;
+  --md-accent-fg-color--transparent: rgba(255, 143, 0, 0.1);
+}
+
+[data-md-color-scheme="slate"] {
+  --md-primary-fg-color: #9FA8DA;
+  --md-primary-fg-color--light: #c5cae9;
+  --md-primary-fg-color--dark: #7986CB;
+  --md-accent-fg-color: #FFD54F;
+  --md-accent-fg-color--transparent: rgba(255, 213, 79, 0.1);
+}
+
+/* ============================================================
+   Hero Section (homepage only)
+   ============================================================ */
+
+.db-hero {
+  position: relative;
+  background: linear-gradient(135deg, #1a237e 0%, #283593 50%, #303f9f 100%);
+  color: #fff;
+  padding: 4rem 1rem 4.5rem;
+  text-align: center;
+}
+
+[data-md-color-scheme="slate"] .db-hero {
+  background: linear-gradient(135deg, #0d1137 0%, #1a237e 50%, #1e2a6e 100%);
+}
+
+/* Pseudo-element used to fade the hero bottom edge into the page background,
+   avoiding the abrupt color boundary a hard border or padding would create. */
+.db-hero::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 80px;
+  background: linear-gradient(to bottom, transparent, var(--md-default-bg-color));
+  pointer-events: none;
+}
+
+.db-hero__inner {
+  max-width: 960px;
+  margin: 0 auto;
+}
+
+.db-hero__title {
+  font-size: 2.8rem;
+  font-weight: 700;
+  margin: 0 0 0.5rem;
+  letter-spacing: -0.02em;
+}
+
+.db-hero__tagline {
+  font-size: 1.15rem;
+  opacity: 0.9;
+  margin: 0 0 2.5rem;
+  font-weight: 400;
+}
+
+.db-hero__variants {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+  margin: 0 0 2.5rem;
+}
+
+.db-hero__variant {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 10px;
+  padding: 1.5rem 1rem;
+  text-align: center;
+  transition: transform 0.2s, background 0.2s;
+}
+
+.db-hero__variant:hover {
+  transform: translateY(-3px);
+  background: rgba(255, 255, 255, 0.12);
+}
+
+/* Negative margins pull the bar flush with the card edges, countering the 1rem card padding. */
+.db-hero__variant-bar {
+  height: 4px;
+  border-radius: 2px 2px 0 0;
+  margin: -1.5rem -1rem 1rem;
+}
+
+.db-hero__variant--lite .db-hero__variant-bar {
+  background: #78909C;
+}
+
+.db-hero__variant--balanced .db-hero__variant-bar {
+  background: var(--md-accent-fg-color);
+}
+
+.db-hero__variant--power .db-hero__variant-bar {
+  background: #E53935;
+}
+
+/* Balanced is the recommended default: amber border + tint */
+.db-hero__variant--balanced {
+  border-color: var(--md-accent-fg-color);
+  background: rgba(255, 143, 0, 0.1);
+}
+
+.db-hero__variant-name {
+  font-size: 1.25rem;
+  font-weight: 700;
+  margin: 0 0 0.25rem;
+}
+
+.db-hero__variant-size {
+  font-size: 1.5rem;
+  font-weight: 300;
+  margin: 0 0 0.5rem;
+  opacity: 0.95;
+}
+
+.db-hero__variant-desc {
+  font-size: 0.85rem;
+  opacity: 0.75;
+  margin: 0;
+}
+
+.db-hero__variant-tag {
+  display: inline-block;
+  font-size: 0.7rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  background: var(--md-accent-fg-color);
+  color: #1a237e;
+  padding: 0.15rem 0.5rem;
+  border-radius: 3px;
+  margin-top: 0.75rem;
+}
+
+.db-hero__actions {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.db-hero__btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.7rem 1.6rem;
+  border-radius: 6px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: transform 0.15s, box-shadow 0.15s;
+}
+
+.db-hero__btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.db-hero__btn--primary {
+  background: var(--md-accent-fg-color);
+  color: #1a237e;
+}
+
+.db-hero__btn--secondary {
+  background: rgba(255, 255, 255, 0.12);
+  color: #fff;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+@media (max-width: 600px) {
+  .db-hero { padding: 2.5rem 1rem 2rem; }
+  .db-hero__title { font-size: 2rem; }
+  .db-hero__tagline { font-size: 1rem; }
+  .db-hero__variants { grid-template-columns: 1fr; gap: 0.75rem; }
+  .db-hero__actions { flex-direction: column; align-items: center; }
+}
+
+@media (max-width: 480px) {
+  .md-typeset pre { font-size: 0.78rem; }
+}
+
+@media (max-width: 400px) {
+  .db-hero { padding: 1.75rem 0.75rem 1.5rem; }
+  .db-hero__title { font-size: 1.75rem; }
+}
+
+/* ============================================================
+   Grid Cards (Explore the Docs)
+   ============================================================ */
+
+.grid.cards ul {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1rem;
+  list-style: none;
+  padding: 0;
+}
+
+.grid.cards li {
+  border: 1px solid var(--md-default-fg-color--lightest);
+  border-radius: 8px;
+  padding: 1.25rem;
+  transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
+}
+
+.grid.cards li:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+  border-color: var(--md-accent-fg-color);
+}
+
+[data-md-color-scheme="slate"] .grid.cards li:hover {
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+}
+
+/* ============================================================
+   Tables
+   ============================================================ */
+
+.md-typeset table:not([class]) th {
+  font-weight: 600;
+  font-size: 0.875rem;
+  padding: 0.6rem 0.75rem;
+  background-color: rgba(40, 53, 147, 0.08);
+  border-bottom: 2px solid var(--md-primary-fg-color--light);
+}
+
+[data-md-color-scheme="slate"] .md-typeset table:not([class]) th {
+  background-color: rgba(159, 168, 218, 0.1);
+  border-bottom-color: var(--md-primary-fg-color--dark);
+}
+
+/* display:block is required before overflow-x takes effect; the native table display model
+   expands to content width regardless of overflow settings. */
+.md-typeset table:not([class]) {
+  display: block;
+  max-width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.md-typeset table:not([class]) td {
+  font-size: 0.875rem;
+  font-weight: 400;
+  padding: 0.5rem 0.75rem;
+  vertical-align: top;
+  line-height: 1.5;
+}
+
+.md-typeset table:not([class]) tbody tr:nth-child(even) {
+  background-color: var(--md-default-bg-color--light);
+}
+
+[data-md-color-scheme="slate"] .md-typeset table:not([class]) tbody tr:nth-child(even) {
+  background-color: rgba(255, 255, 255, 0.05);
+}
+
+/* ============================================================
+   Code Blocks
+   ============================================================ */
+
+/* Horizontal scroll over word-wrap: wrapping breaks command syntax and multi-token flags. */
+.md-typeset pre {
+  border-radius: 6px;
+  border: 1px solid var(--md-default-fg-color--lightest);
+  overflow-x: auto;
+}
+
+[data-md-color-scheme="slate"] .md-typeset pre {
+  border-color: rgba(255, 255, 255, 0.06);
+}
+
+/* ============================================================
+   Last Updated Label
+   ============================================================ */
+
+.md-source-file__fact::before {
+  content: "Last Updated: ";
+  font-weight: 600;
+}
+
+.md-source-file__fact svg {
+  display: none !important;
+}
+
+.md-source-file__fact::after {
+  content: " PKT";
+  font-weight: 600;
+  color: var(--md-default-fg-color);
+}
+
+.md-source-file__fact {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  font-size: 0.875rem;
+  color: var(--md-default-fg-color--light);
+}
+
+/* ============================================================
+   Header – force deeper indigo to match hero
+   ============================================================ */
+
+.md-header,
+.md-tabs {
+  background-color: #1a237e;
+}
+
+[data-md-color-scheme="slate"] .md-header,
+[data-md-color-scheme="slate"] .md-tabs {
+  background-color: #141d5e;
+}
+
+/* ============================================================
+   Navigation – hover and focus-visible states
+   ============================================================ */
+
+.md-tabs__link:hover {
+  color: rgba(255, 255, 255, 0.9);
+  opacity: 1;
+}
+
+.md-header__title a:hover {
+  opacity: 0.85;
+}
+
+/* focus-visible limits the outline to keyboard navigation; mouse clicks do not trigger it. */
+.md-tabs__link:focus-visible,
+.md-nav__link:focus-visible {
+  outline: 2px solid var(--md-accent-fg-color);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+/* ============================================================
+   Announcement Bar
+   ============================================================ */
+
+.md-banner {
+  background: #1a237e;
+  color: rgba(255, 255, 255, 0.9);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.md-banner a {
+  color: #FFD54F;
+  font-weight: 600;
+}
+
+[data-md-color-scheme="slate"] .md-banner {
+  background: #0d1137;
+  border-bottom-color: rgba(255, 255, 255, 0.06);
+}
+
+[data-md-color-scheme="slate"] .md-banner a {
+  color: #FFD54F;
+}
+
+/* ============================================================
+   Reading Scroll Progress Bar
+   ============================================================ */
+
+/* animation-timeline: scroll() requires Chrome 115+ / Firefox 110+. Degrades silently
+   in older browsers; the bar is simply absent with no functional loss. */
+body::after {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  background: var(--md-accent-fg-color);
+  z-index: 9999;
+  pointer-events: none;
+  transform-origin: left;
+  transform: scaleX(0);
+  animation: scroll-progress-grow linear;
+  animation-timeline: scroll();
+}
+
+@keyframes scroll-progress-grow {
+  from { transform: scaleX(0); }
+  to   { transform: scaleX(1); }
+}
+
+/* ============================================================
+   Typography
+   ============================================================ */
+
+/* Material sets html { font-size: 125% }, so 1rem = 20px. 0.9rem (~18px) is more
+   comfortable than the library default for dense technical prose. */
+.md-typeset {
+  font-size: 0.9rem;
+  line-height: 1.7;
+}
+
+.md-content__inner {
+  max-width: 860px;
+}
+
+.md-typeset h1 {
+  letter-spacing: -0.02em;
+  line-height: 1.25;
+}
+
+.md-typeset h2 {
+  letter-spacing: -0.01em;
+  line-height: 1.3;
+}
+
+.md-typeset h3 {
+  line-height: 1.4;
+}
+
+/* ============================================================
+   Inline Code – palette-aware indigo tint
+   ============================================================ */
+
+/* :not(pre > code) targets inline spans only; without it, the tint would override
+   syntax-highlight colors inside code blocks. */
+.md-typeset code:not(pre > code) {
+  background-color: rgba(40, 53, 147, 0.07);
+  color: #283593;
+  border-radius: 3px;
+}
+
+[data-md-color-scheme="slate"] .md-typeset code:not(pre > code) {
+  background-color: rgba(159, 168, 218, 0.14);
+  color: #c5cae9;
+}
+
+/* ============================================================
+   Code Block – dark mode contrast
+   ============================================================ */
+
+/* Material's default dark-mode code background is too light against the deeper slate
+   surface used here; this darkens it to match. */
+[data-md-color-scheme="slate"] {
+  --md-code-bg-color: hsla(225, 15%, 20%, 1);
+}
+
+/* ============================================================
+   Admonitions – remap note and tip to the site palette
+   ============================================================ */
+
+/* note: indigo */
+.md-typeset .admonition.note,
+.md-typeset details.note {
+  border-color: #5c6bc0;
+}
+
+.md-typeset .note > .admonition-title,
+.md-typeset .note > summary {
+  background-color: rgba(92, 107, 192, 0.1);
+}
+
+.md-typeset .note > .admonition-title::before,
+.md-typeset .note > summary::before {
+  background-color: #5c6bc0;
+}
+
+/* tip: amber */
+.md-typeset .admonition.tip,
+.md-typeset details.tip {
+  border-color: #FF8F00;
+}
+
+.md-typeset .tip > .admonition-title,
+.md-typeset .tip > summary {
+  background-color: rgba(255, 143, 0, 0.1);
+}
+
+.md-typeset .tip > .admonition-title::before,
+.md-typeset .tip > summary::before {
+  background-color: #FF8F00;
+}
