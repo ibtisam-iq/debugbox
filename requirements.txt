@@ -13,7 +13,7 @@ pygments==2.20.0
 mike==2.2.0
 
 # Python extensions for Material
-pymdown-extensions==11.0.1
+pymdown-extensions==11.0.2
 python-dateutil==2.9.0.post0
 
 # Optional (advanced features)
