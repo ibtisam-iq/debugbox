@@ -17,7 +17,7 @@ pymdown-extensions==11.0.1
 python-dateutil==2.9.0.post0
 
 # Optional (advanced features)
-mkdocs-git-revision-date-localized-plugin==1.5.3
+mkdocs-git-revision-date-localized-plugin==1.5.4
 
 # Social card generation (OG images)
 pillow>=12.3.0
