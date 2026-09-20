@@ -1,0 +1,14 @@
+# DebugBox Lite - Shell Helpers
+# Loaded automatically via /etc/profile.d
+
+# === File Listing ===
+# ll() is inherited from debugbox-base-profile.sh
+
+# === Data Inspection ===
+json() {
+  jq . "$@" 2>/dev/null || cat "$@"
+}
+
+yaml() {
+  yq . "$@" 2>/dev/null || cat "$@"
+}
